@@ -11,7 +11,10 @@ import SwiftUI
 struct ContentView: View {
     
     var body: some View {
-        Text("GYM")
+        VStack {
+            Text("GYM")
+            Image("staticImage")
+        }
     }
 }
 
