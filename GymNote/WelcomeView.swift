@@ -24,11 +24,13 @@ struct WelcomeView: View {
                 Text("SignUp").tag(false)
             }
             .pickerStyle(SegmentedPickerStyle())
+            .padding(.bottom, 20)
             
             if isRegistered {
-                Text("LOGIN STUFF")
+                //Text("LOGIN STUFF")
+                LoginView()
             } else {
-                Text("SIGN UP STUFF")
+                SignupView()
             }
             
         }.padding()
