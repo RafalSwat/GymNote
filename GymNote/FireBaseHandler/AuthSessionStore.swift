@@ -6,14 +6,15 @@
 //  Copyright © 2019 Rafał Swat. All rights reserved.
 //
 
+import Foundation
 import SwiftUI
 import Firebase
 import Combine
 
-class SessionStore : ObservableObject {
+class AuthSessionStore : ObservableObject {
     
-     //MARK: Properties
-    var didChange = PassthroughSubject<SessionStore, Never>()
+    //MARK: Properties
+    var didChange = PassthroughSubject<AuthSessionStore, Never>()
     @Published var session: UserProfile? { didSet { self.didChange.send(self) }}
     var handle: AuthStateDidChangeListenerHandle?
     

@@ -10,11 +10,17 @@ import SwiftUI
 
 struct SignupView: View {
     
+    //MARK: Properties
+    @EnvironmentObject var authSession: AuthSessionStore
+    
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var repeatPassword: String = ""
-    @State private var matchPassword: Bool = false
+    @State private var loading = false
+    @State private var error = false
     
+    
+    //MARK: View
     var body: some View {
         VStack {
             TextField("Email", text: $email)
@@ -32,8 +38,12 @@ struct SignupView: View {
             
             
             Button("SignUp", action: {
-                //TODO: SignUp functionality with firebase and env.obj.
-                self.comparePasswords(firstPassword: self.password, secondPassword: self.repeatPassword)
+                if !self.email.isEmpty &&
+                    !self.password.isEmpty &&
+                    !self.repeatPassword.isEmpty &&
+                    self.equalPasswords(firstPassword: self.password, secondPassword: self.repeatPassword) {
+                    
+                }
                 
             })
             .frame(minWidth: CGFloat(0), maxWidth: .infinity)
@@ -43,13 +53,14 @@ struct SignupView: View {
         }
     }
     
-    func comparePasswords(firstPassword: String, secondPassword: String) {
+    //MARK: Functions
+    func equalPasswords(firstPassword: String, secondPassword: String) -> Bool {
         if firstPassword == secondPassword {
-            self.matchPassword = true
-            print("Signup Stuff")
+            print("Passwords are equal!")
+            return true
         } else {
-            self.matchPassword = false
-            print("Error: passwords are not equal")
+            print("Error: passwords are not equal!")
+            return false
         }
     }
 }

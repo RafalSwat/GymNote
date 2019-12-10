@@ -10,9 +10,11 @@ import SwiftUI
 
 struct LoginView: View {
     
+    //MARK: Properties
     @State private var email: String = ""
     @State private var password: String = ""
     
+    //MARK: View
     var body: some View {
         VStack {
             TextField("Email", text: $email)
@@ -33,6 +35,8 @@ struct LoginView: View {
             .font(.headline)
         }
     }
+    
+    //MARK: Functions
 }
 
 struct LoginView_Previews: PreviewProvider {
