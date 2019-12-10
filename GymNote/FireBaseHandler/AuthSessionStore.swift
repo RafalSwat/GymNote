@@ -68,4 +68,11 @@ class SessionStore : ObservableObject {
             return false
         }
     }
+    
+    //not sure if there is any need to this function
+    func unbind () {
+        if let handle = handle {
+            Auth.auth().removeStateDidChangeListener(handle)
+        }
+    }
 }
