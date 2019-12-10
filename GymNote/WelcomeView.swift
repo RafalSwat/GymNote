@@ -27,7 +27,6 @@ struct WelcomeView: View {
             .padding(.bottom, 20)
             
             if isRegistered {
-                //Text("LOGIN STUFF")
                 LoginView()
             } else {
                 SignupView()

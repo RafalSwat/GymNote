@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>883087240606-akc6nso0aqtnpnnt4u8tjd7283ls1q0l.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.883087240606-akc6nso0aqtnpnnt4u8tjd7283ls1q0l</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCboz6yxsCuFCfgajCK5OPmwuI4J94t0_0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>883087240606</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>AlmostWorking.GymNote</string>
+	<key>PROJECT_ID</key>
+	<string>gymnote-41fc3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gymnote-41fc3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:883087240606:ios:932bbde9975dfd76297a8f</string>
+	<key>DATABASE_URL</key>
+	<string>https://gymnote-41fc3.firebaseio.com</string>
+</dict>
+</plist>

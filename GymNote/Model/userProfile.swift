@@ -19,6 +19,8 @@ struct UserProfile {
     var userImage: UIImage
     var userHeight: Double
     
+    
+    // default user for test and ect.
     static let `default` = Self(
         email: "example@some.com",
         name: "Noname",
