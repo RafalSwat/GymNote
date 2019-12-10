@@ -12,6 +12,7 @@ import SwiftUI
 
 struct UserProfile {
     
+    var userID: String
     var userEmail: String
     var userName: String
     var userSurname: String
@@ -22,6 +23,7 @@ struct UserProfile {
     
     // default user for test and ect.
     static let `default` = Self(
+        uID: "",
         email: "example@some.com",
         name: "Noname",
         surname: "",
@@ -29,7 +31,8 @@ struct UserProfile {
         profileImage: UIImage(named: "staticImage")!,
         height: 170.0)
     
-    init(email: String, name: String, surname: String, gender: Gender, profileImage: UIImage, height: Double) {
+    init(uID: String, email: String, name: String, surname: String, gender: Gender, profileImage: UIImage, height: Double) {
+        self.userID = uID
         self.userEmail = email
         self.userName = name
         self.userSurname = surname
