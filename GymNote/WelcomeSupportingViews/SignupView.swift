@@ -35,8 +35,8 @@ struct SignupView: View {
             
             
             Button("SignUp", action: {
-                if !self.isEmpty() && self.arePasswordEqual() {
-                    self.signUp(email: self.email, password: self.password)
+                if self.isNotEmpty() && self.arePasswordEqual() {
+                    self.signUp()
                 }
             })
             .frame(minWidth: CGFloat(0), maxWidth: .infinity)
@@ -57,30 +57,35 @@ struct SignupView: View {
         }
     }
     
-    func isEmpty() -> Bool {
+    func isNotEmpty() -> Bool {
         if self.email.isEmpty {
             print("Error: email field is Empty!")
-            return true
+            return false
         } else if self.password.isEmpty {
             print("Error: password field is Empty!")
-            return true
+            return false
+        } else if self.repeatPassword.isEmpty {
+            print("Error: repeated password field is Empty!")
+            return false
         } else {
             print("Confirm: Ther is no empty fields")
-            return false
+            return true
         }
     }
     
-    func signUp(email: String, password: String) {
-            self.authSession.signUp(
-                email: self.email,
-                password: self.password) {(authDataResult, error) in
-                    if error != nil {
-                        print(error.debugDescription)
-                    } else {
-                        self.email = ""
-                        self.password = ""
-                    }
+    func signUp() {
+        self.authSession.signUp(
+            email: self.email,
+            password: self.password) {(authDataResult, error) in
+                if error != nil {
+                    print(error.debugDescription)
+                } else {
+                    self.email = ""
+                    self.password = ""
+                    self.repeatPassword = ""
+                    print("Registration is completed!")
                 }
+            }
     }
 }
 

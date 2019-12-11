@@ -11,6 +11,8 @@ import SwiftUI
 struct LoginView: View {
     
     //MARK: Properties
+    @EnvironmentObject var authSession: AuthSessionStore
+    
     @State private var email: String = ""
     @State private var password: String = ""
     
@@ -26,8 +28,9 @@ struct LoginView: View {
                 .padding(.bottom, 20)
             
             Button("Login", action: {
-                //TODO: login functionality with firebase and env.obj.
-                print("Login Stuff")
+                if self.isNotEmpty() {
+                    self.logIn()
+                }
             })
             .frame(minWidth: 0, maxWidth: .infinity)
             .border(Color.gray, width: 2)
@@ -37,6 +40,33 @@ struct LoginView: View {
     }
     
     //MARK: Functions
+    
+    func isNotEmpty() -> Bool {
+        if self.email.isEmpty {
+            print("Error: email field is Empty!")
+            return false
+        } else if self.password.isEmpty {
+            print("Error: password field is Empty!")
+            return false
+        } else {
+            print("Confirm: Ther is no empty fields")
+            return true
+        }
+    }
+    
+    func logIn() {
+        self.authSession.signIn(
+            email: self.email,
+            password: self.password) {(authDataResult, error) in
+                if error != nil {
+                    print(error.debugDescription)
+                } else {
+                    self.email = ""
+                    self.password = ""
+                    print("login attempt end with success!")
+                }
+            }
+    }
 }
 
 struct LoginView_Previews: PreviewProvider {
