@@ -38,13 +38,8 @@ struct SignupView: View {
             
             
             Button("SignUp", action: {
-                if !self.email.isEmpty &&
-                    !self.password.isEmpty &&
-                    !self.repeatPassword.isEmpty &&
-                    self.equalPasswords(firstPassword: self.password, secondPassword: self.repeatPassword) {
-                    
-                }
-                
+                self.signUp(email: self.email, password: self.password)
+                Text("Sign Up")
             })
             .frame(minWidth: CGFloat(0), maxWidth: .infinity)
             .border(Color.gray, width: CGFloat(2))
@@ -61,6 +56,24 @@ struct SignupView: View {
         } else {
             print("Error: passwords are not equal!")
             return false
+        }
+    }
+    
+    func signUp(email: String, password: String) {
+        if !self.email.isEmpty &&
+            !self.password.isEmpty &&
+            !self.repeatPassword.isEmpty &&
+            self.equalPasswords(firstPassword: self.password, secondPassword: self.repeatPassword) {
+            self.authSession.signUp(
+                email: self.email,
+                password: self.password) { (authDataResult, error) in
+                    if error != nil {
+                        print(error.debugDescription)
+                    } else {
+                        self.email = ""
+                        self.password = ""
+                    }
+            }
         }
     }
 }
