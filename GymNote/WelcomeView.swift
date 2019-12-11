@@ -13,28 +13,32 @@ struct WelcomeView: View {
     @State private var isRegistered = false
     
     var body: some View {
-        VStack {
-            Text("Welcome!")
-                .font(.title)
-                .fontWeight(.medium)
-            Image("staticImage")
+        KeyboardHost {
+            VStack {
+                Text("Welcome!")
+                    .font(.title)
+                    .fontWeight(.medium)
+                Image("staticImage")
 
-            Picker(selection: $isRegistered, label: Text("Welcome")) {
-                Text("Login").tag(true)
-                Text("SignUp").tag(false)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding(.bottom, 20)
-            
-            if isRegistered {
-                LoginView()
-            } else {
-                SignupView()
-            }
-            
-        }.padding()
+                Picker(selection: $isRegistered, label: Text("Welcome")) {
+                    Text("Login").tag(true)
+                    Text("SignUp").tag(false)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.bottom, 20)
+                    
+                if isRegistered {
+                    LoginView()
+                } else {
+                    SignupView()
+                }
+                
+            }.padding()
+        }
     }
+        
 }
+
 
 struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
