@@ -16,9 +16,6 @@ struct SignupView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var repeatPassword: String = ""
-    @State private var loading = false
-    @State private var error = false
-    
     
     //MARK: View
     var body: some View {
@@ -38,8 +35,9 @@ struct SignupView: View {
             
             
             Button("SignUp", action: {
-                self.signUp(email: self.email, password: self.password)
-                Text("Sign Up")
+                if !self.isEmpty() && self.arePasswordEqual() {
+                    self.signUp(email: self.email, password: self.password)
+                }
             })
             .frame(minWidth: CGFloat(0), maxWidth: .infinity)
             .border(Color.gray, width: CGFloat(2))
@@ -49,8 +47,8 @@ struct SignupView: View {
     }
     
     //MARK: Functions
-    func equalPasswords(firstPassword: String, secondPassword: String) -> Bool {
-        if firstPassword == secondPassword {
+    func arePasswordEqual() -> Bool {
+        if password == repeatPassword {
             print("Passwords are equal!")
             return true
         } else {
@@ -59,24 +57,33 @@ struct SignupView: View {
         }
     }
     
+    func isEmpty() -> Bool {
+        if self.email.isEmpty {
+            print("Error: email field is Empty!")
+            return true
+        } else if self.password.isEmpty {
+            print("Error: password field is Empty!")
+            return true
+        } else {
+            print("Confirm: Ther is no empty fields")
+            return false
+        }
+    }
+    
     func signUp(email: String, password: String) {
-        if !self.email.isEmpty &&
-            !self.password.isEmpty &&
-            !self.repeatPassword.isEmpty &&
-            self.equalPasswords(firstPassword: self.password, secondPassword: self.repeatPassword) {
             self.authSession.signUp(
                 email: self.email,
-                password: self.password) { (authDataResult, error) in
+                password: self.password) {(authDataResult, error) in
                     if error != nil {
                         print(error.debugDescription)
                     } else {
                         self.email = ""
                         self.password = ""
                     }
-            }
-        }
+                }
     }
 }
+
 
 
 struct SignupView_Previews: PreviewProvider {
