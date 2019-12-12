@@ -23,8 +23,7 @@ struct LoginView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
             
-            SecureField("Password", text: $password)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+            SwitchableSecureField(placeHolder: "Password", secureText: $password)
                 .padding(.bottom, 20)
             
             Button("Login", action: {

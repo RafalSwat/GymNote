@@ -21,6 +21,7 @@
 		07C0B990239FCFBD001632A0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 07C0B98F239FCFBC001632A0 /* GoogleService-Info.plist */; };
 		07C0B996239FF39B001632A0 /* AuthSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B995239FF39B001632A0 /* AuthSessionStore.swift */; };
 		07C0B99823A144DF001632A0 /* KeyboardHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B99723A144DF001632A0 /* KeyboardHost.swift */; };
+		07C0B99C23A273D9001632A0 /* SwitchableSecureField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B99B23A273D9001632A0 /* SwitchableSecureField.swift */; };
 		BF7337E20C488BE8C1E644E0 /* Pods_GymNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D3FB7B1866B8C9808DCF46 /* Pods_GymNote.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		07C0B98F239FCFBC001632A0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		07C0B995239FF39B001632A0 /* AuthSessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSessionStore.swift; sourceTree = "<group>"; };
 		07C0B99723A144DF001632A0 /* KeyboardHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHost.swift; sourceTree = "<group>"; };
+		07C0B99B23A273D9001632A0 /* SwitchableSecureField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchableSecureField.swift; sourceTree = "<group>"; };
 		55D3FB7B1866B8C9808DCF46 /* Pods_GymNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GymNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ECDFB6A0BC11DC7364F8A5E /* Pods-GymNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymNote.release.xcconfig"; path = "Target Support Files/Pods-GymNote/Pods-GymNote.release.xcconfig"; sourceTree = "<group>"; };
 		C04ACA877E46C8716FDC16AC /* Pods-GymNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymNote.debug.xcconfig"; path = "Target Support Files/Pods-GymNote/Pods-GymNote.debug.xcconfig"; sourceTree = "<group>"; };
@@ -86,7 +88,7 @@
 				07C0B986239816EA001632A0 /* WelcomeView.swift */,
 				07C0B98C239930CF001632A0 /* WelcomeSupportingViews */,
 				07C0B98D239A73C8001632A0 /* HomeView.swift */,
-				07C0B99723A144DF001632A0 /* KeyboardHost.swift */,
+				07C0B99D23A2A812001632A0 /* CustomReusableComponents */,
 				07C0B96F2397BE03001632A0 /* Assets.xcassets */,
 				07C0B9742397BE03001632A0 /* LaunchScreen.storyboard */,
 				07C0B9772397BE03001632A0 /* Info.plist */,
@@ -128,6 +130,15 @@
 				07C0B995239FF39B001632A0 /* AuthSessionStore.swift */,
 			);
 			path = FireBaseHandler;
+			sourceTree = "<group>";
+		};
+		07C0B99D23A2A812001632A0 /* CustomReusableComponents */ = {
+			isa = PBXGroup;
+			children = (
+				07C0B99723A144DF001632A0 /* KeyboardHost.swift */,
+				07C0B99B23A273D9001632A0 /* SwitchableSecureField.swift */,
+			);
+			path = CustomReusableComponents;
 			sourceTree = "<group>";
 		};
 		55D4905CEAB96633E2118356 /* Frameworks */ = {
@@ -271,6 +282,7 @@
 				07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */,
 				07C0B98B23992267001632A0 /* SignupView.swift in Sources */,
 				07C0B98E239A73C8001632A0 /* HomeView.swift in Sources */,
+				07C0B99C23A273D9001632A0 /* SwitchableSecureField.swift in Sources */,
 				07C0B96C2397BE00001632A0 /* SceneDelegate.swift in Sources */,
 				07C0B98523981086001632A0 /* UserData.swift in Sources */,
 			);

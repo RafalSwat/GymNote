@@ -24,16 +24,12 @@ struct SignupView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.bottom, 10)
             
-            SecureField("Password", text: $password)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+            SwitchableSecureField(placeHolder: "Password", secureText: $password)
                 .padding(.bottom, 10)
             
-            SecureField("Repeat password", text: $repeatPassword)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+            SwitchableSecureField(placeHolder: "repeat password", secureText: $repeatPassword)
                 .padding(.bottom, 20)
-            
-            
-            
+
             Button("SignUp", action: {
                 if self.isNotEmpty() && self.arePasswordEqual() {
                     self.signUp()
