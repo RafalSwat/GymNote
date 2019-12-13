@@ -11,7 +11,48 @@ import SwiftUI
 struct HomeView: View {
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            VStack {
+                HStack {
+                    
+                    CircleImage()
+                    
+                    VStack {
+                        Text("Jan Kowalski")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                        Text("22.11.2019")
+                        Divider()
+                        Text("Last training:")
+                        Text("20.11.2019")
+                    }
+                }.padding(.horizontal)
+                
+                Button("note training", action:{})
+                    .frame(minWidth: CGFloat(0), maxWidth: .infinity)
+                    .border(Color.gray, width: CGFloat(2))
+                    .cornerRadius(CGFloat(5))
+                    .font(.headline)
+                    .padding()
+                
+                Button("note body measurments", action:{})
+                    .frame(minWidth: CGFloat(0), maxWidth: .infinity)
+                    .border(Color.gray, width: CGFloat(2))
+                    .cornerRadius(CGFloat(5))
+                    .font(.headline)
+                    .padding()
+
+                
+                Button("show stats", action:{})
+                    .frame(minWidth: CGFloat(0), maxWidth: .infinity)
+                    .border(Color.gray, width: CGFloat(2))
+                    .cornerRadius(CGFloat(5))
+                    .font(.headline)
+                    .padding()
+
+            }.navigationBarTitle("Home")
+            
+        }
     }
 }
 

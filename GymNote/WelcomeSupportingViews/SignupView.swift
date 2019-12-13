@@ -22,13 +22,10 @@ struct SignupView: View {
         VStack {
             TextField("Email", text: $email)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.bottom, 10)
             
             SwitchableSecureField(placeHolder: "Password", secureText: $password)
-                .padding(.bottom, 10)
-            
+
             SwitchableSecureField(placeHolder: "repeat password", secureText: $repeatPassword)
-                .padding(.bottom, 20)
 
             Button("SignUp", action: {
                 if self.isNotEmpty() && self.arePasswordEqual() {

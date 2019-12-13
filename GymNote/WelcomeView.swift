@@ -13,28 +13,30 @@ struct WelcomeView: View {
     @State private var isRegistered = false
     
     var body: some View {
-        KeyboardHost {
-            VStack {
-                Text("Welcome!")
-                    .font(.title)
-                    .fontWeight(.medium)
-                Image("staticImage")
+        NavigationView {
+            KeyboardHost {
+                VStack {
 
-                Picker(selection: $isRegistered, label: Text("Welcome")) {
-                    Text("Login").tag(true)
-                    Text("SignUp").tag(false)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.bottom, 20)
-                    
-                if isRegistered {
-                    LoginView()
-                } else {
-                    SignupView()
-                }
-                
-            }.padding()
+                    Image("staticImage")
+                        
+                    Picker(selection: $isRegistered, label: Text("Welcome")) {
+                        Text("Login").tag(true)
+                        Text("SignUp").tag(false)
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding(.bottom, 20)
+                            
+                    if isRegistered {
+                        LoginView()
+                    } else {
+                        SignupView()
+                    }
+                        
+                }.padding()
+            }
+            .navigationBarTitle("Welcome")
         }
+       
     }
         
 }

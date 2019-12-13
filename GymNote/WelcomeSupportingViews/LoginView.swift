@@ -21,11 +21,9 @@ struct LoginView: View {
         VStack {
             TextField("Email", text: $email)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
             
             SwitchableSecureField(placeHolder: "Password", secureText: $password)
-                .padding(.bottom, 20)
-            
+
             Button("Login", action: {
                 if self.isNotEmpty() {
                     self.logIn()

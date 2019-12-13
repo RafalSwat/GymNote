@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		073B917A23A4025800F38F1D /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073B917923A4025800F38F1D /* CircleImage.swift */; };
 		07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B9692397BE00001632A0 /* AppDelegate.swift */; };
 		07C0B96C2397BE00001632A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B96B2397BE00001632A0 /* SceneDelegate.swift */; };
 		07C0B9702397BE03001632A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07C0B96F2397BE03001632A0 /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		073B917923A4025800F38F1D /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
 		07C0B9662397BE00001632A0 /* GymNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07C0B9692397BE00001632A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07C0B96B2397BE00001632A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			children = (
 				07C0B99723A144DF001632A0 /* KeyboardHost.swift */,
 				07C0B99B23A273D9001632A0 /* SwitchableSecureField.swift */,
+				073B917923A4025800F38F1D /* CircleImage.swift */,
 			);
 			path = CustomReusableComponents;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				07C0B98923990D0E001632A0 /* LoginView.swift in Sources */,
 				07C0B987239816EA001632A0 /* WelcomeView.swift in Sources */,
 				07C0B99823A144DF001632A0 /* KeyboardHost.swift in Sources */,
+				073B917A23A4025800F38F1D /* CircleImage.swift in Sources */,
 				07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */,
 				07C0B98B23992267001632A0 /* SignupView.swift in Sources */,
 				07C0B98E239A73C8001632A0 /* HomeView.swift in Sources */,
