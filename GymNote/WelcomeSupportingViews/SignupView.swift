@@ -16,6 +16,7 @@ struct SignupView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var repeatPassword: String = ""
+    @Binding var signUpWithoutError: Bool
     
     //MARK: View
     var body: some View {
@@ -24,19 +25,20 @@ struct SignupView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
             
             SwitchableSecureField(placeHolder: "Password", secureText: $password)
-
+            
             SwitchableSecureField(placeHolder: "repeat password", secureText: $repeatPassword)
-
+            
             Button("SignUp", action: {
                 if self.isNotEmpty() && self.arePasswordEqual() {
                     self.signUp()
                 }
             })
-            .frame(minWidth: CGFloat(0), maxWidth: .infinity)
-            .border(Color.gray, width: CGFloat(2))
-            .cornerRadius(CGFloat(5))
-            .font(.headline)
+                .frame(minWidth: CGFloat(0), maxWidth: .infinity)
+                .border(Color.gray, width: CGFloat(2))
+                .cornerRadius(CGFloat(5))
+                .font(.headline)
         }
+
     }
     
     //MARK: Functions
@@ -72,11 +74,14 @@ struct SignupView: View {
             password: self.password) {(authDataResult, error) in
                 if error != nil {
                     print(error.debugDescription)
+                    self.signUpWithoutError = false
                 } else {
                     self.email = ""
                     self.password = ""
                     self.repeatPassword = ""
+                    self.signUpWithoutError = true
                     print("Registration is completed!")
+                    
                 }
             }
     }
@@ -85,7 +90,9 @@ struct SignupView: View {
 
 
 struct SignupView_Previews: PreviewProvider {
+    @State static var signUpWithoutError: Bool = false
+    
     static var previews: some View {
-        SignupView()
+        SignupView(signUpWithoutError: $signUpWithoutError)
     }
 }

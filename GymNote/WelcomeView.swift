@@ -10,34 +10,40 @@ import SwiftUI
 
 struct WelcomeView: View {
     
+    //MARK: Properties
     @State private var isRegistered = false
+    @State private var noErrorAppear: Bool = false
+
     
+    //MARK: View
     var body: some View {
         NavigationView {
             KeyboardHost {
                 VStack {
-
+                    
                     Image("staticImage")
-                        
+                    
                     Picker(selection: $isRegistered, label: Text("Welcome")) {
                         Text("Login").tag(true)
                         Text("SignUp").tag(false)
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .padding(.bottom, 20)
-                            
+                    
+                    NavigationLink(destination: HomeView(), isActive: self.$noErrorAppear) { Text("") }
+                    
                     if isRegistered {
-                        LoginView()
+                        LoginView(signInWithoutError: $noErrorAppear)
                     } else {
-                        SignupView()
+                        SignupView(signUpWithoutError: $noErrorAppear)
                     }
-                        
+                    
                 }.padding()
             }
-            .navigationBarTitle("Welcome")
+            .navigationBarTitle("Welcome", displayMode: .inline)
         }
-       
     }
+    //MARK: Functions
         
 }
 

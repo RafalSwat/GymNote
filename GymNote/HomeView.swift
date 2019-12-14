@@ -15,7 +15,7 @@ struct HomeView: View {
             VStack {
                 HStack {
                     
-                    CircleImage()
+                    CircleImage(image: Image("staticImage"))
                     
                     VStack {
                         Text("Jan Kowalski")
