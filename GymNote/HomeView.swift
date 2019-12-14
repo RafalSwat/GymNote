@@ -29,28 +29,21 @@ struct HomeView: View {
                 }.padding(.horizontal)
                 
                 Button("note training", action:{})
-                    .frame(minWidth: CGFloat(0), maxWidth: .infinity)
-                    .border(Color.gray, width: CGFloat(2))
-                    .cornerRadius(CGFloat(5))
-                    .font(.headline)
+                    .buttonStyle(RectangularButtonStyle())
                     .padding()
                 
                 Button("note body measurments", action:{})
-                    .frame(minWidth: CGFloat(0), maxWidth: .infinity)
-                    .border(Color.gray, width: CGFloat(2))
-                    .cornerRadius(CGFloat(5))
-                    .font(.headline)
+                    .buttonStyle(RectangularButtonStyle())
                     .padding()
 
                 
                 Button("show stats", action:{})
-                    .frame(minWidth: CGFloat(0), maxWidth: .infinity)
-                    .border(Color.gray, width: CGFloat(2))
-                    .cornerRadius(CGFloat(5))
-                    .font(.headline)
+                    .buttonStyle(RectangularButtonStyle())
                     .padding()
 
-            }.navigationBarTitle("Home")
+            }.navigationBarTitle("Home", displayMode: .inline)
+
+
             
         }
     }

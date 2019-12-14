@@ -23,12 +23,7 @@ struct WelcomeView: View {
                     
                     Image("staticImage")
                     
-                    Picker(selection: $isRegistered, label: Text("Welcome")) {
-                        Text("Login").tag(true)
-                        Text("SignUp").tag(false)
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .padding(.bottom, 20)
+                    ColorfulPicker(selection: $isRegistered)
                     
                     NavigationLink(destination: HomeView(), isActive: self.$noErrorAppear) { Text("") }
                     

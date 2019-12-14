@@ -28,15 +28,15 @@ struct SignupView: View {
             
             SwitchableSecureField(placeHolder: "repeat password", secureText: $repeatPassword)
             
+            
+            
             Button("SignUp", action: {
                 if self.isNotEmpty() && self.arePasswordEqual() {
                     self.signUp()
                 }
             })
-                .frame(minWidth: CGFloat(0), maxWidth: .infinity)
-                .border(Color.gray, width: CGFloat(2))
-                .cornerRadius(CGFloat(5))
-                .font(.headline)
+                .buttonStyle(RectangularButtonStyle())
+                .padding(.top, 15)
         }
 
     }

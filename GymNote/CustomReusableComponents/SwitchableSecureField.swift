@@ -32,8 +32,10 @@ struct SwitchableSecureField: View {
                 }) {
                     if hidePassword {
                         Image(systemName: "eye")
+                            .foregroundColor(.orange)
                     } else {
                         Image(systemName: "eye.slash")
+                            .foregroundColor(.orange)
                     }
                 }.padding()
             }

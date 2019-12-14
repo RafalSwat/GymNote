@@ -30,10 +30,8 @@ struct LoginView: View {
                     self.logIn()
                 }
             })
-            .frame(minWidth: 0, maxWidth: .infinity)
-            .border(Color.gray, width: 2)
-            .cornerRadius(5)
-            .font(.headline)
+                .buttonStyle(RectangularButtonStyle())
+                .padding(.top, 15)
         }
     }
     
