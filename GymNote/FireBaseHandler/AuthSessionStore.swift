@@ -15,7 +15,16 @@ class AuthSessionStore : ObservableObject {
     
     //MARK: Properties
     var didChange = PassthroughSubject<AuthSessionStore, Never>()
-    @Published var session: UserProfile? { didSet { self.didChange.send(self) }}
+    @Published var session: UserProfile? {
+        didSet {
+            self.didChange.send(self)
+        }
+    }
+    @Published var noErrorAppearDuringAuth: Bool = false {
+        didSet {
+            self.didChange.send(self)
+        }
+    }
     var handle: AuthStateDidChangeListenerHandle?
     
     
@@ -44,20 +53,53 @@ class AuthSessionStore : ObservableObject {
         }
     }
 
-    func signUp(
-        email: String,
-        password: String,
-        handler: @escaping AuthDataResultCallback
-        ) {
-        Auth.auth().createUser(withEmail: email, password: password, completion: handler)
+    func signUp(email: String, password: String) {
+        Auth.auth().createUser(withEmail: email, password: password) {
+            (user, error) in
+            
+            if error != nil {
+                self.noErrorAppearDuringAuth = false
+            } else {
+                self.noErrorAppearDuringAuth = true
+            }
+            
+            if user != nil {
+                // show some details from user
+                print("Got a new user: \(email)")
+                
+            } else {
+
+                if let specificError = error?.localizedDescription {
+                    print(specificError)
+                } else {
+                    print("Error:  can`t register!")
+                }
+            }
+        }
     }
 
-    func signIn(
-        email: String,
-        password: String,
-        handler: @escaping AuthDataResultCallback
-        ) {
-        Auth.auth().signIn(withEmail: email, password: password, completion: handler)
+    func signIn(email: String, password: String) {
+        Auth.auth().signIn(withEmail: email, password: password) {
+            (user, error) in
+            
+            if error != nil {
+                self.noErrorAppearDuringAuth = false
+            } else {
+                self.noErrorAppearDuringAuth = true
+            }
+            
+            if user != nil {
+                // show some details from user
+                print("Welcome back: \(email)")
+            } else {
+                if let specificError = error?.localizedDescription {
+                    print(specificError)
+                } else {
+                    print("Error:  can`t login!")
+                }
+            }
+        }
+        
     }
 
     func signOut () -> Bool {

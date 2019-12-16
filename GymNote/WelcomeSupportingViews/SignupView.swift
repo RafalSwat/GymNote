@@ -16,7 +16,6 @@ struct SignupView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var repeatPassword: String = ""
-    @Binding var signUpWithoutError: Bool
     
     //MARK: View
     var body: some View {
@@ -69,30 +68,14 @@ struct SignupView: View {
     }
     
     func signUp() {
-        self.authSession.signUp(
-            email: self.email,
-            password: self.password) {(authDataResult, error) in
-                if error != nil {
-                    print(error.debugDescription)
-                    self.signUpWithoutError = false
-                } else {
-                    self.email = ""
-                    self.password = ""
-                    self.repeatPassword = ""
-                    self.signUpWithoutError = true
-                    print("Registration is completed!")
-                    
-                }
-            }
+        self.authSession.signUp(email: email, password: password)
     }
 }
 
 
 
 struct SignupView_Previews: PreviewProvider {
-    @State static var signUpWithoutError: Bool = false
-    
     static var previews: some View {
-        SignupView(signUpWithoutError: $signUpWithoutError)
+        SignupView()
     }
 }

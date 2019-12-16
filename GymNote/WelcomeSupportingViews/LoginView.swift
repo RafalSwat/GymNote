@@ -15,7 +15,6 @@ struct LoginView: View {
     
     @State private var email: String = ""
     @State private var password: String = ""
-    @Binding var signInWithoutError: Bool
     
     //MARK: View
     var body: some View {
@@ -51,26 +50,12 @@ struct LoginView: View {
     }
     
     func logIn() {
-        self.authSession.signIn(
-            email: self.email,
-            password: self.password) {(authDataResult, error) in
-                if error != nil {
-                    print(error.debugDescription)
-                    self.signInWithoutError = false
-                } else {
-                    self.email = ""
-                    self.password = ""
-                    self.signInWithoutError = true
-                    print("login attempt end with success!")
-                }
-            }
+        self.authSession.signIn(email: email, password: password)
     }
 }
 
 struct LoginView_Previews: PreviewProvider {
-    @State static var signInWithoutError: Bool = false
-    
     static var previews: some View {
-        LoginView(signInWithoutError: $signInWithoutError)
+        LoginView()
     }
 }

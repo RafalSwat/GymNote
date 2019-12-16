@@ -11,9 +11,8 @@ import SwiftUI
 struct WelcomeView: View {
     
     //MARK: Properties
+    @EnvironmentObject var authSession: AuthSessionStore
     @State private var isRegistered = false
-    @State private var noErrorAppear: Bool = false
-
     
     //MARK: View
     var body: some View {
@@ -25,12 +24,12 @@ struct WelcomeView: View {
                     
                     ColorfulPicker(selection: $isRegistered)
                     
-                    NavigationLink(destination: HomeView(), isActive: self.$noErrorAppear) { Text("") }
+                    NavigationLink(destination: HomeView(), isActive: self.$authSession.noErrorAppearDuringAuth) { Text("") }
                     
                     if isRegistered {
-                        LoginView(signInWithoutError: $noErrorAppear)
+                        LoginView()
                     } else {
-                        SignupView(signUpWithoutError: $noErrorAppear)
+                        SignupView()
                     }
                     
                 }.padding()
