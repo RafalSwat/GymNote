@@ -27,6 +27,9 @@ class AuthSessionStore : ObservableObject {
     }
     var handle: AuthStateDidChangeListenerHandle?
     
+    init() {
+        self.session = .default
+    }
     
     //MARK: Functions
     func listen () {
@@ -40,7 +43,7 @@ class AuthSessionStore : ObservableObject {
                 self.session = UserProfile(
                     uID: user.uid,
                     email: user.email!,
-                    name: user.displayName!,
+                    name: user.displayName ?? "",
                     surname: "",
                     gender: .non,
                     profileImage: UIImage(named: "staticImage")!,

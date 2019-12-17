@@ -22,6 +22,7 @@ struct SignupView: View {
         VStack {
             TextField("Email", text: $email)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textContentType(.emailAddress)
             
             SwitchableSecureField(placeHolder: "Password", secureText: $password)
             

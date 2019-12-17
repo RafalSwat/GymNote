@@ -35,15 +35,19 @@ struct WelcomeView: View {
                 }.padding()
             }
             .navigationBarTitle("Welcome", displayMode: .inline)
-        }
+        }.onAppear(perform: getUser)
     }
     //MARK: Functions
-        
+    
+    func getUser() {
+        authSession.listen()
+    }
 }
 
 
 struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
         WelcomeView()
+            .environmentObject(AuthSessionStore())
     }
 }

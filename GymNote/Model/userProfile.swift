@@ -21,17 +21,24 @@ struct UserProfile {
     var userHeight: Double
     
     
-    // default user for test and ect.
+    // default user for preview and ect.
     static let `default` = Self(
-        uID: "",
-        email: "example@some.com",
-        name: "Noname",
+        uID: "0",
+        email: "anonim@domain.com",
+        name: "anonim",
         surname: "",
         gender: .non,
         profileImage: UIImage(named: "staticImage")!,
         height: 170.0)
     
-    init(uID: String, email: String, name: String, surname: String, gender: Gender, profileImage: UIImage, height: Double) {
+    init(uID: String,
+         email: String,
+         name: String,
+         surname: String,
+         gender: Gender,
+         profileImage: UIImage,
+         height: Double) {
+        
         self.userID = uID
         self.userEmail = email
         self.userName = name
@@ -40,9 +47,7 @@ struct UserProfile {
         self.userImage = profileImage
         self.userHeight = height
     }
-    
-    
-    
+
     enum Gender {
         case male, female, non
     }

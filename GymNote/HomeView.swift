@@ -10,6 +10,8 @@ import SwiftUI
 
 struct HomeView: View {
     
+    @EnvironmentObject var authSession: AuthSessionStore
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -18,9 +20,12 @@ struct HomeView: View {
                     CircleImage(image: Image("staticImage"))
                     
                     VStack {
-                        Text("Jan Kowalski")
+                        //Text("Jan Kowalski")
+                        Text("\(authSession.session!.userEmail)")
                             .font(.headline)
                             .fontWeight(.bold)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .lineLimit(3)
                         Text("22.11.2019")
                         Divider()
                         Text("Last training:")
@@ -50,7 +55,15 @@ struct HomeView: View {
 }
 
 struct HomeView_Previews: PreviewProvider {
+    
+    @State static var authSession = AuthSessionStore()
+    
     static var previews: some View {
         HomeView()
+            .environmentObject(authSession)
     }
+
 }
+
+
+
