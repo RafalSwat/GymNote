@@ -43,10 +43,10 @@ class AuthSessionStore : ObservableObject {
                 self.session = UserProfile(
                     uID: user.uid,
                     email: user.email!,
-                    name: user.displayName ?? "",
+                    name: user.displayName ?? "anonim",
                     surname: "",
                     gender: .non,
-                    profileImage: UIImage(named: "staticImage")!,
+                    profileImage: Image("staticImage"),
                     height: 170
                 )
             } else {

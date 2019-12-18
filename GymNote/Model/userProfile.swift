@@ -17,7 +17,7 @@ struct UserProfile {
     var userName: String
     var userSurname: String
     var userGender: Gender
-    var userImage: UIImage
+    var userImage: Image
     var userHeight: Double
     
     
@@ -28,7 +28,7 @@ struct UserProfile {
         name: "anonim",
         surname: "",
         gender: .non,
-        profileImage: UIImage(named: "staticImage")!,
+        profileImage: Image("staticImage"),
         height: 170.0)
     
     init(uID: String,
@@ -36,7 +36,7 @@ struct UserProfile {
          name: String,
          surname: String,
          gender: Gender,
-         profileImage: UIImage,
+         profileImage: Image,
          height: Double) {
         
         self.userID = uID

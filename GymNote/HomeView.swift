@@ -15,23 +15,8 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             VStack {
-                HStack {
-                    
-                    CircleImage(image: Image("staticImage"))
-                    
-                    VStack {
-                        //Text("Jan Kowalski")
-                        Text("\(authSession.session!.userEmail)")
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .lineLimit(3)
-                        Text("22.11.2019")
-                        Divider()
-                        Text("Last training:")
-                        Text("20.11.2019")
-                    }
-                }.padding(.horizontal)
+                
+                TitleBelt(title: authSession.session!.userName, subtitle: authSession.session!.userEmail)
                 
                 Button("note training", action:{})
                     .buttonStyle(RectangularButtonStyle())
@@ -66,4 +51,21 @@ struct HomeView_Previews: PreviewProvider {
 }
 
 
-
+//
+//HStack {
+//
+//    CircleImage(image: authSession.session?.userImage ?? Image("staticImage"))
+//
+//    VStack {
+//        //Text("Jan Kowalski")
+//        Text("\(authSession.session!.userName)")
+//            .font(.headline)
+//            .fontWeight(.bold)
+//            .fixedSize(horizontal: false, vertical: true)
+//            .lineLimit(3)
+//        Text("22.11.2019")
+//        Divider()
+//        Text("Last training:")
+//        Text("20.11.2019")
+//    }
+//}.padding(.horizontal)

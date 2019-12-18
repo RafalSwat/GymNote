@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		073B917A23A4025800F38F1D /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073B917923A4025800F38F1D /* CircleImage.swift */; };
+		073E6C9523AA215800A06E80 /* TitleBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073E6C9423AA215800A06E80 /* TitleBelt.swift */; };
 		0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757023E23A4D89500030991 /* RectangularButtonStyle.swift */; };
 		0757024323A4EAD500030991 /* ColorfulPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757024223A4EAD500030991 /* ColorfulPicker.swift */; };
 		07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B9692397BE00001632A0 /* AppDelegate.swift */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		073B917923A4025800F38F1D /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
+		073E6C9423AA215800A06E80 /* TitleBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBelt.swift; sourceTree = "<group>"; };
 		0757023E23A4D89500030991 /* RectangularButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButtonStyle.swift; sourceTree = "<group>"; };
 		0757024223A4EAD500030991 /* ColorfulPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulPicker.swift; sourceTree = "<group>"; };
 		07C0B9662397BE00001632A0 /* GymNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,6 +145,7 @@
 				073B917923A4025800F38F1D /* CircleImage.swift */,
 				0757023E23A4D89500030991 /* RectangularButtonStyle.swift */,
 				0757024223A4EAD500030991 /* ColorfulPicker.swift */,
+				073E6C9423AA215800A06E80 /* TitleBelt.swift */,
 			);
 			path = CustomReusableComponents;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				07C0B98923990D0E001632A0 /* LoginView.swift in Sources */,
 				07C0B987239816EA001632A0 /* WelcomeView.swift in Sources */,
 				07C0B99823A144DF001632A0 /* KeyboardHost.swift in Sources */,
+				073E6C9523AA215800A06E80 /* TitleBelt.swift in Sources */,
 				073B917A23A4025800F38F1D /* CircleImage.swift in Sources */,
 				07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */,
 				07C0B98B23992267001632A0 /* SignupView.swift in Sources */,
