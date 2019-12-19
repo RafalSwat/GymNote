@@ -49,7 +49,8 @@ class AuthSessionStore : ObservableObject {
                     surname: "",
                     gender: .non,
                     profileImage: Image("staticImage"),
-                    height: 170
+                    height: 170,
+                    dateOfBirth: Date()
                 )
                 if self.session != nil {
                     self.addUser(user: self.session!)
@@ -130,22 +131,23 @@ class AuthSessionStore : ObservableObject {
              "email": user.userEmail,
              "name" : user.userName,
              "surname" : user.userSurname,
-             //"gender" : user.userGender,
+             //FIXME: return to enums, avoid hardcoded strings! do Image stuff! do Age stuff!!
+                //"gender" : user.userGender,
                 "gender" : "non",
-             "height" : user.userHeight]) {
-                
-                (error, reference) in
-                
-                if error != nil {
-                    if let specificError = error?.localizedDescription {
-                        print(specificError)
-                    } else {
-                        print("Error:  can`t login!")
+                "height" : user.userHeight]) {
+                    
+                    (error, reference) in
+                    
+                    if error != nil {
+                        if let specificError = error?.localizedDescription {
+                            print(specificError)
+                        } else {
+                            print("Error:  can`t login!")
+                        }
                     }
-                }
         }
     }
-                
+    
     //not sure if there is any need to this function
     func unbind () {
         if let handle = handle {

@@ -9,15 +9,19 @@
 import SwiftUI
 
 struct ProfileView: View {
+    var profile: UserProfile
+     
     var body: some View {
         NavigationView {
             VStack {
-                CircleImage(image: Image("staticImage"))
+                CircleImage(image: profile.userImage)
                     .padding()
                 List {
-                    ForEach(0 ..< 5) { number in
-                        Text("Row \(number)")
-                    }
+                    Text(profile.userName)
+                    Text(profile.userSurname)
+                    Text(profile.userEmail)
+                    //Text("\(profile.userGender)")
+                    Text("\(profile.userHeight)")
                 }.navigationBarTitle("Profile", displayMode: .inline)
             }
         }
@@ -27,6 +31,6 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        ProfileView(profile: UserProfile.default)
     }
 }
