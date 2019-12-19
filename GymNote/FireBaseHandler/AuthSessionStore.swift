@@ -25,6 +25,8 @@ class AuthSessionStore : ObservableObject {
             self.didChange.send(self)
         }
     }
+    @Published var usersDBRef = Database.database().reference().child("Users")
+    
     var handle: AuthStateDidChangeListenerHandle?
     
     init() {
@@ -49,6 +51,13 @@ class AuthSessionStore : ObservableObject {
                     profileImage: Image("staticImage"),
                     height: 170
                 )
+                if self.session != nil {
+                    self.addUser(user: self.session!)
+                } else {
+                    print("Something dont work! --> Problem with add a new user during listen")
+                }
+                
+                
             } else {
                 // if we don't have a user, set our session to nil
                 self.session = nil
@@ -115,6 +124,28 @@ class AuthSessionStore : ObservableObject {
         }
     }
     
+    func addUser(user: UserProfile) {
+        usersDBRef.child(user.userID).child("Profile").setValue(
+            ["userID" : user.userID,
+             "email": user.userEmail,
+             "name" : user.userName,
+             "surname" : user.userSurname,
+             //"gender" : user.userGender,
+                "gender" : "non",
+             "height" : user.userHeight]) {
+                
+                (error, reference) in
+                
+                if error != nil {
+                    if let specificError = error?.localizedDescription {
+                        print(specificError)
+                    } else {
+                        print("Error:  can`t login!")
+                    }
+                }
+        }
+    }
+                
     //not sure if there is any need to this function
     func unbind () {
         if let handle = handle {

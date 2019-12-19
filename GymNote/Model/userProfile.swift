@@ -48,7 +48,7 @@ struct UserProfile {
         self.userHeight = height
     }
 
-    enum Gender {
-        case male, female, non
+    enum Gender: String {
+        case male = "male", female = "female", non = "non"
     }
 }

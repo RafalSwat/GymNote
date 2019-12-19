@@ -27,9 +27,7 @@ struct SignupView: View {
             SwitchableSecureField(placeHolder: "Password", secureText: $password)
             
             SwitchableSecureField(placeHolder: "repeat password", secureText: $repeatPassword)
-            
-            
-            
+
             Button("SignUp", action: {
                 if self.isNotEmpty() && self.arePasswordEqual() {
                     self.signUp()
