@@ -34,8 +34,7 @@ struct TitleBelt: View {
                 Text(subtitle)
                     .font(.subheadline)
             }.offset(x: UIScreen.main.bounds.width/4)
-            
-        }
+        }.padding(.bottom, 50)
     }
 }
 
