@@ -10,21 +10,23 @@ import SwiftUI
 
 struct ProfileView: View {
     var profile: UserProfile
-     
+    
     var body: some View {
-        NavigationView {
-            VStack {
-                CircleImage(image: profile.userImage)
-                    .padding()
-                List {
-                    Text(profile.userName)
-                    Text(profile.userSurname)
-                    Text(profile.userEmail)
-                    //Text("\(profile.userGender)")
-                    Text("\(profile.userHeight)")
-                }.navigationBarTitle("Profile", displayMode: .inline)
+        VStack {
+            CircleImage(image: profile.userImage)
+                .padding()
+            List {
+                Text(profile.userName)
+                Text(profile.userSurname)
+                Text(profile.userEmail)
+                //Text("\(profile.userGender)")
+                Text("\(profile.userHeight)")
             }
+            .navigationBarTitle("Profile", displayMode: .inline)
+            .navigationBarItems(leading: BackButton())
+            
         }
+        
         
     }
 }

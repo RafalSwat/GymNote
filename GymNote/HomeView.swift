@@ -42,10 +42,12 @@ struct HomeView: View {
                     .padding()
             }
             
-        }.navigationBarTitle("Home", displayMode: .inline)
-            .navigationBarItems(trailing:
-                ProfileButton(profile: authSession.session!))
-
+        }
+        .navigationBarTitle("Home", displayMode: .inline)
+        .navigationBarItems(
+            leading: BackButton(),
+            trailing: ProfileButton(profile: authSession.session!)
+        )
     }
 }
 
