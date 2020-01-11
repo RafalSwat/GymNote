@@ -10,6 +10,7 @@
 		0727887123AA473500092E24 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0727887023AA473500092E24 /* ProfileView.swift */; };
 		0736F9DB23CA395F00626599 /* CustomEditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0736F9DA23CA395F00626599 /* CustomEditButton.swift */; };
 		0736F9DD23CA3F0C00626599 /* ChangeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0736F9DC23CA3F0C00626599 /* ChangeButton.swift */; };
+		0736F9DF23CA4CBA00626599 /* DoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0736F9DE23CA4CBA00626599 /* DoneButton.swift */; };
 		073B917A23A4025800F38F1D /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073B917923A4025800F38F1D /* CircleImage.swift */; };
 		073E6C9523AA215800A06E80 /* TitleBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073E6C9423AA215800A06E80 /* TitleBelt.swift */; };
 		0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757023E23A4D89500030991 /* RectangularButtonStyle.swift */; };
@@ -40,6 +41,7 @@
 		0727887023AA473500092E24 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		0736F9DA23CA395F00626599 /* CustomEditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEditButton.swift; sourceTree = "<group>"; };
 		0736F9DC23CA3F0C00626599 /* ChangeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeButton.swift; sourceTree = "<group>"; };
+		0736F9DE23CA4CBA00626599 /* DoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneButton.swift; sourceTree = "<group>"; };
 		073B917923A4025800F38F1D /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
 		073E6C9423AA215800A06E80 /* TitleBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBelt.swift; sourceTree = "<group>"; };
 		0757023E23A4D89500030991 /* RectangularButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButtonStyle.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				07A8D3FE23AD44E70051D493 /* BackButton.swift */,
 				0736F9DA23CA395F00626599 /* CustomEditButton.swift */,
 				0736F9DC23CA3F0C00626599 /* ChangeButton.swift */,
+				0736F9DE23CA4CBA00626599 /* DoneButton.swift */,
 			);
 			path = CustomReusableComponents;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0736F9DF23CA4CBA00626599 /* DoneButton.swift in Sources */,
 				07C0B9832397DE58001632A0 /* UserProfile.swift in Sources */,
 				077ECD4123B0F020005A1B76 /* ProfileEditView.swift in Sources */,
 				07C0B996239FF39B001632A0 /* AuthSessionStore.swift in Sources */,

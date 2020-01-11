@@ -21,7 +21,6 @@ struct ProfileEditView: View {
                 ChangeButton()
                     .offset(x: 40, y: 50)
                     .scaleEffect(1.7)
-
             }
             Text("\(profile.userName) \(profile.userSurname)")
                 .font(.title)
@@ -65,6 +64,12 @@ struct ProfileEditView: View {
                     }
                 }
             }
+            .navigationBarTitle("Edit Profile", displayMode: .inline)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(
+                leading: BackButton(),
+                trailing: DoneButton()
+            )
         }
     }
 
@@ -75,6 +80,9 @@ struct ProfileEditView_Previews: PreviewProvider {
     @State static var profile = UserProfile.default
     
     static var previews: some View {
-        ProfileEditView(profile: $profile)
+        NavigationView {
+            ProfileEditView(profile: $profile)
+        }
+        
     }
 }
