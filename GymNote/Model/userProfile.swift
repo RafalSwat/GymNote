@@ -26,8 +26,8 @@ struct UserProfile {
     static let `default` = Self(
         uID: "0",
         email: "anonim@domain.com",
-        name: "anonim",
-        surname: "",
+        name: "Anonim",
+        surname: "non",
         gender: .non,
         profileImage: Image("staticImage"),
         height: 170.0,
@@ -53,7 +53,10 @@ struct UserProfile {
         self.dateOfBirth = Date()
     }
 
-    enum Gender: String, CaseIterable {
+    enum Gender: String {
+        
         case male = "male", female = "female", non = "non"
+
     }
+
 }
