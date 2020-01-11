@@ -14,9 +14,15 @@ struct ProfileEditView: View {
     
     var body: some View {
         VStack {
-            CircleImage(image: profile.userImage)
-                .padding(.top, 50)
-                .padding(.bottom, 15)
+            ZStack {
+                CircleImage(image: profile.userImage)
+                    .padding(.top, 50)
+                    .padding(.bottom, 15)
+                ChangeButton()
+                    .offset(x: 40, y: 50)
+                    .scaleEffect(1.7)
+
+            }
             Text("\(profile.userName) \(profile.userSurname)")
                 .font(.title)
             

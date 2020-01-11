@@ -64,7 +64,6 @@ struct ProfileView: View {
             }.listStyle(GroupedListStyle())
             .navigationBarTitle("Profile", displayMode: .inline)
             .navigationBarBackButtonHidden(true)
-            //FIXME: there is a problem with second button, dont appear (they do appear on real device so the problem must by on previews)
             .navigationBarItems(
                 leading: BackButton(),
                 trailing: CustomEditButton()
