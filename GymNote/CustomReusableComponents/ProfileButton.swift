@@ -27,7 +27,10 @@ struct ProfileButton: View {
 }
 
 struct ProfileButton_Previews: PreviewProvider {
+    
+    @State static var prevProfile = UserProfile.default
+    
     static var previews: some View {
-        ProfileButton(profile: UserProfile.default)
+        ProfileButton(profile: prevProfile)
     }
 }

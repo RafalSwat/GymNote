@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    var profile: UserProfile
+    @State var profile: UserProfile
     
     static let dateFormat: DateFormatter = {
         let formatter = DateFormatter()
@@ -41,7 +41,7 @@ struct ProfileView: View {
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                         Spacer()
-                        Text("\(profile.userHeight, specifier: "%.f") cm")
+                        Text("\(profile.userHeight) cm")
                     }
                     HStack {
                         Text("Gender:")
@@ -66,7 +66,7 @@ struct ProfileView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(
                 leading: BackButton(),
-                trailing: CustomEditButton()
+                trailing: CustomEditButton(profile: $profile)
             )
         }
         
@@ -75,9 +75,12 @@ struct ProfileView: View {
 }
 
 struct ProfileView_Previews: PreviewProvider {
+    
+    @State static var prevProfile = UserProfile.default
+    
     static var previews: some View {
         NavigationView {
-            ProfileView(profile: UserProfile.default)
+            ProfileView(profile: prevProfile)
         }
         
     }

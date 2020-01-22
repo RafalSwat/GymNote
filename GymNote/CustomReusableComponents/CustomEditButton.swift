@@ -10,24 +10,27 @@ import SwiftUI
 
 struct CustomEditButton: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
-    
     var editsButtonImage: Image = Image(systemName: "pencil.circle")
-
-    var body: some View {
+    @Binding var profile: UserProfile
     
-        Button(action: {
-            print("edit button tapped!")
-        }) {
+    var body: some View {
+        
+        
+        NavigationLink(destination: ProfileEditView(profile: $profile)) {
             self.editsButtonImage
                 .font(.largeTitle)
-                .foregroundColor(colorScheme == .light ? .black : .secondary)
+                .foregroundColor(
+                    colorScheme == .light ? .black : .secondary
+            )
         }
     }
-    
 }
 
 struct CustomEditButton_Previews: PreviewProvider {
+    
+    @State static var prevProfile = UserProfile.default
+    
     static var previews: some View {
-        CustomEditButton()
+        CustomEditButton(profile: $prevProfile)
     }
 }

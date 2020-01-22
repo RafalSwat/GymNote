@@ -12,6 +12,11 @@ struct ProfileEditView: View {
     
     @Binding var profile: UserProfile
     
+    //Array only for pick the height and gender of a user
+    var userPossibleHeight = Array(40...250)
+    var userPossibleGender = ["male", "female", "non"]
+    
+    
     var body: some View {
         VStack {
             ZStack {
@@ -40,28 +45,35 @@ struct ProfileEditView: View {
                             .foregroundColor(.secondary)
                         Spacer()
                         TextField("Enter your surname: ", text: $profile.userSurname)
+                    }}
+                Section(header: Text("Height")) {
+                    Picker(
+                        selection: $profile.userHeight,
+                        label: Text("")) {
+                            ForEach(0 ..< userPossibleHeight.count) {              Text("\(self.userPossibleHeight[$0]) cm")
+                            }
+                        }.pickerStyle(WheelPickerStyle())
+                    
+                    
+                }
+                Section(header: Text("Gender")) {
+                    Picker(
+                        selection: $profile.userGender,
+                        label: Text("")) {
+                            ForEach(0 ..< userPossibleGender.count) {             Text("\(self.userPossibleGender[$0])")
+                            }
+                    }.pickerStyle(SegmentedPickerStyle())
+                        .padding(.vertical)
+                    
+                }
+                Section(header: Text("Date of birth")) {
+                    DatePicker(
+                        selection: $profile.dateOfBirth,
+                        in: ...Date(),
+                        displayedComponents: .date) {
+                            Text("")
                     }
-                    HStack {
-                        Text("Height:")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        Text("\(profile.userHeight, specifier: "%.f") cm")
-                    }
-                    HStack {
-                        Text("Gender:")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        Text("non")
-                    }
-                    HStack {
-                        Text("Date of birth:")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        Text("\(ProfileView.dateFormat.string(from: profile.dateOfBirth))")
-                    }
+
                 }
             }
             .navigationBarTitle("Edit Profile", displayMode: .inline)
