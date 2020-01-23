@@ -40,7 +40,7 @@ struct KeyboardHost<Content: View>: View {
                 .padding(.bottom, keyboardHeight)
                 .animation(.default)
         }.onReceive(showPublisher.merge(with: hidePublisher)) {
-            (height) in self.keyboardHeight = height + 100
+            (height) in self.keyboardHeight = height + 150
         }
     }
 }
