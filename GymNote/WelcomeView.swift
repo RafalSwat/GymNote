@@ -33,8 +33,7 @@ struct WelcomeView: View {
                     }
                     
                 }.padding()
-            }
-            .navigationBarTitle("Welcome", displayMode: .inline)
+            }.navigationBarTitle("Welcome", displayMode: .inline)
         }.onAppear(perform: getUser)
     }
     //MARK: Functions
