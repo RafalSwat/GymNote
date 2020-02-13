@@ -11,12 +11,16 @@ import SwiftUI
 
 struct DoneButton: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @Binding var isDone: Bool
     
     var changesButtonImage: Image = Image(systemName: "checkmark.circle")
 
     var body: some View {
         
         Button(action: {
+            
+            self.isDone.toggle()
+            
             print("done button tapped!")
         }) {
             self.changesButtonImage
@@ -27,7 +31,10 @@ struct DoneButton: View {
 }
 
 struct DoneButton_Previews: PreviewProvider {
+    
+    @State static var prevIsDone: Bool = false
+    
     static var previews: some View {
-        DoneButton()
+        DoneButton(isDone: $prevIsDone)
     }
 }

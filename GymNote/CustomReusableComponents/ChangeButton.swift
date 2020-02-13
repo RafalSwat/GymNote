@@ -10,13 +10,14 @@ import SwiftUI
 
 struct ChangeButton: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @Binding var isChanged: Bool
     
     var changesButtonImage: Image = Image(systemName: "arrow.right.arrow.left.circle.fill")
 
     var body: some View {
         
         Button(action: {
-            print("change button tapped!")
+            self.isChanged.toggle()
         }) {
             self.changesButtonImage
                 .font(.largeTitle)
@@ -26,7 +27,10 @@ struct ChangeButton: View {
 }
 
 struct ChangeButton_Previews: PreviewProvider {
+    
+    @State static var prevIsChanged = false
+    
     static var previews: some View {
-        ChangeButton()
+        ChangeButton(isChanged: $prevIsChanged)
     }
 }

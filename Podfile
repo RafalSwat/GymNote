@@ -11,6 +11,6 @@ target 'GymNote' do
     pod 'Firebase/Analytics'
     pod 'Firebase/Auth'
     pod 'Firebase/Database'
-
+    pod 'GoogleAppMeasurement', '~> 5.2.0'
 
 end

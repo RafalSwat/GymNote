@@ -11,6 +11,9 @@ import SwiftUI
 struct ProfileEditView: View {
     
     @Binding var profile: UserProfile
+    @State var doneUpdating = false
+    @State var doneChangingPhoto = false
+    
     //Array only for pick the height and gender of a user
     var userPossibleHeight = Array(40...250)
     var userPossibleGender = ["male", "female", "non"]
@@ -28,7 +31,7 @@ struct ProfileEditView: View {
                                 CircleImage(image: profile.userImage)
                                     .padding(.top, 50)
                                     .padding(.bottom, 15)
-                                ChangeButton()
+                                ChangeButton(isChanged: $doneChangingPhoto)
                                     .offset(x: 40, y: 50)
                                     .scaleEffect(1.7)
                             }
@@ -91,10 +94,14 @@ struct ProfileEditView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(
                 leading: BackButton(),
-                trailing: DoneButton()
+                trailing: DoneButton(isDone: $doneUpdating)
             )
+            if (doneChangingPhoto) {
+                CaptureImageView(isShown: $doneChangingPhoto, image: $profile.userImage)
+            }
         }
     }
+    
 }
 
 struct ProfileEditView_Previews: PreviewProvider {
