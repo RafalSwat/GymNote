@@ -21,86 +21,108 @@ struct ProfileEditView: View {
     
     var body: some View {
         KeyboardHost {
-            List {
-                Section(header: Text("Profile picture")) {
-                    HStack{
-                        Spacer()
-                        VStack {
-                            ZStack {
-                                
-                                CircleImage(image: profile.userImage)
-                                    .padding(.top, 50)
-                                    .padding(.bottom, 15)
-                                ChangeButton(isChanged: $doneChangingPhoto)
-                                    .offset(x: 40, y: 50)
-                                    .scaleEffect(1.7)
+            ZStack {
+                List {
+                    Section(header: Text("Profile picture")) {
+                        HStack{
+                            Spacer()
+                            VStack {
+                                ZStack {
+                                    
+                                    CircleImage(image: profile.userImage)
+                                        .padding(.top, 50)
+                                        .padding(.bottom, 15)
+                                    ChangeButton(isChanged: $doneChangingPhoto)
+                                        .offset(x: 40, y: 50)
+                                        .scaleEffect(1.7)
+                                }
+                                Text("\(profile.userName) \(profile.userSurname)")
+                                    .font(.title)
                             }
-                            Text("\(profile.userName) \(profile.userSurname)")
-                                .font(.title)
+                            Spacer()
                         }
-                        Spacer()
+                    }
+                    
+                    Section(header: Text("Basic info")) {
+                        HStack {
+                            Text("Name:")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                            Spacer()
+                            TextField("Enter your name: ", text: $profile.userName)
+                        }
+                        HStack {
+                            Text("Surname: ")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                            Spacer()
+                            TextField("Enter your surname: ", text: $profile.userSurname)
+                        }}
+                    Section(header: Text("Height")) {
+                        Picker(
+                            selection: $profile.userHeight,
+                            label: Text("")) {
+                                ForEach(0 ..< userPossibleHeight.count) {
+                                    //FIXME: "-40" because for unknown reasons, the picker chooses a number that is exactly 40 different
+                                    Text("\(self.userPossibleHeight[$0] - 40) cm")
+                                }
+                        }.pickerStyle(WheelPickerStyle())
+                        
+                        
+                    }
+                    Section(header: Text("Gender")) {
+                        Picker(
+                            selection: $profile.userGender,
+                            label: Text("")) {
+                                ForEach(0 ..< userPossibleGender.count) {             Text("\(self.userPossibleGender[$0])")
+                                }
+                        }.pickerStyle(SegmentedPickerStyle())
+                            .padding(.vertical)
+                        
+                    }
+                    Section(header: Text("Date of birth")) {
+                        DatePicker(
+                            selection: $profile.dateOfBirth,
+                            in: ...Date(),
+                            displayedComponents: .date) {
+                                Text("")
+                        }
+                        
+                    }
+                }
+                    
+                    
+                    
+                .navigationBarTitle("Edit Profile", displayMode: .inline)
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(
+                    leading: BackButton(),
+                    trailing: DoneButton(isDone: $doneUpdating)
+                )
+                if (doneUpdating) {
+                    ZStack {
+                        Color.black.opacity(0.4)
+                            .edgesIgnoringSafeArea(.vertical)
+                        GeometryReader { geometry in
+                            DoneConformAlert(showAlert: self.$doneUpdating, alertTitle: "T", alertMessage: "MESS", alertAction: {
+                                //TODO: updating stuff!
+                                self.doneUpdating.toggle()
+                            })
+                            .padding()
+                            .position(x: geometry.size.width/2, y: geometry.size.height/2)
+                        }
                     }
                 }
                 
-                Section(header: Text("Basic info")) {
-                    HStack {
-                        Text("Name:")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        TextField("Enter your name: ", text: $profile.userName)
-                    }
-                    HStack {
-                        Text("Surname: ")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        TextField("Enter your surname: ", text: $profile.userSurname)
-                    }}
-                Section(header: Text("Height")) {
-                    Picker(
-                        selection: $profile.userHeight,
-                        label: Text("")) {
-                            ForEach(0 ..< userPossibleHeight.count) {              Text("\(self.userPossibleHeight[$0]) cm")
-                            }
-                    }.pickerStyle(WheelPickerStyle())
-                    
-                    
+                if (doneChangingPhoto) {
+                    CaptureImageView(isShown: $doneChangingPhoto, image: $profile.userImage)
                 }
-                Section(header: Text("Gender")) {
-                    Picker(
-                        selection: $profile.userGender,
-                        label: Text("")) {
-                            ForEach(0 ..< userPossibleGender.count) {             Text("\(self.userPossibleGender[$0])")
-                            }
-                    }.pickerStyle(SegmentedPickerStyle())
-                        .padding(.vertical)
-                    
-                }
-                Section(header: Text("Date of birth")) {
-                    DatePicker(
-                        selection: $profile.dateOfBirth,
-                        in: ...Date(),
-                        displayedComponents: .date) {
-                            Text("")
-                    }
-                    
-                }
+                
             }
-                
-                
-                
-            .navigationBarTitle("Edit Profile", displayMode: .inline)
-            .navigationBarBackButtonHidden(true)
-            .navigationBarItems(
-                leading: BackButton(),
-                trailing: DoneButton(isDone: $doneUpdating)
-            )
-            if (doneChangingPhoto) {
-                CaptureImageView(isShown: $doneChangingPhoto, image: $profile.userImage)
-            }
+            
         }
     }
+    
     
 }
 
