@@ -13,6 +13,7 @@ struct ProfileEditView: View {
     @Binding var profile: UserProfile
     @State var doneUpdating = false
     @State var doneChangingPhoto = false
+    @State var tempUserProfile = UserProfile.default
     
     //Array only for pick the height and gender of a user
     var userPossibleHeight = Array(40...250)
@@ -20,6 +21,7 @@ struct ProfileEditView: View {
     
     
     var body: some View {
+        
         KeyboardHost {
             ZStack {
                 List {
@@ -29,14 +31,14 @@ struct ProfileEditView: View {
                             VStack {
                                 ZStack {
                                     
-                                    CircleImage(image: profile.userImage)
+                                    CircleImage(image: tempUserProfile.userImage)
                                         .padding(.top, 50)
                                         .padding(.bottom, 15)
                                     ChangeButton(isChanged: $doneChangingPhoto)
                                         .offset(x: 40, y: 50)
                                         .scaleEffect(1.7)
                                 }
-                                Text("\(profile.userName) \(profile.userSurname)")
+                                Text("\(tempUserProfile.userName) \(tempUserProfile.userSurname)")
                                     .font(.title)
                             }
                             Spacer()
@@ -49,18 +51,18 @@ struct ProfileEditView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             Spacer()
-                            TextField("Enter your name: ", text: $profile.userName)
+                            TextField("Enter your name: ", text: $tempUserProfile.userName)
                         }
                         HStack {
                             Text("Surname: ")
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             Spacer()
-                            TextField("Enter your surname: ", text: $profile.userSurname)
+                            TextField("Enter your surname: ", text: $tempUserProfile.userSurname)
                         }}
                     Section(header: Text("Height")) {
                         Picker(
-                            selection: $profile.userHeight,
+                            selection: $tempUserProfile.userHeight,
                             label: Text("")) {
                                 ForEach(0 ..< userPossibleHeight.count) {
                                     //FIXME: "-40" because for unknown reasons, the picker chooses a number that is exactly 40 different
@@ -72,7 +74,7 @@ struct ProfileEditView: View {
                     }
                     Section(header: Text("Gender")) {
                         Picker(
-                            selection: $profile.userGender,
+                            selection: $tempUserProfile.userGender,
                             label: Text("")) {
                                 ForEach(0 ..< userPossibleGender.count) {             Text("\(self.userPossibleGender[$0])")
                                 }
@@ -82,7 +84,7 @@ struct ProfileEditView: View {
                     }
                     Section(header: Text("Date of birth")) {
                         DatePicker(
-                            selection: $profile.dateOfBirth,
+                            selection: $tempUserProfile.dateOfBirth,
                             in: ...Date(),
                             displayedComponents: .date) {
                                 Text("")
@@ -104,9 +106,11 @@ struct ProfileEditView: View {
                         Color.black.opacity(0.4)
                             .edgesIgnoringSafeArea(.vertical)
                         GeometryReader { geometry in
-                            DoneConformAlert(showAlert: self.$doneUpdating, alertTitle: "T", alertMessage: "MESS", alertAction: {
+                            DoneConformAlert(showAlert: self.$doneUpdating, alertTitle: "", alertMessage: "MESS", alertAction: {
                                 //TODO: updating stuff!
+                                self.updateOfflineData()
                                 self.doneUpdating.toggle()
+                                
                             })
                             .padding()
                             .position(x: geometry.size.width/2, y: geometry.size.height/2)
@@ -117,12 +121,21 @@ struct ProfileEditView: View {
                 if (doneChangingPhoto) {
                     CaptureImageView(isShown: $doneChangingPhoto, image: $profile.userImage)
                 }
-                
             }
             
+      }
+        .onAppear {
+            self.tempUserProfile = self.profile
         }
     }
-    
+    func updateOfflineData() {
+        self.profile.userImage = self.tempUserProfile.userImage
+        self.profile.userName =  self.tempUserProfile.userName
+        self.profile.userSurname = self.tempUserProfile.userSurname
+        self.profile.userHeight = self.tempUserProfile.userHeight
+        self.profile.userGender = self.tempUserProfile.userGender
+        self.profile.dateOfBirth = self.tempUserProfile.dateOfBirth
+    }
     
 }
 
