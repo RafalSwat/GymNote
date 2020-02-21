@@ -47,10 +47,10 @@ class AuthSessionStore : ObservableObject {
                     email: user.email!,
                     name: user.displayName ?? "Anonim",
                     surname: "Non",
-                    gender: .non,
+                    gender: "non",
                     profileImage: Image("staticImage"),
                     height: 170,
-                    dateOfBirth: Date()
+                    userDateOfBirth: Date()
                 )
                 if self.session != nil {
                     self.addUser(user: self.session!)
@@ -131,8 +131,8 @@ class AuthSessionStore : ObservableObject {
              "email": user.userEmail,
              "name" : user.userName,
              "surname" : user.userSurname,
+             "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
              //FIXME: return to enums, avoid hardcoded strings! do Image stuff! do Age stuff!!
-                //"gender" : user.userGender,
                 "gender" : "non",
                 "height" : user.userHeight]) {
                     

@@ -11,15 +11,9 @@ import SwiftUI
 struct HomeView: View {
     
     @EnvironmentObject var authSession: AuthSessionStore
+
     
-    static let dateFormat: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        return formatter
-    }()
-    
-    let dataString = dateFormat.string(from: Date())
+    let dataString = DateConverter.dateFormat.string(from: Date())
     
     var body: some View {
         VStack {

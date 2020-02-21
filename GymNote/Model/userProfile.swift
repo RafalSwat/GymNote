@@ -16,10 +16,10 @@ struct UserProfile {
     var userEmail: String
     var userName: String
     var userSurname: String
-    var userGender: Gender
+    var userGender: String
     var userImage: Image
     var userHeight: Int
-    var dateOfBirth: Date
+    var userDateOfBirth: Date
     
     
     // default user for preview and ect.
@@ -28,20 +28,20 @@ struct UserProfile {
         email: "anonim@domain.com",
         name: "Anonim",
         surname: "non",
-        gender: .non,
+        gender: "non",
         profileImage: Image("staticImage"),
         height: 170,
-        dateOfBirth: Date()
+        userDateOfBirth: Date()
     )
     
     init(uID: String,
          email: String,
          name: String,
          surname: String,
-         gender: Gender,
+         gender: String,
          profileImage: Image,
          height: Int,
-         dateOfBirth: Date) {
+         userDateOfBirth: Date) {
         
         self.userID = uID
         self.userEmail = email
@@ -50,13 +50,7 @@ struct UserProfile {
         self.userGender = gender
         self.userImage = profileImage
         self.userHeight = height
-        self.dateOfBirth = Date()
-    }
-
-    enum Gender: String {
-        
-        case male = "male", female = "female", non = "non"
-
+        self.userDateOfBirth = Date()
     }
 
 }

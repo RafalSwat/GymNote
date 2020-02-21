@@ -11,14 +11,7 @@ import SwiftUI
 struct ProfileView: View {
     
     @State var profile: UserProfile
-    
-    static let dateFormat: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        return formatter
-    }()
-    
+        
     var body: some View {
         VStack {
             
@@ -55,7 +48,7 @@ struct ProfileView: View {
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                         Spacer()
-                        Text("\(ProfileView.dateFormat.string(from: profile.dateOfBirth))")
+                        Text("\(DateConverter.dateFormat.string(from: profile.userDateOfBirth))")
                     }
                 }
                 Section(header: Text("Training level")) {

@@ -84,7 +84,7 @@ struct ProfileEditView: View {
                     }
                     Section(header: Text("Date of birth")) {
                         DatePicker(
-                            selection: $tempUserProfile.dateOfBirth,
+                            selection: $tempUserProfile.userDateOfBirth,
                             in: ...Date(),
                             displayedComponents: .date) {
                                 Text("")
@@ -134,7 +134,7 @@ struct ProfileEditView: View {
         self.profile.userSurname = self.tempUserProfile.userSurname
         self.profile.userHeight = self.tempUserProfile.userHeight
         self.profile.userGender = self.tempUserProfile.userGender
-        self.profile.dateOfBirth = self.tempUserProfile.dateOfBirth
+        self.profile.userDateOfBirth = self.tempUserProfile.userDateOfBirth
     }
     
 }

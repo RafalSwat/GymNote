@@ -19,6 +19,7 @@
 		073F482923F5604C003011F0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073F482823F5604C003011F0 /* Coordinator.swift */; };
 		0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757023E23A4D89500030991 /* RectangularButtonStyle.swift */; };
 		0757024323A4EAD500030991 /* ColorfulPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757024223A4EAD500030991 /* ColorfulPicker.swift */; };
+		075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F223FF19ED006613A2 /* DateConverter.swift */; };
 		077ECD4123B0F020005A1B76 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECD4023B0F020005A1B76 /* ProfileEditView.swift */; };
 		077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECD4223B0F4A1005A1B76 /* UserData.swift */; };
 		07A8D3FD23AD338B0051D493 /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A8D3FC23AD338B0051D493 /* ProfileButton.swift */; };
@@ -52,6 +53,7 @@
 		073F482823F5604C003011F0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		0757023E23A4D89500030991 /* RectangularButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButtonStyle.swift; sourceTree = "<group>"; };
 		0757024223A4EAD500030991 /* ColorfulPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulPicker.swift; sourceTree = "<group>"; };
+		075A31F223FF19ED006613A2 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		077ECD4023B0F020005A1B76 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		077ECD4223B0F4A1005A1B76 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		07A8D3FC23AD338B0051D493 /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				0736F9DC23CA3F0C00626599 /* ChangeButton.swift */,
 				0736F9DE23CA4CBA00626599 /* DoneButton.swift */,
 				0720992023F7417E00B75CF5 /* DoneConformAlert.swift */,
+				075A31F223FF19ED006613A2 /* DateConverter.swift */,
 			);
 			path = CustomReusableComponents;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				073B917A23A4025800F38F1D /* CircleImage.swift in Sources */,
 				0727887123AA473500092E24 /* ProfileView.swift in Sources */,
 				07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */,
+				075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */,
 				07C0B98B23992267001632A0 /* SignupView.swift in Sources */,
 				0736F9DB23CA395F00626599 /* CustomEditButton.swift in Sources */,
 				0720992123F7417E00B75CF5 /* DoneConformAlert.swift in Sources */,
