@@ -65,7 +65,7 @@ class AuthSessionStore : ObservableObject {
             }
         }
     }
-
+    
     func signUp(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) {
             (user, error) in
@@ -81,7 +81,7 @@ class AuthSessionStore : ObservableObject {
                 print("Got a new user: \(email)")
                 
             } else {
-
+                
                 if let specificError = error?.localizedDescription {
                     print(specificError)
                 } else {
@@ -90,7 +90,7 @@ class AuthSessionStore : ObservableObject {
             }
         }
     }
-
+    
     func signIn(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) {
             (user, error) in
@@ -114,7 +114,7 @@ class AuthSessionStore : ObservableObject {
         }
         
     }
-
+    
     func signOut () -> Bool {
         do {
             try Auth.auth().signOut()
@@ -132,20 +132,28 @@ class AuthSessionStore : ObservableObject {
              "name" : user.userName,
              "surname" : user.userSurname,
              "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
-             //FIXME: return to enums, avoid hardcoded strings! do Image stuff! do Age stuff!!
-                "gender" : "non",
-                "height" : user.userHeight]) {
-                    
-                    (error, reference) in
-                    
-                    if error != nil {
-                        if let specificError = error?.localizedDescription {
-                            print(specificError)
-                        } else {
-                            print("Error:  can`t login!")
-                        }
+             "gender" : "non",
+             "height" : user.userHeight]) {
+                
+                (error, reference) in
+                
+                if error != nil {
+                    if let specificError = error?.localizedDescription {
+                        print(specificError)
+                    } else {
+                        print("Error:  can`t login!")
                     }
+                }
         }
+    }
+    
+    func updateProfileOnFBR(user: UserProfile) {
+        usersDBRef.child(user.userID).child("Profile").updateChildValues(
+            ["name" : user.userName,
+             "surname" : user.userSurname,
+             "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
+             "gender" : user.userGender,
+             "height" : user.userHeight])
     }
     
     //not sure if there is any need to this function
