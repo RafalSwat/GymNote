@@ -39,12 +39,16 @@ struct DoneConformAlert: View {
                         self.showAlert = false
                     })
                         .buttonStyle(RectangularButtonStyle(fromColor: .red, toColor: .customDark))
+                        .shadow(color: Color(UIColor.black),radius: 3)
                         .padding()
+                        
                     
                     
                     Button("Conform", action: alertAction)
                         .buttonStyle(RectangularButtonStyle(fromColor: .green, toColor: .customDark))
+                        .shadow(color: Color(UIColor.black),radius: 3)
                         .padding()
+                        
                 }
             }.padding(.horizontal, 30)
             
@@ -54,7 +58,7 @@ struct DoneConformAlert: View {
                                    startPoint: .leading, endPoint: .trailing
         ))
             .cornerRadius(20)
-            .shadow(color: Color(colorScheme == .light ? UIColor.black : UIColor.white), radius: 20)
+            .shadow(color: Color(colorScheme == .light ? UIColor.black : UIColor.gray), radius: 20)
 
     }
 }
