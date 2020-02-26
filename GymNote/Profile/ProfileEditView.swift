@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ProfileEditView: View {
     
-    @EnvironmentObject var authSession: AuthSessionStore
+    @EnvironmentObject var session: FireBaseSession
     @Binding var profile: UserProfile
     @State var doneUpdating = false
     @State var doneChangingPhoto = false
@@ -110,7 +110,7 @@ struct ProfileEditView: View {
                             DoneConformAlert(showAlert: self.$doneUpdating, alertTitle: "", alertMessage: "MESS", alertAction: {
                                 //TODO: updating stuff!
                                 self.updateOfflineData()
-                                self.authSession.updateProfileOnFBR(user: self.profile)
+                                self.session.updateProfileOnFBR(user: self.profile)
                                 self.doneUpdating.toggle()
                                 
                             })

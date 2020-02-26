@@ -11,7 +11,7 @@ import SwiftUI
 struct LoginView: View {
     
     //MARK: Properties
-    @EnvironmentObject var authSession: AuthSessionStore
+    @EnvironmentObject var session: FireBaseSession
     
     @State private var email: String = ""
     @State private var password: String = ""
@@ -51,7 +51,7 @@ struct LoginView: View {
     }
     
     func logIn() {
-        self.authSession.signIn(email: email, password: password)
+        self.session.signIn(email: email, password: password)
     }
 }
 

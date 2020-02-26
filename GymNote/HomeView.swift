@@ -10,15 +10,14 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @EnvironmentObject var authSession: AuthSessionStore
+    @EnvironmentObject var session: FireBaseSession
 
-    
     let dataString = DateConverter.dateFormat.string(from: Date())
     
     var body: some View {
         VStack {
             
-            TitleBelt(title: authSession.session!.userName, subtitle: dataString)
+            TitleBelt(title: session.userSession?.userName ?? "", subtitle: dataString)
             
             
             Group {
@@ -40,19 +39,25 @@ struct HomeView: View {
         .navigationBarTitle("Home", displayMode: .inline)
         .navigationBarItems(
             leading: BackButton(),
-            trailing: ProfileButton(profile: authSession.session!)
+            trailing: ProfileButton(profile: session.userSession ?? UserProfile.default)
         )
+        .onAppear(perform: getUser)
+    }
+    
+    //MARK: Functions
+    func getUser() {
+        session.listen()
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     
-    @State static var authSession = AuthSessionStore()
+    @State static var session = FireBaseSession()
     
     static var previews: some View {
         NavigationView {
             HomeView()
-                .environmentObject(authSession)
+                .environmentObject(session)
         }
     }
 

@@ -11,7 +11,7 @@ import SwiftUI
 struct WelcomeView: View {
     
     //MARK: Properties
-    @EnvironmentObject var authSession: AuthSessionStore
+    @EnvironmentObject var Session: FireBaseSession
     @State private var isRegistered = false
     
     //MARK: View
@@ -24,7 +24,7 @@ struct WelcomeView: View {
                     
                     ColorfulPicker(selection: $isRegistered)
                     
-                    NavigationLink(destination: HomeView(), isActive: self.$authSession.noErrorAppearDuringAuth) { Text("") }
+                    NavigationLink(destination: HomeView(), isActive: self.$Session.noErrorAppearDuringAuth) { Text("") }
                     
                     if isRegistered {
                         LoginView()
@@ -34,19 +34,15 @@ struct WelcomeView: View {
                     
                 }.padding()
             }.navigationBarTitle("Welcome", displayMode: .inline)
-        }.onAppear(perform: getUser)
+        }
     }
-    //MARK: Functions
-    
-    func getUser() {
-        authSession.listen()
-    }
+
 }
 
 
 struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
         WelcomeView()
-            .environmentObject(AuthSessionStore())
+            .environmentObject(FireBaseSession())
     }
 }
