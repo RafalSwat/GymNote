@@ -41,7 +41,7 @@ struct ProfileView: View {
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                         Spacer()
-                        Text("non")
+                        Text(profile.userGender)
                     }
                     HStack {
                         Text("Date of birth:")

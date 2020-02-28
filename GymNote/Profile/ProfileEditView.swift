@@ -10,15 +10,20 @@ import SwiftUI
 
 struct ProfileEditView: View {
     
+    //MARK: Properties
+    
     @EnvironmentObject var session: FireBaseSession
     @Binding var profile: UserProfile
+    @State var tempUserProfile = UserProfile.default
+    //var to change photo mechanics
     @State var doneUpdating = false
     @State var doneChangingPhoto = false
-    @State var tempUserProfile = UserProfile.default
-    
     //Array only for pick the height and gender of a user
     var userPossibleHeight = Array(40...250)
-    var userPossibleGender = ["male", "female", "non"]
+    var userPossibleGender = ["non", "male", "female"]
+    @State var selectedGender = 0
+    
+    
     
     
     var body: some View {
@@ -75,14 +80,19 @@ struct ProfileEditView: View {
                     }
                     Section(header: Text("Gender")) {
                         Picker(
-                            selection: $tempUserProfile.userGender,
+                            selection: $selectedGender,
                             label: Text("")) {
                                 ForEach(0 ..< userPossibleGender.count) {             Text("\(self.userPossibleGender[$0])")
                                 }
-                        }.pickerStyle(SegmentedPickerStyle())
-                            .padding(.vertical)
-                        
+                        }
+                        //FIXME: the solution is unsatisfactory because it doesn't react on "swipe", only for clicking so that without clicking the gender doesn't change ad all
+                        .onTapGesture {
+                            self.tempUserProfile.userGender = self.userPossibleGender[self.selectedGender]
+                        }
                     }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding(.vertical)
+                    
                     Section(header: Text("Date of birth")) {
                         DatePicker(
                             selection: $tempUserProfile.userDateOfBirth,
@@ -114,8 +124,8 @@ struct ProfileEditView: View {
                                 self.doneUpdating.toggle()
                                 
                             })
-                            .padding()
-                            .position(x: geometry.size.width/2, y: geometry.size.height/2)
+                                .padding()
+                                .position(x: geometry.size.width/2, y: geometry.size.height/2)
                         }
                     }
                 }
@@ -125,7 +135,7 @@ struct ProfileEditView: View {
                 }
             }
             
-      }
+        }
         .onAppear {
             self.tempUserProfile = self.profile
         }
@@ -137,9 +147,21 @@ struct ProfileEditView: View {
         self.profile.userHeight = self.tempUserProfile.userHeight
         self.profile.userGender = self.tempUserProfile.userGender
         self.profile.userDateOfBirth = self.tempUserProfile.userDateOfBirth
+        self.profile.userGender = self.tempUserProfile.userGender
+        print("Gender: \(self.profile.userGender), selector: \(self.selectedGender) ")
     }
     
+    func setupGender() {
+        if self.profile.userGender == "non" {
+            self.selectedGender = 0
+        } else if self.profile.userGender == "male" {
+            self.selectedGender = 1
+        } else {
+            self.selectedGender = 2
+        }
+    }
 }
+
 
 struct ProfileEditView_Previews: PreviewProvider {
     
@@ -152,3 +174,4 @@ struct ProfileEditView_Previews: PreviewProvider {
         
     }
 }
+

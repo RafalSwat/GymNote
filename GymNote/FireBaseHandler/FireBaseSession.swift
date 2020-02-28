@@ -107,7 +107,6 @@ class FireBaseSession: ObservableObject {
                                                profileImage: Image("staticImage"),
                                                height: value["height"] as! Int,
                                                userDateOfBirth: DateConverter.dateFormat.date(from: value["dateOfBirth"] as! String)!)
-                    self.printProfileUltraDefense(user: self.userSession)
                 }
             } else {
                 // User has no data on FirebaseDatabase, so we set up default on (new user)
@@ -119,7 +118,6 @@ class FireBaseSession: ObservableObject {
                                            profileImage: Image("staticImage"),
                                            height: 175,
                                            userDateOfBirth: Date())
-                self.printProfileUltraDefense(user: self.userSession)
                 
                 if let newUser = self.userSession {
                     
@@ -167,14 +165,5 @@ class FireBaseSession: ObservableObject {
         }
     }
     
-    func printProfileUltraDefense(user: UserProfile?) {
-        print("-------------------------------")
-        print(self.userSession?.userEmail ?? "NIC TU KURWA NIE MA")
-        print(self.userSession?.userName ?? "NIC TU KURWA NIE MA")
-        print(self.userSession?.userSurname ?? "NIC TU KURWA NIE MA")
-        print(self.userSession?.userHeight ?? "NIC TU KURWA NIE MA")
-        print(self.userSession?.userDateOfBirth ?? "NIC TU KURWA NIE MA")
-        print("-------------------------------")
-    }
 }
 
