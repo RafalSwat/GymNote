@@ -138,6 +138,7 @@ struct ProfileEditView: View {
         }
         .onAppear {
             self.tempUserProfile = self.profile
+            self.setupGender()
         }
     }
     func updateOfflineData() {
@@ -148,7 +149,6 @@ struct ProfileEditView: View {
         self.profile.userGender = self.tempUserProfile.userGender
         self.profile.userDateOfBirth = self.tempUserProfile.userDateOfBirth
         self.profile.userGender = self.tempUserProfile.userGender
-        print("Gender: \(self.profile.userGender), selector: \(self.selectedGender) ")
     }
     
     func setupGender() {
