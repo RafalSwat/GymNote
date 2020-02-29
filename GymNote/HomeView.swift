@@ -11,17 +11,20 @@ import SwiftUI
 struct HomeView: View {
     
     @EnvironmentObject var session: FireBaseSession
-
+    @State var passageTrainingNote = false
     let dataString = DateConverter.dateFormat.string(from: Date())
+    
     
     var body: some View {
         VStack {
             
             TitleBelt(title: session.userSession?.userName ?? "", subtitle: dataString)
             
+            //Navigation Links
+            NavigationLink(destination: TrainingNoteView(), isActive: self.$passageTrainingNote) { Text("") }
             
             Group {
-                Button("note training", action:{})
+                Button("note training", action:{ self.passageTrainingNote.toggle()})
                     .buttonStyle(RectangularButtonStyle())
                     .padding()
                 
@@ -48,6 +51,7 @@ struct HomeView: View {
     func getUser() {
         session.listen()
     }
+
 }
 
 struct HomeView_Previews: PreviewProvider {
