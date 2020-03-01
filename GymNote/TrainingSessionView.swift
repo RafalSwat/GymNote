@@ -12,7 +12,7 @@ struct TrainingSessionView: View {
     
     @EnvironmentObject var session: FireBaseSession
     @State var addMode = false
-    @State 
+    @State var doneCreating = false
     
     var body: some View {
         
@@ -21,14 +21,19 @@ struct TrainingSessionView: View {
             TitleBelt(title: "...", subtitle: "...", editMode: true)
             Divider()
             Spacer()
+            
             AddButton(addingMode: $addMode)
                 .padding()
-            
+                .sheet(isPresented: $addMode) {
+                    ExercisesListView()
+            }
+                
         }
-        .navigationBarTitle("Training Note", displayMode: .inline)
+        .navigationBarTitle("Edit Profile", displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
         .navigationBarItems(
             leading: BackButton(),
-            trailing: ProfileButton(profile: session.userSession ?? UserProfile.default)
+            trailing: DoneButton(isDone: $doneCreating)
         )
         
     }

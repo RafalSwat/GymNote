@@ -22,6 +22,8 @@
 		07426603240BCB4B003F2C32 /* TrainingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07426602240BCB4B003F2C32 /* TrainingSessionView.swift */; };
 		07426605240BCE20003F2C32 /* DateBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07426604240BCE20003F2C32 /* DateBelt.swift */; };
 		07426608240BFD2A003F2C32 /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07426607240BFD2A003F2C32 /* AddButton.swift */; };
+		0742660D240C11C6003F2C32 /* ExercisesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0742660C240C11C6003F2C32 /* ExercisesListView.swift */; };
+		0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0742660E240C1B72003F2C32 /* ExerciseListRow.swift */; };
 		0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757023E23A4D89500030991 /* RectangularButtonStyle.swift */; };
 		0757024323A4EAD500030991 /* ColorfulPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757024223A4EAD500030991 /* ColorfulPicker.swift */; };
 		075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F223FF19ED006613A2 /* DateConverter.swift */; };
@@ -62,6 +64,8 @@
 		07426602240BCB4B003F2C32 /* TrainingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionView.swift; sourceTree = "<group>"; };
 		07426604240BCE20003F2C32 /* DateBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateBelt.swift; sourceTree = "<group>"; };
 		07426607240BFD2A003F2C32 /* AddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButton.swift; sourceTree = "<group>"; };
+		0742660C240C11C6003F2C32 /* ExercisesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesListView.swift; sourceTree = "<group>"; };
+		0742660E240C1B72003F2C32 /* ExerciseListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListRow.swift; sourceTree = "<group>"; };
 		0757023E23A4D89500030991 /* RectangularButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButtonStyle.swift; sourceTree = "<group>"; };
 		0757024223A4EAD500030991 /* ColorfulPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulPicker.swift; sourceTree = "<group>"; };
 		075A31F223FF19ED006613A2 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
@@ -175,6 +179,8 @@
 				077ECD3F23B0EFF6005A1B76 /* Profile */,
 				075A31F924096EBD006613A2 /* TrainingNoteView.swift */,
 				07426602240BCB4B003F2C32 /* TrainingSessionView.swift */,
+				0742660C240C11C6003F2C32 /* ExercisesListView.swift */,
+				0742660E240C1B72003F2C32 /* ExerciseListRow.swift */,
 				07C0B99D23A2A812001632A0 /* CustomReusableComponents */,
 				07C0B96F2397BE03001632A0 /* Assets.xcassets */,
 				07C0B9742397BE03001632A0 /* LaunchScreen.storyboard */,
@@ -372,6 +378,7 @@
 				0736F9DF23CA4CBA00626599 /* DoneButton.swift in Sources */,
 				07C0B9832397DE58001632A0 /* UserProfile.swift in Sources */,
 				077ECD4123B0F020005A1B76 /* ProfileEditView.swift in Sources */,
+				0742660D240C11C6003F2C32 /* ExercisesListView.swift in Sources */,
 				07C0B98923990D0E001632A0 /* LoginView.swift in Sources */,
 				07C0B987239816EA001632A0 /* WelcomeView.swift in Sources */,
 				075A31FA24096EBD006613A2 /* TrainingNoteView.swift in Sources */,
@@ -380,6 +387,7 @@
 				075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */,
 				07A8D3FF23AD44E70051D493 /* BackButton.swift in Sources */,
 				077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */,
+				0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */,
 				07426603240BCB4B003F2C32 /* TrainingSessionView.swift in Sources */,
 				073F482723F55F47003011F0 /* CaptureImageView.swift in Sources */,
 				073B917A23A4025800F38F1D /* CircleImage.swift in Sources */,

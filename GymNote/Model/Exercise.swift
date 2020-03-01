@@ -25,6 +25,13 @@ struct Exercise {
         self.exerciseWeight = weight
     }
     
+    init(name: String) {
+        self.exerciseName = name
+        self.exerciseSeries = 1
+        self.exerciseRepeats = 10
+        self.exerciseWeight = 0
+    }
+    
     static let `default` = Self(
         name: "",
         series: 4,

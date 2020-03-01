@@ -12,6 +12,7 @@ struct AddButton: View {
     
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     var addButtonImage: Image = Image(systemName: "plus.circle")
+    var addButtonText: String = "ADD EXERCISES"
     @Binding var addingMode: Bool
     
     var body: some View {
@@ -24,12 +25,10 @@ struct AddButton: View {
                     .font(.largeTitle)
                     .foregroundColor(colorScheme == .light ? .white : .black)
                 Spacer()
-                Text("ADD EXERCISES")
+                Text(addButtonText)
                 Spacer()
             }
-            
-            
-            
+
         }.buttonStyle(RectangularButtonStyle())
     }
 }
