@@ -9,7 +9,9 @@
 import SwiftUI
 
 struct TrainingNoteView: View {
+    
     @EnvironmentObject var session: FireBaseSession
+    @State var passageTrainingSession = false
     
     var body: some View {
         VStack {
@@ -20,8 +22,11 @@ struct TrainingNoteView: View {
                 .scaledToFill()
                 .padding(30)
             
+            NavigationLink(destination: TrainingSessionView(), isActive: self.$passageTrainingSession) { Text("") }
+            
+            
             Group {
-                Button("add session", action:{})
+                Button("add session", action:{ self.passageTrainingSession.toggle()})
                     .buttonStyle(RectangularButtonStyle())
                     .padding()
                 
@@ -45,8 +50,11 @@ struct TrainingNoteView: View {
 }
 
 struct TrainingNoteView_Previews: PreviewProvider {
+    
+    @State static var session = FireBaseSession()
+    
     static var previews: some View {
         TrainingNoteView()
-            .environmentObject(FireBaseSession())
+            .environmentObject(session)
     }
 }

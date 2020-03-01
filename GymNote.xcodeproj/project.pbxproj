@@ -17,6 +17,11 @@
 		073F482423F43A8F003011F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 073F482323F43A8F003011F0 /* GoogleService-Info.plist */; };
 		073F482723F55F47003011F0 /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073F482623F55F47003011F0 /* CaptureImageView.swift */; };
 		073F482923F5604C003011F0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073F482823F5604C003011F0 /* Coordinator.swift */; };
+		074265FB240BC3BF003F2C32 /* UserTrainings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074265FA240BC3BF003F2C32 /* UserTrainings.swift */; };
+		074265FF240BC6C6003F2C32 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074265FE240BC6C6003F2C32 /* Exercise.swift */; };
+		07426603240BCB4B003F2C32 /* TrainingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07426602240BCB4B003F2C32 /* TrainingSessionView.swift */; };
+		07426605240BCE20003F2C32 /* DateBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07426604240BCE20003F2C32 /* DateBelt.swift */; };
+		07426608240BFD2A003F2C32 /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07426607240BFD2A003F2C32 /* AddButton.swift */; };
 		0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757023E23A4D89500030991 /* RectangularButtonStyle.swift */; };
 		0757024323A4EAD500030991 /* ColorfulPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757024223A4EAD500030991 /* ColorfulPicker.swift */; };
 		075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F223FF19ED006613A2 /* DateConverter.swift */; };
@@ -52,6 +57,11 @@
 		073F482323F43A8F003011F0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		073F482623F55F47003011F0 /* CaptureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
 		073F482823F5604C003011F0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		074265FA240BC3BF003F2C32 /* UserTrainings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTrainings.swift; sourceTree = "<group>"; };
+		074265FE240BC6C6003F2C32 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
+		07426602240BCB4B003F2C32 /* TrainingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionView.swift; sourceTree = "<group>"; };
+		07426604240BCE20003F2C32 /* DateBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateBelt.swift; sourceTree = "<group>"; };
+		07426607240BFD2A003F2C32 /* AddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButton.swift; sourceTree = "<group>"; };
 		0757023E23A4D89500030991 /* RectangularButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButtonStyle.swift; sourceTree = "<group>"; };
 		0757024223A4EAD500030991 /* ColorfulPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulPicker.swift; sourceTree = "<group>"; };
 		075A31F223FF19ED006613A2 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
@@ -101,6 +111,15 @@
 			path = PhotoHandler;
 			sourceTree = "<group>";
 		};
+		07426606240BCEC4003F2C32 /* DesignBelts */ = {
+			isa = PBXGroup;
+			children = (
+				073E6C9423AA215800A06E80 /* TitleBelt.swift */,
+				07426604240BCE20003F2C32 /* DateBelt.swift */,
+			);
+			path = DesignBelts;
+			sourceTree = "<group>";
+		};
 		075A31F624094C9F006613A2 /* CustomButtons */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +129,7 @@
 				0736F9DE23CA4CBA00626599 /* DoneButton.swift */,
 				0736F9DC23CA3F0C00626599 /* ChangeButton.swift */,
 				0736F9DA23CA395F00626599 /* CustomEditButton.swift */,
+				07426607240BFD2A003F2C32 /* AddButton.swift */,
 			);
 			path = CustomButtons;
 			sourceTree = "<group>";
@@ -154,6 +174,7 @@
 				07C0B98D239A73C8001632A0 /* HomeView.swift */,
 				077ECD3F23B0EFF6005A1B76 /* Profile */,
 				075A31F924096EBD006613A2 /* TrainingNoteView.swift */,
+				07426602240BCB4B003F2C32 /* TrainingSessionView.swift */,
 				07C0B99D23A2A812001632A0 /* CustomReusableComponents */,
 				07C0B96F2397BE03001632A0 /* Assets.xcassets */,
 				07C0B9742397BE03001632A0 /* LaunchScreen.storyboard */,
@@ -176,6 +197,8 @@
 			isa = PBXGroup;
 			children = (
 				07C0B9822397DE58001632A0 /* UserProfile.swift */,
+				074265FA240BC3BF003F2C32 /* UserTrainings.swift */,
+				074265FE240BC6C6003F2C32 /* Exercise.swift */,
 				077ECD4223B0F4A1005A1B76 /* UserData.swift */,
 			);
 			path = Model;
@@ -201,12 +224,12 @@
 		07C0B99D23A2A812001632A0 /* CustomReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
+				07426606240BCEC4003F2C32 /* DesignBelts */,
 				075A31F624094C9F006613A2 /* CustomButtons */,
 				07C0B99723A144DF001632A0 /* KeyboardHost.swift */,
 				07C0B99B23A273D9001632A0 /* SwitchableSecureField.swift */,
 				073B917923A4025800F38F1D /* CircleImage.swift */,
 				0757024223A4EAD500030991 /* ColorfulPicker.swift */,
-				073E6C9423AA215800A06E80 /* TitleBelt.swift */,
 				0720992023F7417E00B75CF5 /* DoneConformAlert.swift */,
 				075A31F223FF19ED006613A2 /* DateConverter.swift */,
 			);
@@ -357,17 +380,22 @@
 				075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */,
 				07A8D3FF23AD44E70051D493 /* BackButton.swift in Sources */,
 				077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */,
+				07426603240BCB4B003F2C32 /* TrainingSessionView.swift in Sources */,
 				073F482723F55F47003011F0 /* CaptureImageView.swift in Sources */,
 				073B917A23A4025800F38F1D /* CircleImage.swift in Sources */,
+				074265FF240BC6C6003F2C32 /* Exercise.swift in Sources */,
+				07426608240BFD2A003F2C32 /* AddButton.swift in Sources */,
 				0727887123AA473500092E24 /* ProfileView.swift in Sources */,
 				07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */,
 				075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */,
+				074265FB240BC3BF003F2C32 /* UserTrainings.swift in Sources */,
 				07C0B98B23992267001632A0 /* SignupView.swift in Sources */,
 				0736F9DB23CA395F00626599 /* CustomEditButton.swift in Sources */,
 				0720992123F7417E00B75CF5 /* DoneConformAlert.swift in Sources */,
 				0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */,
 				07A8D3FD23AD338B0051D493 /* ProfileButton.swift in Sources */,
 				07C0B98E239A73C8001632A0 /* HomeView.swift in Sources */,
+				07426605240BCE20003F2C32 /* DateBelt.swift in Sources */,
 				0736F9DD23CA3F0C00626599 /* ChangeButton.swift in Sources */,
 				07C0B99C23A273D9001632A0 /* SwitchableSecureField.swift in Sources */,
 				073F482923F5604C003011F0 /* Coordinator.swift in Sources */,

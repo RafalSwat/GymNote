@@ -20,8 +20,7 @@ struct DoneButton: View {
         Button(action: {
             
             self.isDone.toggle()
-            
-            print("done button tapped!")
+
         }) {
             self.changesButtonImage
                 .font(.largeTitle)
