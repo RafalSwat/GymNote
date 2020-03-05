@@ -15,13 +15,13 @@ struct ExercisesListView: View {
     @State var searchText = ""
     
     let listOfExercises = [
-        Exercise(name: "exercise1"),
-        Exercise(name: "exercise2"),
-        Exercise(name: "exercise3"),
-        Exercise(name: "exercise3"),
-        Exercise(name: "exercise4"),
-        Exercise(name: "exercise5"),
-        Exercise(name: "exercise6"),
+        Exercise(name: "aa exercise1"),
+        Exercise(name: "ab exercise2"),
+        Exercise(name: "abc exercise3"),
+        Exercise(name: "abcd exercise3"),
+        Exercise(name: "abcde exercise4"),
+        Exercise(name: "abcdef exercise5"),
+        Exercise(name: "mmmo exercise6"),
         Exercise(name: "exercise7"),
         Exercise(name: "exercise8"),
         Exercise(name: "exercise9"),
@@ -34,7 +34,9 @@ struct ExercisesListView: View {
         VStack {
             SearchBar(text: $searchText)
             
-            List(listOfExercises, id: \.exerciseName) { exercise in
+            List(self.listOfExercises.filter {
+                self.searchText.isEmpty ? true : $0.exerciseName.localizedStandardContains(self.searchText)
+            }, id: \.self) { exercise in
                 ExerciseListRow(exercise: exercise)
             }
             Spacer()
