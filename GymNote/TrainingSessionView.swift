@@ -25,7 +25,7 @@ struct TrainingSessionView: View {
             AddButton(addingMode: $addMode)
                 .padding()
                 .sheet(isPresented: $addMode) {
-                    ExercisesListView()
+                    ExercisesListView(finishTyping: self.$addMode)
             }
                 
         }

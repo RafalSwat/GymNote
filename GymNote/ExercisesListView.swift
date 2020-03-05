@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ExercisesListView: View {
     
-    @State var finishTyping = false
+    @Binding var finishTyping: Bool
     @State var isCheck = false
     @State var searchText = ""
     
@@ -31,24 +31,34 @@ struct ExercisesListView: View {
     var listOfChoosenExercises: [Exercise] = []
     
     var body: some View {
-        VStack {
-            SearchBar(text: $searchText)
-            
-            List(self.listOfExercises.filter {
-                self.searchText.isEmpty ? true : $0.exerciseName.localizedStandardContains(self.searchText)
-            }, id: \.self) { exercise in
-                ExerciseListRow(exercise: exercise)
+        NavigationView {
+            VStack {
+                SearchBar(text: $searchText)
+                
+                List(self.listOfExercises.filter {
+                    self.searchText.isEmpty ? true : $0.exerciseName.localizedStandardContains(self.searchText)
+                }, id: \.self) { exercise in
+                    ExerciseListRow(exercise: exercise)
+                }
+                Spacer()
+                AddButton(addButtonText: "add selected exercises", addingMode: $finishTyping)
+                    .padding()
             }
-            Spacer()
-            AddButton(addButtonText: "add selected exercises", addingMode: $finishTyping)
-                .padding()
-        }.navigationBarTitle(Text("List of Exercises"))
+            .navigationBarTitle(Text("List of Exercises"), displayMode: .inline)
+            .navigationBarItems(
+                leading: ExitButton(donePresenting: $finishTyping)
+            )
+        }
+        
         
     }
 }
 
 struct ExercisesListView_Previews: PreviewProvider {
+    
+    @State static var prevAddMode = true
+    
     static var previews: some View {
-        ExercisesListView()
+        ExercisesListView(finishTyping: $prevAddMode)
     }
 }
