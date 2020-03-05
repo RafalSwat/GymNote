@@ -50,7 +50,7 @@ struct DoneConformAlert: View {
                         .padding()
                         
                 }
-            }.padding(.horizontal, 30)
+            }.padding(.horizontal, 20)
             
         }
         .background(LinearGradient(gradient: Gradient(

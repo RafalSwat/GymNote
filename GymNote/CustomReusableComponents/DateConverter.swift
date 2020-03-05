@@ -16,4 +16,17 @@ class DateConverter {
         formatter.timeStyle = .none
         return formatter
     }()
+    
+    func convertFromString(dateString: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy"
+        if let dateTypeDate = formatter.date(from: dateString) {
+            return dateTypeDate
+        } else {
+            print("Error: Data Converter Error: finds nil during converting!")
+            return Date()
+        }
+        
+    }
+    
 }

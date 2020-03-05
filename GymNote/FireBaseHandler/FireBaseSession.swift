@@ -92,6 +92,7 @@ class FireBaseSession: ObservableObject {
         }
     }
     
+    
     func setupSession(userEmail: String, userID: String) {
         
         self.usersDBRef.child(userID).child("Profile").observeSingleEvent(of: .value) { (snapshot) in
@@ -99,6 +100,8 @@ class FireBaseSession: ObservableObject {
             if snapshot.exists() {
                 // User is already on FirebaseDatabase, so we setup session based on it (old user)
                 if let value = snapshot.value as? [String: Any] {
+                    let strDate = value["dateOfBirth"] as! String
+                    let convertDate = DateConverter().convertFromString(dateString: strDate)
                     self.userSession = UserProfile(uID: userID,
                                                email: userEmail,
                                                name: value["name"] as! String,
@@ -106,8 +109,8 @@ class FireBaseSession: ObservableObject {
                                                gender: value["gender"] as! String,
                                                profileImage: Image("staticImage"),
                                                height: value["height"] as! Int,
-                                               userDateOfBirth: DateConverter.dateFormat.date(from: value["dateOfBirth"] as! String)!)
-                }
+                                               userDateOfBirth: convertDate)
+                } 
             } else {
                 // User has no data on FirebaseDatabase, so we set up default on (new user)
                 self.userSession = UserProfile(uID: userID,
