@@ -31,9 +31,11 @@ struct ExercisesListView: View {
     
     var listOfChoosenExercises: [Exercise] = []
     
+    
     var body: some View {
         NavigationView {
             VStack {
+                
                 SearchBar(text: $searchText)
                 
                 List(self.listOfExercises.filter {
@@ -50,9 +52,12 @@ struct ExercisesListView: View {
                 leading: ExitButton(donePresenting: $finishTyping),
                 trailing: AddBarItem(showAddView: $addExerciseMode)
             )
+//                .background(NavigationConfigurator { navigationController in
+//                    navigationController.navigationBar.tintColor = .orange
+//                })
+            
         }
-        
-        
+    .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

@@ -48,6 +48,7 @@
 		07C922E02410EA2300AF6010 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922DF2410EA2300AF6010 /* SearchBar.swift */; };
 		07C922E22411078700AF6010 /* ExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E12411078700AF6010 /* ExitButton.swift */; };
 		07C922E424110A5700AF6010 /* AddBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E324110A5700AF6010 /* AddBarItem.swift */; };
+		07C922E62411140000AF6010 /* NavigationConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E52411140000AF6010 /* NavigationConfigurator.swift */; };
 		1B373EB5305511AB67498B64 /* libPods-GymNote.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEA7BA808CFAE3021932793 /* libPods-GymNote.a */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +96,7 @@
 		07C922DF2410EA2300AF6010 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		07C922E12411078700AF6010 /* ExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitButton.swift; sourceTree = "<group>"; };
 		07C922E324110A5700AF6010 /* AddBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBarItem.swift; sourceTree = "<group>"; };
+		07C922E52411140000AF6010 /* NavigationConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationConfigurator.swift; sourceTree = "<group>"; };
 		92418A42585CD4BBC0A8B4F7 /* Pods-GymNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymNote.release.xcconfig"; path = "Target Support Files/Pods-GymNote/Pods-GymNote.release.xcconfig"; sourceTree = "<group>"; };
 		9C640CDF02DF30CA87AB78FE /* Pods-GymNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymNote.debug.xcconfig"; path = "Target Support Files/Pods-GymNote/Pods-GymNote.debug.xcconfig"; sourceTree = "<group>"; };
 		CDEA7BA808CFAE3021932793 /* libPods-GymNote.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GymNote.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -247,6 +249,7 @@
 				0720992023F7417E00B75CF5 /* DoneConformAlert.swift */,
 				075A31F223FF19ED006613A2 /* DateConverter.swift */,
 				07C922DF2410EA2300AF6010 /* SearchBar.swift */,
+				07C922E52411140000AF6010 /* NavigationConfigurator.swift */,
 			);
 			path = CustomReusableComponents;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */,
 				074265FB240BC3BF003F2C32 /* UserTrainings.swift in Sources */,
 				07C0B98B23992267001632A0 /* SignupView.swift in Sources */,
+				07C922E62411140000AF6010 /* NavigationConfigurator.swift in Sources */,
 				0736F9DB23CA395F00626599 /* CustomEditButton.swift in Sources */,
 				0720992123F7417E00B75CF5 /* DoneConformAlert.swift in Sources */,
 				0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */,
