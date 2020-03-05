@@ -10,32 +10,64 @@ import SwiftUI
 
 struct ExerciseListRow: View {
     
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
-    @State var isCheck = false
-    var exercise: Exercise
-    var checkmark = Image(systemName: "checkmark")
-    
+    var exerciseName: String
+    var isCheck: Bool
+    var action: () -> Void
     
     var body: some View {
-        HStack {
-            Text(exercise.exerciseName)
-                .font(.headline)
-            Spacer()
-            if isCheck {
-                self.checkmark
-                    .foregroundColor(colorScheme == .light ? .black : .secondary)
-                    .font(.headline)
-                
+        Button(action: self.action) {
+            HStack {
+                Text(self.exerciseName)
+                if self.isCheck {
+                    Spacer()
+                    DualColorCheckmark()
+                }
             }
-        }.onTapGesture { self.isCheck.toggle() }
+        }
     }
 }
 
 struct ExerciseListRow_Previews: PreviewProvider {
     
     static var prevExercise = Exercise(name: "example exercise")
+    static func prevAction(){return}
     
     static var previews: some View {
-        ExerciseListRow(exercise: prevExercise)
+        ExerciseListRow(exerciseName: "exercise", isCheck: false, action: prevAction)
     }
 }
+
+//import SwiftUI
+//
+//struct ExerciseListRow: View {
+//
+//    @Environment(\.colorScheme) var colorScheme: ColorScheme
+//    @State var isCheck: Bool = false
+//
+//    var exercise: Exercise
+//    var checkmark = Image(systemName: "checkmark")
+//
+//
+//    var body: some View {
+//        HStack {
+//            Text(exercise.exerciseName)
+//                .font(.headline)
+//            Spacer()
+//            if isCheck {
+//                self.checkmarkImage
+//                    .foregroundColor(colorScheme == .light ? .black : .secondary)
+//                    .font(.headline)
+//            }
+//        }.onTapGesture { self.isCheck.toggle() }
+//    }
+//}
+//
+//struct ExerciseListRow_Previews: PreviewProvider {
+//
+//    static var prevExercise = Exercise(name: "example exercise")
+//
+//    static var previews: some View {
+//        ExerciseListRow(exercise: prevExercise)
+//    }
+//}
+

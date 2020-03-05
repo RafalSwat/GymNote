@@ -13,6 +13,7 @@ struct Exercise: Hashable {
     var exerciseSeries: Int
     var exerciseRepeats: Int
     var exerciseWeight: Int?
+    var exerciseIsCheck: Bool
     
     //MARK: String is a built-in type, which means it is hashable by default
 //    public var hashValue: Int {
@@ -32,12 +33,14 @@ struct Exercise: Hashable {
     init(name: String,
          series: Int,
          repeats: Int,
-         weight: Int?) {
+         weight: Int?,
+         isCheck: Bool) {
         
         self.exerciseName = name
         self.exerciseSeries = series
         self.exerciseRepeats = repeats
         self.exerciseWeight = weight
+        self.exerciseIsCheck = isCheck
     }
     
     init(name: String) {
@@ -45,12 +48,15 @@ struct Exercise: Hashable {
         self.exerciseSeries = 1
         self.exerciseRepeats = 10
         self.exerciseWeight = 0
+        self.exerciseIsCheck = false
     }
     
     static let `default` = Self(
         name: "",
         series: 4,
         repeats: 10,
-        weight: 0
+        weight: 0,
+        isCheck: false
     )
+
 }

@@ -12,8 +12,8 @@ struct ExercisesListView: View {
     
     @Binding var finishTyping: Bool
     @State var addExerciseMode = false
-    @State var isCheck = false
     @State var searchText = ""
+    @State var selectedExercises = [Exercise]()
     
     let listOfExercises = [
         Exercise(name: "aa exercise1"),
@@ -29,7 +29,7 @@ struct ExercisesListView: View {
         Exercise(name: "exercise10"),
         Exercise(name: "exercise11")]
     
-    var listOfChoosenExercises: [Exercise] = []
+    
     
     
     var body: some View {
@@ -39,10 +39,26 @@ struct ExercisesListView: View {
                 SearchBar(text: $searchText)
                 
                 List(self.listOfExercises.filter {
+                    // search mechanics: If searchText is empty, then give it all list.
+                    //                   If some elements of the list contains searchText show only them
+                    
                     self.searchText.isEmpty ? true : $0.exerciseName.localizedStandardContains(self.searchText)
                 }, id: \.self) { exercise in
-                    ExerciseListRow(exercise: exercise)
+                    // row display exercise name from array,
+                    // and add exercise to selected array base on Exercise model property: "isChcek".
+                    // "isCheck" is a Bool that changes according to the "contains" method.
+                    
+                    ExerciseListRow(exerciseName: exercise.exerciseName, isCheck: self.selectedExercises.contains(exercise)) {
+                        if self.selectedExercises.contains(exercise) {
+                            self.selectedExercises.removeAll(where: { $0 == exercise })
+                        }
+                        else {
+                            self.selectedExercises.append(exercise)
+                        }
+                    }
                 }
+                
+                
                 Spacer()
                 AddButton(addButtonText: "add selected exercises", addingMode: $finishTyping)
                     .padding()
@@ -52,12 +68,7 @@ struct ExercisesListView: View {
                 leading: ExitButton(donePresenting: $finishTyping),
                 trailing: AddBarItem(showAddView: $addExerciseMode)
             )
-//                .background(NavigationConfigurator { navigationController in
-//                    navigationController.navigationBar.tintColor = .orange
-//                })
-            
         }
-    .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
@@ -69,3 +80,18 @@ struct ExercisesListView_Previews: PreviewProvider {
         ExercisesListView(finishTyping: $prevFinishTyping)
     }
 }
+
+
+//List(self.listOfExercises.filter {
+//    self.searchText.isEmpty ? true : $0.exerciseName.localizedStandardContains(self.searchText)
+//}, id: \.self) { exercise in
+//    ExerciseListRow(exerciseName: exercise.exerciseName, isCheck: self.selectedExercises.contains(exercise)) {
+//        if self.selectedExercises.contains(exercise) {
+//            self.selectedExercises.removeAll(where: { $0 == exercise })
+//        }
+//        else {
+//            self.selectedExercises.append(exercise)
+//        }
+//    }
+//
+//}
