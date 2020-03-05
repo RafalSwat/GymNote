@@ -11,6 +11,7 @@ import SwiftUI
 struct ExercisesListView: View {
     
     @Binding var finishTyping: Bool
+    @State var addExerciseMode = false
     @State var isCheck = false
     @State var searchText = ""
     
@@ -46,7 +47,8 @@ struct ExercisesListView: View {
             }
             .navigationBarTitle(Text("List of Exercises"), displayMode: .inline)
             .navigationBarItems(
-                leading: ExitButton(donePresenting: $finishTyping)
+                leading: ExitButton(donePresenting: $finishTyping),
+                trailing: AddBarItem(showAddView: $addExerciseMode)
             )
         }
         
@@ -56,9 +58,9 @@ struct ExercisesListView: View {
 
 struct ExercisesListView_Previews: PreviewProvider {
     
-    @State static var prevAddMode = true
+    @State static var prevFinishTyping = true
     
     static var previews: some View {
-        ExercisesListView(finishTyping: $prevAddMode)
+        ExercisesListView(finishTyping: $prevFinishTyping)
     }
 }
