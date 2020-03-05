@@ -12,6 +12,7 @@ struct ExercisesListView: View {
     
     @State var finishTyping = false
     @State var isCheck = false
+    @State var searchText = ""
     
     let listOfExercises = [
         Exercise(name: "exercise1"),
@@ -31,6 +32,8 @@ struct ExercisesListView: View {
     
     var body: some View {
         VStack {
+            SearchBar(text: $searchText)
+            
             List(listOfExercises, id: \.exerciseName) { exercise in
                 ExerciseListRow(exercise: exercise)
             }
