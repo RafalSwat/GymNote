@@ -13,13 +13,17 @@ struct TrainingSessionView: View {
     @EnvironmentObject var session: FireBaseSession
     @State var addMode = false
     @State var doneCreating = false
+    @State var editMode = true
     @State var selectedExercises = [Exercise]()
+    @State var trainingTitle = ""
+    @State var trainingSubscription = ""
+    @State var trainingImage  = Image("staticImage")
     
     var body: some View {
         
         VStack {
             DateBelt()
-            TitleBelt(title: "...", subtitle: "...", editMode: true)
+            TitleBelt(title: $trainingTitle, subtitle: $trainingSubscription, editMode: $editMode, image: $trainingImage)
             Divider()
             Spacer()
             List(selectedExercises, id: \.self) { exercise in

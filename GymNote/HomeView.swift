@@ -12,15 +12,16 @@ struct HomeView: View {
     
     @EnvironmentObject var session: FireBaseSession
     @State var passageTrainingNote = false
-    let dataString = DateConverter.dateFormat.string(from: Date())
-    
+    @State var dataString = DateConverter.dateFormat.string(from: Date())
+    @State var editMode = false
+    @State var homeTitle = "GYMNOTE"
+    @State var homeImage  = Image("staticImage")
     
     var body: some View {
         VStack {
             
-            TitleBelt(title: session.userSession?.userName ?? "", subtitle: dataString)
+            TitleBelt(title: $homeTitle, subtitle: $dataString, editMode: $editMode, image: $homeImage)
             
-            //Navigation Links
             NavigationLink(destination: TrainingNoteView(), isActive: self.$passageTrainingNote) { Text("") }
             
             Group {
@@ -42,7 +43,7 @@ struct HomeView: View {
         .navigationBarTitle("Home", displayMode: .inline)
         .navigationBarItems(
             leading: BackButton(),
-            trailing: ProfileButton(profile: session.userSession ?? UserProfile.default)
+            trailing: ProfileButton(profile: self.session.userSession ?? UserProfile.default)
         )
         .onAppear(perform: getUser)
     }
@@ -50,6 +51,7 @@ struct HomeView: View {
     //MARK: Functions
     func getUser() {
         session.listen()
+        
     }
 
 }

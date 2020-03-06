@@ -11,7 +11,7 @@ import SwiftUI
 struct WelcomeView: View {
     
     //MARK: Properties
-    @EnvironmentObject var Session: FireBaseSession
+    @EnvironmentObject var session: FireBaseSession
     @State private var isRegistered = false
     
     //MARK: View
@@ -24,7 +24,7 @@ struct WelcomeView: View {
                     
                     ColorfulPicker(selection: $isRegistered)
                     
-                    NavigationLink(destination: HomeView(), isActive: self.$Session.noErrorAppearDuringAuth) { Text("") }
+                    NavigationLink(destination: HomeView(), isActive: self.$session.noErrorAppearDuringAuth) { Text("") }
                     
                     if isRegistered {
                         LoginView()

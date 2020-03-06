@@ -11,10 +11,10 @@ import SwiftUI
 struct TitleBelt: View {
     
     @Environment(\.colorScheme) var colorScheme: ColorScheme
-    @State var title: String = "Title"
-    @State var subtitle: String = "subtitle"
-    @State var editMode: Bool = false
-    var image = Image("staticImage")
+    @Binding var title: String 
+    @Binding var subtitle: String
+    @Binding var editMode: Bool
+    @Binding var image: Image  // = Image("staticImage")
     var lightBeltColors: [Color] = [.white, .yellow, .red]
     var darkBeltColors: [Color] = [.black, .orange, .red]
     
@@ -32,39 +32,44 @@ struct TitleBelt: View {
             VStack(alignment: .center) {
                 if editMode {
                     
-                    TextField("...", text: $title)
-                        //.textFieldStyle(RoundedBorderTextFieldStyle())
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color.gray.opacity(0.3))
+                        .frame(width: UIScreen.main.bounds.width/2,
+                               height: UIScreen.main.bounds.height/12,
+                               alignment: .center)
+                        .overlay(TextField("...", text: $title)
+                            .lineLimit(nil)
+                            .multilineTextAlignment(.center)
+                            .font(.title)
+                            
+                    )
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color.gray.opacity(0.3))
+                        .frame(width: UIScreen.main.bounds.width/2,
+                               height: UIScreen.main.bounds.height/15,
+                               alignment: .center)
+                        .font(.subheadline)
+                        .overlay(TextField("...", text: $subtitle)
+                            .lineLimit(nil)
+                            .multilineTextAlignment(.center)
+                            
+                    )
+                    
+                } else {
+                    Text(title)
                         .lineLimit(nil)
                         .multilineTextAlignment(.center)
                         .frame(width: UIScreen.main.bounds.width/2,
                                height: UIScreen.main.bounds.height/12,
                                alignment: .center)
                         .font(.title)
-                        .offset(x: -8)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(Color.gray.opacity(0.3))
-                                .offset(x: -8)
-                    )
-                    TextField("...", text: $subtitle)
+                    
+                    Text(subtitle)
                         .lineLimit(nil)
                         .multilineTextAlignment(.center)
                         .frame(width: UIScreen.main.bounds.width/2,
-                               height: UIScreen.main.bounds.height/15,
+                               height: UIScreen.main.bounds.height/12,
                                alignment: .center)
-                        .font(.subheadline)
-                        .offset(x: -8)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(Color.gray.opacity(0.3))
-                                .offset(x: -8)
-                    )
-                    
-                } else {
-                    Text(title)
-                        .font(.title)
-                    
-                    Text(subtitle)
                         .font(.subheadline)
                 }
             }.offset(x: UIScreen.main.bounds.width/4)
@@ -74,7 +79,12 @@ struct TitleBelt: View {
 
 struct TitleBelt_Previews: PreviewProvider {
     
+    @State static var prevTitle = "GYMNOTE"
+    @State static var prevSubtitle = "..."
+    @State static var prevEditMode = true
+    @State static var prevImage  = Image("staticImage")
+    
     static var previews: some View {
-        TitleBelt()
+        TitleBelt(title: $prevTitle, subtitle: $prevSubtitle, editMode: $prevEditMode, image: $prevImage)
     }
 }
