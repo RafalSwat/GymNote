@@ -11,9 +11,11 @@ import SwiftUI
 struct ExercisesListView: View {
     
     @Binding var finishTyping: Bool
+    @Binding var selectedExercises: [Exercise] // Exercise conform as selected
+    @State var choosenExercise = [Exercise]() // Exercise selected but not conform
     @State var addExerciseMode = false
     @State var searchText = ""
-    @State var selectedExercises = [Exercise]()
+    
     
     let listOfExercises = [
         Exercise(name: "aa exercise1"),
@@ -29,7 +31,9 @@ struct ExercisesListView: View {
         Exercise(name: "exercise10"),
         Exercise(name: "exercise11")]
     
-    
+    func conformExercise() {
+        selectedExercises.append(contentsOf: choosenExercise)
+    }
     
     
     var body: some View {
@@ -48,20 +52,22 @@ struct ExercisesListView: View {
                     // and add exercise to selected array base on Exercise model property: "isChcek".
                     // "isCheck" is a Bool that changes according to the "contains" method.
                     
-                    ExerciseListRow(exerciseName: exercise.exerciseName, isCheck: self.selectedExercises.contains(exercise)) {
-                        if self.selectedExercises.contains(exercise) {
-                            self.selectedExercises.removeAll(where: { $0 == exercise })
+                    ExerciseListRow(exerciseName: exercise.exerciseName, isCheck: self.choosenExercise.contains(exercise)) {
+                        if self.choosenExercise.contains(exercise) {
+                            self.choosenExercise.removeAll(where: { $0 == exercise })
                         }
                         else {
-                            self.selectedExercises.append(exercise)
+                            self.choosenExercise.append(exercise)
                         }
                     }
                 }
                 
                 
                 Spacer()
-                AddButton(addButtonText: "add selected exercises", addingMode: $finishTyping)
+                AddButton(addButtonText: "add selected exercises", action: self.conformExercise, addingMode: $finishTyping)
                     .padding()
+                
+                
             }
             .navigationBarTitle(Text("List of Exercises"), displayMode: .inline)
             .navigationBarItems(
@@ -75,23 +81,12 @@ struct ExercisesListView: View {
 struct ExercisesListView_Previews: PreviewProvider {
     
     @State static var prevFinishTyping = true
+    @State static var prevSelectedExercise = [Exercise(name: "aa exercise1"),
+                                              Exercise(name: "ab exercise2")]
     
     static var previews: some View {
-        ExercisesListView(finishTyping: $prevFinishTyping)
+        ExercisesListView(finishTyping: $prevFinishTyping,
+                          selectedExercises: $prevSelectedExercise)
     }
 }
 
-
-//List(self.listOfExercises.filter {
-//    self.searchText.isEmpty ? true : $0.exerciseName.localizedStandardContains(self.searchText)
-//}, id: \.self) { exercise in
-//    ExerciseListRow(exerciseName: exercise.exerciseName, isCheck: self.selectedExercises.contains(exercise)) {
-//        if self.selectedExercises.contains(exercise) {
-//            self.selectedExercises.removeAll(where: { $0 == exercise })
-//        }
-//        else {
-//            self.selectedExercises.append(exercise)
-//        }
-//    }
-//
-//}

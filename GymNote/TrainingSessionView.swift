@@ -13,6 +13,7 @@ struct TrainingSessionView: View {
     @EnvironmentObject var session: FireBaseSession
     @State var addMode = false
     @State var doneCreating = false
+    @State var selectedExercises = [Exercise]()
     
     var body: some View {
         
@@ -21,11 +22,14 @@ struct TrainingSessionView: View {
             TitleBelt(title: "...", subtitle: "...", editMode: true)
             Divider()
             Spacer()
+            List(selectedExercises, id: \.self) { exercise in
+                Text(exercise.exerciseName)
+            }
             
             AddButton(addingMode: $addMode)
                 .padding()
                 .sheet(isPresented: $addMode) {
-                    ExercisesListView(finishTyping: self.$addMode)
+                    ExercisesListView(finishTyping: self.$addMode, selectedExercises: self.$selectedExercises)
             }
                 
         }
