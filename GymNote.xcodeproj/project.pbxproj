@@ -195,6 +195,7 @@
 				07426602240BCB4B003F2C32 /* TrainingSessionView.swift */,
 				0742660C240C11C6003F2C32 /* ExercisesListView.swift */,
 				0742660E240C1B72003F2C32 /* ExerciseListRow.swift */,
+				07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */,
 				07C0B99D23A2A812001632A0 /* CustomReusableComponents */,
 				07C0B96F2397BE03001632A0 /* Assets.xcassets */,
 				07C0B9742397BE03001632A0 /* LaunchScreen.storyboard */,
@@ -255,7 +256,6 @@
 				07C922DF2410EA2300AF6010 /* SearchBar.swift */,
 				07C922E52411140000AF6010 /* NavigationConfigurator.swift */,
 				07C922E72411582400AF6010 /* DualColorCheckmark.swift */,
-				07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */,
 			);
 			path = CustomReusableComponents;
 			sourceTree = "<group>";

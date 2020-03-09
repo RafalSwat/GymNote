@@ -17,7 +17,7 @@ struct ExercisesListView: View {
     @State var searchText = ""
     
     
-    let listOfExercises = [
+    @State var listOfExercises = [
         Exercise(name: "aa exercise1"),
         Exercise(name: "ab exercise2"),
         Exercise(name: "abc exercise3"),
@@ -39,6 +39,10 @@ struct ExercisesListView: View {
     var body: some View {
         NavigationView {
             VStack {
+                if (addExerciseMode) {
+                    AddUserExerciseView(showAddView: self.$addExerciseMode, list: self.$listOfExercises)
+                }
+                
                 
                 SearchBar(text: $searchText)
                 
@@ -66,7 +70,6 @@ struct ExercisesListView: View {
                 Spacer()
                 AddButton(addButtonText: "add selected exercises", action: self.conformExercise, addingMode: $finishTyping)
                     .padding()
-                
                 
             }
             .navigationBarTitle(Text("List of Exercises"), displayMode: .inline)
