@@ -14,12 +14,10 @@ struct AddBarItem: View {
     @Binding var showAddView: Bool
     
     var addBarItemImage: Image = Image(systemName: "plus.circle")
-
-    var body: some View {
     
-        Button(action: {
-            self.showAddView = true
-        }) {
+    var body: some View {
+        
+        Button(action: { withAnimation { self.showAddView = true }}) {
             self.addBarItemImage
                 .font(.largeTitle)
                 .foregroundColor(colorScheme == .light ? .black : .secondary)
