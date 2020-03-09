@@ -43,6 +43,14 @@ struct Exercise: Hashable {
         self.exerciseIsCheck = isCheck
     }
     
+    init(name: String, isCheck: Bool) {
+        self.exerciseName = name
+        self.exerciseSeries = 1
+        self.exerciseRepeats = 10
+        self.exerciseWeight = 0
+        self.exerciseIsCheck = isCheck
+    }
+    
     init(name: String) {
         self.exerciseName = name
         self.exerciseSeries = 1
