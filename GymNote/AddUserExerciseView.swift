@@ -24,7 +24,7 @@ struct AddUserExerciseView: View {
                 .lineLimit(2).fixedSize(horizontal: false, vertical: true)
                 .padding(.vertical, 5)
                 .frame(maxWidth: .infinity)
-                .foregroundColor(Color.secondary)
+                .foregroundColor(colorScheme == .light ? Color.secondary : Color.magnesium)
                 .font(.headline)
             
             
@@ -49,10 +49,10 @@ struct AddUserExerciseView: View {
                 }) {
                     Image(systemName: "arrowshape.turn.up.right.circle")
                         .font(.largeTitle)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(colorScheme == .light ? Color.secondary : Color.magnesium)
                 }
             }.padding()
-        }.background(Color.magnesium)
+        }.background(colorScheme == .light ? Color.magnesium :  Color.customDark)
     }
     
     
