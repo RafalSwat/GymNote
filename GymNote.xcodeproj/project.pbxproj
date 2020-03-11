@@ -51,6 +51,7 @@
 		07C922E62411140000AF6010 /* NavigationConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E52411140000AF6010 /* NavigationConfigurator.swift */; };
 		07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E72411582400AF6010 /* DualColorCheckmark.swift */; };
 		07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */; };
+		07C922EE2416DBF800AF6010 /* TrainingSessionListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922ED2416DBF800AF6010 /* TrainingSessionListRow.swift */; };
 		1B373EB5305511AB67498B64 /* libPods-GymNote.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEA7BA808CFAE3021932793 /* libPods-GymNote.a */; };
 /* End PBXBuildFile section */
 
@@ -101,6 +102,7 @@
 		07C922E52411140000AF6010 /* NavigationConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationConfigurator.swift; sourceTree = "<group>"; };
 		07C922E72411582400AF6010 /* DualColorCheckmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualColorCheckmark.swift; sourceTree = "<group>"; };
 		07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserExerciseView.swift; sourceTree = "<group>"; };
+		07C922ED2416DBF800AF6010 /* TrainingSessionListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionListRow.swift; sourceTree = "<group>"; };
 		92418A42585CD4BBC0A8B4F7 /* Pods-GymNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymNote.release.xcconfig"; path = "Target Support Files/Pods-GymNote/Pods-GymNote.release.xcconfig"; sourceTree = "<group>"; };
 		9C640CDF02DF30CA87AB78FE /* Pods-GymNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymNote.debug.xcconfig"; path = "Target Support Files/Pods-GymNote/Pods-GymNote.debug.xcconfig"; sourceTree = "<group>"; };
 		CDEA7BA808CFAE3021932793 /* libPods-GymNote.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GymNote.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -194,6 +196,7 @@
 				075A31F924096EBD006613A2 /* TrainingNoteView.swift */,
 				07426602240BCB4B003F2C32 /* TrainingSessionView.swift */,
 				0742660C240C11C6003F2C32 /* ExercisesListView.swift */,
+				07C922ED2416DBF800AF6010 /* TrainingSessionListRow.swift */,
 				0742660E240C1B72003F2C32 /* ExerciseListRow.swift */,
 				07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */,
 				07C0B99D23A2A812001632A0 /* CustomReusableComponents */,
@@ -398,6 +401,7 @@
 				073B917A23A4025800F38F1D /* CircleImage.swift in Sources */,
 				074265FF240BC6C6003F2C32 /* Exercise.swift in Sources */,
 				07426608240BFD2A003F2C32 /* AddButton.swift in Sources */,
+				07C922EE2416DBF800AF6010 /* TrainingSessionListRow.swift in Sources */,
 				0727887123AA473500092E24 /* ProfileView.swift in Sources */,
 				07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */,
 				075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */,
