@@ -45,6 +45,7 @@
 		07C0B98E239A73C8001632A0 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B98D239A73C8001632A0 /* HomeView.swift */; };
 		07C0B99823A144DF001632A0 /* KeyboardHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B99723A144DF001632A0 /* KeyboardHost.swift */; };
 		07C0B99C23A273D9001632A0 /* SwitchableSecureField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B99B23A273D9001632A0 /* SwitchableSecureField.swift */; };
+		07C3754E241905AE00A6BE5C /* ExerciseDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C3754D241905AE00A6BE5C /* ExerciseDetails.swift */; };
 		07C922E02410EA2300AF6010 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922DF2410EA2300AF6010 /* SearchBar.swift */; };
 		07C922E22411078700AF6010 /* ExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E12411078700AF6010 /* ExitButton.swift */; };
 		07C922E424110A5700AF6010 /* AddBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E324110A5700AF6010 /* AddBarItem.swift */; };
@@ -96,6 +97,7 @@
 		07C0B98D239A73C8001632A0 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		07C0B99723A144DF001632A0 /* KeyboardHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHost.swift; sourceTree = "<group>"; };
 		07C0B99B23A273D9001632A0 /* SwitchableSecureField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchableSecureField.swift; sourceTree = "<group>"; };
+		07C3754D241905AE00A6BE5C /* ExerciseDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDetails.swift; sourceTree = "<group>"; };
 		07C922DF2410EA2300AF6010 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		07C922E12411078700AF6010 /* ExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitButton.swift; sourceTree = "<group>"; };
 		07C922E324110A5700AF6010 /* AddBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBarItem.swift; sourceTree = "<group>"; };
@@ -195,8 +197,9 @@
 				077ECD3F23B0EFF6005A1B76 /* Profile */,
 				075A31F924096EBD006613A2 /* TrainingNoteView.swift */,
 				07426602240BCB4B003F2C32 /* TrainingSessionView.swift */,
-				0742660C240C11C6003F2C32 /* ExercisesListView.swift */,
 				07C922ED2416DBF800AF6010 /* TrainingSessionListRow.swift */,
+				07C3754D241905AE00A6BE5C /* ExerciseDetails.swift */,
+				0742660C240C11C6003F2C32 /* ExercisesListView.swift */,
 				0742660E240C1B72003F2C32 /* ExerciseListRow.swift */,
 				07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */,
 				07C0B99D23A2A812001632A0 /* CustomReusableComponents */,
@@ -378,6 +381,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07C3754E241905AE00A6BE5C /* ExerciseDetails.swift in Sources */,
 				0736F9DF23CA4CBA00626599 /* DoneButton.swift in Sources */,
 				07C922E22411078700AF6010 /* ExitButton.swift in Sources */,
 				07C0B9832397DE58001632A0 /* UserProfile.swift in Sources */,
