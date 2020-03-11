@@ -12,21 +12,22 @@ struct TrainingSessionListRow: View {
     
     @Binding var exercise: Exercise
     @State var tempExercise = Exercise(name: "")
-    @State var more = true
+    @State var showDetails = true
+    @State var numberOfSeries = 1
     var action: () -> Void
-    @State var dupa = ""
+    
     
     
     var body: some View {
         
         Button(action: {
-            withAnimation { self.more.toggle() }
+            withAnimation { self.showDetails.toggle() }
         }) {
             VStack {
                 HStack {
                     Text(exercise.exerciseName)
                     Spacer()
-                    if more {
+                    if showDetails {
                         Image(systemName: "chevron.up")
                             .font(.headline)
                     } else {
@@ -34,40 +35,19 @@ struct TrainingSessionListRow: View {
                             .font(.headline)
                     }
                 }.padding()
-                if more {
+                if showDetails {
                     List {
                         Section(header: Text("dupa blada")) {
                             HStack {
                                 Text("Number of series:")
                                 Spacer()
                                 Button(action: {
-                                    self.tempExercise.exerciseSeries += 1
+                                    self.numberOfSeries += 1
                                 }) {
                                     Text("add")
                                 }
                             }
-                            HStack {
-                                VStack {
-                                    Text("repeats")
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                    Spacer()
-                                    TextField("...", text: $dupa)
-                                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                                    
-                                }
-                                VStack {
-                                    Text("weight")
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                    Spacer()
-                                    HStack {
-                                        TextField("...", text: self.$dupa)
-                                            .textFieldStyle(RoundedBorderTextFieldStyle())
- 
-                                    }
-                                }
-                            }
+                            
                         }
                     }
                 }

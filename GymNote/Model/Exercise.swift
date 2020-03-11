@@ -9,10 +9,9 @@
 import Foundation
 
 struct Exercise: Hashable {
+    
     var exerciseName: String
-    var exerciseSeries: Int
-    var exerciseRepeats: Int
-    var exerciseWeight: Int?
+    var exerciseSeries: [Series]
     var exerciseIsCheck: Bool
     
     //MARK: String is a built-in type, which means it is hashable by default
@@ -31,40 +30,47 @@ struct Exercise: Hashable {
     }
 
     init(name: String,
-         series: Int,
-         repeats: Int,
-         weight: Int?,
+         series: [Series],
          isCheck: Bool) {
         
         self.exerciseName = name
         self.exerciseSeries = series
-        self.exerciseRepeats = repeats
-        self.exerciseWeight = weight
         self.exerciseIsCheck = isCheck
     }
     
     init(name: String, isCheck: Bool) {
         self.exerciseName = name
-        self.exerciseSeries = 1
-        self.exerciseRepeats = 10
-        self.exerciseWeight = 0
+        self.exerciseSeries = [Series]()
         self.exerciseIsCheck = isCheck
     }
     
     init(name: String) {
         self.exerciseName = name
-        self.exerciseSeries = 1
-        self.exerciseRepeats = 10
-        self.exerciseWeight = 0
+        self.exerciseSeries = [Series]()
         self.exerciseIsCheck = false
     }
     
     static let `default` = Self(
         name: "",
-        series: 4,
-        repeats: 10,
-        weight: 0,
+        series: [Series](),
         isCheck: false
     )
 
+}
+struct Series {
+    var exerciseRepeats: Int
+    var exerciseWeight: Int?
+    
+    init(repeats: Int, weight: Int) {
+        self.exerciseRepeats = repeats
+        self.exerciseWeight = weight
+    }
+    init(repeats: Int) {
+        self.exerciseRepeats = repeats
+        self.exerciseWeight = 0
+    }
+    init() {
+        self.exerciseRepeats = 1
+        self.exerciseWeight = 0
+    }
 }
