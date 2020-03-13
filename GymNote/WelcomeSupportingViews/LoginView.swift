@@ -13,8 +13,8 @@ struct LoginView: View {
     //MARK: Properties
     @EnvironmentObject var session: FireBaseSession
     
-    @State private var email: String = ""
-    @State private var password: String = ""
+    @State private var email: String = "a@a.com"
+    @State private var password: String = "123456"
     
     //MARK: View
     var body: some View {
