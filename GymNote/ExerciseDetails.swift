@@ -15,17 +15,51 @@ struct ExerciseDetails: View {
     @State var repeats = [String]()
     @State var weights = [String]()
     
-    
-    func addSeriesToExercise() {
-        self.tempExercise.exerciseSeries = setSeries(seriesNumber: numberOfSeries)
+    var body: some View {
+        
+        HStack {
+            VStack {
+                Text("repeats")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                
+                ForEach (0 ..< self.repeats.count, id: \.self) { index in
+                    TextField("...", text: self.$repeats[index])
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .keyboardType(.numberPad)
+                }
+            }
+            VStack {
+                Text("weight")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                
+                ForEach (0 ..< self.weights.count, id: \.self) { index in
+                    TextField("...", text: self.$weights[index])
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .keyboardType(.numberPad)
+                }
+            }
+        }.onAppear() {
+            self.repeats = Array(repeating: "", count: self.numberOfSeries)
+            self.weights = Array(repeating: "", count: self.numberOfSeries)
+        }
+        
     }
     
-    func setSeries(seriesNumber: Int) -> [Series] {
+    //MARK: Functions
+    
+    func addSeriesToExercise() {
+        self.tempExercise.exerciseSeries = setSeries()
+    }
+    
+    func setSeries() -> [Series] {
         var tempSeries = [Series]()
         let repeatsAsInt = convertArrayToInt(arrayString: self.repeats)
         let weightsAsInt = convertArrayToInt(arrayString: self.weights)
         
-        for index in (0..<seriesNumber) {
+        for index in (0..<self.numberOfSeries) {
+            print(self.numberOfSeries)
             tempSeries.append(Series(repeats: repeatsAsInt[index], weight: weightsAsInt[index]))
         }
         return tempSeries
@@ -39,45 +73,16 @@ struct ExerciseDetails: View {
         }
         return arrayInt
     }
-    
-    var body: some View {
-        HStack {
-            VStack {
-                Text("repeats")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                Form {
-                    ForEach (0 ..< self.numberOfSeries) { number in
-                        TextField("...", text: self.$repeats[number])
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .keyboardType(.numberPad)
-                    }
-                }
-                
-            }
-            VStack {
-                Text("weight")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                Form {
-                    ForEach (0 ..< self.numberOfSeries) { number in
-                        TextField("...", text: self.$weights[number])
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .keyboardType(.numberPad)
-                    }
-                }
-                
-            }
-        }.onDisappear(perform: addSeriesToExercise)
-    }
 }
 
 struct ExerciseDetails_Previews: PreviewProvider {
     
-    @State static var prevNumberOfSeries = 5
+    @State static var prevNumberOfSeries = 1
     @State static var prevTempExercise = Exercise(name: "example1")
     
     static var previews: some View {
         ExerciseDetails(numberOfSeries: $prevNumberOfSeries, tempExercise: $prevTempExercise)
     }
 }
+
+

@@ -20,32 +20,34 @@ struct TrainingSessionView: View {
     @State var trainingImage  = Image("staticImage")
     
     var body: some View {
-        KeyboardHost {
-            VStack {
-                DateBelt()
-                TitleBelt(title: $trainingTitle, subtitle: $trainingSubscription, editMode: $editMode, image: $trainingImage)
-                Divider()
-                Spacer()
-                List(selectedExercises, id: \.self) { exercise in
-                    Text(exercise.exerciseName)
+        
+        VStack {
+            DateBelt()
+            TitleBelt(title: $trainingTitle, subtitle: $trainingSubscription, editMode: $editMode, image: $trainingImage)
+            Divider()
+            Spacer()
+            if selectedExercises.count != 0 {
+                List {
+                    ForEach(0..<selectedExercises.count, id: \.self) { index in
+                        TrainingSessionListRow(exercise: self.$selectedExercises[index])
+                        //Text("\(self.selectedExercises[index].exerciseName)")
+                    }
                 }
-                
-                AddButton(addingMode: $addMode)
-                    .padding()
-                    .sheet(isPresented: $addMode) {
-                        ExercisesListView(finishTyping: self.$addMode, selectedExercises: self.$selectedExercises)
-                }
-                
             }
-            .navigationBarTitle("Edit Profile", displayMode: .inline)
-            .navigationBarBackButtonHidden(true)
-            .navigationBarItems(
-                leading: BackButton(),
-                trailing: DoneButton(isDone: $doneCreating)
-            )
+            
+            AddButton(addingMode: $addMode)
+                .padding()
+                .sheet(isPresented: $addMode) {
+                    ExercisesListView(finishTyping: self.$addMode, selectedExercises: self.$selectedExercises)
+            }
             
         }
-        
+        .navigationBarTitle("Edit Profile", displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(
+            leading: BackButton(),
+            trailing: DoneButton(isDone: $doneCreating)
+        )
     }
 }
 
