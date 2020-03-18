@@ -30,7 +30,6 @@ struct TrainingSessionView: View {
                 List {
                     ForEach(0..<selectedExercises.count, id: \.self) { index in
                         TrainingSessionListRow(exercise: self.$selectedExercises[index])
-                        //Text("\(self.selectedExercises[index].exerciseName)")
                     }
                 }
             }
@@ -48,16 +47,22 @@ struct TrainingSessionView: View {
             leading: BackButton(),
             trailing: DoneButton(isDone: $doneCreating)
         )
+        
+        
     }
 }
 
 struct TrainingSessionView_Previews: PreviewProvider {
     
     @State static var session = FireBaseSession()
+    @State static var prevSelectedExercise = [Exercise]()/*[
+     Exercise(name: "egzample 1"),
+     Exercise(name: "egzample 2"),
+     Exercise(name: "egzample 3")]*/
     
     static var previews: some View {
         NavigationView {
-            TrainingSessionView()
+            TrainingSessionView(selectedExercises: prevSelectedExercise)
                 .environmentObject(session)
         }
         

@@ -11,11 +11,8 @@ import SwiftUI
 struct TrainingSessionListRow: View {
     
     @Binding var exercise: Exercise
-    @State var tempExercise = Exercise(name: "")
     @State var showDetails = false
-    @State var numberOfSeries = 3
-    
-    
+
     var body: some View {
         
         VStack {
@@ -25,19 +22,20 @@ struct TrainingSessionListRow: View {
                 VStack {
                     HStack {
                         Text(exercise.exerciseName)
+                            .font(.callout)
                         Spacer()
                         if showDetails {
                             Image(systemName: "chevron.up")
-                                .font(.headline)
+                                .font(.callout)
                         } else {
                             Image(systemName: "chevron.down")
-                                .font(.headline)
+                                .font(.callout)
                         }
                     }.padding()
                 }
             }
             if showDetails {
-                ExerciseDetails(numberOfSeries: $numberOfSeries, tempExercise: $exercise)
+                ExerciseDetails(tempExercise: $exercise)
             }
         }
         

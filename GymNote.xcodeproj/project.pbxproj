@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0701B65A24224AFA00DFF955 /* ResizableRectangularButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0701B65924224AFA00DFF955 /* ResizableRectangularButtonStyle.swift */; };
 		0720992123F7417E00B75CF5 /* DoneConformAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0720992023F7417E00B75CF5 /* DoneConformAlert.swift */; };
 		0727887123AA473500092E24 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0727887023AA473500092E24 /* ProfileView.swift */; };
 		0736F9DB23CA395F00626599 /* CustomEditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0736F9DA23CA395F00626599 /* CustomEditButton.swift */; };
@@ -57,6 +58,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0701B65924224AFA00DFF955 /* ResizableRectangularButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizableRectangularButtonStyle.swift; sourceTree = "<group>"; };
 		0720992023F7417E00B75CF5 /* DoneConformAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneConformAlert.swift; sourceTree = "<group>"; };
 		0727887023AA473500092E24 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		0736F9DA23CA395F00626599 /* CustomEditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEditButton.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				0757023E23A4D89500030991 /* RectangularButtonStyle.swift */,
+				0701B65924224AFA00DFF955 /* ResizableRectangularButtonStyle.swift */,
 				07A8D3FC23AD338B0051D493 /* ProfileButton.swift */,
 				07A8D3FE23AD44E70051D493 /* BackButton.swift */,
 				0736F9DE23CA4CBA00626599 /* DoneButton.swift */,
@@ -401,6 +404,7 @@
 				077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */,
 				0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */,
 				07426603240BCB4B003F2C32 /* TrainingSessionView.swift in Sources */,
+				0701B65A24224AFA00DFF955 /* ResizableRectangularButtonStyle.swift in Sources */,
 				073F482723F55F47003011F0 /* CaptureImageView.swift in Sources */,
 				073B917A23A4025800F38F1D /* CircleImage.swift in Sources */,
 				074265FF240BC6C6003F2C32 /* Exercise.swift in Sources */,
