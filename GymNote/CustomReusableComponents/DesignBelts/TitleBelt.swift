@@ -26,7 +26,7 @@ struct TitleBelt: View {
                     gradient: Gradient(
                         colors: colorScheme == .light ? lightBeltColors : darkBeltColors),
                     startPoint: .leading, endPoint: .trailing))
-                .frame(width: UIScreen.main.bounds.width, height: 140, alignment: .trailing)
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/5, alignment: .trailing)
                 .overlay(CircleImage(image: image), alignment: .leading)
             
             VStack(alignment: .center) {
@@ -73,7 +73,7 @@ struct TitleBelt: View {
                         .font(.subheadline)
                 }
             }.offset(x: UIScreen.main.bounds.width/4)
-        }.padding(.bottom, 50)
+        }.padding(.bottom, 25)
     }
 }
 
