@@ -39,7 +39,7 @@ struct ExerciseDetails: View {
                         //TODO: decrease numberOfSeries if it is greater then 1, remove elements in arrays
                         print("Delete series button tapped!")
                     })
-                        .buttonStyle(ResizableRectangularButtonStyle(
+                        .buttonStyle(RectangularButtonStyle(
                             fromColor: .black,
                             toColor: .red,
                             minWidth: 10, maxWidth: 25,
@@ -51,7 +51,7 @@ struct ExerciseDetails: View {
                 self.numberOfSeries += 1
                 self.repeats.append("")
                 self.weights.append("")
-            }).buttonStyle(ResizableRectangularButtonStyle(fromColor: .black, toColor: .green,
+            }).buttonStyle(RectangularButtonStyle(fromColor: .black, toColor: .green,
                                                            minHeight: 10, maxHeight: 25))
                 
             

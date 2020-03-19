@@ -26,6 +26,7 @@ struct AddButton: View {
                 self.addButtonImage
                     .font(.largeTitle)
                     .foregroundColor(colorScheme == .light ? .white : .black)
+                    .padding()
                 Spacer()
                 Text(addButtonText)
                 Spacer()
