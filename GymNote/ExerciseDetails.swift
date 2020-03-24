@@ -14,6 +14,8 @@ struct ExerciseDetails: View {
     @State var numberOfSeries = 1
     @State var repeats = [String]()
     @State var weights = [String]()
+    @State var weight = ""
+    @State var rep = ""
     
     var body: some View {
         
@@ -22,22 +24,25 @@ struct ExerciseDetails: View {
                 Text("repeats")
                     .offset(x: -55)
                 Text("weight")
-                    .offset(x: 10)
+                    //.offset(x: 15)
+                    .offset(x: UIScreen.main.bounds.width/15)
             }
             .font(.subheadline)
             .foregroundColor(.magnesium)
             
             ForEach (0 ..< self.weights.count, id: \.self) { index in
                 HStack {
-                    TextField("...", text: self.$weights[index])
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .keyboardType(.numberPad)
-                    TextField("...", text: self.$repeats[index])
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .keyboardType(.numberPad)
+                    SeriesTextFields(repeats: self.$repeats,
+                                     weights: self.$weights,
+                                     index: index,
+                                     reps: self.rep,
+                                     weight: self.weight)
+                    
                     Button("-", action: {
                         //TODO: decrease numberOfSeries if it is greater then 1, remove elements in arrays
                         print("Delete series button tapped!")
+                        self.removeRows(at: index)
+                        
                     })
                         .buttonStyle(RectangularButtonStyle(
                             fromColor: .black,
@@ -96,6 +101,12 @@ struct ExerciseDetails: View {
             arrayInt.append(Int(stringElement) ?? 0)
         }
         return arrayInt
+    }
+    
+    func removeRows(at offsets: Int) {
+        repeats.remove(at: offsets)
+        weights.remove(at: offsets)
+        numberOfSeries -= 1
     }
     
 }

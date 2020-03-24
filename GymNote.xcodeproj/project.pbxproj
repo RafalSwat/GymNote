@@ -29,6 +29,7 @@
 		075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F223FF19ED006613A2 /* DateConverter.swift */; };
 		075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F4240683C4006613A2 /* FireBaseSession.swift */; };
 		075A31FA24096EBD006613A2 /* TrainingNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F924096EBD006613A2 /* TrainingNoteView.swift */; };
+		075DE10C242A2CB8005666A7 /* SeriesTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075DE10B242A2CB8005666A7 /* SeriesTextFields.swift */; };
 		077ECD4123B0F020005A1B76 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECD4023B0F020005A1B76 /* ProfileEditView.swift */; };
 		077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECD4223B0F4A1005A1B76 /* UserData.swift */; };
 		07A8D3FD23AD338B0051D493 /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A8D3FC23AD338B0051D493 /* ProfileButton.swift */; };
@@ -79,6 +80,7 @@
 		075A31F223FF19ED006613A2 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		075A31F4240683C4006613A2 /* FireBaseSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseSession.swift; sourceTree = "<group>"; };
 		075A31F924096EBD006613A2 /* TrainingNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingNoteView.swift; sourceTree = "<group>"; };
+		075DE10B242A2CB8005666A7 /* SeriesTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesTextFields.swift; sourceTree = "<group>"; };
 		077ECD4023B0F020005A1B76 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		077ECD4223B0F4A1005A1B76 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		07A8D3FC23AD338B0051D493 /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				07426602240BCB4B003F2C32 /* TrainingSessionView.swift */,
 				07C922ED2416DBF800AF6010 /* TrainingSessionListRow.swift */,
 				07C3754D241905AE00A6BE5C /* ExerciseDetails.swift */,
+				075DE10B242A2CB8005666A7 /* SeriesTextFields.swift */,
 				0742660C240C11C6003F2C32 /* ExercisesListView.swift */,
 				0742660E240C1B72003F2C32 /* ExerciseListRow.swift */,
 				07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */,
@@ -400,6 +403,7 @@
 				07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */,
 				077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */,
 				0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */,
+				075DE10C242A2CB8005666A7 /* SeriesTextFields.swift in Sources */,
 				07426603240BCB4B003F2C32 /* TrainingSessionView.swift in Sources */,
 				073F482723F55F47003011F0 /* CaptureImageView.swift in Sources */,
 				073B917A23A4025800F38F1D /* CircleImage.swift in Sources */,
