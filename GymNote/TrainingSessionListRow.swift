@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TrainingSessionListRow: View {
     
-    @Binding var exercise: Exercise
+    @Binding var exercise: Exercise // binding from list of selected exercises
     @State var showDetails = false
 
     var body: some View {
@@ -35,10 +35,9 @@ struct TrainingSessionListRow: View {
                 }
             }
             if showDetails {
-                ExerciseDetails(tempExercise: $exercise)
+                ExerciseDetails(exercise: $exercise)
             }
         }
-        
     }
 }
 

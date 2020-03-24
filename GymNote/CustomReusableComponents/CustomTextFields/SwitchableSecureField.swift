@@ -23,8 +23,7 @@ struct SwitchableSecureField: View {
                 TextField(placeHolder, text: $secureText)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
             }
-                
-
+            
             HStack {
                 Spacer()
                 Button(action: {

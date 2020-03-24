@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ExerciseDetails: View {
     
-    @Binding var tempExercise: Exercise
+    @Binding var exercise: Exercise // binding from list of selected exercises
     @State var numberOfSeries = 1
     @State var repeats = [String]()
     @State var weights = [String]()
@@ -24,8 +24,7 @@ struct ExerciseDetails: View {
                 Text("repeats")
                     .offset(x: -55)
                 Text("weight")
-                    //.offset(x: 15)
-                    .offset(x: UIScreen.main.bounds.width/15)
+                    .offset(x: 15)
             }
             .font(.subheadline)
             .foregroundColor(.magnesium)
@@ -39,12 +38,10 @@ struct ExerciseDetails: View {
                                      weight: self.weight)
                     
                     Button("-", action: {
-                        //TODO: decrease numberOfSeries if it is greater then 1, remove elements in arrays
                         print("Delete series button tapped!")
                         self.removeRows(at: index)
                         
-                    })
-                        .buttonStyle(RectangularButtonStyle(
+                    }).buttonStyle(RectangularButtonStyle(
                             fromColor: .black,
                             toColor: .red,
                             minWidth: 10, maxWidth: 25,
@@ -53,15 +50,10 @@ struct ExerciseDetails: View {
             }
             
             Button("add series", action: {
-                self.numberOfSeries += 1
-                self.repeats.append("")
-                self.weights.append("")
-            }).buttonStyle(RectangularButtonStyle(fromColor: .black, toColor: .green,
-                                                           minHeight: 10, maxHeight: 25))
-                
-            
-            
-            
+                self.addRows()
+            }).buttonStyle(RectangularButtonStyle(fromColor: .black,
+                                                  toColor: .green,
+                                                  minHeight: 10, maxHeight: 25))
         }
         .onAppear() {
             self.repeats = Array(repeating: "", count: self.numberOfSeries)
@@ -69,17 +61,16 @@ struct ExerciseDetails: View {
         }
         .padding(.horizontal)
         .padding(.bottom)
-        .background(LinearGradient(gradient: Gradient(
-            colors: [.gray ,.customDark]),
-                                   startPoint: .leading, endPoint: .trailing
-        ))
+        .background(LinearGradient(gradient: Gradient(colors: [.gray ,.customDark]),
+                                   startPoint: .leading, endPoint: .trailing))
         
     }
     
     //MARK: Functions
     
+    //********ADD SERIES MECHANIC - (3FUNC)****************
     func addSeriesToExercise() {
-        self.tempExercise.exerciseSeries = setSeries()
+        self.exercise.exerciseSeries = setSeries()
     }
     
     func setSeries() -> [Series] {
@@ -102,11 +93,18 @@ struct ExerciseDetails: View {
         }
         return arrayInt
     }
+    //***************************************************
+    
+    func addRows() {
+        self.numberOfSeries += 1
+        self.repeats.append("")
+        self.weights.append("")
+    }
     
     func removeRows(at offsets: Int) {
-        repeats.remove(at: offsets)
-        weights.remove(at: offsets)
-        numberOfSeries -= 1
+        self.repeats.remove(at: offsets)
+        self.weights.remove(at: offsets)
+        self.numberOfSeries -= 1
     }
     
 }
@@ -116,7 +114,7 @@ struct ExerciseDetails_Previews: PreviewProvider {
     @State static var prevTempExercise = Exercise(name: "example1")
     
     static var previews: some View {
-        ExerciseDetails(tempExercise: $prevTempExercise)
+        ExerciseDetails(exercise: $prevTempExercise)
     }
 }
 

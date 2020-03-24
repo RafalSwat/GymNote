@@ -158,6 +158,15 @@
 			path = CustomButtons;
 			sourceTree = "<group>";
 		};
+		075DE10D242A7CAC005666A7 /* CustomTextFields */ = {
+			isa = PBXGroup;
+			children = (
+				07C0B99B23A273D9001632A0 /* SwitchableSecureField.swift */,
+				075DE10B242A2CB8005666A7 /* SeriesTextFields.swift */,
+			);
+			path = CustomTextFields;
+			sourceTree = "<group>";
+		};
 		077ECD3F23B0EFF6005A1B76 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,7 +210,6 @@
 				07426602240BCB4B003F2C32 /* TrainingSessionView.swift */,
 				07C922ED2416DBF800AF6010 /* TrainingSessionListRow.swift */,
 				07C3754D241905AE00A6BE5C /* ExerciseDetails.swift */,
-				075DE10B242A2CB8005666A7 /* SeriesTextFields.swift */,
 				0742660C240C11C6003F2C32 /* ExercisesListView.swift */,
 				0742660E240C1B72003F2C32 /* ExerciseListRow.swift */,
 				07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */,
@@ -256,8 +264,8 @@
 			children = (
 				07426606240BCEC4003F2C32 /* DesignBelts */,
 				075A31F624094C9F006613A2 /* CustomButtons */,
+				075DE10D242A7CAC005666A7 /* CustomTextFields */,
 				07C0B99723A144DF001632A0 /* KeyboardHost.swift */,
-				07C0B99B23A273D9001632A0 /* SwitchableSecureField.swift */,
 				073B917923A4025800F38F1D /* CircleImage.swift */,
 				0757024223A4EAD500030991 /* ColorfulPicker.swift */,
 				0720992023F7417E00B75CF5 /* DoneConformAlert.swift */,

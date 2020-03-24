@@ -11,9 +11,9 @@ import SwiftUI
 struct TrainingSessionView: View {
     
     @EnvironmentObject var session: FireBaseSession
-    @State var addMode = false
-    @State var doneCreating = false
-    @State var editMode = true
+    @State var addMode = false  //needed to show sheet with exercises
+    @State var doneCreating = false // needed to save training
+    @State var editMode = true  // needed to display correct "titleBelt"
     @State var selectedExercises = [Exercise]()
     @State var trainingTitle = ""
     @State var trainingSubscription = ""
@@ -47,18 +47,13 @@ struct TrainingSessionView: View {
             leading: BackButton(),
             trailing: DoneButton(isDone: $doneCreating)
         )
-        
-        
     }
 }
 
 struct TrainingSessionView_Previews: PreviewProvider {
     
     @State static var session = FireBaseSession()
-    @State static var prevSelectedExercise = [Exercise]()/*[
-     Exercise(name: "egzample 1"),
-     Exercise(name: "egzample 2"),
-     Exercise(name: "egzample 3")]*/
+    @State static var prevSelectedExercise = [Exercise]()
     
     static var previews: some View {
         NavigationView {
