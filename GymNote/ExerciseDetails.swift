@@ -10,8 +10,7 @@ import SwiftUI
 
 struct ExerciseDetails: View {
     
-    @Binding var exercise: Exercise // binding from list of selected exercises
-    @State var numberOfSeries = 1
+    @Binding var exercise: Exercise // binding from list of selected 
     @State var repeats = [String]()
     @State var weights = [String]()
     @State var weight = ""
@@ -38,9 +37,7 @@ struct ExerciseDetails: View {
                                      weight: self.weight)
                     
                     Button("-", action: {
-                        print("Delete series button tapped!")
                         self.removeRows(at: index)
-                        
                     }).buttonStyle(RectangularButtonStyle(
                             fromColor: .black,
                             toColor: .red,
@@ -56,8 +53,8 @@ struct ExerciseDetails: View {
                                                   minHeight: 10, maxHeight: 25))
         }
         .onAppear() {
-            self.repeats = Array(repeating: "", count: self.numberOfSeries)
-            self.weights = Array(repeating: "", count: self.numberOfSeries)
+            self.repeats = Array(repeating: "", count: self.exercise.exerciseNumberOfSerises)
+            self.weights = Array(repeating: "", count: self.exercise.exerciseNumberOfSerises)
         }
         .padding(.horizontal)
         .padding(.bottom)
@@ -78,8 +75,8 @@ struct ExerciseDetails: View {
         let repeatsAsInt = convertArrayToInt(arrayString: self.repeats)
         let weightsAsInt = convertArrayToInt(arrayString: self.weights)
         
-        for index in (0..<self.numberOfSeries) {
-            print(self.numberOfSeries)
+        for index in (0..<self.exercise.exerciseNumberOfSerises) {
+            print(self.exercise.exerciseNumberOfSerises)
             tempSeries.append(Series(repeats: repeatsAsInt[index], weight: weightsAsInt[index]))
         }
         return tempSeries
@@ -93,10 +90,10 @@ struct ExerciseDetails: View {
         }
         return arrayInt
     }
-    //***************************************************
+    //*******************************************************
     
     func addRows() {
-        self.numberOfSeries += 1
+        self.exercise.exerciseNumberOfSerises += 1
         self.repeats.append("")
         self.weights.append("")
     }
@@ -104,7 +101,7 @@ struct ExerciseDetails: View {
     func removeRows(at offsets: Int) {
         self.repeats.remove(at: offsets)
         self.weights.remove(at: offsets)
-        self.numberOfSeries -= 1
+        self.exercise.exerciseNumberOfSerises -= 1
     }
     
 }

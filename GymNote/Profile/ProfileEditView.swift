@@ -23,9 +23,6 @@ struct ProfileEditView: View {
     var userPossibleGender = ["non", "male", "female"]
     @State var selectedGender = 0
     
-    
-    
-    
     var body: some View {
         
         KeyboardHost {

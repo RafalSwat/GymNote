@@ -8,11 +8,12 @@
 
 import Foundation
 
-struct Exercise: Hashable {
+class Exercise: Hashable, ObservableObject {
     
-    var exerciseName: String
-    var exerciseSeries: [Series]
-    var exerciseIsCheck: Bool
+    @Published var exerciseName: String
+    @Published var exerciseSeries: [Series]
+    @Published var exerciseIsCheck: Bool
+    @Published var exerciseNumberOfSerises: Int
     
     //MARK: String is a built-in type, which means it is hashable by default
 //    public var hashValue: Int {
@@ -31,30 +32,35 @@ struct Exercise: Hashable {
 
     init(name: String,
          series: [Series],
-         isCheck: Bool) {
+         isCheck: Bool,
+         numberOfSeries: Int) {
         
         self.exerciseName = name
         self.exerciseSeries = series
         self.exerciseIsCheck = isCheck
+        self.exerciseNumberOfSerises = numberOfSeries
     }
     
     init(name: String, isCheck: Bool) {
         self.exerciseName = name
         self.exerciseSeries = [Series]()
         self.exerciseIsCheck = isCheck
+        self.exerciseNumberOfSerises = 1
     }
     
     init(name: String) {
         self.exerciseName = name
         self.exerciseSeries = [Series]()
         self.exerciseIsCheck = false
+        self.exerciseNumberOfSerises = 1
     }
     
-    static let `default` = Self(
-        name: "",
-        series: [Series](),
-        isCheck: false
-    )
+//    static let `default` = Self(
+//        name: "",
+//        series: [Series](),
+//        isCheck: false,
+//        numberOfSeries: 1
+//    )
 
 }
 struct Series {
