@@ -17,7 +17,8 @@
 		073F482423F43A8F003011F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 073F482323F43A8F003011F0 /* GoogleService-Info.plist */; };
 		073F482723F55F47003011F0 /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073F482623F55F47003011F0 /* CaptureImageView.swift */; };
 		073F482923F5604C003011F0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073F482823F5604C003011F0 /* Coordinator.swift */; };
-		074265FB240BC3BF003F2C32 /* UserTrainings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074265FA240BC3BF003F2C32 /* UserTrainings.swift */; };
+		0740B3C7242E0F56003D7520 /* Training.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0740B3C6242E0F56003D7520 /* Training.swift */; };
+		0740B3C9242E1974003D7520 /* UserTrainings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0740B3C8242E1974003D7520 /* UserTrainings.swift */; };
 		074265FF240BC6C6003F2C32 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074265FE240BC6C6003F2C32 /* Exercise.swift */; };
 		07426603240BCB4B003F2C32 /* TrainingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07426602240BCB4B003F2C32 /* TrainingSessionView.swift */; };
 		07426605240BCE20003F2C32 /* DateBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07426604240BCE20003F2C32 /* DateBelt.swift */; };
@@ -68,7 +69,8 @@
 		073F482323F43A8F003011F0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		073F482623F55F47003011F0 /* CaptureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
 		073F482823F5604C003011F0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
-		074265FA240BC3BF003F2C32 /* UserTrainings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTrainings.swift; sourceTree = "<group>"; };
+		0740B3C6242E0F56003D7520 /* Training.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Training.swift; sourceTree = "<group>"; };
+		0740B3C8242E1974003D7520 /* UserTrainings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTrainings.swift; sourceTree = "<group>"; };
 		074265FE240BC6C6003F2C32 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 		07426602240BCB4B003F2C32 /* TrainingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionView.swift; sourceTree = "<group>"; };
 		07426604240BCE20003F2C32 /* DateBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateBelt.swift; sourceTree = "<group>"; };
@@ -234,10 +236,11 @@
 		07C0B97D2397D0E2001632A0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				07C0B9822397DE58001632A0 /* UserProfile.swift */,
-				074265FA240BC3BF003F2C32 /* UserTrainings.swift */,
-				074265FE240BC6C6003F2C32 /* Exercise.swift */,
 				077ECD4223B0F4A1005A1B76 /* UserData.swift */,
+				07C0B9822397DE58001632A0 /* UserProfile.swift */,
+				0740B3C8242E1974003D7520 /* UserTrainings.swift */,
+				0740B3C6242E0F56003D7520 /* Training.swift */,
+				074265FE240BC6C6003F2C32 /* Exercise.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0740B3C7242E0F56003D7520 /* Training.swift in Sources */,
 				07C3754E241905AE00A6BE5C /* ExerciseDetails.swift in Sources */,
 				0736F9DF23CA4CBA00626599 /* DoneButton.swift in Sources */,
 				07C922E22411078700AF6010 /* ExitButton.swift in Sources */,
@@ -421,7 +425,6 @@
 				0727887123AA473500092E24 /* ProfileView.swift in Sources */,
 				07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */,
 				075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */,
-				074265FB240BC3BF003F2C32 /* UserTrainings.swift in Sources */,
 				07C0B98B23992267001632A0 /* SignupView.swift in Sources */,
 				07C922E62411140000AF6010 /* NavigationConfigurator.swift in Sources */,
 				0736F9DB23CA395F00626599 /* CustomEditButton.swift in Sources */,
@@ -432,6 +435,7 @@
 				07426605240BCE20003F2C32 /* DateBelt.swift in Sources */,
 				0736F9DD23CA3F0C00626599 /* ChangeButton.swift in Sources */,
 				07C0B99C23A273D9001632A0 /* SwitchableSecureField.swift in Sources */,
+				0740B3C9242E1974003D7520 /* UserTrainings.swift in Sources */,
 				073F482923F5604C003011F0 /* Coordinator.swift in Sources */,
 				07C0B96C2397BE00001632A0 /* SceneDelegate.swift in Sources */,
 				0757024323A4EAD500030991 /* ColorfulPicker.swift in Sources */,
