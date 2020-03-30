@@ -11,6 +11,10 @@ import Combine
 
 
 final class UserData: ObservableObject {
-    @Published var profile = UserProfile.default
+    @Published var userProfile: UserProfile
+    
+    init(profile: UserProfile) {
+        self.userProfile = profile
+    }
 }
 
