@@ -53,7 +53,7 @@ struct TrainingSessionView: View {
                         .edgesIgnoringSafeArea(.vertical)
                     GeometryReader { geometry in
                         DoneConformAlert(showAlert: self.$doneCreating, alertTitle: "", alertMessage: "MESS", alertAction: {
-                            self.saveTrainingOffline()
+                            self.saveTraining()
                             self.doneCreating.toggle()
                             
                         })
@@ -66,7 +66,7 @@ struct TrainingSessionView: View {
         
     }
     
-    func saveTrainingOffline() {
+    func saveTraining() {
         let training = Training(name: trainingTitle,
                                 subscription: trainingSubscription,
                                 date: DateConverter.dateFormat.string(from: Date()),
