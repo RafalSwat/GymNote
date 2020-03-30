@@ -28,7 +28,7 @@ struct CustomEditButton: View {
 
 struct CustomEditButton_Previews: PreviewProvider {
     
-    @State static var prevProfile = UserProfile.default
+    @State static var prevProfile = UserProfile()
     
     static var previews: some View {
         CustomEditButton(profile: $prevProfile)

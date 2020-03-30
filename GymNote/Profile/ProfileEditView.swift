@@ -14,7 +14,7 @@ struct ProfileEditView: View {
     
     @EnvironmentObject var session: FireBaseSession
     @Binding var profile: UserProfile
-    @State var tempUserProfile = UserProfile.default
+    @State var tempUserProfile = UserProfile()
     //var to change photo mechanics
     @State var doneUpdating = false
     @State var doneChangingPhoto = false
@@ -162,7 +162,7 @@ struct ProfileEditView: View {
 
 struct ProfileEditView_Previews: PreviewProvider {
     
-    @State static var profile = UserProfile.default
+    @State static var profile = UserProfile()
     
     static var previews: some View {
         NavigationView {

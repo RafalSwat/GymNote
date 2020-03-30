@@ -43,7 +43,7 @@ struct HomeView: View {
         .navigationBarTitle("Home", displayMode: .inline)
         .navigationBarItems(
             leading: BackButton(),
-            trailing: ProfileButton(profile: self.session.userSession ?? UserProfile.default)
+            trailing: ProfileButton(profile: self.session.userSession?.userProfile ?? UserProfile())
         )
         .onAppear(perform: getUser)
     }

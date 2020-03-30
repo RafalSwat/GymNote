@@ -43,7 +43,7 @@ struct TrainingNoteView: View {
         .navigationBarTitle("Training Note", displayMode: .inline)
         .navigationBarItems(
             leading: BackButton(),
-            trailing: ProfileButton(profile: session.userSession ?? UserProfile.default)
+            trailing: ProfileButton(profile: session.userSession?.userProfile ?? UserProfile())
         )
     }
     
