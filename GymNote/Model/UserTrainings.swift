@@ -10,10 +10,10 @@ import Foundation
 import Combine
 import SwiftUI
 
-class UserTrainnings: ObservableObject {
+class UserTrainnings {
     
-    @Published var userID: String
-    @Published var listOfTrainings: [Training]
+    var userID: String
+    var listOfTrainings: [Training]
     
     init(id: String,
          trainings: [Training]) {

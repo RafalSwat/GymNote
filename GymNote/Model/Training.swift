@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class Training: ObservableObject {
+class Training {
     
     var trainingName: String
     var trainingSubscription: String
