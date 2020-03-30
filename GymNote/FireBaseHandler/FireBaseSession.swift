@@ -111,7 +111,7 @@ class FireBaseSession: ObservableObject {
                                                   height: value["height"] as! Int,
                                                   userDateOfBirth: convertDate)
                     
-                    self.userSession = UserData(profile: profile)
+                    self.userSession = UserData(profile: profile, uID: userID)
                 } 
             } else {
                 // User has no data on FirebaseDatabase, so we set up default on (new user)
@@ -123,7 +123,7 @@ class FireBaseSession: ObservableObject {
                                            profileImage: Image("staticImage"),
                                            height: 175,
                                            userDateOfBirth: Date())
-                self.userSession = UserData(profile: profile)
+                self.userSession = UserData(profile: profile, uID: userID)
                 
                 if let newUser = self.userSession?.userProfile {
                     
