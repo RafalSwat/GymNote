@@ -20,6 +20,49 @@ struct TrainingSessionView: View {
     @State var trainingImage  = Image("staticImage")
     
     var body: some View {
+        ZStack {
+            VStack {
+                DateBelt()
+                TitleBelt(title: $trainingTitle, subtitle: $trainingSubscription, editMode: $editMode, image: $trainingImage)
+                Divider()
+                Spacer()
+                if selectedExercises.count != 0 {
+                    List {
+                        ForEach(0..<selectedExercises.count, id: \.self) { index in
+                            TrainingSessionListRow(exercise: self.$selectedExercises[index])
+                        }
+                    }
+                }
+                
+                AddButton(addingMode: $addMode)
+                    .padding()
+                    .sheet(isPresented: $addMode) {
+                        ExercisesListView(finishTyping: self.$addMode, selectedExercises: self.$selectedExercises)
+                }
+                
+            }
+            .navigationBarTitle("Edit Profile", displayMode: .inline)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(
+                leading: BackButton(),
+                trailing: DoneButton(isDone: $doneCreating)
+            )
+            if (doneCreating) {
+                ZStack {
+                    Color.black.opacity(0.4)
+                        .edgesIgnoringSafeArea(.vertical)
+                    GeometryReader { geometry in
+                        DoneConformAlert(showAlert: self.$doneCreating, alertTitle: "", alertMessage: "MESS", alertAction: {
+                            self.saveTrainingOffline()
+                            self.doneCreating.toggle()
+                            
+                        })
+                            .padding()
+                            .position(x: geometry.size.width/2, y: geometry.size.height/2)
+                    }
+                }
+            }
+        }
         
     }
     
