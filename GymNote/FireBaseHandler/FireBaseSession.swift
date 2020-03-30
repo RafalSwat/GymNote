@@ -16,7 +16,7 @@ class FireBaseSession: ObservableObject {
     //MARK: Properties
     var didChange = PassthroughSubject<FireBaseSession, Never>()
     
-    @Published var userSession: UserProfile? {
+    @Published var userSession: UserData? {
         didSet {self.didChange.send(self)}
     }
     @Published var noErrorAppearDuringAuth: Bool = false {
@@ -102,18 +102,20 @@ class FireBaseSession: ObservableObject {
                 if let value = snapshot.value as? [String: Any] {
                     let strDate = value["dateOfBirth"] as! String
                     let convertDate = DateConverter().convertFromString(dateString: strDate)
-                    self.userSession = UserProfile(uID: userID,
-                                               email: userEmail,
-                                               name: value["name"] as! String,
-                                               surname: value["surname"] as! String,
-                                               gender: value["gender"] as! String,
-                                               profileImage: Image("staticImage"),
-                                               height: value["height"] as! Int,
-                                               userDateOfBirth: convertDate)
+                    let profile = UserProfile(uID: userID,
+                                                  email: userEmail,
+                                                  name: value["name"] as! String,
+                                                  surname: value["surname"] as! String,
+                                                  gender: value["gender"] as! String,
+                                                  profileImage: Image("staticImage"),
+                                                  height: value["height"] as! Int,
+                                                  userDateOfBirth: convertDate)
+                    
+                    self.userSession = UserData(profile: profile)
                 } 
             } else {
                 // User has no data on FirebaseDatabase, so we set up default on (new user)
-                self.userSession = UserProfile(uID: userID,
+                let profile = UserProfile(uID: userID,
                                            email: userEmail,
                                            name: "",
                                            surname: "",
@@ -121,8 +123,9 @@ class FireBaseSession: ObservableObject {
                                            profileImage: Image("staticImage"),
                                            height: 175,
                                            userDateOfBirth: Date())
+                self.userSession = UserData(profile: profile)
                 
-                if let newUser = self.userSession {
+                if let newUser = self.userSession?.userProfile {
                     
                     self.addUserToBase(user: newUser)
                 }
