@@ -12,11 +12,11 @@ import Combine
 
 final class UserData: ObservableObject {
     @Published var userProfile: UserProfile
-    @Published var userTrainings: UserTrainnings?
+    @Published var userTrainings: UserTrainings?
     
     init(profile: UserProfile, uID: String) {
         self.userProfile = profile
-        self.userTrainings = UserTrainnings(id: uID, trainings: [Training]())
+        self.userTrainings = UserTrainings(id: uID, trainings: [Training]())
     }
 }
 

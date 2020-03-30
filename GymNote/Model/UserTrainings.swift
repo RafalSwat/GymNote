@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class UserTrainnings {
+class UserTrainings {
     
     var userID: String
     var listOfTrainings: [Training]
