@@ -21,32 +21,14 @@ struct TrainingSessionView: View {
     
     var body: some View {
         
-        VStack {
-            DateBelt()
-            TitleBelt(title: $trainingTitle, subtitle: $trainingSubscription, editMode: $editMode, image: $trainingImage)
-            Divider()
-            Spacer()
-            if selectedExercises.count != 0 {
-                List {
-                    ForEach(0..<selectedExercises.count, id: \.self) { index in
-                        TrainingSessionListRow(exercise: self.$selectedExercises[index])
-                    }
-                }
-            }
-            
-            AddButton(addingMode: $addMode)
-                .padding()
-                .sheet(isPresented: $addMode) {
-                    ExercisesListView(finishTyping: self.$addMode, selectedExercises: self.$selectedExercises)
-            }
-            
-        }
-        .navigationBarTitle("Edit Profile", displayMode: .inline)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(
-            leading: BackButton(),
-            trailing: DoneButton(isDone: $doneCreating)
-        )
+    }
+    
+    func saveTrainingOffline() {
+        let training = Training(name: trainingTitle,
+                                subscription: trainingSubscription,
+                                date: DateConverter.dateFormat.string(from: Date()),
+                                exercises: selectedExercises)
+        self.session.userSession?.userTrainings?.listOfTrainings.append(training)
     }
 }
 
