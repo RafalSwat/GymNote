@@ -116,8 +116,7 @@ struct ProfileEditView: View {
                         GeometryReader { geometry in
                             DoneConformAlert(showAlert: self.$doneUpdating, alertTitle: "", alertMessage: "MESS", alertAction: {
                                 //TODO: updating stuff!
-                                self.updateOfflineData()
-                                self.session.updateProfileOnFBR(user: self.profile)
+                                self.updateProfileData()
                                 self.doneUpdating.toggle()
                                 
                             })
@@ -138,7 +137,7 @@ struct ProfileEditView: View {
             self.setupGender()
         }
     }
-    func updateOfflineData() {
+    func updateProfileData() {
         self.profile.userImage = self.tempUserProfile.userImage
         self.profile.userName =  self.tempUserProfile.userName
         self.profile.userSurname = self.tempUserProfile.userSurname
@@ -146,6 +145,9 @@ struct ProfileEditView: View {
         self.profile.userGender = self.tempUserProfile.userGender
         self.profile.userDateOfBirth = self.tempUserProfile.userDateOfBirth
         self.profile.userGender = self.tempUserProfile.userGender
+        
+        //updating on firebase 
+        self.session.updateProfileOnFBR(user: self.profile)
     }
     
     func setupGender() {
