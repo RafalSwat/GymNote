@@ -22,7 +22,7 @@ class FireBaseSession: ObservableObject {
     @Published var noErrorAppearDuringAuth: Bool = false {
         didSet {self.didChange.send(self)}
     }
-    @Published var usersDBRef = Database.database().reference().child("Users")
+    @Published var usersDBRef = Database.database().reference()
     
     var handle: AuthStateDidChangeListenerHandle?
     
@@ -95,7 +95,7 @@ class FireBaseSession: ObservableObject {
     
     func setupSession(userEmail: String, userID: String) {
         
-        self.usersDBRef.child(userID).child("Profile").observeSingleEvent(of: .value) { (snapshot) in
+        self.usersDBRef.child("Users").child(userID).child("Profile").observeSingleEvent(of: .value) { (snapshot) in
 
             if snapshot.exists() {
                 // User is already on FirebaseDatabase, so we setup session based on it (old user)
@@ -134,7 +134,7 @@ class FireBaseSession: ObservableObject {
     }
     
     func addUserToBase(user: UserProfile) {
-        usersDBRef.child(user.userID).child("Profile").setValue(
+        usersDBRef.child("Users").child(user.userID).child("Profile").setValue(
             ["userID" : user.userID,
              "email": user.userEmail,
              "name" : user.userName,
@@ -156,7 +156,7 @@ class FireBaseSession: ObservableObject {
     }
     
     func updateProfileOnFBR(user: UserProfile) {
-        usersDBRef.child(user.userID).child("Profile").updateChildValues(
+        usersDBRef.child("Users").child(user.userID).child("Profile").updateChildValues(
             ["name" : user.userName,
              "surname" : user.userSurname,
              "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
