@@ -12,6 +12,7 @@ import SwiftUI
 
 class Training {
     
+    var trainingID = UUID().uuidString
     var trainingName: String
     var trainingSubscription: String
     var initialDate: String
