@@ -21,18 +21,17 @@ struct UserProfile {
     var userHeight: Int
     var userDateOfBirth: Date
     
-    
-    // default user for preview and ect.
-    static let `default` = Self(
-        uID: "0",
-        email: "anonim@domain.com",
-        name: "Anonim",
-        surname: "non",
-        gender: "non",
-        profileImage: Image("staticImage"),
-        height: 170,
-        userDateOfBirth: Date()
-    )
+    init() {
+        
+        self.userID = "0"
+        self.userEmail = "name@domain.com"
+        self.userName = "Anonim"
+        self.userSurname = ""
+        self.userGender = "non"
+        self.userImage = Image("staticImage")
+        self.userHeight = 170
+        self.userDateOfBirth = Date()
+    }
     
     init(uID: String,
          email: String,
