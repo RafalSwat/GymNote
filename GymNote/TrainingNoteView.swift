@@ -12,6 +12,7 @@ struct TrainingNoteView: View {
     
     @EnvironmentObject var session: FireBaseSession
     @State var passageTrainingSession = false
+    @State var passageCreateProgram = false
     
     var body: some View {
         VStack {
@@ -23,14 +24,14 @@ struct TrainingNoteView: View {
                 .padding(30)
             
             NavigationLink(destination: TrainingSessionView(), isActive: self.$passageTrainingSession) { Text("") }
-            
+            NavigationLink(destination: CreateProgramView(), isActive: self.$passageCreateProgram) { Text("") }
             
             Group {
                 Button("add session", action:{ self.passageTrainingSession.toggle()})
                     .buttonStyle(RectangularButtonStyle())
                     .padding()
                 
-                Button("create program", action:{})
+                Button("create program", action:{self.passageCreateProgram.toggle()})
                     .buttonStyle(RectangularButtonStyle())
                     .padding()
                 
