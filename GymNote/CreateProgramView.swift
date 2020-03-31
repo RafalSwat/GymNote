@@ -29,7 +29,7 @@ struct CreateProgramView: View {
                 if selectedExercises.count != 0 {
                     List {
                         ForEach(0..<selectedExercises.count, id: \.self) { index in
-                            TrainingSessionListRow(exercise: self.$selectedExercises[index])
+                            CreateProgramListRow(exercise: self.$selectedExercises[index])
                         }
                     }
                 }
