@@ -14,7 +14,10 @@ struct AddButton: View {
     var addButtonImage: Image = Image(systemName: "plus.circle")
     var addButtonText: String = "ADD EXERCISES"
     var action: () -> Void = {}
+    var fromColor = Color.orange
+    var toColor = Color.red
     @Binding var addingMode: Bool
+
     
     var body: some View {
         Button(action: {
@@ -32,7 +35,7 @@ struct AddButton: View {
                 Spacer()
             }
 
-        }.buttonStyle(RectangularButtonStyle())
+        }.buttonStyle(RectangularButtonStyle(fromColor: self.fromColor, toColor: self.toColor))
     }
 }
 
