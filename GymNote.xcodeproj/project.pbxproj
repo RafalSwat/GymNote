@@ -14,6 +14,8 @@
 		0736F9DF23CA4CBA00626599 /* DoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0736F9DE23CA4CBA00626599 /* DoneButton.swift */; };
 		073B917A23A4025800F38F1D /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073B917923A4025800F38F1D /* CircleImage.swift */; };
 		073DEF982433403300644ED3 /* CreateProgramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEF972433403300644ED3 /* CreateProgramView.swift */; };
+		073DEF9A2433545C00644ED3 /* CreateProgramListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEF992433545C00644ED3 /* CreateProgramListRow.swift */; };
+		073DEF9C2433556100644ED3 /* SetSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEF9B2433556100644ED3 /* SetSeriesView.swift */; };
 		073E6C9523AA215800A06E80 /* TitleBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073E6C9423AA215800A06E80 /* TitleBelt.swift */; };
 		073F482423F43A8F003011F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 073F482323F43A8F003011F0 /* GoogleService-Info.plist */; };
 		073F482723F55F47003011F0 /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073F482623F55F47003011F0 /* CaptureImageView.swift */; };
@@ -67,6 +69,8 @@
 		0736F9DE23CA4CBA00626599 /* DoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneButton.swift; sourceTree = "<group>"; };
 		073B917923A4025800F38F1D /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
 		073DEF972433403300644ED3 /* CreateProgramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProgramView.swift; sourceTree = "<group>"; };
+		073DEF992433545C00644ED3 /* CreateProgramListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProgramListRow.swift; sourceTree = "<group>"; };
+		073DEF9B2433556100644ED3 /* SetSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSeriesView.swift; sourceTree = "<group>"; };
 		073E6C9423AA215800A06E80 /* TitleBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBelt.swift; sourceTree = "<group>"; };
 		073F482323F43A8F003011F0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		073F482623F55F47003011F0 /* CaptureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
@@ -231,6 +235,8 @@
 				075A31F924096EBD006613A2 /* TrainingNoteView.swift */,
 				07426602240BCB4B003F2C32 /* TrainingSessionView.swift */,
 				073DEF972433403300644ED3 /* CreateProgramView.swift */,
+				073DEF992433545C00644ED3 /* CreateProgramListRow.swift */,
+				073DEF9B2433556100644ED3 /* SetSeriesView.swift */,
 				0740B3CA24321DE9003D7520 /* TrainingSessionSupportingViews */,
 				0742660C240C11C6003F2C32 /* ExercisesListView.swift */,
 				0740B3CB24321E40003D7520 /* ExerciseListSupportingViews */,
@@ -417,6 +423,7 @@
 				0740B3C7242E0F56003D7520 /* Training.swift in Sources */,
 				07C3754E241905AE00A6BE5C /* ExerciseDetails.swift in Sources */,
 				0736F9DF23CA4CBA00626599 /* DoneButton.swift in Sources */,
+				073DEF9A2433545C00644ED3 /* CreateProgramListRow.swift in Sources */,
 				07C922E22411078700AF6010 /* ExitButton.swift in Sources */,
 				07C0B9832397DE58001632A0 /* UserProfile.swift in Sources */,
 				077ECD4123B0F020005A1B76 /* ProfileEditView.swift in Sources */,
@@ -446,6 +453,7 @@
 				075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */,
 				07C0B98B23992267001632A0 /* SignupView.swift in Sources */,
 				07C922E62411140000AF6010 /* NavigationConfigurator.swift in Sources */,
+				073DEF9C2433556100644ED3 /* SetSeriesView.swift in Sources */,
 				0736F9DB23CA395F00626599 /* CustomEditButton.swift in Sources */,
 				0720992123F7417E00B75CF5 /* DoneConformAlert.swift in Sources */,
 				0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */,
