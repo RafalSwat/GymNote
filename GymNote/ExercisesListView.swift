@@ -33,7 +33,6 @@ struct ExercisesListView: View {
     
     func conformExercise() {
         selectedExercises += choosenExercise
-        print(selectedExercises.count)
     }
     
     

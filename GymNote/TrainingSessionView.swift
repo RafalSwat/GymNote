@@ -41,7 +41,7 @@ struct TrainingSessionView: View {
                 }
                 
             }
-            .navigationBarTitle("Edit Profile", displayMode: .inline)
+            .navigationBarTitle("Training Session", displayMode: .inline)
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(
                 leading: BackButton(),
