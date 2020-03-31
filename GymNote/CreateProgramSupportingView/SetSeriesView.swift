@@ -22,10 +22,10 @@ struct SetSeriesView: View {
                     self.exercise.exerciseNumberOfSerises = self.series
                 }
             }).buttonStyle(RectangularButtonStyle(
-                    fromColor: .black,
-                    toColor: .red,
-                    minWidth: 15, maxWidth: 30,
-                    minHeight:15, maxHeight: 25))
+                fromColor: .black,
+                toColor: .red,
+                minWidth: 15, maxWidth: 30,
+                minHeight:15, maxHeight: 25))
                 .padding(.horizontal)
             
             Spacer()
@@ -36,16 +36,19 @@ struct SetSeriesView: View {
                 self.series += 1
                 self.exercise.exerciseNumberOfSerises = self.series
             }).buttonStyle(RectangularButtonStyle(
-                    fromColor: .black,
-                    toColor: .green,
-                    minWidth: 15, maxWidth: 30,
-                    minHeight:15, maxHeight: 25))
+                fromColor: .black,
+                toColor: .green,
+                minWidth: 15, maxWidth: 30,
+                minHeight:15, maxHeight: 25))
                 .padding(.horizontal)
             
         }
+        .onAppear() {
+            self.series = self.exercise.exerciseNumberOfSerises
+        }
         .background(LinearGradient(gradient: Gradient(
             colors: colorScheme == .light ? [.white ,.gray] : [.black, .gray]),
-                                    startPoint: .bottom, endPoint: .top))
+                                   startPoint: .bottom, endPoint: .top))
         
     }
 }

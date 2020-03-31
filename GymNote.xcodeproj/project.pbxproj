@@ -132,6 +132,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		073DEF9D24338ABC00644ED3 /* CreateProgramSupportingView */ = {
+			isa = PBXGroup;
+			children = (
+				073DEF992433545C00644ED3 /* CreateProgramListRow.swift */,
+				073DEF9B2433556100644ED3 /* SetSeriesView.swift */,
+			);
+			path = CreateProgramSupportingView;
+			sourceTree = "<group>";
+		};
 		073F482523F55F13003011F0 /* PhotoHandler */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,9 +244,8 @@
 				075A31F924096EBD006613A2 /* TrainingNoteView.swift */,
 				07426602240BCB4B003F2C32 /* TrainingSessionView.swift */,
 				073DEF972433403300644ED3 /* CreateProgramView.swift */,
-				073DEF992433545C00644ED3 /* CreateProgramListRow.swift */,
-				073DEF9B2433556100644ED3 /* SetSeriesView.swift */,
 				0740B3CA24321DE9003D7520 /* TrainingSessionSupportingViews */,
+				073DEF9D24338ABC00644ED3 /* CreateProgramSupportingView */,
 				0742660C240C11C6003F2C32 /* ExercisesListView.swift */,
 				0740B3CB24321E40003D7520 /* ExerciseListSupportingViews */,
 				07C0B99D23A2A812001632A0 /* CustomReusableComponents */,
