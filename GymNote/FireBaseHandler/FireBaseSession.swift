@@ -176,7 +176,16 @@ class FireBaseSession: ObservableObject {
 extension FireBaseSession {
     
     func addTrainingToFBR(userTrainings: UserTrainings, training: Training) {
-        self.usersDBRef.child("Trainings").child(userTrainings.userID).child(training.trainingID).setValue("Dupa nie trening!")
+        self.usersDBRef.child("Trainings").child(userTrainings.userID).child(training.trainingID).setValue(
+            ["name" : training.trainingName,
+             "subscription" : training.trainingSubscription,
+             "date" : training.initialDate])
+
+        for exercise in training.listOfExercises {
+            self.usersDBRef.child("Trainings").child(userTrainings.userID).child(training.trainingID).child("Exercises").child(exercise.exerciseName).setValue(
+                ["Series" : exercise.exerciseNumberOfSerises])
+        }
         
+
     }
 }
