@@ -19,6 +19,7 @@ struct CreateProgramView: View {
     @State var programImage  = Image("staticImage")
     
     var body: some View {
+        ZStack {
             VStack {
                 DateBelt(lightBeltColors: [.white, .magnesium], darkBeltColors: [.black, .magnesium])
                 TitleBelt(title: $programTitle, subtitle: $programSubscription,
@@ -47,8 +48,33 @@ struct CreateProgramView: View {
                 leading: BackButton(),
                 trailing: DoneButton(isDone: $doneCreating)
             )
+            if (doneCreating) {
+                ZStack {
+                    Color.black.opacity(0.4)
+                        .edgesIgnoringSafeArea(.vertical)
+                    GeometryReader { geometry in
+                        DoneConformAlert(showAlert: self.$doneCreating, alertTitle: "", alertMessage: "MESS", alertAction: {
+                            self.saveProgram()
+                            self.doneCreating.toggle()
+                            
+                        })
+                            .padding()
+                            .position(x: geometry.size.width/2, y: geometry.size.height/2)
+                    }
+                }
+            }
+        }
     }
-    
+    func saveProgram() {
+        let training = Training(name: programTitle,
+                                subscription: programSubscription,
+                                date: DateConverter.dateFormat.string(from: Date()),
+                                exercises: selectedExercises)
+        self.session.userSession?.userTrainings?.listOfTrainings.append(training)
+        
+        //saving on firebase
+        self.session.addTrainingToFBR(userTrainings: (self.session.userSession?.userTrainings)!, training: training)
+    }
 }
 
 struct CreateProgramView_Previews: PreviewProvider {
