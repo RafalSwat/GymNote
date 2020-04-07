@@ -11,8 +11,9 @@ import SwiftUI
 struct TrainingNoteView: View {
     
     @EnvironmentObject var session: FireBaseSession
-    @State var passageTrainingSession = false
-    @State var passageCreateProgram = false
+    @State private var passageTrainingSession = false
+    @State private var passageCreateProgram = false
+    @State private var passageChooseProgram = false
     
     var body: some View {
         VStack {
@@ -25,6 +26,7 @@ struct TrainingNoteView: View {
             
             NavigationLink(destination: TrainingSessionView(), isActive: self.$passageTrainingSession) { Text("") }
             NavigationLink(destination: CreateProgramView(), isActive: self.$passageCreateProgram) { Text("") }
+            NavigationLink(destination: ChooseProgramView(), isActive: self.$passageChooseProgram) { Text("") }
             
             Group {
                 Button("add session", action:{ self.passageTrainingSession.toggle()})
@@ -36,7 +38,8 @@ struct TrainingNoteView: View {
                     .padding()
                 
                 
-                Button("choose program", action:{})
+                Button("choose program", action:{
+                    self.passageChooseProgram.toggle()})
                     .buttonStyle(RectangularButtonStyle())
                     .padding()
             }
