@@ -28,6 +28,7 @@
 		07426608240BFD2A003F2C32 /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07426607240BFD2A003F2C32 /* AddButton.swift */; };
 		0742660D240C11C6003F2C32 /* ExercisesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0742660C240C11C6003F2C32 /* ExercisesListView.swift */; };
 		0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0742660E240C1B72003F2C32 /* ExerciseListRow.swift */; };
+		07489CAC243CA39B00FB5589 /* ChooseProgramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07489CAB243CA39B00FB5589 /* ChooseProgramView.swift */; };
 		0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757023E23A4D89500030991 /* RectangularButtonStyle.swift */; };
 		0757024323A4EAD500030991 /* ColorfulPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757024223A4EAD500030991 /* ColorfulPicker.swift */; };
 		075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F223FF19ED006613A2 /* DateConverter.swift */; };
@@ -83,6 +84,7 @@
 		07426607240BFD2A003F2C32 /* AddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButton.swift; sourceTree = "<group>"; };
 		0742660C240C11C6003F2C32 /* ExercisesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesListView.swift; sourceTree = "<group>"; };
 		0742660E240C1B72003F2C32 /* ExerciseListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListRow.swift; sourceTree = "<group>"; };
+		07489CAB243CA39B00FB5589 /* ChooseProgramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseProgramView.swift; sourceTree = "<group>"; };
 		0757023E23A4D89500030991 /* RectangularButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButtonStyle.swift; sourceTree = "<group>"; };
 		0757024223A4EAD500030991 /* ColorfulPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulPicker.swift; sourceTree = "<group>"; };
 		075A31F223FF19ED006613A2 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 				075A31F924096EBD006613A2 /* TrainingNoteView.swift */,
 				07426602240BCB4B003F2C32 /* TrainingSessionView.swift */,
 				073DEF972433403300644ED3 /* CreateProgramView.swift */,
+				07489CAB243CA39B00FB5589 /* ChooseProgramView.swift */,
 				0740B3CA24321DE9003D7520 /* TrainingSessionSupportingViews */,
 				073DEF9D24338ABC00644ED3 /* CreateProgramSupportingView */,
 				0742660C240C11C6003F2C32 /* ExercisesListView.swift */,
@@ -450,6 +453,7 @@
 				077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */,
 				0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */,
 				075DE10C242A2CB8005666A7 /* SeriesTextFields.swift in Sources */,
+				07489CAC243CA39B00FB5589 /* ChooseProgramView.swift in Sources */,
 				07426603240BCB4B003F2C32 /* TrainingSessionView.swift in Sources */,
 				073F482723F55F47003011F0 /* CaptureImageView.swift in Sources */,
 				073B917A23A4025800F38F1D /* CircleImage.swift in Sources */,
