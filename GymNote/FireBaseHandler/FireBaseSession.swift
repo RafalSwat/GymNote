@@ -234,7 +234,7 @@ extension FireBaseSession {
                         }
                         print("-----------------------------------------------------")
                     }
-                    for index in 0..<5 {
+                    for index in 0..<userSnapshot.childrenCount {
                         let tempTraining = Training(name: tempTrainingNames[Int(index)],
                                                     subscription: tempTrainingSubscriptions[Int(index)],
                                                     date: tempTrainingDates[Int(index)],
