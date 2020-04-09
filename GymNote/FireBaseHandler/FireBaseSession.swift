@@ -184,8 +184,66 @@ extension FireBaseSession {
         for exercise in training.listOfExercises {
             self.usersDBRef.child("Trainings").child(userTrainings.userID).child(training.trainingID).child("Exercises").child(exercise.exerciseName).setValue(
                 ["Series" : exercise.exerciseNumberOfSerises])
-        }
+            }
+    }
+    
+    func uploadTrainings(userTrainings: UserTrainings) {
         
+        var tempListOfTrainings = [Training]()
+        var tempTrainingsIDs = [String]()
+        var tempTrainingNames = [String]()
+        var tempTrainingSubscriptions = [String]()
+        var tempTrainingDates = [String]()
+        var tempExercisesForEachTraining = [[Exercise]]()
 
+        self.usersDBRef.child("Trainings").child(userTrainings.userID).observe(.value) { (userSnapshot) in
+            
+            if let trainingsData = userSnapshot.children.allObjects as? [DataSnapshot] {
+                
+                if !trainingsData.isEmpty {
+                    
+                    for training in trainingsData {
+                        
+                        print(training.key)
+                        
+                        if let trainingDetails = training.value as? [String : AnyObject] {
+                            print(trainingDetails["name"] as! String)
+                            print(trainingDetails["subscription"] as! String)
+                            print(trainingDetails["date"] as! String)
+                            
+                            tempTrainingsIDs.append(training.key)
+                            tempTrainingNames.append(trainingDetails["name"] as! String)
+                            tempTrainingSubscriptions.append(trainingDetails["subscription"] as! String)
+                            tempTrainingDates.append(trainingDetails["date"] as! String)
+                            
+                            if let exercises = trainingDetails["Exercises"] as? Dictionary<String, Any> {
+                                var tempExercises = [Exercise]()
+                                
+                                for exercise in exercises {
+                                    print(exercise.key)
+                                    var tempExercise = Exercise(name: exercise.key)
+
+                                    if let series = exercise.value as? Dictionary<String, Any> {
+                                        print(series["Series"] as! Int)
+                                        tempExercise.exerciseNumberOfSerises = series["Series"] as! Int
+                                    }
+                                    tempExercises.append(tempExercise)
+                                }
+                                tempExercisesForEachTraining.append(tempExercises)
+                            }
+                        }
+                        print("-----------------------------------------------------")
+                    }
+                    for index in 0..<5 {
+                        let tempTraining = Training(name: tempTrainingNames[Int(index)],
+                                                    subscription: tempTrainingSubscriptions[Int(index)],
+                                                    date: tempTrainingDates[Int(index)],
+                                                    exercises: tempExercisesForEachTraining[Int(index)])
+                        tempListOfTrainings.append(tempTraining)
+                    }
+                    userTrainings.listOfTrainings = tempListOfTrainings
+                }
+            }
+        }
     }
 }
