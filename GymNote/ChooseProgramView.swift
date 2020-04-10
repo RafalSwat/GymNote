@@ -15,7 +15,10 @@ struct ChooseProgramView: View {
     @State var listOfTrainings: [Training]
     
     var body: some View {
+        
         VStack {
+            
+            NavigationLink(destination: CreateProgramView(), isActive: self.$passageCreateProgram, label: { Text("") })
             
             Image("staticImage")
                 .resizable()
