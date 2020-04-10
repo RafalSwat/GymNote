@@ -11,9 +11,15 @@ import SwiftUI
 struct ProfileView: View {
     
     @State var profile: UserProfile
+    @State var profileEditMode = false
         
     var body: some View {
         VStack {
+            
+            if profileEditMode {
+                NavigationLink(destination: ProfileEditView(profile: $profile),
+                               isActive: self.$profileEditMode) { Text("") }
+            }
             
             CircleImage(image: profile.userImage)
                 .padding(.top, 50)
@@ -59,7 +65,7 @@ struct ProfileView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(
                 leading: BackButton(),
-                trailing: CustomEditButton(profile: $profile)
+                trailing: CustomEditButton(editMode: self.$profileEditMode)
             )
         }
         
