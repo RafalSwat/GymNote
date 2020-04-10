@@ -16,9 +16,27 @@ struct ChooseProgramView: View {
     
     var body: some View {
         VStack {
+            
+            Image("staticImage")
+                .resizable()
+                .frame(height: UIScreen.main.bounds.height/4)
+                .aspectRatio(contentMode: .fit)
+                .padding(15)
+            
             List {
                 ForEach(listOfTrainings, id: \.trainingID) { training in
-                    Text(training.trainingName)
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text(training.trainingName)
+                                .font(.headline)
+                            Spacer()
+                            Text(training.initialDate)
+                                .font(.footnote)
+                        }
+                        Text(training.trainingSubscription)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
                 }
             }
             
@@ -36,7 +54,7 @@ struct ChooseProgramView_Previews: PreviewProvider {
     @State static var prevSession = FireBaseSession()
     @State static var prevListOfTrainings = [Training(name: "My Training",
                                                       subscription: "My litte subscription",
-                                                      date: "01-01-2020",
+                                                      date: "01-Jan-2020",
                                                       exercises: [Exercise(name: "My Exercise")])]
     
     static var previews: some View {
