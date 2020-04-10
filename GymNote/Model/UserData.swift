@@ -11,8 +11,9 @@ import Combine
 
 
 final class UserData: ObservableObject {
+    
     @Published var userProfile: UserProfile
-    @Published var userTrainings: UserTrainings?
+    @Published var userTrainings: UserTrainings? 
     
     init(profile: UserProfile, uID: String) {
         self.userProfile = profile
