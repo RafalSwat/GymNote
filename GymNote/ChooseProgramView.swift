@@ -49,6 +49,7 @@ struct ChooseProgramView: View {
                 .padding()
         }
         .navigationBarTitle("Choose Program", displayMode: .inline)
+        
     }
 }
 
