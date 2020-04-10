@@ -189,6 +189,8 @@ extension FireBaseSession {
     
     func uploadTrainings(userTrainings: UserTrainings) {
         
+        // Properties for storing temporary data during read process of database,
+        // it will be use as a whole to setup "userTrainings/listOfTrainings"
         var tempListOfTrainings = [Training]()
         var tempTrainingsIDs = [String]()
         var tempTrainingNames = [String]()
@@ -196,35 +198,31 @@ extension FireBaseSession {
         var tempTrainingDates = [String]()
         var tempExercisesForEachTraining = [[Exercise]]()
 
+        // DataBase read proces node-by-node, assigning values to needed temporary properties
         self.usersDBRef.child("Trainings").child(userTrainings.userID).observe(.value) { (userSnapshot) in
             
             if let trainingsData = userSnapshot.children.allObjects as? [DataSnapshot] {
-                
+ 
                 if !trainingsData.isEmpty {
                     
                     for training in trainingsData {
                         
-                        print(training.key)
-                        
                         if let trainingDetails = training.value as? [String : AnyObject] {
-                            print(trainingDetails["name"] as! String)
-                            print(trainingDetails["subscription"] as! String)
-                            print(trainingDetails["date"] as! String)
-                            
+
                             tempTrainingsIDs.append(training.key)
                             tempTrainingNames.append(trainingDetails["name"] as! String)
                             tempTrainingSubscriptions.append(trainingDetails["subscription"] as! String)
                             tempTrainingDates.append(trainingDetails["date"] as! String)
                             
                             if let exercises = trainingDetails["Exercises"] as? Dictionary<String, Any> {
+                                
                                 var tempExercises = [Exercise]()
                                 
                                 for exercise in exercises {
-                                    print(exercise.key)
+                                    
                                     var tempExercise = Exercise(name: exercise.key)
 
                                     if let series = exercise.value as? Dictionary<String, Any> {
-                                        print(series["Series"] as! Int)
                                         tempExercise.exerciseNumberOfSerises = series["Series"] as! Int
                                     }
                                     tempExercises.append(tempExercise)
@@ -232,8 +230,8 @@ extension FireBaseSession {
                                 tempExercisesForEachTraining.append(tempExercises)
                             }
                         }
-                        print("-----------------------------------------------------")
                     }
+                    // Settingup listOfTrainings using temporary properties
                     for index in 0..<userSnapshot.childrenCount {
                         let tempTraining = Training(name: tempTrainingNames[Int(index)],
                                                     subscription: tempTrainingSubscriptions[Int(index)],
