@@ -24,7 +24,6 @@ struct CustomEditButton: View {
                 self.editsButtonImage
                     .font(.largeTitle)
                     .foregroundColor(colorScheme == .light ? .black : .secondary)
-                    .padding()
         }
         
     }
