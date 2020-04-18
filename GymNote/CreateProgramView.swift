@@ -82,7 +82,10 @@ struct CreateProgramView_Previews: PreviewProvider {
     @State static var session = FireBaseSession()
     
     static var previews: some View {
-        CreateProgramView()
+        NavigationView {
+            CreateProgramView()
             .environmentObject(session)
+        }
+        
     }
 }
