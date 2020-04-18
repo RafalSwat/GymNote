@@ -12,6 +12,7 @@ struct ChooseProgramView: View {
     
     @EnvironmentObject var session: FireBaseSession
     @State private var passageCreateProgram = false
+    @State private var chooseProgramEdintMode = false
     @State var listOfTrainings: [Training]
     
     var body: some View {
@@ -49,6 +50,10 @@ struct ChooseProgramView: View {
                 .padding()
         }
         .navigationBarTitle("Choose Program", displayMode: .inline)
+        .navigationBarItems(
+            leading: BackButton(),
+            trailing: CustomEditButton(editMode: self.$chooseProgramEdintMode)
+        )
         
     }
 }
