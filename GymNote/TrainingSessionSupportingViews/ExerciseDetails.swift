@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ExerciseDetails: View {
     
-    @Binding var exercise: Exercise // binding from list of selected 
+    var exercise: Exercise 
     @State var repeats = [String]()
     @State var weights = [String]()
     @State var weight = ""
@@ -108,10 +108,10 @@ struct ExerciseDetails: View {
 
 struct ExerciseDetails_Previews: PreviewProvider {
     
-    @State static var prevTempExercise = Exercise(name: "example1")
+    static var prevTempExercise = Exercise(name: "example1")
     
     static var previews: some View {
-        ExerciseDetails(exercise: $prevTempExercise)
+        ExerciseDetails(exercise: prevTempExercise)
     }
 }
 

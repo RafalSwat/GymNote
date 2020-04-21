@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TrainingSessionListRow: View {
     
-    @Binding var exercise: Exercise // binding from list of selected exercises
+    var exercise: Exercise 
     @State var showDetails = false
 
     var body: some View {
@@ -35,7 +35,7 @@ struct TrainingSessionListRow: View {
                 }
             }
             if showDetails {
-                ExerciseDetails(exercise: $exercise)
+                ExerciseDetails(exercise: exercise)
             }
         }
     }
@@ -43,10 +43,10 @@ struct TrainingSessionListRow: View {
 
 struct TrainingSessionListRow_Previews: PreviewProvider {
     
-    @State static var prevExercise = Exercise(name: "pull up")
+    static var prevExercise = Exercise(name: "pull up")
     
     static var previews: some View {
-        TrainingSessionListRow(exercise: $prevExercise)
+        TrainingSessionListRow(exercise: prevExercise)
     }
 }
 
