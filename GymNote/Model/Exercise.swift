@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Exercise: Hashable {
+class Exercise: Hashable, Identifiable {
     
     var exerciseName: String
     var exerciseSeries: [Series]
