@@ -40,6 +40,8 @@ struct ChooseProgramView: View {
                         Text(training.trainingSubscription)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
+                    }.onTapGesture {
+                        print("\(training.trainingName) was just tapped!")
                     }
                 }
             }
