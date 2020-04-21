@@ -28,9 +28,9 @@ struct TrainingSessionView: View {
                 Spacer()
                 if selectedExercises.count != 0 {
                     List {
-                        ForEach(0..<selectedExercises.count, id: \.self) { index in
-                            TrainingSessionListRow(exercise: self.$selectedExercises[index])
-                        }
+                        ForEach(selectedExercises, id: \.self) { exercise in
+                            TrainingSessionListRow(exercise: exercise)
+                        }.onDelete(perform: removeExercise)
                     }
                 }
                 
@@ -63,7 +63,6 @@ struct TrainingSessionView: View {
                 }
             }
         }
-        
     }
     
     func saveTraining() {
@@ -75,6 +74,10 @@ struct TrainingSessionView: View {
         
         //saving on firebase
         self.session.addTrainingToFBR(userTrainings: (self.session.userSession?.userTrainings)!, training: training)
+    }
+    
+    func removeExercise(at index: IndexSet) {
+        self.selectedExercises.remove(atOffsets: index)
     }
 }
 
