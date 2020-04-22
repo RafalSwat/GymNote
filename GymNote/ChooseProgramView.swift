@@ -40,10 +40,8 @@ struct ChooseProgramView: View {
                         Text(training.trainingSubscription)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
-                    }.onTapGesture {
-                        print("\(training.trainingName) was just tapped!")
                     }
-                }
+                }.onDelete(perform: self.removeTraining)
             }
             
             AddButton(addButtonText: "create new program",
@@ -57,6 +55,10 @@ struct ChooseProgramView: View {
             trailing: CustomEditButton(editMode: self.$chooseProgramEdintMode)
         )
         
+    }
+    
+    func removeTraining(at index: IndexSet) {
+        self.listOfTrainings.remove(atOffsets: index)
     }
 }
 
