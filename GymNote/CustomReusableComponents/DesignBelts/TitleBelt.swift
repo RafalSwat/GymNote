@@ -37,10 +37,11 @@ struct TitleBelt: View {
                         .frame(width: UIScreen.main.bounds.width/2,
                                height: UIScreen.main.bounds.height/12,
                                alignment: .center)
+                        .font(.title)
                         .overlay(TextField("...", text: $title)
                             .lineLimit(nil)
                             .multilineTextAlignment(.center)
-                            .font(.title)
+                            
                             
                     )
                     RoundedRectangle(cornerRadius: 4)
