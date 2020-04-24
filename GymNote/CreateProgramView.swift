@@ -66,7 +66,8 @@ struct CreateProgramView: View {
         }
     }
     func saveProgram() {
-        let training = Training(name: programTitle,
+        let training = Training(id: UUID().uuidString,
+                                name: programTitle,
                                 subscription: programSubscription,
                                 date: DateConverter.dateFormat.string(from: Date()),
                                 exercises: selectedExercises)
