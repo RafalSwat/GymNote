@@ -29,17 +29,18 @@ struct ChooseProgramView: View {
             
             List {
                 ForEach(listOfTrainings, id: \.trainingID) { training in
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(training.trainingName)
-                                .font(.headline)
-                            Spacer()
-                            Text(training.initialDate)
-                                .font(.footnote)
+                    
+                    NavigationLink(destination: ProgramSessionView(program: training)) {
+                        
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text(training.trainingName)
+                                    .font(.headline)
+                            }
+                            Text(training.trainingSubscription)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
                         }
-                        Text(training.trainingSubscription)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
                     }
                 }.onDelete(perform: self.removeTraining)
             }
