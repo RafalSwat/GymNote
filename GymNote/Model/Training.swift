@@ -12,17 +12,19 @@ import SwiftUI
 
 class Training: Hashable {
 
-    var trainingID = UUID().uuidString
+    var trainingID: String
     var trainingName: String
     var trainingSubscription: String
     var initialDate: String
     var listOfExercises: [Exercise]
     
-    init(name: String,
+    init(id: String,
+         name: String,
          subscription: String,
          date: String,
          exercises: [Exercise]) {
         
+        self.trainingID = id
         self.trainingName = name
         self.trainingSubscription = subscription
         self.initialDate = date
