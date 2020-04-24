@@ -59,13 +59,15 @@ struct ChooseProgramView: View {
     
     func removeTraining(at index: IndexSet) {
         self.listOfTrainings.remove(atOffsets: index)
+        
     }
 }
 
 struct ChooseProgramView_Previews: PreviewProvider {
     
     @State static var prevSession = FireBaseSession()
-    @State static var prevListOfTrainings = [Training(name: "My Training",
+    @State static var prevListOfTrainings = [Training(id: UUID().uuidString,
+                                                      name: "My Training",
                                                       subscription: "My litte subscription",
                                                       date: "01-Jan-2020",
                                                       exercises: [Exercise(name: "My Exercise")])]
@@ -76,3 +78,4 @@ struct ChooseProgramView_Previews: PreviewProvider {
         }
     }
 }
+
