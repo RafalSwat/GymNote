@@ -233,7 +233,8 @@ extension FireBaseSession {
                     }
                     // Settingup listOfTrainings using temporary properties
                     for index in 0..<userSnapshot.childrenCount {
-                        let tempTraining = Training(name: tempTrainingNames[Int(index)],
+                        let tempTraining = Training(id: tempTrainingsIDs[Int(index)],
+                                                    name: tempTrainingNames[Int(index)],
                                                     subscription: tempTrainingSubscriptions[Int(index)],
                                                     date: tempTrainingDates[Int(index)],
                                                     exercises: tempExercisesForEachTraining[Int(index)])
