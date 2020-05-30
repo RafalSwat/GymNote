@@ -11,41 +11,15 @@ import SwiftUI
 struct HomeView: View {
     
     @EnvironmentObject var session: FireBaseSession
-    @State var passageTrainingNote = false
-    @State var dataString = DateConverter.dateFormat.string(from: Date())
-    @State var editMode = false
-    @State var homeTitle = "GYMNOTE"
-    @State var homeImage  = Image("staticImage")
+    @State private var dataString = DateConverter.dateFormat.string(from: Date())
+    
     
     var body: some View {
-        VStack {
-            
-            TitleBelt(title: $homeTitle, subtitle: $dataString, editMode: $editMode, image: $homeImage)
-            
-            NavigationLink(destination: TrainingNoteView(), isActive: self.$passageTrainingNote) { Text("") }
-            
-            Group {
-                Button("note training", action:{ self.passageTrainingNote.toggle()})
-                    .buttonStyle(RectangularButtonStyle())
-                    .padding()
-                
-                Button("note body measurments", action:{})
-                    .buttonStyle(RectangularButtonStyle())
-                    .padding()
-                
-                
-                Button("show stats", action:{})
-                    .buttonStyle(RectangularButtonStyle())
-                    .padding()
+            VStack {
+                Image("staticImage")
+                Text("Welcome user: \(session.userSession?.userProfile.userEmail ?? "...or maby not")")
             }
-            
-        }
-        .navigationBarTitle("Home", displayMode: .inline)
-        .navigationBarItems(
-            leading: BackButton(),
-            trailing: ProfileButton(profile: self.session.userSession?.userProfile ?? UserProfile())
-        )
-        .onAppear(perform: getUser)
+            .onAppear(perform: getUser)
     }
     
     //MARK: Functions
@@ -53,7 +27,7 @@ struct HomeView: View {
         session.listen()
         
     }
-
+    
 }
 
 struct HomeView_Previews: PreviewProvider {
@@ -66,6 +40,5 @@ struct HomeView_Previews: PreviewProvider {
                 .environmentObject(session)
         }
     }
-
 }
 
