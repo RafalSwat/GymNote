@@ -11,18 +11,12 @@ import SwiftUI
 struct ProfileView: View {
     
     @State var profile: UserProfile
-    @State var profileEditMode = false
         
     var body: some View {
         VStack {
             
-            if profileEditMode {
-                NavigationLink(destination: ProfileEditView(profile: $profile),
-                               isActive: self.$profileEditMode) { Text("") }
-            }
-            
             CircleImage(image: profile.userImage)
-                .padding(.top, 50)
+                .padding(.top, 20)
                 .padding(.bottom, 15)
             Text("\(profile.userName) \(profile.userSurname)")
                 .font(.title)
@@ -60,16 +54,11 @@ struct ProfileView: View {
                 Section(header: Text("Training level")) {
                     Text("Training level: beginner")
                 }
-            }.listStyle(GroupedListStyle())
+            }
+            .listStyle(GroupedListStyle())
             .navigationBarTitle("Profile", displayMode: .inline)
-            .navigationBarBackButtonHidden(true)
-            .navigationBarItems(
-                leading: BackButton(),
-                trailing: CustomEditButton(editMode: self.$profileEditMode)
-            )
+
         }
-        
-        
     }
 }
 
