@@ -35,7 +35,7 @@ struct ProfileEditView: View {
                                 ZStack {
                                     
                                     CircleImage(image: tempUserProfile.userImage)
-                                        .padding(.top, 50)
+                                        .padding(.top, 20)
                                         .padding(.bottom, 15)
                                     ChangeButton(isChanged: $doneChangingPhoto)
                                         .offset(x: 40, y: 50)
@@ -99,16 +99,8 @@ struct ProfileEditView: View {
                         }
                         
                     }
-                }
-                    
-                    
-                    
-                .navigationBarTitle("Edit Profile", displayMode: .inline)
-                .navigationBarBackButtonHidden(true)
-                .navigationBarItems(
-                    leading: BackButton(),
-                    trailing: DoneButton(isDone: $doneUpdating)
-                )
+                }.navigationBarTitle("Edit Profile", displayMode: .inline)
+                
                 if (doneUpdating) {
                     ZStack {
                         Color.black.opacity(0.4)
