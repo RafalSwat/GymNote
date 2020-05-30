@@ -61,6 +61,9 @@
 		07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E72411582400AF6010 /* DualColorCheckmark.swift */; };
 		07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */; };
 		07C922EE2416DBF800AF6010 /* TrainingSessionListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922ED2416DBF800AF6010 /* TrainingSessionListRow.swift */; };
+		07FCCE6F24817238008FE164 /* MainContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FCCE6E24817238008FE164 /* MainContainer.swift */; };
+		07FCCE7124817470008FE164 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FCCE7024817470008FE164 /* NoteView.swift */; };
+		07FCCE732482C8AD008FE164 /* ProfileHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FCCE722482C8AC008FE164 /* ProfileHost.swift */; };
 		1B373EB5305511AB67498B64 /* libPods-GymNote.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEA7BA808CFAE3021932793 /* libPods-GymNote.a */; };
 /* End PBXBuildFile section */
 
@@ -121,6 +124,9 @@
 		07C922E72411582400AF6010 /* DualColorCheckmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualColorCheckmark.swift; sourceTree = "<group>"; };
 		07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserExerciseView.swift; sourceTree = "<group>"; };
 		07C922ED2416DBF800AF6010 /* TrainingSessionListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionListRow.swift; sourceTree = "<group>"; };
+		07FCCE6E24817238008FE164 /* MainContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainer.swift; sourceTree = "<group>"; };
+		07FCCE7024817470008FE164 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
+		07FCCE722482C8AC008FE164 /* ProfileHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHost.swift; sourceTree = "<group>"; };
 		92418A42585CD4BBC0A8B4F7 /* Pods-GymNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymNote.release.xcconfig"; path = "Target Support Files/Pods-GymNote/Pods-GymNote.release.xcconfig"; sourceTree = "<group>"; };
 		9C640CDF02DF30CA87AB78FE /* Pods-GymNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymNote.debug.xcconfig"; path = "Target Support Files/Pods-GymNote/Pods-GymNote.debug.xcconfig"; sourceTree = "<group>"; };
 		CDEA7BA808CFAE3021932793 /* libPods-GymNote.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GymNote.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -211,6 +217,7 @@
 		077ECD3F23B0EFF6005A1B76 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				07FCCE722482C8AC008FE164 /* ProfileHost.swift */,
 				0727887023AA473500092E24 /* ProfileView.swift */,
 				077ECD4023B0F020005A1B76 /* ProfileEditView.swift */,
 			);
@@ -245,7 +252,9 @@
 				07C0B97D2397D0E2001632A0 /* Model */,
 				07C0B986239816EA001632A0 /* WelcomeView.swift */,
 				07C0B98C239930CF001632A0 /* WelcomeSupportingViews */,
+				07FCCE6E24817238008FE164 /* MainContainer.swift */,
 				07C0B98D239A73C8001632A0 /* HomeView.swift */,
+				07FCCE7024817470008FE164 /* NoteView.swift */,
 				077ECD3F23B0EFF6005A1B76 /* Profile */,
 				075A31F924096EBD006613A2 /* TrainingNoteView.swift */,
 				07426602240BCB4B003F2C32 /* TrainingSessionView.swift */,
@@ -447,6 +456,7 @@
 				0742660D240C11C6003F2C32 /* ExercisesListView.swift in Sources */,
 				07C0B98923990D0E001632A0 /* LoginView.swift in Sources */,
 				07C0B987239816EA001632A0 /* WelcomeView.swift in Sources */,
+				07FCCE7124817470008FE164 /* NoteView.swift in Sources */,
 				075A31FA24096EBD006613A2 /* TrainingNoteView.swift in Sources */,
 				07C922E02410EA2300AF6010 /* SearchBar.swift in Sources */,
 				07C922E424110A5700AF6010 /* AddBarItem.swift in Sources */,
@@ -455,6 +465,7 @@
 				075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */,
 				07A8D3FF23AD44E70051D493 /* BackButton.swift in Sources */,
 				07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */,
+				07FCCE732482C8AD008FE164 /* ProfileHost.swift in Sources */,
 				07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */,
 				077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */,
 				0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */,
@@ -480,6 +491,7 @@
 				07A8D3FD23AD338B0051D493 /* ProfileButton.swift in Sources */,
 				07C0B98E239A73C8001632A0 /* HomeView.swift in Sources */,
 				07426605240BCE20003F2C32 /* DateBelt.swift in Sources */,
+				07FCCE6F24817238008FE164 /* MainContainer.swift in Sources */,
 				0736F9DD23CA3F0C00626599 /* ChangeButton.swift in Sources */,
 				07C0B99C23A273D9001632A0 /* SwitchableSecureField.swift in Sources */,
 				0740B3C9242E1974003D7520 /* UserTrainings.swift in Sources */,
