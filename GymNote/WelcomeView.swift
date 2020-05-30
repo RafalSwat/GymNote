@@ -24,7 +24,7 @@ struct WelcomeView: View {
                     
                     ColorfulPicker(selection: $isRegistered)
                     
-                    NavigationLink(destination: HomeView(), isActive: self.$session.noErrorAppearDuringAuth) { Text("") }
+                    NavigationLink(destination: MainContainer(), isActive: self.$session.noErrorAppearDuringAuth) { Text("") }
                     
                     if isRegistered {
                         LoginView()
@@ -36,13 +36,15 @@ struct WelcomeView: View {
             }.navigationBarTitle("Welcome", displayMode: .inline)
         }
     }
-
+    
 }
 
 
 struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
-        WelcomeView()
-            .environmentObject(FireBaseSession())
+        NavigationView {
+            WelcomeView()
+                .environmentObject(FireBaseSession())
+        }
     }
 }
