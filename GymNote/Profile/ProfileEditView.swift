@@ -102,23 +102,6 @@ struct ProfileEditView: View {
                     }
                 }.navigationBarTitle("Edit Profile", displayMode: .inline)
                 
-                if (doneUpdating) {
-                    ZStack {
-                        Color.black.opacity(0.4)
-                            .edgesIgnoringSafeArea(.vertical)
-                        GeometryReader { geometry in
-                            DoneConformAlert(showAlert: self.$doneUpdating, alertTitle: "", alertMessage: "MESS", alertAction: {
-                                //TODO: updating stuff!
-                                self.updateProfileData()
-                                self.doneUpdating.toggle()
-                                
-                            })
-                                .padding()
-                                .position(x: geometry.size.width/2, y: geometry.size.height/2)
-                        }
-                    }
-                }
-                
                 if (doneChangingPhoto) {
                     CaptureImageView(isShown: $doneChangingPhoto, image: $profile.userImage)
                 }
