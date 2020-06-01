@@ -128,18 +128,6 @@ struct ProfileEditView: View {
             self.setupGender()
         }
     }
-    func updateProfileData() {
-        self.profile.userImage = self.tempUserProfile.userImage
-        self.profile.userName =  self.tempUserProfile.userName
-        self.profile.userSurname = self.tempUserProfile.userSurname
-        self.profile.userHeight = self.tempUserProfile.userHeight
-        self.profile.userGender = self.tempUserProfile.userGender
-        self.profile.userDateOfBirth = self.tempUserProfile.userDateOfBirth
-        self.profile.userGender = self.tempUserProfile.userGender
-        
-        //updating on firebase 
-        self.session.updateProfileOnFBR(user: self.profile)
-    }
     
     func setupGender() {
         if self.profile.userGender == "non" {
