@@ -17,14 +17,9 @@ struct ProfileHost: View {
     var body: some View {
         
         VStack(alignment: .leading, spacing: 20) {
+            
             HStack {
-                if mode?.wrappedValue == .inactive {
-                    Text("Edit mode is inactive")
-                } else {
-                    Text("Edit mode is active")
-                }
-                
-                
+
                 if self.mode?.wrappedValue == .active {
                     Button(action: {
                         self.draftProfile = self.session.userSession?.userProfile ?? UserProfile()
@@ -35,8 +30,18 @@ struct ProfileHost: View {
                 }
                 
                 Spacer()
-                
-                EditButton()
+
+                Button(action: {
+                    if self.mode?.wrappedValue == .inactive {
+                        self.mode?.wrappedValue = .active
+                        print("Jest INACT. idzie do ACT.")
+                    } else {
+                        self.mode?.wrappedValue = .inactive
+                        print("Jest ACT. idzie do INACT.")
+                    }
+                }) {
+                    Text(self.mode?.wrappedValue == .active ? "Done" : "Edit")
+                }
             }
             if self.mode?.wrappedValue == .inactive {
                 ProfileView(profile: session.userSession?.userProfile ?? UserProfile())
@@ -60,5 +65,14 @@ struct ProfileHost_Previews: PreviewProvider {
     
     static var previews: some View {
         ProfileHost().environmentObject(prevSession)
+    }
+}
+
+//MARK: Build in EditButton do not woking, so we need to construct new.
+// I prefer to use toggle() bulid in function, so i extend i application
+extension EditMode {
+
+    mutating func toggle() {
+        self = self == .active ? .inactive : .active
     }
 }

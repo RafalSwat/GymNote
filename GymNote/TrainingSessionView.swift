@@ -13,7 +13,7 @@ struct TrainingSessionView: View {
     @EnvironmentObject var session: FireBaseSession
     @State var addMode = false  //needed to show sheet with exercises
     @State var doneCreating = false // needed to save training
-    @State var editMode = true  // needed to display correct "titleBelt"
+    @State var CustomEditMode = true  // needed to display correct "titleBelt"
     @State var selectedExercises = [Exercise]()
     @State var trainingTitle = ""
     @State var trainingSubscription = ""
@@ -23,7 +23,7 @@ struct TrainingSessionView: View {
         ZStack {
             VStack {
                 DateBelt()
-                TitleBelt(title: $trainingTitle, subtitle: $trainingSubscription, editMode: $editMode, image: $trainingImage)
+                TitleBelt(title: $trainingTitle, subtitle: $trainingSubscription, CeditMode: $CustomEditMode, image: $trainingImage)
                 Divider()
                 Spacer()
                 if selectedExercises.count != 0 {
