@@ -33,14 +33,12 @@ struct ProfileHost: View {
 
                 Button(action: {
                     if self.mode?.wrappedValue == .inactive {
-                        self.mode?.wrappedValue = .active
-                        print("Jest INACT. idzie do ACT.")
+                        self.mode?.animation().wrappedValue = .active
                     } else {
                         self.mode?.wrappedValue = .inactive
-                        print("Jest ACT. idzie do INACT.")
                     }
                 }) {
-                    Text(self.mode?.wrappedValue == .active ? "Done" : "Edit")
+                    Text(self.mode?.animation().wrappedValue == .active ? "Done" : "Edit")
                 }
             }
             if self.mode?.wrappedValue == .inactive {
@@ -51,7 +49,13 @@ struct ProfileHost: View {
                         self.draftProfile = self.session.userSession?.userProfile ?? UserProfile()
                     }
                     .onDisappear {
-                    self.session.userSession?.userProfile = self.draftProfile
+                        DispatchQueue.main.async {
+                            //FIXME: the view reacts to changes only after the window has been loaded again
+                            
+                            self.session.updateProfileOnFBR(user: self.draftProfile)
+                            self.session.userSession?.userProfile = self.draftProfile
+                        }
+                        
                     }
             }
         }
@@ -68,11 +72,3 @@ struct ProfileHost_Previews: PreviewProvider {
     }
 }
 
-//MARK: Build in EditButton do not woking, so we need to construct new.
-// I prefer to use toggle() bulid in function, so i extend i application
-extension EditMode {
-
-    mutating func toggle() {
-        self = self == .active ? .inactive : .active
-    }
-}
