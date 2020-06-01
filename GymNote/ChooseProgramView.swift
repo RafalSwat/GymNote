@@ -52,8 +52,7 @@ struct ChooseProgramView: View {
         }
         .navigationBarTitle("Choose Program", displayMode: .inline)
         .navigationBarItems(
-            leading: BackButton(),
-            trailing: CustomEditButton(editMode: self.$chooseProgramEdintMode)
+            leading: BackButton()
         )
         
     }
