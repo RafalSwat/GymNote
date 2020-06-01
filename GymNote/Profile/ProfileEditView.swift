@@ -14,10 +14,11 @@ struct ProfileEditView: View {
     
     @EnvironmentObject var session: FireBaseSession
     @Binding var profile: UserProfile
-    @State var tempUserProfile = UserProfile()
+    
     //var to change photo mechanics
     @State var doneUpdating = false
     @State var doneChangingPhoto = false
+    
     //Array only for pick the height and gender of a user
     var userPossibleHeight = Array(40...250)
     var userPossibleGender = ["non", "male", "female"]
@@ -34,14 +35,14 @@ struct ProfileEditView: View {
                             VStack {
                                 ZStack {
                                     
-                                    CircleImage(image: tempUserProfile.userImage)
+                                    CircleImage(image: profile.userImage)
                                         .padding(.top, 20)
                                         .padding(.bottom, 15)
                                     ChangeButton(isChanged: $doneChangingPhoto)
                                         .offset(x: 40, y: 50)
                                         .scaleEffect(1.7)
                                 }
-                                Text("\(tempUserProfile.userName) \(tempUserProfile.userSurname)")
+                                Text("\(profile.userName) \(profile.userSurname)")
                                     .font(.title)
                             }
                             Spacer()
@@ -54,18 +55,18 @@ struct ProfileEditView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             Spacer()
-                            TextField("Enter your name: ", text: $tempUserProfile.userName)
+                            TextField("Enter your name: ", text: $profile.userName)
                         }
                         HStack {
                             Text("Surname: ")
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             Spacer()
-                            TextField("Enter your surname: ", text: $tempUserProfile.userSurname)
+                            TextField("Enter your surname: ", text: $profile.userSurname)
                         }}
                     Section(header: Text("Height")) {
                         Picker(
-                            selection: $tempUserProfile.userHeight,
+                            selection: $profile.userHeight,
                             label: Text("")) {
                                 ForEach(0 ..< userPossibleHeight.count) {
                                     //FIXME: "-40" because for unknown reasons, the picker chooses a number that is exactly 40 different
@@ -84,7 +85,7 @@ struct ProfileEditView: View {
                         }
                         //FIXME: the solution is unsatisfactory because it doesn't react on "swipe", only for clicking so that without clicking the gender doesn't change ad all
                         .onTapGesture {
-                            self.tempUserProfile.userGender = self.userPossibleGender[self.selectedGender]
+                            self.profile.userGender = self.userPossibleGender[self.selectedGender]
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
@@ -92,7 +93,7 @@ struct ProfileEditView: View {
                     
                     Section(header: Text("Date of birth")) {
                         DatePicker(
-                            selection: $tempUserProfile.userDateOfBirth,
+                            selection: $profile.userDateOfBirth,
                             in: ...Date(),
                             displayedComponents: .date) {
                                 Text("")
@@ -122,10 +123,8 @@ struct ProfileEditView: View {
                     CaptureImageView(isShown: $doneChangingPhoto, image: $profile.userImage)
                 }
             }
-            
         }
         .onAppear {
-            self.tempUserProfile = self.profile
             self.setupGender()
         }
     }
@@ -153,14 +152,14 @@ struct ProfileEditView: View {
     }
 }
 
-
 struct ProfileEditView_Previews: PreviewProvider {
     
-    @State static var profile = UserProfile()
+    @State static var prevProfile = UserProfile()
+    @State static var prevDoneUpdating = false
     
     static var previews: some View {
         NavigationView {
-            ProfileEditView(profile: $profile)
+            ProfileEditView(profile: $prevProfile)
         }
         
     }
