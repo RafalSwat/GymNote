@@ -220,7 +220,7 @@ extension FireBaseSession {
                                 
                                 for exercise in exercises {
                                     
-                                    var tempExercise = Exercise(name: exercise.key)
+                                    let tempExercise = Exercise(name: exercise.key)
 
                                     if let series = exercise.value as? Dictionary<String, Any> {
                                         tempExercise.exerciseNumberOfSerises = series["Series"] as! Int
