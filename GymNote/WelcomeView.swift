@@ -12,7 +12,7 @@ struct WelcomeView: View {
     
     //MARK: Properties
     @EnvironmentObject var session: FireBaseSession
-    @State private var isRegistered = false
+    @State private var isRegistered = true
     
     //MARK: View
     var body: some View {
