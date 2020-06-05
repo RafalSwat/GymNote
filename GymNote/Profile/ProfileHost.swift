@@ -35,6 +35,9 @@ struct ProfileHost: View {
                     if self.mode?.wrappedValue == .inactive {
                         self.mode?.animation().wrappedValue = .active
                     } else {
+                        DispatchQueue.main.async {
+                            self.session.updateProfileOnFBR(user: self.draftProfile)
+                        }
                         self.mode?.wrappedValue = .inactive
                     }
                 }) {
@@ -49,13 +52,7 @@ struct ProfileHost: View {
                         self.draftProfile = self.session.userSession?.userProfile ?? UserProfile()
                     }
                     .onDisappear {
-                        DispatchQueue.main.async {
-                            //FIXME: the view reacts to changes only after the window has been loaded again
-                            
-                            self.session.updateProfileOnFBR(user: self.draftProfile)
-                            self.session.userSession?.userProfile = self.draftProfile
-                        }
-                        
+                        self.session.userSession?.userProfile = self.draftProfile
                     }
             }
         }
