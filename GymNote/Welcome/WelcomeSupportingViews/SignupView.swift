@@ -16,6 +16,7 @@ struct SignupView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var repeatPassword: String = ""
+    @Binding var alreadySignIn: Bool
     
     //MARK: View
     var body: some View {
@@ -31,6 +32,7 @@ struct SignupView: View {
             Button("SignUp", action: {
                 if self.isNotEmpty() && self.arePasswordEqual() {
                     self.signUp()
+                    self.alreadySignIn = true
                 }
             })
                 .buttonStyle(RectangularButtonStyle())
@@ -74,7 +76,10 @@ struct SignupView: View {
 
 
 struct SignupView_Previews: PreviewProvider {
+    
+    @State static var prevAlreadySignIn = false
+    
     static var previews: some View {
-        SignupView()
+        SignupView(alreadySignIn: $prevAlreadySignIn)
     }
 }
