@@ -26,7 +26,7 @@ struct MainContainer: View {
                     .font(.largeTitle)
                     .padding()
             }.tag(0)
-            NoteView()
+            NoteHost()
                 .tabItem {
                     VStack {
                         Image(systemName: "pencil.and.ellipsis.rectangle")
