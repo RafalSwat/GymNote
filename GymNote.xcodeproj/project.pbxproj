@@ -15,6 +15,8 @@
 		073CD70A2452F18000C0913B /* ProgramSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073CD7092452F18000C0913B /* ProgramSessionView.swift */; };
 		073CD70C2452FDA800C0913B /* ProgramSessionListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073CD70B2452FDA800C0913B /* ProgramSessionListRow.swift */; };
 		073DEAD3248E92CD008F3C72 /* NoteHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAD2248E92CD008F3C72 /* NoteHost.swift */; };
+		073DEAD5248ECBCB008F3C72 /* EditNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAD4248ECBCB008F3C72 /* EditNoteView.swift */; };
+		073DEAD8248ECCD7008F3C72 /* TrainingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAD7248ECCD7008F3C72 /* TrainingRow.swift */; };
 		073DEF982433403300644ED3 /* CreateProgramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEF972433403300644ED3 /* CreateProgramView.swift */; };
 		073DEF9A2433545C00644ED3 /* CreateProgramListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEF992433545C00644ED3 /* CreateProgramListRow.swift */; };
 		073DEF9C2433556100644ED3 /* SetSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEF9B2433556100644ED3 /* SetSeriesView.swift */; };
@@ -80,6 +82,8 @@
 		073CD7092452F18000C0913B /* ProgramSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramSessionView.swift; sourceTree = "<group>"; };
 		073CD70B2452FDA800C0913B /* ProgramSessionListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramSessionListRow.swift; sourceTree = "<group>"; };
 		073DEAD2248E92CD008F3C72 /* NoteHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteHost.swift; sourceTree = "<group>"; };
+		073DEAD4248ECBCB008F3C72 /* EditNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteView.swift; sourceTree = "<group>"; };
+		073DEAD7248ECCD7008F3C72 /* TrainingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingRow.swift; sourceTree = "<group>"; };
 		073DEF972433403300644ED3 /* CreateProgramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProgramView.swift; sourceTree = "<group>"; };
 		073DEF992433545C00644ED3 /* CreateProgramListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProgramListRow.swift; sourceTree = "<group>"; };
 		073DEF9B2433556100644ED3 /* SetSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSeriesView.swift; sourceTree = "<group>"; };
@@ -152,6 +156,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		073DEAD6248ECC65008F3C72 /* NoteViewSupportingViews */ = {
+			isa = PBXGroup;
+			children = (
+				073DEAD7248ECCD7008F3C72 /* TrainingRow.swift */,
+			);
+			path = NoteViewSupportingViews;
+			sourceTree = "<group>";
+		};
 		073DEF9D24338ABC00644ED3 /* CreateProgramSupportingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +259,8 @@
 			children = (
 				073DEAD2248E92CD008F3C72 /* NoteHost.swift */,
 				07FCCE7024817470008FE164 /* NoteView.swift */,
+				073DEAD6248ECC65008F3C72 /* NoteViewSupportingViews */,
+				073DEAD4248ECBCB008F3C72 /* EditNoteView.swift */,
 			);
 			path = Note;
 			sourceTree = "<group>";
@@ -494,6 +508,7 @@
 				077ECD4123B0F020005A1B76 /* ProfileEditView.swift in Sources */,
 				0742660D240C11C6003F2C32 /* ExercisesListView.swift in Sources */,
 				07C0B98923990D0E001632A0 /* LoginView.swift in Sources */,
+				073DEAD8248ECCD7008F3C72 /* TrainingRow.swift in Sources */,
 				07C0B987239816EA001632A0 /* WelcomeView.swift in Sources */,
 				07FCCE7124817470008FE164 /* NoteView.swift in Sources */,
 				075A31FA24096EBD006613A2 /* TrainingNoteView.swift in Sources */,
@@ -514,6 +529,7 @@
 				07426603240BCB4B003F2C32 /* TrainingSessionView.swift in Sources */,
 				073F482723F55F47003011F0 /* CaptureImageView.swift in Sources */,
 				073B917A23A4025800F38F1D /* CircleImage.swift in Sources */,
+				073DEAD5248ECBCB008F3C72 /* EditNoteView.swift in Sources */,
 				074265FF240BC6C6003F2C32 /* Exercise.swift in Sources */,
 				07426608240BFD2A003F2C32 /* AddButton.swift in Sources */,
 				07C922EE2416DBF800AF6010 /* TrainingSessionListRow.swift in Sources */,
