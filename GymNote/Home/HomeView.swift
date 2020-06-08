@@ -14,11 +14,15 @@ struct HomeView: View {
     @Binding var alreadySignIn: Bool
 
     var body: some View {
+        NavigationView {
             VStack {
                 Image("staticImage")
-                Text("Welcome user: \(session.userSession?.userProfile.userEmail ?? "...or maby not")")
+                Text("Welcome: \(session.userSession?.userProfile.userEmail ?? "...")")
             }
+            .navigationBarItems(leading: SignOutButton(signIn: $alreadySignIn))
             .onAppear(perform: getUser)
+        }
+            
     }
     
     //MARK: Functions
