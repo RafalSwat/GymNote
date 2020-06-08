@@ -11,7 +11,6 @@ import SwiftUI
 struct ProfileEditView: View {
     
     //MARK: Properties
-    
     @EnvironmentObject var session: FireBaseSession
     @Binding var profile: UserProfile
     
@@ -73,8 +72,6 @@ struct ProfileEditView: View {
                                     Text("\(self.userPossibleHeight[$0] - 40) cm")
                                 }
                         }.pickerStyle(WheelPickerStyle())
-                        
-                        
                     }
                     Section(header: Text("Gender")) {
                         Picker(
@@ -83,9 +80,9 @@ struct ProfileEditView: View {
                                 ForEach(0 ..< userPossibleGender.count) {             Text("\(self.userPossibleGender[$0])")
                                 }
                         }
-                        //FIXME: the solution is unsatisfactory because it doesn't react on "swipe", only for clicking so that without clicking the gender doesn't change ad all
-                        .onTapGesture {
-                            self.profile.userGender = self.userPossibleGender[self.selectedGender]
+                            //FIXME: the solution is unsatisfactory because it doesn't react on "swipe", only for clicking so that without clicking the gender doesn't change ad all
+                            .onTapGesture {
+                                self.profile.userGender = self.userPossibleGender[self.selectedGender]
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
@@ -98,9 +95,8 @@ struct ProfileEditView: View {
                             displayedComponents: .date) {
                                 Text("")
                         }
-                        
                     }
-                }.navigationBarTitle("Edit Profile", displayMode: .inline)
+                }
                 
                 if (doneChangingPhoto) {
                     CaptureImageView(isShown: $doneChangingPhoto, image: $profile.userImage)
@@ -110,6 +106,7 @@ struct ProfileEditView: View {
         .onAppear {
             self.setupGender()
         }
+        .navigationBarTitle("Edit Profile", displayMode: .inline)
     }
     
     func setupGender() {
@@ -132,7 +129,6 @@ struct ProfileEditView_Previews: PreviewProvider {
         NavigationView {
             ProfileEditView(profile: $prevProfile)
         }
-        
     }
 }
 

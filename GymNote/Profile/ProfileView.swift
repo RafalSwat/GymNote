@@ -56,9 +56,8 @@ struct ProfileView: View {
                 }
             }
             .listStyle(GroupedListStyle())
-            .navigationBarTitle("Profile", displayMode: .inline)
-
         }
+        .navigationBarTitle("Profile", displayMode: .inline) 
     }
 }
 
@@ -70,6 +69,5 @@ struct ProfileView_Previews: PreviewProvider {
         NavigationView {
             ProfileView(profile: prevProfile)
         }
-        
     }
 }
