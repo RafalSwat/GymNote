@@ -22,7 +22,10 @@ class FireBaseSession: ObservableObject {
     @Published var noErrorAppearDuringAuth: Bool = false {
         didSet {self.didChange.send(self)}
     }
+
     @Published var usersDBRef = Database.database().reference()
+    
+    
     
     var handle: AuthStateDidChangeListenerHandle?
     
@@ -79,16 +82,23 @@ class FireBaseSession: ObservableObject {
                 }
             }
         }
-        
+    }
+    
+    func tryAutoSignIn() -> Bool {
+        if Auth.auth().currentUser != nil {
+            return true
+        } else {
+            return false
+        }
     }
     
     func signOut () -> Bool {
         do {
             try Auth.auth().signOut()
             self.userSession = nil
-            return true
-        } catch {
             return false
+        } catch {
+            return true
         }
     }
     
