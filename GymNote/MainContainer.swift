@@ -53,7 +53,11 @@ struct MainContainer: View {
                     .font(.largeTitle)
                     .padding()
             }.tag(3)
-        }.accentColor(Color.orange)
+            
+        }
+        .accentColor(Color.orange)
+        .navigationBarBackButtonHidden(true)
+        
     }
 }
 
