@@ -9,63 +9,51 @@
 import SwiftUI
 
 struct ProfileHost: View {
-    
+
     @Environment(\.editMode) var mode
     @EnvironmentObject var session: FireBaseSession
     @State var draftProfile = UserProfile()
-    
+
     var body: some View {
-        
-        VStack(alignment: .leading, spacing: 20) {
-            
-            HStack {
+        NavigationView {
+            VStack(alignment: .leading, spacing: 20) {
 
-                if self.mode?.wrappedValue == .active {
-                    Button(action: {
-                        self.draftProfile = self.session.userSession?.userProfile ?? UserProfile()
-                        self.mode?.animation().wrappedValue = .inactive
-                    }) {
-                        Text("Cancel")
-                    }
-                }
-                
-                Spacer()
-
-                Button(action: {
-                    if self.mode?.wrappedValue == .inactive {
-                        self.mode?.animation().wrappedValue = .active
-                    } else {
-                        DispatchQueue.main.async {
-                            self.session.updateProfileOnFBR(user: self.draftProfile)
+                if self.mode?.wrappedValue == .inactive {
+                    ProfileView(profile: session.userSession?.userProfile ?? UserProfile())
+                } else {
+                    ProfileEditView(profile: $draftProfile)
+                        .onAppear {
+                            self.draftProfile = self.session.userSession?.userProfile ?? UserProfile()
                         }
-                        self.mode?.wrappedValue = .inactive
-                    }
-                }) {
-                    Text(self.mode?.animation().wrappedValue == .active ? "Done" : "Edit")
+                        .onDisappear {
+                            self.session.userSession?.userProfile = self.draftProfile
+                        }
                 }
             }
-            if self.mode?.wrappedValue == .inactive {
-                ProfileView(profile: session.userSession?.userProfile ?? UserProfile())
-            } else {
-                ProfileEditView(profile: $draftProfile)
-                    .onAppear {
-                        self.draftProfile = self.session.userSession?.userProfile ?? UserProfile()
-                    }
-                    .onDisappear {
-                        self.session.userSession?.userProfile = self.draftProfile
-                    }
-            }
+            .navigationBarItems(
+                leading: CancelEditModeButton(cancelAction: {
+                    self.draftProfile = self.session.userSession?.userProfile ?? UserProfile()
+                }),
+                trailing: EditModeButton(editAction: {
+                    self.session.updateProfileOnFBR(user: self.draftProfile)
+                })
+            )
         }
-        
     }
 }
+
+
 
 struct ProfileHost_Previews: PreviewProvider {
     
     @State static var prevSession = FireBaseSession()
     
     static var previews: some View {
-        ProfileHost().environmentObject(prevSession)
+        ProfileHost()
+            .environmentObject(prevSession)
+        
     }
 }
+
+
 
