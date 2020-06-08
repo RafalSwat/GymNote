@@ -17,6 +17,7 @@
 		073DEAD3248E92CD008F3C72 /* NoteHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAD2248E92CD008F3C72 /* NoteHost.swift */; };
 		073DEAD5248ECBCB008F3C72 /* EditNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAD4248ECBCB008F3C72 /* EditNoteView.swift */; };
 		073DEAD8248ECCD7008F3C72 /* TrainingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAD7248ECCD7008F3C72 /* TrainingRow.swift */; };
+		073DEADA248ED394008F3C72 /* TrainingDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAD9248ED394008F3C72 /* TrainingDetails.swift */; };
 		073DEF982433403300644ED3 /* CreateProgramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEF972433403300644ED3 /* CreateProgramView.swift */; };
 		073DEF9A2433545C00644ED3 /* CreateProgramListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEF992433545C00644ED3 /* CreateProgramListRow.swift */; };
 		073DEF9C2433556100644ED3 /* SetSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEF9B2433556100644ED3 /* SetSeriesView.swift */; };
@@ -84,6 +85,7 @@
 		073DEAD2248E92CD008F3C72 /* NoteHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteHost.swift; sourceTree = "<group>"; };
 		073DEAD4248ECBCB008F3C72 /* EditNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteView.swift; sourceTree = "<group>"; };
 		073DEAD7248ECCD7008F3C72 /* TrainingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingRow.swift; sourceTree = "<group>"; };
+		073DEAD9248ED394008F3C72 /* TrainingDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingDetails.swift; sourceTree = "<group>"; };
 		073DEF972433403300644ED3 /* CreateProgramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProgramView.swift; sourceTree = "<group>"; };
 		073DEF992433545C00644ED3 /* CreateProgramListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProgramListRow.swift; sourceTree = "<group>"; };
 		073DEF9B2433556100644ED3 /* SetSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSeriesView.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				073DEAD7248ECCD7008F3C72 /* TrainingRow.swift */,
+				073DEAD9248ED394008F3C72 /* TrainingDetails.swift */,
 			);
 			path = NoteViewSupportingViews;
 			sourceTree = "<group>";
@@ -526,6 +529,7 @@
 				0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */,
 				075DE10C242A2CB8005666A7 /* SeriesTextFields.swift in Sources */,
 				07489CAC243CA39B00FB5589 /* ChooseProgramView.swift in Sources */,
+				073DEADA248ED394008F3C72 /* TrainingDetails.swift in Sources */,
 				07426603240BCB4B003F2C32 /* TrainingSessionView.swift in Sources */,
 				073F482723F55F47003011F0 /* CaptureImageView.swift in Sources */,
 				073B917A23A4025800F38F1D /* CircleImage.swift in Sources */,
