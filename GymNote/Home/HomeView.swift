@@ -11,9 +11,8 @@ import SwiftUI
 struct HomeView: View {
     
     @EnvironmentObject var session: FireBaseSession
-    @State private var dataString = DateConverter.dateFormat.string(from: Date())
-    
-    
+    @Binding var alreadySignIn: Bool
+
     var body: some View {
             VStack {
                 Image("staticImage")
@@ -33,10 +32,11 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     
     @State static var session = FireBaseSession()
+    @State static var prevAlreadySignIn = true
     
     static var previews: some View {
         NavigationView {
-            HomeView()
+            HomeView(alreadySignIn: $prevAlreadySignIn)
                 .environmentObject(session)
         }
     }
