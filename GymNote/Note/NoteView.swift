@@ -18,18 +18,20 @@ struct NoteView: View {
     @State private var passageToAddTraining = false
     
     var body: some View {
-            VStack {
-                
-                NavigationLink(destination: CreateProgramView(), isActive: self.$passageToAddTraining, label: { Text("") })
-                
-                List(listOfTrainings, id: \.trainingID) { training in
-                    Text(training.trainingName)
-                }
-                AddButton(addButtonText: "Add New Training",
-                          action: {print("Add new training tapped!")},
-                          addingMode: self.$passageToAddTraining)
-                    .padding()
+        
+        VStack {
+            
+            NavigationLink(destination: CreateProgramView(), isActive: self.$passageToAddTraining, label: { Text("") })
+            
+            List(listOfTrainings, id: \.trainingID) { training in
+                Text(training.trainingName)
             }
+            AddButton(addButtonText: "Add New Training",
+                      action: {print("Add new training tapped!")},
+                      addingMode: self.$passageToAddTraining)
+                .padding()
+        }
+        .navigationBarTitle("Training List")
     }
 }
 
@@ -42,8 +44,6 @@ struct NoteView_Previews: PreviewProvider {
                                                       exercises: [Exercise(name: "My Exercise")])]
     
     static var previews: some View {
-        NavigationView {
-            NoteView()
-        }
+        NoteView()
     }
 }
