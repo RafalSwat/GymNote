@@ -31,6 +31,8 @@ struct WelcomeView: View {
                 }
             }.padding()
         }
+        .navigationBarTitle("Welcome", displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
     }
     
 }
