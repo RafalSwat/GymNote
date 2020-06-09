@@ -262,8 +262,8 @@
 			children = (
 				073DEAD2248E92CD008F3C72 /* NoteHost.swift */,
 				07FCCE7024817470008FE164 /* NoteView.swift */,
-				073DEAD6248ECC65008F3C72 /* NoteViewSupportingViews */,
 				073DEAD4248ECBCB008F3C72 /* EditNoteView.swift */,
+				073DEAD6248ECC65008F3C72 /* NoteViewSupportingViews */,
 			);
 			path = Note;
 			sourceTree = "<group>";
