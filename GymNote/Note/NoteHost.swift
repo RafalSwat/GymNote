@@ -11,14 +11,16 @@ import SwiftUI
 struct NoteHost: View {
     
     @Environment(\.editMode) var mode
+    @EnvironmentObject var session: FireBaseSession
     
     var body: some View {
         NavigationView {
             VStack {
-                 if self.mode?.wrappedValue == .inactive {
-                    NoteView()
+                if self.mode?.wrappedValue == .inactive {
+                    NoteView(listOfTrainings: session.userSession?.userTrainings.listOfTrainings ?? [Training]())
                  } else {
-                    Text("Edit Note View...")
+                    EditNoteView()
+                    
                 }
             }.navigationBarItems(leading: CancelEditModeButton(cancelAction: {
                 print("Cancel Action")
