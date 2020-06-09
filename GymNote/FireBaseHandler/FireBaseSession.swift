@@ -112,28 +112,38 @@ class FireBaseSession: ObservableObject {
                 if let value = snapshot.value as? [String: Any] {
                     let strDate = value["dateOfBirth"] as! String
                     let convertDate = DateConverter().convertFromString(dateString: strDate)
-                    let profile = UserProfile(uID: userID,
-                                                  email: userEmail,
-                                                  name: value["name"] as! String,
-                                                  surname: value["surname"] as! String,
-                                                  gender: value["gender"] as! String,
-                                                  profileImage: Image("staticImage"),
-                                                  height: value["height"] as! Int,
-                                                  userDateOfBirth: convertDate)
+                    let userProfile = UserProfile(uID: userID,
+                                              email: userEmail,
+                                              name: value["name"] as! String,
+                                              surname: value["surname"] as! String,
+                                              gender: value["gender"] as! String,
+                                              profileImage: Image("staticImage"),
+                                              height: value["height"] as! Int,
+                                              userDateOfBirth: convertDate)
                     
-                    self.userSession = UserData(profile: profile, uID: userID)
+                    // #notpretty: i can use loaded trainings only inside a completion handler, so i setup all
+                    // UserData at once...
+                    self.uploadTrainings(userID: userID, completion: { uploadedTrainings in
+                        let userTrainings = UserTrainings(id: userID, trainings: uploadedTrainings)
+                        self.userSession = UserData(profile: userProfile, trainings: userTrainings)
+                    })
+                    
+                    
                 } 
             } else {
                 // User has no data on FirebaseDatabase, so we set up default on (new user)
-                let profile = UserProfile(uID: userID,
-                                           email: userEmail,
-                                           name: "",
-                                           surname: "",
-                                           gender: "non",
-                                           profileImage: Image("staticImage"),
-                                           height: 175,
-                                           userDateOfBirth: Date())
-                self.userSession = UserData(profile: profile, uID: userID)
+                let userProfile = UserProfile(uID: userID,
+                                          email: userEmail,
+                                          name: "",
+                                          surname: "",
+                                          gender: "non",
+                                          profileImage: Image("staticImage"),
+                                          height: 175,
+                                          userDateOfBirth: Date())
+                
+                let userTrainings = UserTrainings(id: userID, trainings: [Training]())
+                
+                self.userSession = UserData(profile: userProfile, trainings: userTrainings)
                 
                 if let newUser = self.userSession?.userProfile {
                     
