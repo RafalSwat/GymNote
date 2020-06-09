@@ -39,6 +39,9 @@ struct TrainingRow: View {
                     }
                 }
             }
+            if showDetails {
+                TrainingDetails(training: training)
+            }
         }
     }
 }
