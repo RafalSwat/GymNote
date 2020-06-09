@@ -10,11 +10,7 @@ import SwiftUI
 
 struct NoteView: View {
     
-    @State var listOfTrainings = [Training(id: UUID().uuidString,
-                                           name: "My Training",
-                                           subscription: "My litte subscription",
-                                           date: "01-Jan-2020",
-                                           exercises: [Exercise(name: "My Exercise")])]
+    var listOfTrainings: [Training]
     @State private var passageToAddTraining = false
     
     var body: some View {
@@ -22,9 +18,11 @@ struct NoteView: View {
         VStack {
             
             NavigationLink(destination: CreateProgramView(), isActive: self.$passageToAddTraining, label: { Text("") })
-            
-            List(listOfTrainings, id: \.trainingID) { training in
-                Text(training.trainingName)
+            List {
+                ForEach(listOfTrainings, id: \.trainingID) { training in
+                    TrainingRow(training: training)
+                }
+                
             }
             AddButton(addButtonText: "Add New Training",
                       action: {print("Add new training tapped!")},
@@ -37,13 +35,15 @@ struct NoteView: View {
 
 struct NoteView_Previews: PreviewProvider {
     
-    @State static var prevListOfTrainings = [Training(id: UUID().uuidString,
-                                                      name: "My Training",
-                                                      subscription: "My litte subscription",
-                                                      date: "01-Jan-2020",
-                                                      exercises: [Exercise(name: "My Exercise")])]
+    static var prevListOfTrainings = [Training(id: UUID().uuidString,
+                                               name: "My Training",
+                                               subscription: "My litte subscription",
+                                               date: "01-Jan-2020",
+                                               exercises: [Exercise(name: "My Exercise")])]
     
     static var previews: some View {
-        NoteView()
+        NavigationView {
+            NoteView(listOfTrainings: prevListOfTrainings)
+        }
     }
 }
