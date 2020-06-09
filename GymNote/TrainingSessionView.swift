@@ -71,7 +71,7 @@ struct TrainingSessionView: View {
                                 subscription: trainingSubscription,
                                 date: DateConverter.dateFormat.string(from: Date()),
                                 exercises: selectedExercises)
-        self.session.userSession?.userTrainings?.listOfTrainings.append(training)
+        self.session.userSession?.userTrainings.listOfTrainings.append(training)
         
         //saving on firebase
         self.session.addTrainingToFBR(userTrainings: (self.session.userSession?.userTrainings)!, training: training)

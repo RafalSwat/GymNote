@@ -36,10 +36,10 @@ struct ChooseProgramView: View {
                             HStack {
                                 Text(training.trainingName)
                                     .font(.headline)
-                            }
-                            Text(training.trainingSubscription)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
+                                }
+                                Text(training.trainingSubscription)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
                         }
                     }
                 }.onDelete(perform: self.removeTraining)

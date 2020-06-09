@@ -27,8 +27,7 @@ struct HomeView: View {
     
     //MARK: Functions
     func getUser() {
-        session.listen()
-        
+        self.session.listen()
     }
     
 }

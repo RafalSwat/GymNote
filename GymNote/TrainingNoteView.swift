@@ -30,7 +30,7 @@ struct TrainingNoteView: View {
             NavigationLink(destination: CreateProgramView(),
                            isActive: self.$passageCreateProgram) { Text("") }
             
-            NavigationLink(destination: ChooseProgramView(listOfTrainings: session.userSession?.userTrainings?.listOfTrainings ?? [Training]()),
+            NavigationLink(destination: ChooseProgramView(listOfTrainings: session.userSession?.userTrainings.listOfTrainings ?? [Training]()),
                            isActive: self.$passageChooseProgram) { Text("") }
             
             Group {
@@ -54,12 +54,12 @@ struct TrainingNoteView: View {
             leading: BackButton(),
             trailing: ProfileButton(profile: session.userSession?.userProfile ?? UserProfile())
         )
-        .onAppear {
-            // canvas can not work with this method,
-            //it can`t display sth that could be nil! (it works only on simulator or device)
-            self.session.uploadTrainings(userTrainings: (self.session.userSession?.userTrainings)!)
-            
-        }
+//        .onAppear {
+//            // canvas can not work with this method,
+//            //it can`t display sth that could be nil! (it works only on simulator or device)
+//            self.session.uploadTrainings(userTrainings: (self.session.userSession?.userTrainings)!)
+//            
+//        }
     }
     
 }
