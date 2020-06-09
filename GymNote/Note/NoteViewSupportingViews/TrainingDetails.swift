@@ -13,23 +13,15 @@ struct TrainingDetails: View {
     var training: Training
     
     var body: some View {
-        VStack {
-            List {
-                Section(header: Text(training.trainingName)) {
-                            VStack {
-                                ForEach(training.listOfExercises) { exercise in
-                                    HStack {
-                                        Text(exercise.exerciseName)
-                                        Spacer()
-                                        Text("series:")
-                                            .font(.subheadline)
-                                            .foregroundColor(.secondary)
-                                        Text(String(exercise.exerciseNumberOfSerises))
-                                    }
-                                }
-                            }
-                            
-                }
+
+        ForEach(training.listOfExercises) { exercise in
+            HStack {
+                Text(exercise.exerciseName)
+                Spacer()
+                Text("series:")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                Text(String(exercise.exerciseNumberOfSerises))
             }
         }
     }
