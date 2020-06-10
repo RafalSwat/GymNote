@@ -17,10 +17,10 @@ struct EditNoteView: View {
         VStack {
             List {
                 ForEach(listOfTrainings, id: \.trainingID) { training in
-                    Text(training.trainingName)
+                    EditTrainingRow(training: training)
                 }
             }
-        }
+        }.navigationBarTitle("Edit List")
     }
 }
 
@@ -34,6 +34,8 @@ struct EditNoteView_Previews: PreviewProvider {
     
     
     static var previews: some View {
-        EditNoteView(listOfTrainings: $prevListOfTrainings)
+        NavigationView {
+            EditNoteView(listOfTrainings: $prevListOfTrainings)
+        }
     }
 }
