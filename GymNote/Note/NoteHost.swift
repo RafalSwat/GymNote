@@ -10,21 +10,22 @@ import SwiftUI
 
 struct NoteHost: View {
     
-    @Environment(\.editMode) var mode
+    @State var editMode = false
     @EnvironmentObject var session: FireBaseSession
+    @State var draftListOfTrainings = [Training]()
     
     var body: some View {
         NavigationView {
             VStack {
-                if self.mode?.wrappedValue == .inactive {
+                if !self.editMode {
                     NoteView(listOfTrainings: session.userSession?.userTrainings.listOfTrainings ?? [Training]())
                  } else {
                     EditNoteView()
                     
                 }
-            }.navigationBarItems(leading: CancelEditModeButton(cancelAction: {
+            }.navigationBarItems(leading: CancelEditModeButton(editMode: $editMode, cancelAction: {
                 print("Cancel Action")
-            }), trailing: EditModeButton(editAction: {
+            }), trailing: EditModeButton(editMode: $editMode, editAction: {
                 print("Edit Action")
             }))
         }

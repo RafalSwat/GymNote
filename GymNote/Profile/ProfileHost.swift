@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ProfileHost: View {
 
-    @Environment(\.editMode) var mode
+    @State var editMode = false
     @EnvironmentObject var session: FireBaseSession
     @State var draftProfile = UserProfile()
 
@@ -18,7 +18,7 @@ struct ProfileHost: View {
         NavigationView {
             VStack(alignment: .leading, spacing: 20) {
 
-                if self.mode?.wrappedValue == .inactive {
+                if !self.editMode {
                     ProfileView(profile: session.userSession?.userProfile ?? UserProfile())
                 } else {
                     ProfileEditView(profile: $draftProfile)
@@ -31,10 +31,10 @@ struct ProfileHost: View {
                 }
             }
             .navigationBarItems(
-                leading: CancelEditModeButton(cancelAction: {
+                leading: CancelEditModeButton(editMode: $editMode, cancelAction: {
                     self.draftProfile = self.session.userSession?.userProfile ?? UserProfile()
                 }),
-                trailing: EditModeButton(editAction: {
+                trailing: EditModeButton(editMode: $editMode, editAction: {
                     self.session.updateProfileOnFBR(user: self.draftProfile)
                 })
             )
