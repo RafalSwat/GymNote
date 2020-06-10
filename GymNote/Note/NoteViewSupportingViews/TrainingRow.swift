@@ -19,23 +19,35 @@ struct TrainingRow: View {
                 withAnimation { self.showDetails.toggle() }
             }) {
                 HStack {
-                    VStack(alignment: .leading) {
-                        Text(training.trainingName)
-                            .font(.headline)
-                        
-                        Text(training.trainingSubscription)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
+                    if showDetails {
+                        VStack(alignment: .leading) {
+                            
+                            Text(training.trainingName)
+                                .font(.title)
+                            
+                            Text(training.trainingSubscription)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+                    } else {
+                        VStack(alignment: .leading) {
+                            
+                            Text(training.trainingName)
+                                .font(.headline)
+                            
+                            Text(training.trainingSubscription)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }.padding(.bottom)
                     }
-                    
                     
                     Spacer()
                     if showDetails {
                         Image(systemName: "chevron.up")
-                            .font(.callout)
+                            .font(.title)
                     } else {
                         Image(systemName: "chevron.down")
-                            .font(.callout)
+                            .font(.title)
                     }
                 }
             }
