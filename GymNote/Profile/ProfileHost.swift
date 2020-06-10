@@ -25,9 +25,6 @@ struct ProfileHost: View {
                         .onAppear {
                             self.draftProfile = self.session.userSession?.userProfile ?? UserProfile()
                         }
-                        .onDisappear {
-                            self.session.userSession?.userProfile = self.draftProfile
-                        }
                 }
             }
             .navigationBarItems(
@@ -35,6 +32,7 @@ struct ProfileHost: View {
                     self.draftProfile = self.session.userSession?.userProfile ?? UserProfile()
                 }),
                 trailing: EditModeButton(editMode: $editMode, editAction: {
+                    self.session.userSession?.userProfile = self.draftProfile
                     self.session.updateProfileOnFBR(user: self.draftProfile)
                 })
             )
