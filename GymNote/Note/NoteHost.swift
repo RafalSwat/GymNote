@@ -20,7 +20,10 @@ struct NoteHost: View {
                 if !self.editMode {
                     NoteView(listOfTrainings: session.userSession?.userTrainings.listOfTrainings ?? [Training]())
                  } else {
-                    EditNoteView()
+                    EditNoteView(listOfTrainings: $draftListOfTrainings)
+                        .onAppear {
+                            self.draftListOfTrainings = self.session.userSession?.userTrainings.listOfTrainings ?? [Training]()
+                    }
                     
                 }
             }.navigationBarItems(leading: CancelEditModeButton(editMode: $editMode, cancelAction: {
