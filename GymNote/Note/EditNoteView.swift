@@ -23,8 +23,18 @@ struct EditNoteView: View {
                 ForEach(listOfTrainings, id: \.trainingID) { training in
                     EditTrainingRow(training: training)
                 }
+                .onDelete(perform: self.removeTraining)
             }
         }.navigationBarTitle("Edit List")
+    }
+    
+    func removeTraining(at index: IndexSet) {
+        
+        index.sorted(by: > ).forEach { (i) in
+            self.session.deleteTrainingFromFBR(userTrainings: (self.session.userSession?.userTrainings)!, training: listOfTrainings[i])
+        }
+        self.listOfTrainings.remove(atOffsets: index)
+        
     }
 }
 
