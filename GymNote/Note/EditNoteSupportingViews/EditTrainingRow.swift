@@ -10,15 +10,16 @@ import SwiftUI
 
 struct EditTrainingRow: View {
     
-    @Binding var training: Training
+    var training: Training
     
     var body: some View {
-        HStack(spacing: 15) {
+        HStack(spacing: 25) {
             Button(action: {
                 print("Delete Action!")
             }) {
                 Image(systemName: "trash")
-                    .font(.title)
+                    .font(.headline)
+                    .foregroundColor(.red)
             }
             
             VStack(alignment: .leading) {
@@ -42,9 +43,9 @@ struct EditTrainingRow: View {
 
 struct EditTrainingRow_Previews: PreviewProvider {
     
-    @State static var prevTraining = Training()
+    static var prevTraininig = Training()
     
     static var previews: some View {
-        EditTrainingRow(training: $prevTraining)
+        EditTrainingRow(training: prevTraininig)
     }
 }
