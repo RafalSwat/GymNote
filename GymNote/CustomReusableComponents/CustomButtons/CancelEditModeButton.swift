@@ -10,15 +10,15 @@ import SwiftUI
 
 struct CancelEditModeButton: View {
     
-    @Environment(\.editMode) var mode
+    @Binding var editMode: Bool
     var cancelAction: () -> Void
     
     var body: some View {
         HStack {
-            if self.mode?.wrappedValue == .active {
+            if self.editMode {
                 Button(action: {
                     self.cancelAction()
-                    self.mode?.animation().wrappedValue = .inactive
+                    self.editMode = false
                 }) {
                     Text("Cancel")
                 }
@@ -28,7 +28,10 @@ struct CancelEditModeButton: View {
 }
 
 struct CancelEditButton_Previews: PreviewProvider {
+    
+    @State static var prevEditMode = true
+    
     static var previews: some View {
-        CancelEditModeButton(cancelAction: {print("Cancel Action!")})
+        CancelEditModeButton(editMode: $prevEditMode, cancelAction: {print("Cancel Action!")})
     }
 }
