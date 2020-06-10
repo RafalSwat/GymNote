@@ -36,7 +36,7 @@ struct EditTrainingRow: View {
                     .font(.title)
             }
             
-        }
+        }.buttonStyle(PlainButtonStyle())
     }
 }
 
