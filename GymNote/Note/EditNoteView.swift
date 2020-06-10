@@ -12,9 +12,13 @@ struct EditNoteView: View {
     
     @EnvironmentObject var session: FireBaseSession
     @Binding var listOfTrainings: [Training]
+    @State var passageToAddTraining = false
     
     var body: some View {
+        
         VStack {
+            NavigationLink(destination: CreateProgramView(), isActive: self.$passageToAddTraining, label: { Text("") })
+            
             List {
                 ForEach(listOfTrainings, id: \.trainingID) { training in
                     EditTrainingRow(training: training)

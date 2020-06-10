@@ -16,7 +16,6 @@ struct NoteView: View {
     var body: some View {
         
         VStack {
-            
             NavigationLink(destination: CreateProgramView(), isActive: self.$passageToAddTraining, label: { Text("") })
             List {
                 ForEach(listOfTrainings, id: \.trainingID) { training in
