@@ -14,13 +14,13 @@ struct EditTrainingRow: View {
     
     var body: some View {
         HStack(spacing: 25) {
-            Button(action: {
-                print("Delete Action!")
-            }) {
-                Image(systemName: "trash")
-                    .font(.headline)
-                    .foregroundColor(.red)
-            }
+//            Button(action: {
+//                print("Delete Action!")
+//            }) {
+//                Image(systemName: "trash")
+//                    .font(.headline)
+//                    .foregroundColor(.red)
+//            }
             
             VStack(alignment: .leading) {
                 Text(training.trainingName)
