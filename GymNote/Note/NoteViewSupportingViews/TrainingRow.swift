@@ -38,7 +38,7 @@ struct TrainingRow: View {
                             Text(training.trainingSubscription)
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
-                        }.padding(.bottom)
+                        }
                     }
                     
                     Spacer()
