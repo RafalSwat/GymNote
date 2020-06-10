@@ -10,26 +10,29 @@ import SwiftUI
 
 struct EditModeButton: View {
     
-    @Environment(\.editMode) var mode
+    @Binding var editMode: Bool
     var editAction: () -> Void
     
     var body: some View {
         Button(action: {
-            if self.mode?.wrappedValue == .inactive {
-                self.mode?.wrappedValue = .active
-            } else {
+            if self.editMode {
                 self.editAction()
-                self.mode?.wrappedValue = .inactive
+                self.editMode = false
+            } else {
+                self.editMode = true
             }
             
         }) {
-            Text(self.mode?.wrappedValue == .active ? "Done" : "Edit")
+            Text(self.editMode == true ? "Done" : "Edit")
         }
     }
 }
 
 struct EditModeButton_Previews: PreviewProvider {
+    
+    @State static var prevEditMode = true
+    
     static var previews: some View {
-        EditModeButton(editAction: {print("Edit Action")})
+        EditModeButton(editMode: $prevEditMode, editAction: {print("Edit Action")})
     }
 }
