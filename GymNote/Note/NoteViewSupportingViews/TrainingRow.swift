@@ -16,30 +16,50 @@ struct TrainingRow: View {
     
     var body: some View {
         VStack {
-            Button(action: {
-                withAnimation { self.showDetails.toggle() }
-            }) {
-                HStack {
-                    if showDetails {
-                        VStack(alignment: .leading) {
-                            
-                            Text(training.trainingName)
-                                .font(.title)
-                            
-                            Text(training.trainingSubscription)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
+            HStack {
+                if showDetails {
+                    VStack(alignment: .leading) {
+                        Text(training.trainingName)
+                            .font(.title)
+                        Text(training.trainingSubscription)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                } else {
+                    VStack(alignment: .leading) {
+                        Text(training.trainingName)
+                            .font(.headline)
+                        Text(training.trainingSubscription)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                
+                Spacer()
+                ZStack {
+                    if !showButtons {
+                        Image(systemName: "chevron.left")
+                            .offset(x: UIScreen.main.bounds.width/7, y: 0)
+                    }
+                    HStack {
+                        if showButtons {
+                            Image(systemName: "chevron.right")
                         }
-                    } else {
-                        VStack(alignment: .leading) {
-                            
-                            Text(training.trainingName)
-                                .font(.headline)
-                            
-                            Text(training.trainingSubscription)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
+                        
+                        Button(action: {
+                            print("tapped button 1")
+                        }) {
+                            Text("1")
+                        }.buttonStyle(RectangularButtonStyle())
+                            .opacity(showButtons ? 1 : 0).animation(.default)
+                            .frame(width: UIScreen.main.bounds.width/7, height: UIScreen.main.bounds.width/7, alignment: .leading)
+                        Button(action: {
+                            print("tapped button 2")
+                        }) {
+                            Text("2")
+                        }.buttonStyle(RectangularButtonStyle())
+                            .opacity(showButtons ? 1 : 0).animation(.default)
+                            .frame(width: UIScreen.main.bounds.width/7, height: UIScreen.main.bounds.width/7, alignment: .leading)
                     }
                     
                 }
