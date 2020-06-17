@@ -11,6 +11,7 @@ import SwiftUI
 struct TrainingRow: View {
     
     var training: Training
+    @State private var showButtons = false
     @State var showDetails = false
     
     var body: some View {
@@ -70,3 +71,4 @@ struct TrainingRow_Previews: PreviewProvider {
         TrainingRow(training: prevTraining)
     }
 }
+
