@@ -29,7 +29,6 @@ struct EditNoteView: View {
     }
     
     func removeTraining(at index: IndexSet) {
-        
         index.sorted(by: > ).forEach { (i) in
             self.session.deleteTrainingFromFBR(userTrainings: (self.session.userSession?.userTrainings)!, training: listOfTrainings[i])
         }
