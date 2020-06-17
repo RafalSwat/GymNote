@@ -13,6 +13,7 @@ struct TrainingRow: View {
     var training: Training
     @State private var showButtons = false
     @State var showDetails = false
+    @State var goToTraining = false
     
     var body: some View {
         VStack {
