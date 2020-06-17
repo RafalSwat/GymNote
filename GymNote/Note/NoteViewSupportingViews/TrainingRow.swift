@@ -47,20 +47,18 @@ struct TrainingRow: View {
                             Image(systemName: "chevron.right")
                         }
                         
-                        Button(action: {
-                            print("tapped button 1")
-                        }) {
-                            Text("1")
-                        }.buttonStyle(RectangularButtonStyle())
+                        
+                        UseButton(useAction: {
+                            self.goToTraining.toggle()
+                        })
                             .opacity(showButtons ? 1 : 0).animation(.default)
-                            .frame(width: UIScreen.main.bounds.width/7, height: UIScreen.main.bounds.width/7, alignment: .leading)
-                        Button(action: {
-                            print("tapped button 2")
-                        }) {
-                            Text("2")
-                        }.buttonStyle(RectangularButtonStyle())
+                            .buttonStyle(BorderlessButtonStyle())
+                       
+                        DeleteButton(deleteAction: {
+                            print("Delete Action")
+                        })
                             .opacity(showButtons ? 1 : 0).animation(.default)
-                            .frame(width: UIScreen.main.bounds.width/7, height: UIScreen.main.bounds.width/7, alignment: .leading)
+                            .buttonStyle(BorderlessButtonStyle())
                     }
                     
                 }
