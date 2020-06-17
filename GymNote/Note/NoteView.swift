@@ -14,24 +14,24 @@ struct NoteView: View {
     @State private var passageToAddTraining = false
     
     var body: some View {
-        
-        VStack {
-            NavigationLink(destination: CreateProgramView(), isActive: self.$passageToAddTraining, label: { Text("") })
-            List {
-                ForEach(listOfTrainings, id: \.trainingID) { training in
-                    TrainingRow(training: training)
+        NavigationView {
+            VStack {
+                NavigationLink(destination: CreateProgramView(), isActive: self.$passageToAddTraining, label: { Text("") })
+                List {
+                    ForEach(listOfTrainings, id: \.trainingID) { training in
+                        TrainingRow(training: training)
+                    }
+                    
                 }
-                
+                AddButton(addButtonText: "Add New Training",
+                          action: {print("Add new training tapped!")},
+                          addingMode: self.$passageToAddTraining)
+                    .padding()
             }
-            AddButton(addButtonText: "Add New Training",
-                      action: {print("Add new training tapped!")},
-                      addingMode: self.$passageToAddTraining)
-                .padding()
+            .navigationBarTitle("Training List")
         }
-        .navigationBarTitle("Training List")
     }
 }
-
 struct NoteView_Previews: PreviewProvider {
     
     static var prevListOfTrainings = [Training(id: UUID().uuidString,
