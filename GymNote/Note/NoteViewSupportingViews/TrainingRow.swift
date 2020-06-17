@@ -52,6 +52,8 @@ struct TrainingRow: View {
                     }
                 }
             }
+            .modifier(SwipeGesture(direction: .horizontal, showContetnt: $showButtons))
+
             if showDetails {
                 TrainingDetails(training: training)
             }
