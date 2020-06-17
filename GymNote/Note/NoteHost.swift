@@ -27,16 +27,21 @@ struct NoteHost: View {
                     
                 }
             }.navigationBarItems(leading: CancelEditModeButton(editMode: $editMode, cancelAction: {
-                print("Cancel Action")
+                self.draftListOfTrainings = self.session.userSession?.userTrainings.listOfTrainings ?? [Training]()
             }), trailing: EditModeButton(editMode: $editMode, editAction: {
-                print("Edit Action")
+                self.session.userSession?.userTrainings.listOfTrainings = self.draftListOfTrainings
+                
             }))
         }
     }
 }
 
 struct NoteHost_Previews: PreviewProvider {
+    
+    @State static var prevSession = FireBaseSession()
+    
     static var previews: some View {
         NoteHost()
+            .environmentObject(prevSession)
     }
 }
