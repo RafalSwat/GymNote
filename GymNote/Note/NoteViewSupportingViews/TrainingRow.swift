@@ -42,14 +42,6 @@ struct TrainingRow: View {
                         }
                     }
                     
-                    Spacer()
-                    if showDetails {
-                        Image(systemName: "chevron.up")
-                            .font(.title)
-                    } else {
-                        Image(systemName: "chevron.down")
-                            .font(.title)
-                    }
                 }
             }
             .modifier(SwipeGesture(direction: .horizontal, showContetnt: $showButtons))
@@ -57,6 +49,10 @@ struct TrainingRow: View {
             if showDetails {
                 TrainingDetails(training: training)
             }
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            withAnimation { self.showDetails.toggle() }
         }
     }
 }
