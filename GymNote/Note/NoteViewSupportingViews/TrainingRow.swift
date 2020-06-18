@@ -14,6 +14,7 @@ struct TrainingRow: View {
     @State private var showButtons = false
     @State var showDetails = false
     @State var goToTraining = false
+    @Binding var listOfTraining: [Training]
     
     var body: some View {
         VStack {
@@ -56,6 +57,7 @@ struct TrainingRow: View {
                        
                         DeleteButton(deleteAction: {
                             print("Delete Action")
+                            
                         })
                             .opacity(showButtons ? 1 : 0).animation(.default)
                             .buttonStyle(BorderlessButtonStyle())
@@ -84,8 +86,11 @@ struct TrainingRow_Previews: PreviewProvider {
                                        subscription: "My litte subscription ",
                                        date: "01-Jan-2020",
                                        exercises: [Exercise(name: "My Exercise")])
+    
+    @State static var prevListOfTraining = [Training]()
+    
     static var previews: some View {
-        TrainingRow(training: prevTraining)
+        TrainingRow(training: prevTraining, listOfTraining: $prevListOfTraining)
     }
 }
 
