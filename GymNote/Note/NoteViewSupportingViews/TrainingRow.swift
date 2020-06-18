@@ -25,7 +25,7 @@ struct TrainingRow: View {
                         Text(training.trainingSubscription)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
-                    }
+                    }.padding(.bottom)
                 } else {
                     VStack(alignment: .leading) {
                         Text(training.trainingName)
