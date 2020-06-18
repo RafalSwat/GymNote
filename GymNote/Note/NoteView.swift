@@ -10,7 +10,7 @@ import SwiftUI
 
 struct NoteView: View {
     
-    var listOfTrainings: [Training]
+    @State var listOfTrainings: [Training]
     @State private var passageToAddTraining = false
     
     var body: some View {
@@ -19,7 +19,7 @@ struct NoteView: View {
                 NavigationLink(destination: CreateProgramView(), isActive: self.$passageToAddTraining, label: { Text("") })
                 List {
                     ForEach(listOfTrainings, id: \.trainingID) { training in
-                        TrainingRow(training: training)
+                        TrainingRow(training: training, listOfTraining: self.$listOfTrainings)
                     }
                     
                 }
@@ -31,6 +31,7 @@ struct NoteView: View {
             .navigationBarTitle("Training List")
         }
     }
+
 }
 struct NoteView_Previews: PreviewProvider {
     
