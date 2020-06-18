@@ -11,13 +11,13 @@ import SwiftUI
 struct ProfileEditView: View {
     
     //MARK: Properties
-    
     @EnvironmentObject var session: FireBaseSession
     @Binding var profile: UserProfile
-    @State var tempUserProfile = UserProfile()
+    
     //var to change photo mechanics
     @State var doneUpdating = false
     @State var doneChangingPhoto = false
+    
     //Array only for pick the height and gender of a user
     var userPossibleHeight = Array(40...250)
     var userPossibleGender = ["non", "male", "female"]
@@ -34,14 +34,14 @@ struct ProfileEditView: View {
                             VStack {
                                 ZStack {
                                     
-                                    CircleImage(image: tempUserProfile.userImage)
-                                        .padding(.top, 50)
+                                    CircleImage(image: profile.userImage)
+                                        .padding(.top, 20)
                                         .padding(.bottom, 15)
                                     ChangeButton(isChanged: $doneChangingPhoto)
-                                        .offset(x: 40, y: 50)
+                                        .offset(x: 30, y: 40)
                                         .scaleEffect(1.7)
                                 }
-                                Text("\(tempUserProfile.userName) \(tempUserProfile.userSurname)")
+                                Text("\(profile.userName) \(profile.userSurname)")
                                     .font(.title)
                             }
                             Spacer()
@@ -54,26 +54,24 @@ struct ProfileEditView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             Spacer()
-                            TextField("Enter your name: ", text: $tempUserProfile.userName)
+                            TextField("Enter your name: ", text: $profile.userName)
                         }
                         HStack {
                             Text("Surname: ")
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             Spacer()
-                            TextField("Enter your surname: ", text: $tempUserProfile.userSurname)
+                            TextField("Enter your surname: ", text: $profile.userSurname)
                         }}
                     Section(header: Text("Height")) {
                         Picker(
-                            selection: $tempUserProfile.userHeight,
+                            selection: $profile.userHeight,
                             label: Text("")) {
                                 ForEach(0 ..< userPossibleHeight.count) {
                                     //FIXME: "-40" because for unknown reasons, the picker chooses a number that is exactly 40 different
                                     Text("\(self.userPossibleHeight[$0] - 40) cm")
                                 }
                         }.pickerStyle(WheelPickerStyle())
-                        
-                        
                     }
                     Section(header: Text("Gender")) {
                         Picker(
@@ -82,9 +80,9 @@ struct ProfileEditView: View {
                                 ForEach(0 ..< userPossibleGender.count) {             Text("\(self.userPossibleGender[$0])")
                                 }
                         }
-                        //FIXME: the solution is unsatisfactory because it doesn't react on "swipe", only for clicking so that without clicking the gender doesn't change ad all
-                        .onTapGesture {
-                            self.tempUserProfile.userGender = self.userPossibleGender[self.selectedGender]
+                            //FIXME: the solution is unsatisfactory because it doesn't react on "swipe", only for clicking so that without clicking the gender doesn't change ad all
+                            .onTapGesture {
+                                self.profile.userGender = self.userPossibleGender[self.selectedGender]
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
@@ -92,36 +90,10 @@ struct ProfileEditView: View {
                     
                     Section(header: Text("Date of birth")) {
                         DatePicker(
-                            selection: $tempUserProfile.userDateOfBirth,
+                            selection: $profile.userDateOfBirth,
                             in: ...Date(),
                             displayedComponents: .date) {
                                 Text("")
-                        }
-                        
-                    }
-                }
-                    
-                    
-                    
-                .navigationBarTitle("Edit Profile", displayMode: .inline)
-                .navigationBarBackButtonHidden(true)
-                .navigationBarItems(
-                    leading: BackButton(),
-                    trailing: DoneButton(isDone: $doneUpdating)
-                )
-                if (doneUpdating) {
-                    ZStack {
-                        Color.black.opacity(0.4)
-                            .edgesIgnoringSafeArea(.vertical)
-                        GeometryReader { geometry in
-                            DoneConformAlert(showAlert: self.$doneUpdating, alertTitle: "", alertMessage: "MESS", alertAction: {
-                                //TODO: updating stuff!
-                                self.updateProfileData()
-                                self.doneUpdating.toggle()
-                                
-                            })
-                                .padding()
-                                .position(x: geometry.size.width/2, y: geometry.size.height/2)
                         }
                     }
                 }
@@ -130,24 +102,11 @@ struct ProfileEditView: View {
                     CaptureImageView(isShown: $doneChangingPhoto, image: $profile.userImage)
                 }
             }
-            
         }
         .onAppear {
-            self.tempUserProfile = self.profile
             self.setupGender()
         }
-    }
-    func updateProfileData() {
-        self.profile.userImage = self.tempUserProfile.userImage
-        self.profile.userName =  self.tempUserProfile.userName
-        self.profile.userSurname = self.tempUserProfile.userSurname
-        self.profile.userHeight = self.tempUserProfile.userHeight
-        self.profile.userGender = self.tempUserProfile.userGender
-        self.profile.userDateOfBirth = self.tempUserProfile.userDateOfBirth
-        self.profile.userGender = self.tempUserProfile.userGender
-        
-        //updating on firebase 
-        self.session.updateProfileOnFBR(user: self.profile)
+        .navigationBarTitle("Edit Profile", displayMode: .inline)
     }
     
     func setupGender() {
@@ -161,16 +120,15 @@ struct ProfileEditView: View {
     }
 }
 
-
 struct ProfileEditView_Previews: PreviewProvider {
     
-    @State static var profile = UserProfile()
+    @State static var prevProfile = UserProfile()
+    @State static var prevDoneUpdating = false
     
     static var previews: some View {
         NavigationView {
-            ProfileEditView(profile: $profile)
+            ProfileEditView(profile: $prevProfile)
         }
-        
     }
 }
 

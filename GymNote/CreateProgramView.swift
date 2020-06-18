@@ -12,7 +12,7 @@ struct CreateProgramView: View {
     @EnvironmentObject var session: FireBaseSession
     @State var addMode = false  //needed to show sheet with exercises
     @State var doneCreating = false // needed to save training
-    @State var editMode = true  // needed to display correct "titleBelt"
+    @State var CustomEditMode = true  // needed to display correct "titleBelt"
     @State var selectedExercises = [Exercise]()
     @State var programTitle = ""
     @State var programSubscription = ""
@@ -23,7 +23,7 @@ struct CreateProgramView: View {
             VStack {
                 DateBelt(lightBeltColors: [.white, .magnesium], darkBeltColors: [.black, .magnesium])
                 TitleBelt(title: $programTitle, subtitle: $programSubscription,
-                          editMode: $editMode, image: $programImage,
+                          CeditMode: $CustomEditMode, image: $programImage,
                           lightBeltColors: [.white, .magnesium], darkBeltColors: [.black, .magnesium])
                 Divider()
                 Spacer()
@@ -71,7 +71,7 @@ struct CreateProgramView: View {
                                 subscription: programSubscription,
                                 date: DateConverter.dateFormat.string(from: Date()),
                                 exercises: selectedExercises)
-        self.session.userSession?.userTrainings?.listOfTrainings.append(training)
+        self.session.userSession?.userTrainings.listOfTrainings.append(training)
         
         //saving on firebase
         self.session.addTrainingToFBR(userTrainings: (self.session.userSession?.userTrainings)!, training: training)

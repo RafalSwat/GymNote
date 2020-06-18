@@ -23,7 +23,7 @@ struct ProgramSessionView: View {
                 DateBelt()
                 TitleBelt(title: $programTitle,
                           subtitle: $programSubscription,
-                          editMode: $programEditMode,
+                          CeditMode: $programEditMode,
                           image: $programImage)
                 
                 List(program.listOfExercises, id: \.self) { exercise in

@@ -13,7 +13,7 @@ struct TitleBelt: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @Binding var title: String 
     @Binding var subtitle: String
-    @Binding var editMode: Bool
+    @Binding var CeditMode: Bool
     @Binding var image: Image  // = Image("staticImage")
     var lightBeltColors: [Color] = [.white, .yellow, .red]
     var darkBeltColors: [Color] = [.black, .orange, .red]
@@ -30,7 +30,7 @@ struct TitleBelt: View {
                 .overlay(CircleImage(image: image), alignment: .leading)
             
             VStack(alignment: .center) {
-                if editMode {
+                if CeditMode {
                     
                     RoundedRectangle(cornerRadius: 4)
                         .fill(Color.gray.opacity(0.3))
@@ -86,6 +86,6 @@ struct TitleBelt_Previews: PreviewProvider {
     @State static var prevImage  = Image("staticImage")
     
     static var previews: some View {
-        TitleBelt(title: $prevTitle, subtitle: $prevSubtitle, editMode: $prevEditMode, image: $prevImage)
+        TitleBelt(title: $prevTitle, subtitle: $prevSubtitle, CeditMode: $prevEditMode, image: $prevImage)
     }
 }
