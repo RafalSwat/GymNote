@@ -17,10 +17,12 @@ struct CircleImage: View {
         
         image
             .resizable()
-            .scaledToFit()
+            .frame(width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.width/2, alignment: .center)
+            .aspectRatio(contentMode: .fit)
             .clipShape(Circle())
             .overlay(Circle().stroke(colorScheme == .light ? Color.white : Color.black, lineWidth: 4))
             .shadow(color: .gray, radius: 5)
+        
         
     }
 }
