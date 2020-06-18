@@ -57,6 +57,10 @@ struct TrainingRow: View {
                             .buttonStyle(BorderlessButtonStyle())
                        
                         DeleteButton(deleteAction: {
+                            self.removeTraining(at: self.listOfTraining.firstIndex(of: self.training)!)
+                            
+                            
+                            
                             print("Delete Action")
                             
                         })
@@ -77,6 +81,13 @@ struct TrainingRow: View {
             withAnimation { self.showDetails.toggle() }
         }
     }
+    
+    func removeTraining(at index: Int) {
+
+        self.listOfTraining.remove(at: index)
+        self.session.deleteTrainingFromFBR(userTrainings: self.session.userSession!.userTrainings, training: training)
+    }
+    
 }
 
 
