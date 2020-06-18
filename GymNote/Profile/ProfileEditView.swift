@@ -38,7 +38,7 @@ struct ProfileEditView: View {
                                         .padding(.top, 20)
                                         .padding(.bottom, 15)
                                     ChangeButton(isChanged: $doneChangingPhoto)
-                                        .offset(x: 40, y: 50)
+                                        .offset(x: 30, y: 40)
                                         .scaleEffect(1.7)
                                 }
                                 Text("\(profile.userName) \(profile.userSurname)")
