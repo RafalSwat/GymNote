@@ -11,53 +11,59 @@ import SwiftUI
 struct ProfileView: View {
     
     var profile: UserProfile
-        
+    
     var body: some View {
-        VStack {
+        
+        List {
+
+                VStack {
+                    HStack {
+                        Spacer()
+                        CircleImage(image: profile.userImage)
+                        .padding(.top, 20)
+                        .padding(.bottom, 15)
+                        Spacer()
+                    }
+                    Text("\(profile.userName) \(profile.userSurname)")
+                        .font(.title)
+            }
             
-            CircleImage(image: profile.userImage)
-                .padding(.top, 20)
-                .padding(.bottom, 15)
-            Text("\(profile.userName) \(profile.userSurname)")
-                .font(.title)
-            List {
-                Section(header: Text("Basic info")) {
-                    HStack {
-                        Text("Email:")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        Text(profile.userEmail)
-                    }
-                    HStack {
-                        Text("Height:")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        Text("\(profile.userHeight) cm")
-                    }
-                    HStack {
-                        Text("Gender:")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        Text(profile.userGender)
-                    }
-                    HStack {
-                        Text("Date of birth:")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        Text("\(DateConverter.dateFormat.string(from: profile.userDateOfBirth))")
-                    }
+            Section(header: Text("Basic info")) {
+                HStack {
+                    Text("Email:")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text(profile.userEmail)
                 }
-                Section(header: Text("Training level")) {
-                    Text("Training level: beginner")
+                HStack {
+                    Text("Height:")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text("\(profile.userHeight) cm")
+                }
+                HStack {
+                    Text("Gender:")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text(profile.userGender)
+                }
+                HStack {
+                    Text("Date of birth:")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text("\(DateConverter.dateFormat.string(from: profile.userDateOfBirth))")
                 }
             }
-            .listStyle(GroupedListStyle())
+            Section(header: Text("Training level")) {
+                Text("Training level: beginner")
+            }
         }
-        .navigationBarTitle("Profile", displayMode: .inline) 
+        .listStyle(GroupedListStyle())
+        .navigationBarTitle("Profile", displayMode: .inline)
     }
 }
 
