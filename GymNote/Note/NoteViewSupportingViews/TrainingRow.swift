@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TrainingRow: View {
     
+    @EnvironmentObject var session: FireBaseSession
     var training: Training
     @State private var showButtons = false
     @State var showDetails = false
