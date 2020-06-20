@@ -111,23 +111,26 @@ class FireBaseSession: ObservableObject {
                 if let value = snapshot.value as? [String: Any] {
                     let strDate = value["dateOfBirth"] as! String
                     let convertDate = DateConverter().convertFromString(dateString: strDate)
-                    let userProfile = UserProfile(uID: userID,
-                                              email: userEmail,
-                                              name: value["name"] as! String,
-                                              surname: value["surname"] as! String,
-                                              gender: value["gender"] as! String,
-                                              profileImage: UIImage(named: "staticImage")!,
-                                              height: value["height"] as! Int,
-                                              userDateOfBirth: convertDate)
+        
+                    self.uploadImageFromFBR(id: userID, completion: { downloadedImage in
                     
-                    // #notpretty: i can use loaded trainings only inside a completion handler, so i setup all
-                    // UserData at once...
-                    self.uploadTrainings(userID: userID, completion: { uploadedTrainings in
-                        let userTrainings = UserTrainings(id: userID, trainings: uploadedTrainings)
-                        self.userSession = UserData(profile: userProfile, trainings: userTrainings)
+                        let userProfile = UserProfile(uID: userID,
+                                                  email: userEmail,
+                                                  name: value["name"] as! String,
+                                                  surname: value["surname"] as! String,
+                                                  gender: value["gender"] as! String,
+                                                  profileImage: downloadedImage,
+                                                  height: value["height"] as! Int,
+                                                  userDateOfBirth: convertDate)
+                        
+                        // #notpretty: i can use loaded trainings only inside a completion handler, so i setup all
+                        // UserData at once...
+                        self.uploadTrainings(userID: userID, completion: { uploadedTrainings in
+                            let userTrainings = UserTrainings(id: userID, trainings: uploadedTrainings)
+                            self.userSession = UserData(profile: userProfile, trainings: userTrainings)
+                        })
                     })
-                    
-                    
+      
                 } 
             } else {
                 // User has no data on FirebaseDatabase, so we set up default on (new user)
