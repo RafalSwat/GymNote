@@ -22,6 +22,7 @@
 		073DEAE4249A54D4008F3C72 /* DeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAE3249A54D4008F3C72 /* DeleteButton.swift */; };
 		073DEAE9249E5F11008F3C72 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAE8249E5F11008F3C72 /* TrainingView.swift */; };
 		073DEAEC249E658C008F3C72 /* ExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAEB249E658C008F3C72 /* ExerciseView.swift */; };
+		073DEAF2249EA864008F3C72 /* EditTrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAF1249EA864008F3C72 /* EditTrainingView.swift */; };
 		073DEF982433403300644ED3 /* CreateProgramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEF972433403300644ED3 /* CreateProgramView.swift */; };
 		073DEF9A2433545C00644ED3 /* CreateProgramListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEF992433545C00644ED3 /* CreateProgramListRow.swift */; };
 		073DEF9C2433556100644ED3 /* SetSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEF9B2433556100644ED3 /* SetSeriesView.swift */; };
@@ -94,6 +95,7 @@
 		073DEAE3249A54D4008F3C72 /* DeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButton.swift; sourceTree = "<group>"; };
 		073DEAE8249E5F11008F3C72 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
 		073DEAEB249E658C008F3C72 /* ExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseView.swift; sourceTree = "<group>"; };
+		073DEAF1249EA864008F3C72 /* EditTrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingView.swift; sourceTree = "<group>"; };
 		073DEF972433403300644ED3 /* CreateProgramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProgramView.swift; sourceTree = "<group>"; };
 		073DEF992433545C00644ED3 /* CreateProgramListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProgramListRow.swift; sourceTree = "<group>"; };
 		073DEF9B2433556100644ED3 /* SetSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSeriesView.swift; sourceTree = "<group>"; };
@@ -197,6 +199,8 @@
 			isa = PBXGroup;
 			children = (
 				073DEAE8249E5F11008F3C72 /* TrainingView.swift */,
+				073DEAF1249EA864008F3C72 /* EditTrainingView.swift */,
+				073DEAF3249EB2B0008F3C72 /* EditTrainingSupportingViews */,
 				073DEAEA249E6550008F3C72 /* TrainingSupportingViews */,
 			);
 			path = Training;
@@ -208,6 +212,14 @@
 				073DEAEB249E658C008F3C72 /* ExerciseView.swift */,
 			);
 			path = TrainingSupportingViews;
+			sourceTree = "<group>";
+		};
+		073DEAF3249EB2B0008F3C72 /* EditTrainingSupportingViews */ = {
+			isa = PBXGroup;
+			children = (
+				0742660C240C11C6003F2C32 /* ExercisesListView.swift */,
+			);
+			path = EditTrainingSupportingViews;
 			sourceTree = "<group>";
 		};
 		073DEF9D24338ABC00644ED3 /* CreateProgramSupportingView */ = {
@@ -362,7 +374,6 @@
 				073CD70B2452FDA800C0913B /* ProgramSessionListRow.swift */,
 				0740B3CA24321DE9003D7520 /* TrainingSessionSupportingViews */,
 				073DEF9D24338ABC00644ED3 /* CreateProgramSupportingView */,
-				0742660C240C11C6003F2C32 /* ExercisesListView.swift */,
 				0740B3CB24321E40003D7520 /* ExerciseListSupportingViews */,
 				07C0B99D23A2A812001632A0 /* CustomReusableComponents */,
 				07C0B96F2397BE03001632A0 /* Assets.xcassets */,
@@ -578,6 +589,7 @@
 				07489CAC243CA39B00FB5589 /* ChooseProgramView.swift in Sources */,
 				073DEADA248ED394008F3C72 /* TrainingDetails.swift in Sources */,
 				07426603240BCB4B003F2C32 /* TrainingSessionView.swift in Sources */,
+				073DEAF2249EA864008F3C72 /* EditTrainingView.swift in Sources */,
 				073F482723F55F47003011F0 /* CaptureImageView.swift in Sources */,
 				073B917A23A4025800F38F1D /* CircleImage.swift in Sources */,
 				074265FF240BC6C6003F2C32 /* Exercise.swift in Sources */,
