@@ -24,8 +24,7 @@ class FireBaseSession: ObservableObject {
     }
     
     @Published var usersDBRef = Database.database().reference()
-    
-    
+    @Published var usersDBStorage = Storage.storage().reference()
     
     var handle: AuthStateDidChangeListenerHandle?
     
