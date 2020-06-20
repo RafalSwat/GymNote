@@ -11,7 +11,7 @@ import SwiftUI
 struct AddButton: View {
     
     @Environment(\.colorScheme) var colorScheme: ColorScheme
-    var addButtonImage: Image = Image(systemName: "plus.circle")
+    var addButtonImage: Image = Image(systemName: "plus.square")
     var addButtonText: String = "ADD EXERCISES"
     var action: () -> Void = {}
     var fromColor = Color.orange
@@ -29,7 +29,7 @@ struct AddButton: View {
                 self.addButtonImage
                     .font(.largeTitle)
                     .foregroundColor(colorScheme == .light ? .white : .black)
-                    .padding()
+                    .padding(.leading)
                 Spacer()
                 Text(addButtonText)
                 Spacer()
