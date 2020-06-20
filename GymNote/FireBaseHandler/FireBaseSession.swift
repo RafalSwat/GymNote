@@ -181,6 +181,7 @@ class FireBaseSession: ObservableObject {
              "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
              "gender" : user.userGender,
              "height" : user.userHeight])
+        saveImageOnFBR(uiimage: user.userImage, id: user.userID)
     }
     
     func saveImageOnFBR(uiimage: UIImage, id: String) {
