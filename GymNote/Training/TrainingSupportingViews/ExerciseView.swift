@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ExerciseView: View {
     
+    @EnvironmentObject var session: FireBaseSession
     var exercise: Exercise
     
     @State var repeats = [String]()
@@ -21,21 +22,31 @@ struct ExerciseView: View {
         VStack {
             HStack {
                 Text(exercise.exerciseName)
+                    .font(.title)
+                    .fixedSize(horizontal: false, vertical: true)
                 Spacer()
+                Text("Series:")
+                    .foregroundColor(.secondary)
+                Text("\(exercise.exerciseNumberOfSerises)x")
+            }
+            .padding(.bottom)
+            HStack {
+                
                 Text("repeats")
+                    .padding(.leading, 40)
+                    .foregroundColor(.secondary)
+                Spacer()
                 Text("weight")
+                    .padding(.trailing, 40)
+                    .foregroundColor(.secondary)
             }
             
             ForEach (0 ..< self.weights.count, id: \.self) { index in
-                HStack {
-                    Spacer()
-                    SeriesTextFields(repeats: self.$repeats,
-                                     weights: self.$weights,
-                                     index: index,
-                                     reps: self.rep,
-                                     weight: self.weight)
-                    
-                }
+                SeriesTextFields(repeats: self.$repeats,
+                                 weights: self.$weights,
+                                 index: index,
+                                 reps: self.rep,
+                                 weight: self.weight)
             }
             
         }
