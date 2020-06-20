@@ -19,9 +19,9 @@ struct ProfileView: View {
                 VStack {
                     HStack {
                         Spacer()
-                        CircleImage(image: profile.userImage)
-                        .padding(.top, 20)
-                        .padding(.bottom, 15)
+                        CircleImage(image: Image(uiImage: profile.userImage))
+                            .padding(.top, 20)
+                            .padding(.bottom, 15)
                         Spacer()
                     }
                     Text("\(profile.userName) \(profile.userSurname)")

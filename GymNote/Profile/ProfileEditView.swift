@@ -34,7 +34,7 @@ struct ProfileEditView: View {
                             VStack {
                                 ZStack {
                                     
-                                    CircleImage(image: profile.userImage)
+                                    CircleImage(image: Image(uiImage: profile.userImage))
                                         .padding(.top, 20)
                                         .padding(.bottom, 15)
                                     ChangeButton(isChanged: $doneChangingPhoto)
