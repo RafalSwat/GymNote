@@ -13,14 +13,14 @@ struct AddBarItem: View {
     @Environment(\.presentationMode) var presentationMode
     @Binding var showAddView: Bool
     
-    var addBarItemImage: Image = Image(systemName: "plus.circle")
+    var addBarItemImage: Image = Image(systemName: "plus.square")
     
     var body: some View {
         
         Button(action: { withAnimation { self.showAddView = true }}) {
             self.addBarItemImage
-                .font(.largeTitle)
-                .foregroundColor(colorScheme == .light ? .black : .secondary)
+                .font(.title)
+                .foregroundColor(Color.orange)
         }
     }
 }
