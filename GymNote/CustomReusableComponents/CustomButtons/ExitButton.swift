@@ -13,7 +13,7 @@ struct ExitButton: View {
     @Environment(\.presentationMode) var presentationMode
     @Binding var donePresenting: Bool
     
-    var exitsButtonImage: Image = Image(systemName: "multiply.circle")
+    var exitsButtonImage: Image = Image(systemName: "multiply.square")
 
     var body: some View {
     
@@ -21,8 +21,8 @@ struct ExitButton: View {
             self.donePresenting = false
         }) {
             self.exitsButtonImage
-                .font(.largeTitle)
-                .foregroundColor(colorScheme == .light ? .black : .secondary)
+                .font(.title)
+                .foregroundColor(Color.red)
         }
     }
 }
