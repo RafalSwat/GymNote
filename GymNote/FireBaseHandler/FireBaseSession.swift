@@ -183,6 +183,21 @@ class FireBaseSession: ObservableObject {
              "height" : user.userHeight])
     }
     
+    func saveImageOnFBR(uiimage: UIImage, id: String) {
+        
+        if let imageToSave = uiimage.jpegData(compressionQuality: 1) {
+            self.usersDBStorage.child("Images").child(id).putData(imageToSave, metadata: nil) { (_, error) in
+                if let err = error {
+                    print("Could`t save image in FireBase Database: \(err.localizedDescription)")
+                } else {
+                    print("Image was save in FiraBase DataBase successfully!")
+                }
+            }
+        } else {
+            print("Could`t case/unwrap image to data!")
+        }
+    }
+    
     //not sure if there is any need to this function
     func unbind () {
         if let handle = handle {
