@@ -199,6 +199,20 @@ class FireBaseSession: ObservableObject {
         }
     }
     
+    func uploadImageFromFBR(id: String, completion: @escaping (UIImage)->()){
+        usersDBStorage.child("Images").child(id).getData(maxSize: 10*1024*1024) { (imageData, error) in
+            if let err = error {
+                print("Could`t get image data from FireBase DataBase!: \(err.localizedDescription)")
+            } else {
+                if let image = imageData {
+                    completion(UIImage(data: image)!)
+                } else {
+                    print("Error: Could`t unwrap image-data to an image!")
+                }
+            }
+        }
+    }
+    
     //not sure if there is any need to this function
     func unbind () {
         if let handle = handle {
