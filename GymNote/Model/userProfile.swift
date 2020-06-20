@@ -17,7 +17,7 @@ struct UserProfile {
     var userName: String
     var userSurname: String
     var userGender: String
-    var userImage: Image
+    var userImage: UIImage
     var userHeight: Int
     var userDateOfBirth: Date
     
@@ -28,7 +28,7 @@ struct UserProfile {
         self.userName = "Anonim"
         self.userSurname = ""
         self.userGender = "non"
-        self.userImage = Image("staticImage")
+        self.userImage = UIImage(named: "staticImage")!
         self.userHeight = 170
         self.userDateOfBirth = Date()
     }
@@ -38,7 +38,7 @@ struct UserProfile {
          name: String,
          surname: String,
          gender: String,
-         profileImage: Image,
+         profileImage: UIImage,
          height: Int,
          userDateOfBirth: Date) {
         
