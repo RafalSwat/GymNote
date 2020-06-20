@@ -49,32 +49,26 @@ struct TrainingRow: View {
                             Image(systemName: "chevron.right")
                         }
                         
-                        
                         UseButton(useAction: {
                             self.goToTraining.toggle()
                         })
                             .opacity(showButtons ? 1 : 0).animation(.default)
                             .buttonStyle(BorderlessButtonStyle())
-                       
+                        
                         DeleteButton(deleteAction: {
                             self.removeTraining(at: self.listOfTraining.firstIndex(of: self.training)!)
-                            
-                            
-                            
-                            print("Delete Action")
-                            
                         })
                             .opacity(showButtons ? 1 : 0).animation(.default)
                             .buttonStyle(BorderlessButtonStyle())
                     }
-                    
                 }
             }
             .modifier(SwipeGesture(direction: .horizontal, showContetnt: $showButtons))
-
+            
             if showDetails {
                 TrainingDetails(training: training)
             }
+            NavigationLink(destination: TrainingView(training: training), isActive: self.$goToTraining) { EmptyView() }
         }
         .contentShape(Rectangle())
         .onTapGesture {
@@ -83,7 +77,7 @@ struct TrainingRow: View {
     }
     
     func removeTraining(at index: Int) {
-
+        
         self.listOfTraining.remove(at: index)
         self.session.deleteTrainingFromFBR(userTrainings: self.session.userSession!.userTrainings, training: training)
     }
