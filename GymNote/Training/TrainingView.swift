@@ -11,7 +11,7 @@ import SwiftUI
 struct TrainingView: View {
     
     var training: Training
-    
+    let dataString = DateConverter.dateFormat.string(from: Date())
     
     var body: some View {
         VStack {
