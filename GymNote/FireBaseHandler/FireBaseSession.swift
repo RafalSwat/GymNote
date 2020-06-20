@@ -116,7 +116,7 @@ class FireBaseSession: ObservableObject {
                                               name: value["name"] as! String,
                                               surname: value["surname"] as! String,
                                               gender: value["gender"] as! String,
-                                              profileImage: Image("staticImage"),
+                                              profileImage: UIImage(named: "staticImage")!,
                                               height: value["height"] as! Int,
                                               userDateOfBirth: convertDate)
                     
@@ -136,7 +136,7 @@ class FireBaseSession: ObservableObject {
                                           name: "",
                                           surname: "",
                                           gender: "non",
-                                          profileImage: Image("staticImage"),
+                                          profileImage: UIImage(named: "staticImage")!,
                                           height: 175,
                                           userDateOfBirth: Date())
                 
