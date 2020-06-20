@@ -14,10 +14,40 @@ struct TrainingView: View {
     let dataString = DateConverter.dateFormat.string(from: Date())
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             List {
-                ForEach(training.listOfExercises, id: \.self) { exercise in
-                    ExerciseView(exercise: exercise)
+                Section(header: Text("")) {
+                    
+                    VStack(alignment: .leading) {
+                        Text(training.trainingSubscription)
+                            .padding(.horizontal)
+                        Text("last training: \(dataString)")
+                            .padding(.horizontal)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    .padding()
+                    
+                }
+                Section(header: Text("")) {
+                    ForEach(training.listOfExercises, id: \.self) { exercise in
+                        ExerciseView(exercise: exercise)
+                    }
+                }
+                Section(header: Text("")) {
+                    VStack {
+                        Button(action: {
+                            print("Some Action")
+                        }) {
+                            HStack {
+                                Image(systemName: "checkmark.circle")
+                                    .font(.largeTitle)
+                                Spacer()
+                                Text("Confirm finished training")
+                                Spacer()
+                            }.padding()
+                        }.buttonStyle(RectangularButtonStyle())
+                    }
                 }
             }
         }
