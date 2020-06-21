@@ -19,7 +19,7 @@ struct UseButton: View {
             }
         }) {
             VStack {
-                Image(systemName: "square.and.pencil")
+                Image(systemName: "arrow.up.right.square")
                     .font(.largeTitle)
                     .foregroundColor(.orange)
             }
