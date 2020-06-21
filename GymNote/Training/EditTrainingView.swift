@@ -42,7 +42,7 @@ struct EditTrainingView: View {
                         EditExerciseView(exercise: self.$selectedExercises[index])
                     }
                 }
-            }
+            }.listStyle(GroupedListStyle())
             AddButton(addingMode: $addMode)
                 .padding()
                 .sheet(isPresented: $addMode) {
