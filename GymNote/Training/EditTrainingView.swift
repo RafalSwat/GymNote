@@ -35,11 +35,11 @@ struct EditTrainingView: View {
                             Spacer()
                             TextField("Enter your name: ", text: $training.trainingSubscription)
                         }
-                    }
+                    }.padding(.vertical)
                 }
                 Section(header: Text("List of exercises")) {
-                    ForEach(training.listOfExercises, id: \.self) { exercise in
-                        Text(exercise.exerciseName)
+                    ForEach(0..<selectedExercises.count, id: \.self) { index in
+                        EditExerciseView(exercise: self.$selectedExercises[index])
                     }
                 }
             }
