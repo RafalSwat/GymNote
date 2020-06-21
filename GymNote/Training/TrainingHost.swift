@@ -26,6 +26,7 @@ struct TrainingHost: View {
             } else {
                 TrainingView(training: training)
             }
+            
         }
         .navigationBarItems(
             leading: CancelEditModeButton(editMode: $editMode, cancelAction: {

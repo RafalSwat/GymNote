@@ -19,6 +19,11 @@ struct TrainingView: View {
                 Section(header: Text("")) {
                     
                     VStack(alignment: .leading) {
+                        Text(training.trainingName)
+                            .font(.largeTitle)
+                            .padding(.horizontal)
+                            .padding(.bottom)
+                        
                         Text(training.trainingSubscription)
                             .padding(.horizontal)
                         Text("last training: \(dataString)")
@@ -50,10 +55,12 @@ struct TrainingView: View {
                             .padding(.vertical)
                     }
                 }
-            }.listStyle(PlainListStyle())
+            }
+            .listStyle(PlainListStyle())
+            .navigationBarBackButtonHidden(false)
+            .navigationBarTitle(Text(training.trainingName), displayMode: .inline)
         }
-        .navigationBarTitle(training.trainingName)
-        .navigationBarBackButtonHidden(false)
+        
     }
 }
 
