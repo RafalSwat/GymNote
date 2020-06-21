@@ -46,7 +46,9 @@ struct EditTrainingView: View {
                         EditExerciseView(exercise: self.$selectedExercises[index])
                     }
                 }
-            }.listStyle(GroupedListStyle())
+            }
+            .listStyle(GroupedListStyle())
+            
             AddButton(addingMode: $addMode)
                 .padding(5)
                 .sheet(isPresented: $addMode) {
@@ -56,6 +58,8 @@ struct EditTrainingView: View {
             self.selectedExercises = self.training.listOfExercises
         }
         .navigationBarBackButtonHidden(true)
+        .navigationBarTitle(Text("Edit Mode"), displayMode: .inline)
+
     }
 }
 
