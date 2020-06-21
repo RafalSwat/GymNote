@@ -70,7 +70,7 @@ struct ExercisesListView: View {
                 
                 Spacer()
 
-                AddButton(addButtonText: "add selected exercises", action: self.conformExercise, fromColor: buttonColors[0], toColor: buttonColors[1], addingMode: $finishTyping)
+                AddButton(addButtonImage: Image(systemName: "checkmark.square") ,addButtonText: "add selected exercises", action: self.conformExercise, fromColor: buttonColors[0], toColor: buttonColors[1], addingMode: $finishTyping)
                     .padding()
             }
             .navigationBarTitle(Text("List of Exercises"), displayMode: .inline)
