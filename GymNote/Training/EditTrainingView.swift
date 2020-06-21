@@ -48,6 +48,8 @@ struct EditTrainingView: View {
                 .sheet(isPresented: $addMode) {
                         ExercisesListView(finishTyping: self.$addMode, selectedExercises: self.$selectedExercises)
                 }
+        }.onAppear {
+            self.selectedExercises = self.training.listOfExercises
         }
         .navigationBarBackButtonHidden(true)
     }
