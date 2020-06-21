@@ -48,7 +48,7 @@ struct EditTrainingView: View {
                 }
             }.listStyle(GroupedListStyle())
             AddButton(addingMode: $addMode)
-                .padding()
+                .padding(5)
                 .sheet(isPresented: $addMode) {
                         ExercisesListView(finishTyping: self.$addMode, selectedExercises: self.$selectedExercises)
                 }
