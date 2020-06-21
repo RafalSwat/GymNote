@@ -22,7 +22,7 @@ struct EditExerciseView: View {
                 }
                 SetSeriesView(exercise: $exercise)
             }
-        }
+        }.padding(.bottom, 10)
     }
 }
 
