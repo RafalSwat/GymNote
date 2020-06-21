@@ -54,6 +54,7 @@ struct TrainingRow: View {
                         })
                             .opacity(showButtons ? 1 : 0).animation(.default)
                             .buttonStyle(BorderlessButtonStyle())
+                            .offset(x: 0, y: 2)
                         
                         DeleteButton(deleteAction: {
                             self.removeTraining(at: self.listOfTraining.firstIndex(of: self.training)!)
