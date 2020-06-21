@@ -47,7 +47,7 @@ struct AddUserExerciseView: View {
                         }
                     }
                 }) {
-                    Image(systemName: "arrowshape.turn.up.right.circle")
+                    Image(systemName: "checkmark.square")
                         .font(.largeTitle)
                         .foregroundColor(colorScheme == .light ? Color.secondary : Color.magnesium)
                 }
