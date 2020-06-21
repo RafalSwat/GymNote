@@ -17,7 +17,6 @@ struct NoteView: View {
     var body: some View {
         NavigationView {
             VStack {
-                NavigationLink(destination: TrainingHost(editMode: true, training: $newTraining), isActive: self.$passageToAddTraining, label: { Text("") })
                 List {
                     ForEach(listOfTrainings, id: \.trainingID) { training in
                         TrainingRow(training: training, listOfTraining: self.$listOfTrainings)
@@ -28,6 +27,8 @@ struct NoteView: View {
                           action: {print("Add new training tapped!")},
                           addingMode: self.$passageToAddTraining)
                     .padding()
+                
+                NavigationLink(destination: TrainingHost(editMode: true, training: $newTraining), isActive: self.$passageToAddTraining, label: { EmptyView() })
             }
             .navigationBarTitle("Training List")
         }
