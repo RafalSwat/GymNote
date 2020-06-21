@@ -68,7 +68,7 @@ struct TrainingRow: View {
             if showDetails {
                 TrainingDetails(training: training)
             }
-            NavigationLink(destination: TrainingView(training: training), isActive: self.$goToTraining) { EmptyView() }
+            NavigationLink(destination: TrainingHost(training: $training), isActive: self.$goToTraining) { EmptyView() }
         }
         .contentShape(Rectangle())
         .onTapGesture {
