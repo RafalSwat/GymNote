@@ -20,8 +20,9 @@ struct DeleteButton: View {
         }) {
             VStack {
                 Image(systemName: "trash")
-                    .font(.largeTitle)
+                    .font(.title)
                     .foregroundColor(.red)
+                    
             }
             .frame(width: UIScreen.main.bounds.width/7, height: UIScreen.main.bounds.width/7, alignment: .center)
         }
