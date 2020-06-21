@@ -31,7 +31,8 @@ struct SetSeriesView: View {
                     .font(.largeTitle)
                     .foregroundColor(Color.orange)
                     .padding(.horizontal)
-            }
+            }.buttonStyle(BorderlessButtonStyle())
+
             
             Button(action: {
                 if self.series >= 2 {
@@ -42,7 +43,8 @@ struct SetSeriesView: View {
                 Image(systemName: "minus.square")
                     .font(.largeTitle)
                     .foregroundColor(Color.red)
-            }
+            }.buttonStyle(BorderlessButtonStyle())
+
             
             
         }
