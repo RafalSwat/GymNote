@@ -12,11 +12,12 @@ struct NoteView: View {
     
     @State var listOfTrainings: [Training]
     @State private var passageToAddTraining = false
+    @State var newTraining = Training()
     
     var body: some View {
         NavigationView {
             VStack {
-                NavigationLink(destination: CreateProgramView(), isActive: self.$passageToAddTraining, label: { Text("") })
+                NavigationLink(destination: TrainingHost(editMode: true, training: $newTraining), isActive: self.$passageToAddTraining, label: { Text("") })
                 List {
                     ForEach(listOfTrainings, id: \.trainingID) { training in
                         TrainingRow(training: training, listOfTraining: self.$listOfTrainings)
