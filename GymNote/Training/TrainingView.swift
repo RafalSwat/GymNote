@@ -52,6 +52,7 @@ struct TrainingView: View {
             }
         }
         .navigationBarTitle(training.trainingName)
+        .navigationBarBackButtonHidden(false)
     }
 }
 
