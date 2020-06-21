@@ -47,9 +47,10 @@ struct TrainingView: View {
                                 Spacer()
                             }.padding()
                         }.buttonStyle(RectangularButtonStyle())
+                            .padding(.vertical)
                     }
                 }
-            }
+            }.listStyle(PlainListStyle())
         }
         .navigationBarTitle(training.trainingName)
         .navigationBarBackButtonHidden(false)
