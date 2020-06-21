@@ -49,6 +49,7 @@ struct EditTrainingView: View {
                         ExercisesListView(finishTyping: self.$addMode, selectedExercises: self.$selectedExercises)
                 }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
