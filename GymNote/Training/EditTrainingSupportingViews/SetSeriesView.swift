@@ -33,7 +33,6 @@ struct SetSeriesView: View {
                     .padding(.horizontal)
             }.buttonStyle(BorderlessButtonStyle())
 
-            
             Button(action: {
                 if self.series >= 2 {
                     self.series -= 1
@@ -45,8 +44,6 @@ struct SetSeriesView: View {
                     .foregroundColor(Color.red)
             }.buttonStyle(BorderlessButtonStyle())
 
-            
-            
         }
         .onAppear() {
             self.series = self.exercise.exerciseNumberOfSerises

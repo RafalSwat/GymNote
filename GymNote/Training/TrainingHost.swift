@@ -42,7 +42,6 @@ struct TrainingHost: View {
                     self.session.userSession?.userTrainings.listOfTrainings = uploadedTrainings
             }
         }
-        
     }
 }
 

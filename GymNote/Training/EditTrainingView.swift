@@ -26,9 +26,6 @@ struct EditTrainingView: View {
                             TextField("Enter your name: ", text: $training.trainingName)
                                 .font(.title)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
-
-                                
-                                
                         }
                         HStack {
                             Text("Subscription:")
@@ -37,7 +34,6 @@ struct EditTrainingView: View {
                             Spacer()
                             TextField("Enter your name: ", text: $training.trainingSubscription)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                                
                         }
                     }.padding(.vertical)
                 }
@@ -57,7 +53,6 @@ struct EditTrainingView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle(Text("Edit Mode"), displayMode: .inline)
-
     }
 }
 

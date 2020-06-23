@@ -43,7 +43,6 @@ struct AddUserExerciseView: View {
                     } else {
                         withAnimation {
                             self.showAddView = false
-                            
                         }
                     }
                 }) {
@@ -54,8 +53,6 @@ struct AddUserExerciseView: View {
             }.padding()
         }.background(colorScheme == .light ? Color.magnesium :  Color.customDark)
     }
-    
-    
 }
 
 struct AddUserExerciseView_Previews: PreviewProvider {

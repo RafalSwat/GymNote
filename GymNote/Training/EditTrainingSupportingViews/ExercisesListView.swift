@@ -33,24 +33,21 @@ struct ExercisesListView: View {
     func conformExercise() {
         selectedExercises += choosenExercise
     }
-    
-    
+
     var body: some View {
         NavigationView {
             VStack {
                 if (addExerciseMode) {
                     AddUserExerciseView(showAddView: self.$addExerciseMode, list: self.$listOfExercises)
                 }
-                
-                
+
                 SearchBar(text: $searchText)
                 
                 List(self.listOfExercises.filter {
                     // search mechanics: If searchText is empty, then give it all list.
                     //                   If some elements of the list contains searchText show only them
                     
-                    self.searchText.isEmpty ? true : $0.exerciseName.localizedStandardContains(self.searchText)
-                }, id: \.self) { exercise in
+                    self.searchText.isEmpty ? true : $0.exerciseName.localizedStandardContains(self.searchText)}, id: \.self) { exercise in
                     // row display exercise name from array,
                     // and add exercise to selected array base on Exercise model property: "isChcek".
                     // "isCheck" is a Bool that changes according to the "contains" method.
@@ -64,8 +61,7 @@ struct ExercisesListView: View {
                         }
                     }
                 }
-                
-                
+
                 Spacer()
 
                 AddButton(addButtonImage: Image(systemName: "checkmark.square") ,addButtonText: "add selected exercises", action: self.conformExercise, fromColor: Color.orange, toColor: Color.red, addingMode: $finishTyping)

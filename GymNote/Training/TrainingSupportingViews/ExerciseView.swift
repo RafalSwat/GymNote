@@ -43,34 +43,13 @@ struct ExerciseView: View {
             
             ForEach (0 ..< self.weights.count, id: \.self) { index in
                 HStack {
-//                    Text(String(index + 1))
-                    
                     SeriesTextFields(repeats: self.$repeats,
                     weights: self.$weights,
                     index: index,
                     reps: self.rep,
                     weight: self.weight)
-                    
-//                    Button(action: {
-//                        print("-")
-//                    }) {
-//                        Image(systemName: "minus.square")
-//                            .font(.largeTitle)
-//                            .foregroundColor(Color.red)
-//                    }
                 }
             }
-//            Button(action: {
-//                print("+")
-//            }) {
-//                HStack {
-//                    Image(systemName: "plus")
-//                    Text("add series")
-//                }
-//                .padding(5)
-//                .foregroundColor(Color.green)
-//            }.buttonStyle(EmptyButtonStyle())
-            
         }
         .onAppear() {
             self.repeats = Array(repeating: "", count: self.exercise.exerciseNumberOfSerises)

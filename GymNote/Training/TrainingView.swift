@@ -60,7 +60,6 @@ struct TrainingView: View {
             .navigationBarBackButtonHidden(false)
             .navigationBarTitle(Text(training.trainingName), displayMode: .inline)
         }
-        
     }
 }
 
