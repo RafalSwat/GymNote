@@ -37,6 +37,11 @@ struct TrainingHost: View {
                 self.training = self.draftTraining
                 self.session.addTrainingToFBR(userTrainings: self.session.userSession!.userTrainings, training: self.training)
             }))
+            .onDisappear {
+                self.session.uploadTrainings(userID: self.session.userSession!.userProfile.userID) {  uploadedTrainings in
+                    self.session.userSession?.userTrainings.listOfTrainings = uploadedTrainings
+            }
+        }
         
     }
 }
