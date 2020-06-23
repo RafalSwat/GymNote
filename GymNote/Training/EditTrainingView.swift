@@ -12,7 +12,6 @@ struct EditTrainingView: View {
     
     @Binding var training: Training
     @State var addMode = false
-    @State var selectedExercises = [Exercise]()
     
     var body: some View {
         VStack {
@@ -27,6 +26,7 @@ struct EditTrainingView: View {
                             TextField("Enter your name: ", text: $training.trainingName)
                                 .font(.title)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+
                                 
                                 
                         }
@@ -42,8 +42,8 @@ struct EditTrainingView: View {
                     }.padding(.vertical)
                 }
                 Section(header: Text("List of exercises")) {
-                    ForEach(0..<selectedExercises.count, id: \.self) { index in
-                        EditExerciseView(exercise: self.$selectedExercises[index])
+                    ForEach(0..<training.listOfExercises.count, id: \.self) { index in
+                        EditExerciseView(exercise: self.$training.listOfExercises[index])
                     }
                 }
             }
@@ -52,10 +52,8 @@ struct EditTrainingView: View {
             AddButton(addingMode: $addMode)
                 .padding(5)
                 .sheet(isPresented: $addMode) {
-                        ExercisesListView(finishTyping: self.$addMode, selectedExercises: self.$selectedExercises)
+                    ExercisesListView(finishTyping: self.$addMode, selectedExercises: self.$training.listOfExercises)
                 }
-        }.onAppear {
-            self.selectedExercises = self.training.listOfExercises
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle(Text("Edit Mode"), displayMode: .inline)
