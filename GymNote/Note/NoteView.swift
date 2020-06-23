@@ -10,6 +10,7 @@ import SwiftUI
 
 struct NoteView: View {
     
+    @EnvironmentObject var session: FireBaseSession
     @State var listOfTrainings: [Training]
     @State private var passageToAddTraining = false
     let newTraining = Training()
@@ -31,6 +32,11 @@ struct NoteView: View {
                 NavigationLink(destination: TrainingHost(editMode: true, training: newTraining), isActive: self.$passageToAddTraining, label: { EmptyView() })
             }
             .navigationBarTitle("Training List")
+        }
+        .onAppear {
+            if self.session.userSession != nil {
+                self.listOfTrainings = self.session.userSession!.userTrainings.listOfTrainings
+            }
         }
     }
 
