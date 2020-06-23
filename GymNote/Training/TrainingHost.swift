@@ -27,11 +27,11 @@ struct TrainingHost: View {
             } else {
                 TrainingView(training: training)
             }
-            
         }
         .navigationBarItems(
             leading: CancelEditModeButton(editMode: $editMode, cancelAction: {
-                print("cancel action!")
+                self.draftTraining = self.training
+                self.presentationMode.wrappedValue.dismiss()
             }),
             trailing: EditModeButton(editMode: $editMode, editAction: {
                 print("edit action!")
