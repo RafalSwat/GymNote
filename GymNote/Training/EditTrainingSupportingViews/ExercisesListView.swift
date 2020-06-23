@@ -15,9 +15,7 @@ struct ExercisesListView: View {
     @State var choosenExercise = [Exercise]() // Exercise selected but not conform
     @State var addExerciseMode = false
     @State var searchText = ""
-    var buttonColors = [Color.orange, Color.red]
-    
-    
+
     @State var listOfExercises = [
         Exercise(name: "aa exercise1"),
         Exercise(name: "ab exercise2"),
@@ -70,7 +68,7 @@ struct ExercisesListView: View {
                 
                 Spacer()
 
-                AddButton(addButtonImage: Image(systemName: "checkmark.square") ,addButtonText: "add selected exercises", action: self.conformExercise, fromColor: buttonColors[0], toColor: buttonColors[1], addingMode: $finishTyping)
+                AddButton(addButtonImage: Image(systemName: "checkmark.square") ,addButtonText: "add selected exercises", action: self.conformExercise, fromColor: Color.orange, toColor: Color.red, addingMode: $finishTyping)
                     .padding()
             }
             .navigationBarTitle(Text("List of Exercises"), displayMode: .inline)
