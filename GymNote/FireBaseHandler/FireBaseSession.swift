@@ -302,6 +302,7 @@ extension FireBaseSession {
         }
         
     }
+
     
     func deleteTrainingFromFBR(userTrainings: UserTrainings, training: Training) {
         self.usersDBRef.child("Trainings").child(userTrainings.userID).child(training.trainingID).removeValue()

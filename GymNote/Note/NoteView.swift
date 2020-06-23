@@ -12,7 +12,7 @@ struct NoteView: View {
     
     @State var listOfTrainings: [Training]
     @State private var passageToAddTraining = false
-    @State var newTraining = Training()
+    let newTraining = Training()
     
     var body: some View {
         NavigationView {
