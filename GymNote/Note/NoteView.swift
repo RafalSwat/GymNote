@@ -24,7 +24,7 @@ struct NoteView: View {
                     
                 }
                 AddButton(addButtonText: "Add New Training",
-                          action: {print("Add new training tapped!")},
+                          action: {},
                           addingMode: self.$passageToAddTraining)
                     .padding()
                 
