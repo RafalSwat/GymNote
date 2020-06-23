@@ -10,9 +10,10 @@ import SwiftUI
 
 struct TrainingHost: View {
     
-    @State var editMode = false
     @EnvironmentObject var session: FireBaseSession
-    @Binding var training: Training
+    @Environment(\.presentationMode) var presentationMode
+    @State var editMode = false
+    @State var training: Training
     @State var draftTraining = Training()
     
     
@@ -45,7 +46,7 @@ struct TrainingHost_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            TrainingHost(training: $prevTraining)
+            TrainingHost(training: prevTraining)
         }
     }
 }
