@@ -38,7 +38,7 @@ struct CreateProgramView: View {
                 AddButton(fromColor: .gray, toColor: .magnesium ,addingMode: $addMode)
                     .padding()
                     .sheet(isPresented: $addMode) {
-                        ExercisesListView(finishTyping: self.$addMode, selectedExercises: self.$selectedExercises, buttonColors: [Color.gray, Color.magnesium])
+                        ExercisesListView(finishTyping: self.$addMode, selectedExercises: self.$selectedExercises)
                 }
                 
             }

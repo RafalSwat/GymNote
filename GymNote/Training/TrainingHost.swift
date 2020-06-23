@@ -34,7 +34,8 @@ struct TrainingHost: View {
                 self.presentationMode.wrappedValue.dismiss()
             }),
             trailing: EditModeButton(editMode: $editMode, editAction: {
-                print("edit action!")
+                self.training = self.draftTraining
+                self.session.addTrainingToFBR(userTrainings: self.session.userSession!.userTrainings, training: self.training)
             }))
         
     }
