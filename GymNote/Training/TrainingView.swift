@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TrainingView: View {
     
+    @EnvironmentObject var session: FireBaseSession
     var training: Training
     let dataString = DateConverter.dateFormat.string(from: Date())
     
@@ -55,10 +56,10 @@ struct TrainingView: View {
                             .padding(.vertical)
                     }
                 }
+                .listStyle(PlainListStyle())
+                .navigationBarBackButtonHidden(false)
+                .navigationBarTitle(Text(training.trainingName), displayMode: .inline)
             }
-            .listStyle(PlainListStyle())
-            .navigationBarBackButtonHidden(false)
-            .navigationBarTitle(Text(training.trainingName), displayMode: .inline)
         }
     }
 }
