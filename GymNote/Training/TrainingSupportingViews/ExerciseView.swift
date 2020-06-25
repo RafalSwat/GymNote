@@ -12,6 +12,7 @@ struct ExerciseView: View {
     
     @EnvironmentObject var session: FireBaseSession
     var exercise: Exercise
+    @Binding var conform: Bool
     
     @State var repeats = [String]()
     @State var weights = [String]()
@@ -19,6 +20,7 @@ struct ExerciseView: View {
     @State var rep = ""
     
     var body: some View {
+        
         VStack {
             HStack {
                 Text(exercise.exerciseName)
@@ -56,13 +58,21 @@ struct ExerciseView: View {
             self.weights = Array(repeating: "", count: self.exercise.exerciseNumberOfSerises)
         }
     }
+    
+    
+    func saveSeries() {
+        for index in 0..<(exercise.exerciseNumberOfSerises) {
+            self.exercise.exerciseSeries[index] = Series(repeats: Int(repeats[index])!, weight: Int(weights[index])!)
+        }
+    }
 }
 
 struct ExerciseView_Previews: PreviewProvider {
     
     static var prevExercise = Exercise(name: "My Exercise")
+    @State static var prevConform = false
     
     static var previews: some View {
-        ExerciseView(exercise: prevExercise)
+        ExerciseView(exercise: prevExercise, conform: $prevConform)
     }
 }
