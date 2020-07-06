@@ -15,6 +15,8 @@ struct LoginView: View {
     
     @State private var email: String = "a@a.com"
     @State private var password: String = "123456"
+    @State var showWarning = false
+    @State var warningText = ""
     @Binding var alreadySignIn: Bool
     
     //MARK: View
@@ -25,11 +27,11 @@ struct LoginView: View {
                 .textContentType(.emailAddress)
             
             SwitchableSecureField(placeHolder: "Password", secureText: $password)
-
+            
             Button("Login", action: {
                 if self.isNotEmpty() {
                     self.logIn()
-                    self.alreadySignIn = true
+                    self.alreadySignIn = self.session.noErrorAppearDuringAuth
                 }
             })
                 .buttonStyle(RectangularButtonStyle())
