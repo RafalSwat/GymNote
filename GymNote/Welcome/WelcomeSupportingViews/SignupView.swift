@@ -16,6 +16,7 @@ struct SignupView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var repeatPassword: String = ""
+    @Binding var showWarning: Bool
     @Binding var alreadySignIn: Bool
     
     //MARK: View
@@ -28,18 +29,22 @@ struct SignupView: View {
             SwitchableSecureField(placeHolder: "Password", secureText: $password)
             
             SwitchableSecureField(placeHolder: "repeat password", secureText: $repeatPassword)
-
+            
             Button("SignUp", action: {
                 if self.isNotEmpty() && self.arePasswordEqual() {
+                    
                     self.signUp()
                     self.alreadySignIn = true
+                    
+                } else if !self.isNotEmpty() {
+                    self.showWarning = true
                 }
             })
                 .buttonStyle(RectangularButtonStyle())
                 .padding(.top, 15)
         }
-
     }
+    
     
     //MARK: Functions
     func arePasswordEqual() -> Bool {
@@ -78,8 +83,9 @@ struct SignupView: View {
 struct SignupView_Previews: PreviewProvider {
     
     @State static var prevAlreadySignIn = false
+    @State static var prevShowWarning = false
     
     static var previews: some View {
-        SignupView(alreadySignIn: $prevAlreadySignIn)
+        SignupView(showWarning: $prevShowWarning, alreadySignIn: $prevAlreadySignIn)
     }
 }
