@@ -67,6 +67,8 @@
 		07C922E62411140000AF6010 /* NavigationConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E52411140000AF6010 /* NavigationConfigurator.swift */; };
 		07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E72411582400AF6010 /* DualColorCheckmark.swift */; };
 		07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */; };
+		07F55DA224AF3D790024AB1A /* ActionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F55DA124AF3D790024AB1A /* ActionAlert.swift */; };
+		07F55DA424AF3E690024AB1A /* WarningAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F55DA324AF3E690024AB1A /* WarningAlert.swift */; };
 		07FCCE6F24817238008FE164 /* MainContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FCCE6E24817238008FE164 /* MainContainer.swift */; };
 		07FCCE7124817470008FE164 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FCCE7024817470008FE164 /* NoteView.swift */; };
 		07FCCE732482C8AD008FE164 /* ProfileHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FCCE722482C8AC008FE164 /* ProfileHost.swift */; };
@@ -136,6 +138,8 @@
 		07C922E52411140000AF6010 /* NavigationConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationConfigurator.swift; sourceTree = "<group>"; };
 		07C922E72411582400AF6010 /* DualColorCheckmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualColorCheckmark.swift; sourceTree = "<group>"; };
 		07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserExerciseView.swift; sourceTree = "<group>"; };
+		07F55DA124AF3D790024AB1A /* ActionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionAlert.swift; sourceTree = "<group>"; };
+		07F55DA324AF3E690024AB1A /* WarningAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningAlert.swift; sourceTree = "<group>"; };
 		07FCCE6E24817238008FE164 /* MainContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainer.swift; sourceTree = "<group>"; };
 		07FCCE7024817470008FE164 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		07FCCE722482C8AC008FE164 /* ProfileHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHost.swift; sourceTree = "<group>"; };
@@ -390,8 +394,10 @@
 				073B917923A4025800F38F1D /* CircleImage.swift */,
 				0757024223A4EAD500030991 /* ColorfulPicker.swift */,
 				0720992023F7417E00B75CF5 /* DoneConformAlert.swift */,
-				07C922DF2410EA2300AF6010 /* SearchBar.swift */,
+				07F55DA124AF3D790024AB1A /* ActionAlert.swift */,
+				07F55DA324AF3E690024AB1A /* WarningAlert.swift */,
 				075A31F223FF19ED006613A2 /* DateConverter.swift */,
+				07C922DF2410EA2300AF6010 /* SearchBar.swift */,
 				07C922E72411582400AF6010 /* DualColorCheckmark.swift */,
 			);
 			path = CustomReusableComponents;
@@ -514,6 +520,7 @@
 			files = (
 				073DEAEC249E658C008F3C72 /* ExerciseView.swift in Sources */,
 				0740B3C7242E0F56003D7520 /* Training.swift in Sources */,
+				07F55DA224AF3D790024AB1A /* ActionAlert.swift in Sources */,
 				07840A94248B9D9400FC3019 /* ContentView.swift in Sources */,
 				07840A92248ACD8100FC3019 /* CancelEditModeButton.swift in Sources */,
 				07840A99248BA17900FC3019 /* SignOutButton.swift in Sources */,
@@ -539,6 +546,7 @@
 				07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */,
 				077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */,
 				0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */,
+				07F55DA424AF3E690024AB1A /* WarningAlert.swift in Sources */,
 				075DE10C242A2CB8005666A7 /* SeriesTextFields.swift in Sources */,
 				073DEADA248ED394008F3C72 /* TrainingDetails.swift in Sources */,
 				073DEAF2249EA864008F3C72 /* EditTrainingView.swift in Sources */,
