@@ -14,22 +14,34 @@ struct WelcomeView: View {
     @EnvironmentObject var session: FireBaseSession
     @State private var isRegistered = true
     @Binding var alreadySignIn: Bool
+    @State var errorDuringAuthorization = false
     
     //MARK: View
     var body: some View {
         KeyboardHost {
-            VStack {
+            ZStack {
                 
-                Image("staticImage")
-                
-                ColorfulPicker(selection: $isRegistered)
-                
-                if isRegistered {
-                    LoginView(alreadySignIn: $alreadySignIn)
-                } else {
-                    SignupView(alreadySignIn: $alreadySignIn)
+                VStack {
+                    Image("staticImage")
+                    
+                    ColorfulPicker(selection: $isRegistered)
+                    
+                    if isRegistered {
+                        LoginView(alreadySignIn: $alreadySignIn)
+                    } else {
+                        SignupView(showWarning: self.$errorDuringAuthorization, alreadySignIn: $alreadySignIn)
+                    }
+            }
+               if errorDuringAuthorization {
+                    ZStack {
+                        WarningAlert(showAlert: $errorDuringAuthorization, title: "Warninig", message: "There are still empty fields, please fill them up!", buttonTitle: "ok", action: {print("Fuck yeah!")})
+                    }
                 }
-            }.padding()
+                
+                
+            }
+                .padding()
+                .edgesIgnoringSafeArea(.vertical)
         }
         .navigationBarTitle("Welcome", displayMode: .inline)
         .navigationBarBackButtonHidden(true)
