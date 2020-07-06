@@ -16,7 +16,8 @@ struct SignupView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var repeatPassword: String = ""
-    @Binding var showWarning: Bool
+    @State var showWarning = false
+    @State var warningText = ""
     @Binding var alreadySignIn: Bool
     
     //MARK: View
@@ -83,9 +84,8 @@ struct SignupView: View {
 struct SignupView_Previews: PreviewProvider {
     
     @State static var prevAlreadySignIn = false
-    @State static var prevShowWarning = false
     
     static var previews: some View {
-        SignupView(showWarning: $prevShowWarning, alreadySignIn: $prevAlreadySignIn)
+        SignupView(alreadySignIn: $prevAlreadySignIn)
     }
 }
