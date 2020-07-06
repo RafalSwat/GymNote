@@ -36,6 +36,16 @@ struct LoginView: View {
             })
                 .buttonStyle(RectangularButtonStyle())
                 .padding(.top, 15)
+            
+            if self.showWarning {
+                Text(warningText)
+                    .font(.caption)
+                    .foregroundColor(.red)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding()
+                    .multilineTextAlignment(.center)
+                
+            }
         }
     }
     
