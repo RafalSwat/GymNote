@@ -33,6 +33,7 @@ struct WarningAlert: View {
                 .padding(.top)
 
                     Button(action: {
+
                         withAnimation {
                             self.showAlert = false
                         }

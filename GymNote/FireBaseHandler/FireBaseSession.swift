@@ -22,7 +22,9 @@ class FireBaseSession: ObservableObject {
     @Published var noErrorAppearDuringAuth: Bool = false {
         didSet {self.didChange.send(self)}
     }
-    
+    @Published var errorDiscription: String? {
+        didSet {self.didChange.send(self)}
+    }
     @Published var usersDBRef = Database.database().reference()
     @Published var usersDBStorage = Storage.storage().reference()
     
@@ -39,6 +41,8 @@ class FireBaseSession: ObservableObject {
         }
     }
     
+    //================== Authorization functionality =========================
+    
     func signUp(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) {
             (user, error) in
@@ -54,8 +58,10 @@ class FireBaseSession: ObservableObject {
             } else {
                 if let specificError = error?.localizedDescription {
                     print(specificError)
+                    self.errorDiscription = specificError
                 } else {
                     print("Error:  can`t register!")
+                    self.errorDiscription = "Error:  can`t register!"
                 }
             }
         }
@@ -76,8 +82,10 @@ class FireBaseSession: ObservableObject {
             } else {
                 if let specificError = error?.localizedDescription {
                     print(specificError)
+                    self.errorDiscription = specificError
                 } else {
                     print("Error:  can`t login!")
+                    self.errorDiscription = "Error:  can`t login!"
                 }
             }
         }
@@ -100,7 +108,9 @@ class FireBaseSession: ObservableObject {
             return true
         }
     }
+    //=================================================================
     
+    //===================== Setup session =============================
     
     func setupSession(userEmail: String, userID: String) {
         
@@ -154,6 +164,9 @@ class FireBaseSession: ObservableObject {
             }
         }
     }
+    //=================================================================
+    
+    //======================= Profile on FBR ==========================
     
     func addUserToBase(user: UserProfile) {
         usersDBRef.child("Users").child(user.userID).child("Profile").setValue(
@@ -223,9 +236,13 @@ class FireBaseSession: ObservableObject {
         }
     }
     
+    //=================================================================
 }
 
 extension FireBaseSession {
+    
+    
+    //===================== Trainings on FBR ==========================
     
     func addTrainingToFBR(userTrainings: UserTrainings, training: Training) {
         self.usersDBRef.child("Trainings").child(userTrainings.userID).child(training.trainingID).setValue(
@@ -303,8 +320,27 @@ extension FireBaseSession {
         
     }
 
-    
     func deleteTrainingFromFBR(userTrainings: UserTrainings, training: Training) {
         self.usersDBRef.child("Trainings").child(userTrainings.userID).child(training.trainingID).removeValue()
+    }
+    
+    //=================================================================
+    
+    //=================== Exercise to Stats ===========================
+    
+    
+    func addExerciseStatstoFBR(id: String, date: String, exercise: Exercise) {
+        
+        var seriesCounter = 1
+        
+        self.usersDBRef.child("Exercises").child(id).child(exercise.exerciseID).child("name").setValue(exercise.exerciseName)
+        self.usersDBRef.child("Exercises").child(id).child(exercise.exerciseID).child("Dates").child(date).child("Number Of Series").setValue(exercise.exerciseNumberOfSerises)
+        
+        for series in exercise.exerciseSeries {
+            seriesCounter += 1
+            self.usersDBRef.child("Exercises").child(id).child(exercise.exerciseID).child("Dates").child(date).child("Series").child(String(seriesCounter)).setValue(
+                ["repeats" : series.exerciseRepeats,
+                 "weight" : series.exerciseWeight])
+        }
     }
 }
