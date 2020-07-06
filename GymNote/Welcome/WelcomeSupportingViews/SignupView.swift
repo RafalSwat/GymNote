@@ -33,17 +33,37 @@ struct SignupView: View {
             
             Button("SignUp", action: {
                 if self.isNotEmpty() && self.arePasswordEqual() {
-                    
+                    self.showWarning = false
                     self.signUp()
-                    self.alreadySignIn = true
+                    self.alreadySignIn = self.session.noErrorAppearDuringAuth
+                    
+                    if let fbrError = self.session.errorDiscription {
+                        self.showWarning = true
+                        self.warningText = fbrError
+                        
+                    }
                     
                 } else if !self.isNotEmpty() {
                     self.showWarning = true
+                    
+                } else if !self.arePasswordEqual() {
+                    self.showWarning = true
+                    
                 }
                 
             })
                 .buttonStyle(RectangularButtonStyle())
                 .padding(.top, 15)
+            
+            if self.showWarning {
+                Text(warningText)
+                    .font(.caption)
+                    .foregroundColor(.red)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding()
+                    .multilineTextAlignment(.center)
+                    
+            }
         }
     }
     
