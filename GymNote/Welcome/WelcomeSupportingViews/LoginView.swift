@@ -43,10 +43,10 @@ struct LoginView: View {
     
     func isNotEmpty() -> Bool {
         if self.email.isEmpty {
-            print("Error: email field is Empty!")
+            self.warningText = "Error: email field is Empty!"
             return false
         } else if self.password.isEmpty {
-            print("Error: password field is Empty!")
+            self.warningText = "Error: password field is Empty!"
             return false
         } else {
             print("Confirm: Ther is no empty fields")
