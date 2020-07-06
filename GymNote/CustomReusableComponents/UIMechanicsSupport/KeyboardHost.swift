@@ -37,6 +37,7 @@ struct KeyboardHost<Content: View>: View {
     
     var body: some View {
         VStack {
+            
             view
                 .padding(.bottom, keyboardHeight)
                 .animation(.default)
