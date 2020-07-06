@@ -40,6 +40,7 @@ struct SignupView: View {
                 } else if !self.isNotEmpty() {
                     self.showWarning = true
                 }
+                
             })
                 .buttonStyle(RectangularButtonStyle())
                 .padding(.top, 15)
@@ -53,20 +54,20 @@ struct SignupView: View {
             print("Passwords are equal!")
             return true
         } else {
-            print("Error: passwords are not equal!")
+            self.warningText = "Error: passwords are not equal!"
             return false
         }
     }
     
     func isNotEmpty() -> Bool {
         if self.email.isEmpty {
-            print("Error: email field is Empty!")
+            self.warningText = "Error: email field is Empty!"
             return false
         } else if self.password.isEmpty {
-            print("Error: password field is Empty!")
+            self.warningText = "Error: password field is Empty!"
             return false
         } else if self.repeatPassword.isEmpty {
-            print("Error: repeated password field is Empty!")
+            self.warningText = "Error: repeated password field is Empty!"
             return false
         } else {
             print("Confirm: Ther is no empty fields")
