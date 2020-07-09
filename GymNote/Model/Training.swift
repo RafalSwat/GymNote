@@ -15,21 +15,21 @@ class Training: Hashable, Identifiable {
     var trainingID: String
     var trainingName: String
     var trainingSubscription: String
-    var initialDate: String
+    var initialDate: Date
     var listOfExercises: [Exercise]
     
     init() {
         self.trainingID = UUID().uuidString
         self.trainingName = "My Training"
         self.trainingSubscription = "My Little Subscription"
-        self.initialDate = "01-Jan-2020"
+        self.initialDate = Date()
         self.listOfExercises = [Exercise(name: "My Exercise")]
     }
     
     init(id: String,
          name: String,
          subscription: String,
-         date: String,
+         date: Date,
          exercises: [Exercise]) {
         
         self.trainingID = id
