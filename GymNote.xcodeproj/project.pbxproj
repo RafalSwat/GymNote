@@ -224,6 +224,29 @@
 			path = ExerciseListSupportingViews;
 			sourceTree = "<group>";
 		};
+		0741E33424B737C10072EC0C /* App */ = {
+			isa = PBXGroup;
+			children = (
+				07C0B9692397BE00001632A0 /* AppDelegate.swift */,
+				07C0B96B2397BE00001632A0 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		0741E33524B738130072EC0C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				07840A93248B9D9400FC3019 /* ContentView.swift */,
+				07FCCE6E24817238008FE164 /* MainContainer.swift */,
+				07840A97248BA07200FC3019 /* Welcome */,
+				07840A95248BA05200FC3019 /* Home */,
+				077ECD3F23B0EFF6005A1B76 /* Profile */,
+				07840A96248BA06100FC3019 /* Note */,
+				073DEAE7249E5CCA008F3C72 /* Training */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		07426606240BCEC4003F2C32 /* DesignBelts */ = {
 			isa = PBXGroup;
 			children = (
@@ -318,18 +341,11 @@
 		07C0B9682397BE00001632A0 /* GymNote */ = {
 			isa = PBXGroup;
 			children = (
-				07C0B9692397BE00001632A0 /* AppDelegate.swift */,
-				07C0B96B2397BE00001632A0 /* SceneDelegate.swift */,
+				0741E33424B737C10072EC0C /* App */,
 				07C0B994239FF37A001632A0 /* FireBaseHandler */,
 				073F482523F55F13003011F0 /* PhotoHandler */,
 				07C0B97D2397D0E2001632A0 /* Model */,
-				07840A93248B9D9400FC3019 /* ContentView.swift */,
-				07FCCE6E24817238008FE164 /* MainContainer.swift */,
-				07840A97248BA07200FC3019 /* Welcome */,
-				07840A95248BA05200FC3019 /* Home */,
-				07840A96248BA06100FC3019 /* Note */,
-				073DEAE7249E5CCA008F3C72 /* Training */,
-				077ECD3F23B0EFF6005A1B76 /* Profile */,
+				0741E33524B738130072EC0C /* Views */,
 				07C0B99D23A2A812001632A0 /* CustomReusableComponents */,
 				07C0B96F2397BE03001632A0 /* Assets.xcassets */,
 				07C0B9742397BE03001632A0 /* LaunchScreen.storyboard */,

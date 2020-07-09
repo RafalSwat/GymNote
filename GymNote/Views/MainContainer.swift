@@ -26,7 +26,7 @@ struct MainContainer: View {
                     .font(.largeTitle)
                     .padding()
             }.tag(0)
-            NoteView(listOfTrainings: session.userSession?.userTrainings.listOfTrainings ?? [Training]())
+            NoteView(/*listOfTrainings: session.userSession?.userTrainings.listOfTrainings ?? [Training]()*/)
                 .tabItem {
                     VStack {
                         Image(systemName: "pencil.and.ellipsis.rectangle")

@@ -32,7 +32,7 @@ struct TrainingDetails_Previews: PreviewProvider {
     static var prevTraining = Training(id: UUID().uuidString,
                                        name: "My Program",
                                        subscription: "My litte subscription ",
-                                       date: "01-Jan-2020",
+                                       date: Date(),
                                        exercises: [Exercise(name: "My Exercise")])
     
     static var previews: some View {

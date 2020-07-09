@@ -77,7 +77,8 @@ struct ProfileEditView: View {
                         Picker(
                             selection: $selectedGender,
                             label: Text("")) {
-                                ForEach(0 ..< userPossibleGender.count) {             Text("\(self.userPossibleGender[$0])")
+                                ForEach(0 ..< userPossibleGender.count) {
+                                    Text("\(self.userPossibleGender[$0])")
                                 }
                         }
                             //FIXME: the solution is unsatisfactory because it doesn't react on "swipe", only for clicking so that without clicking the gender doesn't change ad all

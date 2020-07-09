@@ -11,7 +11,7 @@ import SwiftUI
 struct NoteView: View {
     
     @EnvironmentObject var session: FireBaseSession
-    @State var listOfTrainings: [Training]
+    @State var listOfTrainings = [Training]()
     @State private var passageToAddTraining = false
     let newTraining = Training()
     
@@ -43,15 +43,11 @@ struct NoteView: View {
 }
 struct NoteView_Previews: PreviewProvider {
     
-    static var prevListOfTrainings = [Training(id: UUID().uuidString,
-                                               name: "My Training",
-                                               subscription: "My litte subscription",
-                                               date: "01-Jan-2020",
-                                               exercises: [Exercise(name: "My Exercise")])]
+
     
     static var previews: some View {
         NavigationView {
-            NoteView(listOfTrainings: prevListOfTrainings)
+            NoteView()
         }
     }
 }

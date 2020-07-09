@@ -25,6 +25,7 @@ struct TrainingRow: View {
                         Text(training.trainingName)
                             .font(.title)
                         Text(training.trainingSubscription)
+                            .fixedSize(horizontal: false, vertical: true)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }.padding(.bottom)
@@ -91,7 +92,7 @@ struct TrainingRow_Previews: PreviewProvider {
     static var prevTraining = Training(id: UUID().uuidString,
                                        name: "My Program",
                                        subscription: "My litte subscription ",
-                                       date: "01-Jan-2020",
+                                       date: Date(),
                                        exercises: [Exercise(name: "My Exercise")])
     
     @State static var prevListOfTraining = [Training]()

@@ -12,7 +12,7 @@ struct TrainingView: View {
     
     @EnvironmentObject var session: FireBaseSession
     var training: Training
-    let dataString = DateConverter.dateFormat.string(from: Date())
+    var dataString = ""
     @State var conform = false
     
     var body: some View {
@@ -29,7 +29,8 @@ struct TrainingView: View {
                             
                             Text(training.trainingSubscription)
                                 .padding(.horizontal)
-                            Text("last training: \(dataString)")
+                                .padding(.bottom, 5)
+                            Text("last training: \(DateConverter.dateFormat.string(from: self.training.initialDate))")
                                 .padding(.horizontal)
                                 .font(.caption)
                                 .foregroundColor(.secondary)
