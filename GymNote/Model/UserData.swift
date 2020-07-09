@@ -14,10 +14,12 @@ final class UserData: ObservableObject {
     
     @Published var userProfile: UserProfile
     @Published var userTrainings: UserTrainings
+    @Published var userStats: [Exercise]
     
     init(profile: UserProfile, trainings: UserTrainings) {
         self.userProfile = profile
         self.userTrainings = UserTrainings(id: profile.userID, trainings: trainings.listOfTrainings)
+        self.userStats = [Exercise]()
     }
 }
 
