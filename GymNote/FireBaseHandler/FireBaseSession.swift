@@ -19,14 +19,20 @@ class FireBaseSession: ObservableObject {
     @Published var userSession: UserData? {
         didSet {self.didChange.send(self)}
     }
-    @Published var noErrorAppearDuringAuth: Bool = false {
+    @Published var usersDBRef = Database.database().reference()
+    @Published var usersDBStorage = Storage.storage().reference()
+    
+    //-------------------- Error properties handler ----------------------------
+    
+    @Published var errorAppearDuringAuth: Bool = true {
+        didSet {self.didChange.send(self)}
+    }
+    @Published var errorAppearDuringImageTransfer: Bool = true {
         didSet {self.didChange.send(self)}
     }
     @Published var errorDiscription: String? {
         didSet {self.didChange.send(self)}
     }
-    @Published var usersDBRef = Database.database().reference()
-    @Published var usersDBStorage = Storage.storage().reference()
     
     var handle: AuthStateDidChangeListenerHandle?
     
