@@ -10,7 +10,6 @@
 		0720992123F7417E00B75CF5 /* DoneConformAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0720992023F7417E00B75CF5 /* DoneConformAlert.swift */; };
 		0727887123AA473500092E24 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0727887023AA473500092E24 /* ProfileView.swift */; };
 		0736F9DD23CA3F0C00626599 /* ChangeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0736F9DC23CA3F0C00626599 /* ChangeButton.swift */; };
-		0736F9DF23CA4CBA00626599 /* DoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0736F9DE23CA4CBA00626599 /* DoneButton.swift */; };
 		073B917A23A4025800F38F1D /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073B917923A4025800F38F1D /* CircleImage.swift */; };
 		073DEAD8248ECCD7008F3C72 /* TrainingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAD7248ECCD7008F3C72 /* TrainingRow.swift */; };
 		073DEADA248ED394008F3C72 /* TrainingDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAD9248ED394008F3C72 /* TrainingDetails.swift */; };
@@ -47,7 +46,6 @@
 		07840A94248B9D9400FC3019 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07840A93248B9D9400FC3019 /* ContentView.swift */; };
 		07840A99248BA17900FC3019 /* SignOutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07840A98248BA17900FC3019 /* SignOutButton.swift */; };
 		07840A9B248BD4E900FC3019 /* EditModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07840A9A248BD4E900FC3019 /* EditModeButton.swift */; };
-		07A8D3FF23AD44E70051D493 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A8D3FE23AD44E70051D493 /* BackButton.swift */; };
 		07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B9692397BE00001632A0 /* AppDelegate.swift */; };
 		07C0B96C2397BE00001632A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B96B2397BE00001632A0 /* SceneDelegate.swift */; };
 		07C0B9702397BE03001632A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07C0B96F2397BE03001632A0 /* Assets.xcassets */; };
@@ -78,7 +76,6 @@
 		0720992023F7417E00B75CF5 /* DoneConformAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneConformAlert.swift; sourceTree = "<group>"; };
 		0727887023AA473500092E24 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		0736F9DC23CA3F0C00626599 /* ChangeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeButton.swift; sourceTree = "<group>"; };
-		0736F9DE23CA4CBA00626599 /* DoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneButton.swift; sourceTree = "<group>"; };
 		073B917923A4025800F38F1D /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
 		073DEAD7248ECCD7008F3C72 /* TrainingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingRow.swift; sourceTree = "<group>"; };
 		073DEAD9248ED394008F3C72 /* TrainingDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingDetails.swift; sourceTree = "<group>"; };
@@ -115,7 +112,6 @@
 		07840A93248B9D9400FC3019 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		07840A98248BA17900FC3019 /* SignOutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutButton.swift; sourceTree = "<group>"; };
 		07840A9A248BD4E900FC3019 /* EditModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeButton.swift; sourceTree = "<group>"; };
-		07A8D3FE23AD44E70051D493 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		07C0B9662397BE00001632A0 /* GymNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07C0B9692397BE00001632A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07C0B96B2397BE00001632A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -173,6 +169,8 @@
 				07C0B99723A144DF001632A0 /* KeyboardHost.swift */,
 				07C922E52411140000AF6010 /* NavigationConfigurator.swift */,
 				073DEADF2498F852008F3C72 /* SwipeGesture.swift */,
+				07C922DF2410EA2300AF6010 /* SearchBar.swift */,
+				075A31F223FF19ED006613A2 /* DateConverter.swift */,
 			);
 			path = UIMechanicsSupport;
 			sourceTree = "<group>";
@@ -241,8 +239,6 @@
 				0757023E23A4D89500030991 /* RectangularButtonStyle.swift */,
 				073DEAE1249A4F66008F3C72 /* UseButton.swift */,
 				073DEAE3249A54D4008F3C72 /* DeleteButton.swift */,
-				07A8D3FE23AD44E70051D493 /* BackButton.swift */,
-				0736F9DE23CA4CBA00626599 /* DoneButton.swift */,
 				0736F9DC23CA3F0C00626599 /* ChangeButton.swift */,
 				07426607240BFD2A003F2C32 /* AddButton.swift */,
 				07C922E12411078700AF6010 /* ExitButton.swift */,
@@ -393,8 +389,6 @@
 				0720992023F7417E00B75CF5 /* DoneConformAlert.swift */,
 				07F55DA124AF3D790024AB1A /* ActionAlert.swift */,
 				07F55DA324AF3E690024AB1A /* WarningAlert.swift */,
-				075A31F223FF19ED006613A2 /* DateConverter.swift */,
-				07C922DF2410EA2300AF6010 /* SearchBar.swift */,
 				07C922E72411582400AF6010 /* DualColorCheckmark.swift */,
 			);
 			path = CustomReusableComponents;
@@ -521,7 +515,6 @@
 				07840A94248B9D9400FC3019 /* ContentView.swift in Sources */,
 				07840A92248ACD8100FC3019 /* CancelEditModeButton.swift in Sources */,
 				07840A99248BA17900FC3019 /* SignOutButton.swift in Sources */,
-				0736F9DF23CA4CBA00626599 /* DoneButton.swift in Sources */,
 				073DEAE02498F852008F3C72 /* SwipeGesture.swift in Sources */,
 				07C922E22411078700AF6010 /* ExitButton.swift in Sources */,
 				07C0B9832397DE58001632A0 /* UserProfile.swift in Sources */,
@@ -536,7 +529,6 @@
 				07C0B99823A144DF001632A0 /* KeyboardHost.swift in Sources */,
 				073E6C9523AA215800A06E80 /* TitleBelt.swift in Sources */,
 				075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */,
-				07A8D3FF23AD44E70051D493 /* BackButton.swift in Sources */,
 				07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */,
 				07840A9B248BD4E900FC3019 /* EditModeButton.swift in Sources */,
 				07FCCE732482C8AD008FE164 /* ProfileHost.swift in Sources */,
