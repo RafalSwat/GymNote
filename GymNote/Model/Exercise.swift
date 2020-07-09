@@ -10,6 +10,7 @@ import Foundation
 
 class Exercise: Hashable, Identifiable {
     
+    var exerciseID = UUID().uuidString
     var exerciseName: String
     var exerciseSeries: [Series]
     var exerciseIsCheck: Bool
@@ -42,6 +43,7 @@ class Exercise: Hashable, Identifiable {
     }
     
     init(name: String, isCheck: Bool) {
+        
         self.exerciseName = name
         self.exerciseSeries = [Series]()
         self.exerciseIsCheck = isCheck
@@ -49,6 +51,7 @@ class Exercise: Hashable, Identifiable {
     }
     
     init(name: String) {
+        
         self.exerciseName = name
         self.exerciseSeries = [Series]()
         self.exerciseIsCheck = false
