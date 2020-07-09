@@ -10,22 +10,23 @@ import SwiftUI
 
 struct ProfileView: View {
     
+    @EnvironmentObject var session: FireBaseSession
+    @State var showAlert = false
     var profile: UserProfile
     
     var body: some View {
-        
+        ZStack {
         List {
-
-                VStack {
-                    HStack {
-                        Spacer()
-                        CircleImage(image: Image(uiImage: profile.userImage))
-                            .padding(.top, 20)
-                            .padding(.bottom, 15)
-                        Spacer()
-                    }
-                    Text("\(profile.userName) \(profile.userSurname)")
-                        .font(.title)
+            VStack {
+                HStack {
+                    Spacer()
+                    CircleImage(image: Image(uiImage: profile.userImage))
+                        .padding(.top, 20)
+                        .padding(.bottom, 15)
+                    Spacer()
+                }
+                Text("\(profile.userName) \(profile.userSurname)")
+                    .font(.title)
             }
             
             Section(header: Text("Basic info")) {
@@ -64,6 +65,16 @@ struct ProfileView: View {
         }
         .listStyle(GroupedListStyle())
         .navigationBarTitle("Profile", displayMode: .inline)
+            
+            if self.showAlert {
+                WarningAlert(showAlert: self.$showAlert,
+                             title: "Warninig",
+                             message: self.session.errorDiscription!,
+                             buttonTitle: "ok",
+                             action: {})
+            }
+    }
+        
     }
 }
 
@@ -73,7 +84,7 @@ struct ProfileView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            ProfileView(profile: prevProfile)
+            ProfileView(profile: prevProfile).environmentObject(FireBaseSession())
         }
     }
 }
