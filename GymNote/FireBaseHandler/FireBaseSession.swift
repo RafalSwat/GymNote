@@ -54,9 +54,9 @@ class FireBaseSession: ObservableObject {
             (user, error) in
             
             if error != nil {
-                self.noErrorAppearDuringAuth = false
+                self.errorAppearDuringAuth = true
             } else {
-                self.noErrorAppearDuringAuth = true
+                self.errorAppearDuringAuth = false
             }
             
             if user != nil {
@@ -78,9 +78,9 @@ class FireBaseSession: ObservableObject {
             (user, error) in
             
             if error != nil {
-                self.noErrorAppearDuringAuth = false
+                self.errorAppearDuringAuth = true
             } else {
-                self.noErrorAppearDuringAuth = true
+                self.errorAppearDuringAuth = false
             }
             
             if user != nil {
@@ -194,6 +194,7 @@ class FireBaseSession: ObservableObject {
                     }
                 }
         }
+        saveImageOnFBR(uiimage: user.userImage, id: user.userID)
     }
     
     func updateProfileOnFBR(user: UserProfile) {
@@ -222,13 +223,18 @@ class FireBaseSession: ObservableObject {
     }
     
     func uploadImageFromFBR(id: String, completion: @escaping (UIImage)->()){
+    
         usersDBStorage.child("Images").child(id).getData(maxSize: 10*1024*1024) { (imageData, error) in
             if let err = error {
+                self.errorAppearDuringImageTransfer = true
+                self.errorDiscription = "Could`t get image data from FireBase DataBase!: \(err.localizedDescription)"
                 print("Could`t get image data from FireBase DataBase!: \(err.localizedDescription)")
             } else {
                 if let image = imageData {
                     completion(UIImage(data: image)!)
                 } else {
+                    self.errorAppearDuringImageTransfer = true
+                    self.errorDiscription = "Error: Could`t unwrap image-data to an image!"
                     print("Error: Could`t unwrap image-data to an image!")
                 }
             }
