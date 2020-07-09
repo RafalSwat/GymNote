@@ -257,10 +257,11 @@ extension FireBaseSession {
     //===================== Trainings on FBR ==========================
     
     func addTrainingToFBR(userTrainings: UserTrainings, training: Training) {
+        
         self.usersDBRef.child("Trainings").child(userTrainings.userID).child(training.trainingID).setValue(
             ["name" : training.trainingName,
              "subscription" : training.trainingSubscription,
-             "date" : training.initialDate])
+             "date" : DateConverter.dateFormat.string(from: training.initialDate)])
         
         for exercise in training.listOfExercises {
             self.usersDBRef.child("Trainings").child(userTrainings.userID).child(training.trainingID).child("Exercises").child(exercise.exerciseName).setValue(
@@ -277,7 +278,7 @@ extension FireBaseSession {
         var tempTrainingsIDs = [String]()
         var tempTrainingNames = [String]()
         var tempTrainingSubscriptions = [String]()
-        var tempTrainingDates = [String]()
+        var tempTrainingDates = [Date]()
         var tempExercisesForEachTraining = [[Exercise]]()
         
         // DataBase read proces node-by-node, assigning values to needed temporary properties
@@ -292,11 +293,11 @@ extension FireBaseSession {
                         for training in trainingsData {
                             
                             if let trainingDetails = training.value as? [String : AnyObject] {
-                                
+
                                 tempTrainingsIDs.append(training.key)
                                 tempTrainingNames.append(trainingDetails["name"] as! String)
                                 tempTrainingSubscriptions.append(trainingDetails["subscription"] as! String)
-                                tempTrainingDates.append(trainingDetails["date"] as! String)
+                                tempTrainingDates.append(DateConverter().convertFromString(dateString: trainingDetails["date"] as! String))
                                 
                                 if let exercises = trainingDetails["Exercises"] as? Dictionary<String, Any> {
                                     
