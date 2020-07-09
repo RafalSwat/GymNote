@@ -13,9 +13,8 @@ struct LoginView: View {
     //MARK: Properties
     @EnvironmentObject var session: FireBaseSession
     
-    @State private var email: String = "a@a.com"
-    @State private var password: String = "123456"
-    @State var showWarning = false
+    @State private var email: String = ""//"a@a.com"
+    @State private var password: String = ""//"123456"
     @State var warningText = ""
     @Binding var alreadySignIn: Bool
     
@@ -23,6 +22,7 @@ struct LoginView: View {
     var body: some View {
         VStack {
             TextField("Email", text: $email)
+                .autocapitalization(.none)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .textContentType(.emailAddress)
             
@@ -31,13 +31,26 @@ struct LoginView: View {
             Button("Login", action: {
                 if self.isNotEmpty() {
                     self.logIn()
-                    self.alreadySignIn = self.session.noErrorAppearDuringAuth
+                    
+                    if !self.session.errorAppearDuringAuth {
+                        self.alreadySignIn = true
+                        self.session.errorAppearDuringAuth = false
+                    } else {
+                        if let fbrError = self.session.errorDiscription {
+                            self.session.errorAppearDuringAuth = true
+                            self.warningText = fbrError
+                            
+                        }
+                    }
+    
+                } else if !self.isNotEmpty() {
+                    self.session.errorAppearDuringAuth = true
                 }
             })
                 .buttonStyle(RectangularButtonStyle())
                 .padding(.top, 15)
             
-            if self.showWarning {
+            if self.session.errorAppearDuringAuth{
                 Text(warningText)
                     .font(.caption)
                     .foregroundColor(.red)

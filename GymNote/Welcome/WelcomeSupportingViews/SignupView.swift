@@ -24,6 +24,7 @@ struct SignupView: View {
     var body: some View {
         VStack {
             TextField("Email", text: $email)
+                .autocapitalization(.none)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .textContentType(.emailAddress)
             
@@ -35,12 +36,20 @@ struct SignupView: View {
                 if self.isNotEmpty() && self.arePasswordEqual() {
                     self.showWarning = false
                     self.signUp()
-                    self.alreadySignIn = self.session.noErrorAppearDuringAuth
                     
-                    if let fbrError = self.session.errorDiscription {
-                        self.showWarning = true
-                        self.warningText = fbrError
+                    if !self.session.errorAppearDuringAuth {
+                        self.alreadySignIn = true
+                        self.showWarning = false
                         
+                    } else {
+                        if let fbrError = self.session.errorDiscription {
+                            self.showWarning = true
+                            self.warningText = fbrError
+                            
+                        } else {
+                            self.showWarning = true
+                            self.warningText = "Unknow error... please try again"
+                        }
                     }
                     
                 } else if !self.isNotEmpty() {
