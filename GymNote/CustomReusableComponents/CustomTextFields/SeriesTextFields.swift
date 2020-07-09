@@ -22,13 +22,13 @@ struct SeriesTextFields: View {
                 self.repeats.wrappedValue[self.index] = self.reps
             })
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .keyboardType(.numberPad)
+                .keyboardType(.decimalPad)
             
             TextField("", text: self.$weight, onCommit: {
                 self.weights.wrappedValue[self.index] = self.weight
             })
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .keyboardType(.numberPad)
+                .keyboardType(.decimalPad)
         }
     }
 }
