@@ -45,11 +45,16 @@ struct ExerciseView: View {
             
             ForEach (0 ..< self.weights.count, id: \.self) { index in
                 HStack {
-                    SeriesTextFields(repeats: self.$repeats,
-                    weights: self.$weights,
-                    index: index,
-                    reps: self.rep,
-                    weight: self.weight)
+//                    SeriesTextFields(repeats: self.$repeats,
+//                                     weights: self.$weights,
+//                                     index: index,
+//                                     reps: self.rep,
+//                                     weight: self.weight)
+                    Try(repeats: self.$repeats,
+                        weights: self.$weights,
+                        index: index,
+                        reps: self.rep,
+                        weight: self.weight)
                 }
             }
         }
