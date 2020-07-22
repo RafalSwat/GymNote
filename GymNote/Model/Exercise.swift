@@ -61,9 +61,9 @@ class Exercise: Hashable, Identifiable {
 }
 struct Series {
     var exerciseRepeats: Int
-    var exerciseWeight: Int?
+    var exerciseWeight: Double?
     
-    init(repeats: Int, weight: Int) {
+    init(repeats: Int, weight: Double) {
         self.exerciseRepeats = repeats
         self.exerciseWeight = weight
     }
