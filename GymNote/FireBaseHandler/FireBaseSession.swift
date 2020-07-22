@@ -353,7 +353,7 @@ extension FireBaseSession {
             seriesCounter += 1
             self.usersDBRef.child("Exercises").child(id).child(exercise.exerciseID).child("Dates").child(date).child("Series").child(String(seriesCounter)).setValue(
                 ["repeats" : series.exerciseRepeats,
-                 "weight" : series.exerciseWeight])
+                 "weight" : series.exerciseWeight ?? 0])
         }
     }
 }
