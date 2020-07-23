@@ -16,8 +16,8 @@ struct ExerciseView: View {
     
     @State var repeats = [String]()
     @State var weights = [String]()
-    @State var weight = ""
-    @State var rep = ""
+    @State var weight: Double = 0.0
+    @State var reps: Double = 0
     
     var body: some View {
         
@@ -45,16 +45,12 @@ struct ExerciseView: View {
             
             ForEach (0 ..< self.weights.count, id: \.self) { index in
                 HStack {
-//                    SeriesTextFields(repeats: self.$repeats,
-//                                     weights: self.$weights,
-//                                     index: index,
-//                                     reps: self.rep,
-//                                     weight: self.weight)
+
                     Try(repeats: self.$repeats,
                         weights: self.$weights,
                         index: index,
-                        reps: self.rep,
-                        weight: self.weight)
+                        reps: self.$reps,
+                        weight: self.$weight)
                 }
             }
         }
@@ -67,7 +63,7 @@ struct ExerciseView: View {
     
     func saveSeries() {
         for index in 0..<(exercise.exerciseNumberOfSerises) {
-            self.exercise.exerciseSeries[index] = Series(repeats: Int(repeats[index])!, weight: Int(weights[index])!)
+            self.exercise.exerciseSeries[index] = Series(repeats: Int(repeats[index])!, weight: Double(weights[index])!)
         }
     }
 }
@@ -78,6 +74,7 @@ struct ExerciseView_Previews: PreviewProvider {
     @State static var prevConform = false
     
     static var previews: some View {
-        ExerciseView(exercise: prevExercise, conform: $prevConform)
+        ExerciseView(exercise: prevExercise,
+                     conform: $prevConform)
     }
 }
