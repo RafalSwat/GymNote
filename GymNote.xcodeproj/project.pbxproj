@@ -29,7 +29,6 @@
 		073F482723F55F47003011F0 /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073F482623F55F47003011F0 /* CaptureImageView.swift */; };
 		073F482923F5604C003011F0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073F482823F5604C003011F0 /* Coordinator.swift */; };
 		0740B3C7242E0F56003D7520 /* Training.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0740B3C6242E0F56003D7520 /* Training.swift */; };
-		0740B3C9242E1974003D7520 /* UserTrainings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0740B3C8242E1974003D7520 /* UserTrainings.swift */; };
 		074265FF240BC6C6003F2C32 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074265FE240BC6C6003F2C32 /* Exercise.swift */; };
 		07426605240BCE20003F2C32 /* DateBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07426604240BCE20003F2C32 /* DateBelt.swift */; };
 		07426608240BFD2A003F2C32 /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07426607240BFD2A003F2C32 /* AddButton.swift */; };
@@ -40,6 +39,7 @@
 		075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F223FF19ED006613A2 /* DateConverter.swift */; };
 		075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F4240683C4006613A2 /* FireBaseSession.swift */; };
 		075DE10C242A2CB8005666A7 /* SeriesTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075DE10B242A2CB8005666A7 /* SeriesTextFields.swift */; };
+		075F9BC324D9BDA4005ADFF1 /* DecimalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BC224D9BDA4005ADFF1 /* DecimalTextField.swift */; };
 		077ECD4123B0F020005A1B76 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECD4023B0F020005A1B76 /* ProfileEditView.swift */; };
 		077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECD4223B0F4A1005A1B76 /* UserData.swift */; };
 		07840A92248ACD8100FC3019 /* CancelEditModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07840A91248ACD8100FC3019 /* CancelEditModeButton.swift */; };
@@ -95,7 +95,6 @@
 		073F482623F55F47003011F0 /* CaptureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
 		073F482823F5604C003011F0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		0740B3C6242E0F56003D7520 /* Training.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Training.swift; sourceTree = "<group>"; };
-		0740B3C8242E1974003D7520 /* UserTrainings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTrainings.swift; sourceTree = "<group>"; };
 		074265FE240BC6C6003F2C32 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 		07426604240BCE20003F2C32 /* DateBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateBelt.swift; sourceTree = "<group>"; };
 		07426607240BFD2A003F2C32 /* AddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButton.swift; sourceTree = "<group>"; };
@@ -106,6 +105,7 @@
 		075A31F223FF19ED006613A2 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		075A31F4240683C4006613A2 /* FireBaseSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseSession.swift; sourceTree = "<group>"; };
 		075DE10B242A2CB8005666A7 /* SeriesTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesTextFields.swift; sourceTree = "<group>"; };
+		075F9BC224D9BDA4005ADFF1 /* DecimalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTextField.swift; sourceTree = "<group>"; };
 		077ECD4023B0F020005A1B76 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		077ECD4223B0F4A1005A1B76 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		07840A91248ACD8100FC3019 /* CancelEditModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelEditModeButton.swift; sourceTree = "<group>"; };
@@ -256,6 +256,7 @@
 				07C0B99B23A273D9001632A0 /* SwitchableSecureField.swift */,
 				075DE10B242A2CB8005666A7 /* SeriesTextFields.swift */,
 				073DEAFA24A4FF37008F3C72 /* CustomTextField.swift */,
+				075F9BC224D9BDA4005ADFF1 /* DecimalTextField.swift */,
 				073DEAFC24A4FF88008F3C72 /* Try.swift */,
 			);
 			path = CustomTextFields;
@@ -353,7 +354,6 @@
 			children = (
 				077ECD4223B0F4A1005A1B76 /* UserData.swift */,
 				07C0B9822397DE58001632A0 /* UserProfile.swift */,
-				0740B3C8242E1974003D7520 /* UserTrainings.swift */,
 				0740B3C6242E0F56003D7520 /* Training.swift */,
 				074265FE240BC6C6003F2C32 /* Exercise.swift */,
 			);
@@ -528,6 +528,7 @@
 				07C922E424110A5700AF6010 /* AddBarItem.swift in Sources */,
 				07C0B99823A144DF001632A0 /* KeyboardHost.swift in Sources */,
 				073E6C9523AA215800A06E80 /* TitleBelt.swift in Sources */,
+				075F9BC324D9BDA4005ADFF1 /* DecimalTextField.swift in Sources */,
 				075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */,
 				07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */,
 				07840A9B248BD4E900FC3019 /* EditModeButton.swift in Sources */,
@@ -561,7 +562,6 @@
 				07FCCE6F24817238008FE164 /* MainContainer.swift in Sources */,
 				0736F9DD23CA3F0C00626599 /* ChangeButton.swift in Sources */,
 				07C0B99C23A273D9001632A0 /* SwitchableSecureField.swift in Sources */,
-				0740B3C9242E1974003D7520 /* UserTrainings.swift in Sources */,
 				073F482923F5604C003011F0 /* Coordinator.swift in Sources */,
 				073DEAE4249A54D4008F3C72 /* DeleteButton.swift in Sources */,
 				07C0B96C2397BE00001632A0 /* SceneDelegate.swift in Sources */,

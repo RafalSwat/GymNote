@@ -20,9 +20,10 @@ struct HomeView: View {
                 Text("Welcome: \(session.userSession?.userProfile.userEmail ?? "...")")
             }
             .navigationBarItems(leading: SignOutButton(signIn: $alreadySignIn))
-            .onAppear(perform: getUser)
-        }
-            
+            .onAppear{
+                self.getUser()
+            }
+        }  
     }
     
     //MARK: Functions
