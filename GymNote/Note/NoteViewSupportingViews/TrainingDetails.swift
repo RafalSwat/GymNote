@@ -21,7 +21,7 @@ struct TrainingDetails: View {
                 Text("series:")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                Text(String(exercise.exerciseNumberOfSerises))
+                Text(String(exercise.exerciseNumberOfSeries))
             }
         }
     }
@@ -31,7 +31,7 @@ struct TrainingDetails_Previews: PreviewProvider {
     
     static var prevTraining = Training(id: UUID().uuidString,
                                        name: "My Program",
-                                       subscription: "My litte subscription ",
+                                       description: "My litte subscription ",
                                        date: "01-Jan-2020",
                                        exercises: [Exercise(name: "My Exercise")])
     
