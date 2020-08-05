@@ -36,7 +36,7 @@ class FireBaseSession: ObservableObject {
     
     var handle: AuthStateDidChangeListenerHandle?
     
-    //MARK: Functions
+    //MARK: Setup user data
     func listen() {
         self.handle = Auth.auth().addStateDidChangeListener { (auth, user) in
             if let user = user {
@@ -46,9 +46,7 @@ class FireBaseSession: ObservableObject {
             }
         }
     }
-    
-    //================== Authorization functionality =========================
-    
+    //MARK: Signup method
     func signUp(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) {
             (user, error) in
@@ -58,7 +56,6 @@ class FireBaseSession: ObservableObject {
             } else {
                 self.errorAppearDuringAuth = false
             }
-            
             if user != nil {
                 print("Got a new user: \(email)")
             } else {
@@ -72,7 +69,7 @@ class FireBaseSession: ObservableObject {
             }
         }
     }
-    
+    //MARK: Signin method
     func signIn(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) {
             (user, error) in
@@ -82,7 +79,6 @@ class FireBaseSession: ObservableObject {
             } else {
                 self.errorAppearDuringAuth = false
             }
-            
             if user != nil {
                 print("Welcome back: \(email)")
             } else {
@@ -96,7 +92,7 @@ class FireBaseSession: ObservableObject {
             }
         }
     }
-    
+    //MARK: Autologin method
     func tryAutoSignIn() -> Bool {
         if Auth.auth().currentUser != nil {
             return true
@@ -104,7 +100,7 @@ class FireBaseSession: ObservableObject {
             return false
         }
     }
-    
+    //MARK: Log out method
     func signOut () -> Bool {
         do {
             try Auth.auth().signOut()
@@ -114,67 +110,50 @@ class FireBaseSession: ObservableObject {
             return true
         }
     }
-    //=================================================================
     
-    //===================== Setup session =============================
-    
+    //MARK: Setup session method
     func setupSession(userEmail: String, userID: String) {
-        
         self.usersDBRef.child("Users").child(userID).child("Profile").observeSingleEvent(of: .value) { (snapshot) in
-            
             if snapshot.exists() {
                 // User is already on FirebaseDatabase, so we setup session based on it (old user)
                 if let value = snapshot.value as? [String: Any] {
                     let strDate = value["dateOfBirth"] as! String
                     let convertDate = DateConverter().convertFromString(dateString: strDate)
-        
-                    self.uploadImageFromFBR(id: userID, completion: { downloadedImage in
                     
-                        let userProfile = UserProfile(uID: userID,
-                                                  email: userEmail,
-                                                  name: value["name"] as! String,
-                                                  surname: value["surname"] as! String,
-                                                  gender: value["gender"] as! String,
-                                                  profileImage: downloadedImage,
-                                                  height: value["height"] as! Int,
-                                                  userDateOfBirth: convertDate)
+                    self.downloadImageFromDB(id: userID, completion: { downloadedImage in
                         
-                        // #notpretty: i can use loaded trainings only inside a completion handler, so i setup all
-                        // UserData at once...
-                        self.uploadTrainings(userID: userID, completion: { uploadedTrainings in
-                            let userTrainings = UserTrainings(id: userID, trainings: uploadedTrainings)
-                            self.userSession = UserData(profile: userProfile, trainings: userTrainings)
-                        })
+                        let userProfile = UserProfile(uID: userID,
+                                                      email: userEmail,
+                                                      name: value["name"] as! String,
+                                                      surname: value["surname"] as! String,
+                                                      gender: value["gender"] as! String,
+                                                      profileImage: downloadedImage,
+                                                      height: value["height"] as! Int,
+                                                      userDateOfBirth: convertDate)
+                        self.userSession = UserData(profile: userProfile)
+                        self.downloadTrainingsFromDB(userID: userID)
                     })
-      
                 } 
             } else {
                 // User has no data on FirebaseDatabase, so we set up default on (new user)
                 let userProfile = UserProfile(uID: userID,
-                                          email: userEmail,
-                                          name: "",
-                                          surname: "",
-                                          gender: "non",
-                                          profileImage: UIImage(named: "staticImage")!,
-                                          height: 175,
-                                          userDateOfBirth: Date())
-                
-                let userTrainings = UserTrainings(id: userID, trainings: [Training]())
-                
-                self.userSession = UserData(profile: userProfile, trainings: userTrainings)
+                                              email: userEmail,
+                                              name: "",
+                                              surname: "",
+                                              gender: "non",
+                                              profileImage: UIImage(named: "staticImage")!,
+                                              height: 175,
+                                              userDateOfBirth: Date())
+                self.userSession = UserData(profile: userProfile)
                 
                 if let newUser = self.userSession?.userProfile {
-                    
-                    self.addUserToBase(user: newUser)
+                    self.uploadUserToDB(user: newUser)
                 }
             }
         }
     }
-    //=================================================================
-    
-    //======================= Profile on FBR ==========================
-    
-    func addUserToBase(user: UserProfile) {
+    //MARK: Adding new user to data base
+    func uploadUserToDB(user: UserProfile) {
         usersDBRef.child("Users").child(user.userID).child("Profile").setValue(
             ["userID" : user.userID,
              "email": user.userEmail,
@@ -194,21 +173,20 @@ class FireBaseSession: ObservableObject {
                     }
                 }
         }
-        saveImageOnFBR(uiimage: user.userImage, id: user.userID)
+        uploadImageToDB(uiimage: user.userImage, id: user.userID)
     }
-    
-    func updateProfileOnFBR(user: UserProfile) {
+    //MARK: Update profile for current user on DB
+    func updateProfileOnDB(user: UserProfile) {
         usersDBRef.child("Users").child(user.userID).child("Profile").updateChildValues(
             ["name" : user.userName,
              "surname" : user.userSurname,
              "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
              "gender" : user.userGender,
              "height" : user.userHeight])
-        saveImageOnFBR(uiimage: user.userImage, id: user.userID)
+        uploadImageToDB(uiimage: user.userImage, id: user.userID)
     }
-    
-    func saveImageOnFBR(uiimage: UIImage, id: String) {
-        
+    //MARK: Upload image to DB ( is used inside updating profile method)
+    func uploadImageToDB(uiimage: UIImage, id: String) {
         if let imageToSave = uiimage.jpegData(compressionQuality: 1) {
             self.usersDBStorage.child("Images").child(id).putData(imageToSave, metadata: nil) { (_, error) in
                 if let err = error {
@@ -221,9 +199,8 @@ class FireBaseSession: ObservableObject {
             print("Could`t case/unwrap image to data!")
         }
     }
-    
-    func uploadImageFromFBR(id: String, completion: @escaping (UIImage)->()){
-    
+    //MARK: Download Image form DB
+    func downloadImageFromDB(id: String, completion: @escaping (UIImage)->()){
         usersDBStorage.child("Images").child(id).getData(maxSize: 10*1024*1024) { (imageData, error) in
             if let err = error {
                 self.errorAppearDuringImageTransfer = true
@@ -248,111 +225,106 @@ class FireBaseSession: ObservableObject {
         }
     }
     
-    //=================================================================
-}
-
-extension FireBaseSession {
-    
-    
-    //===================== Trainings on FBR ==========================
-    
-    func addTrainingToFBR(userTrainings: UserTrainings, training: Training) {
-        self.usersDBRef.child("Trainings").child(userTrainings.userID).child(training.trainingID).setValue(
-            ["name" : training.trainingName,
-             "subscription" : training.trainingSubscription,
-             "date" : training.initialDate])
+    //MARK: Save training in the database
+    func uploadTrainingToDB(userID: String, training: Training) {
         
+        // Upload training under current user
+        self.usersDBRef.child("UsersTrainings").child(userID).child(training.trainingID).setValue(training.trainingName)
+        
+        // Upload basic info about training (no sepcific membership)
+        self.usersDBRef.child("Trainings").child(training.trainingID).setValue(
+            ["name" : training.trainingName,
+             "description" : training.trainingDescription,
+             "initialDate" : training.initialDate]
+        )
         for exercise in training.listOfExercises {
-            self.usersDBRef.child("Trainings").child(userTrainings.userID).child(training.trainingID).child("Exercises").child(exercise.exerciseName).setValue(
-                ["Series" : exercise.exerciseNumberOfSerises])
+            
+            // Upload list of exercises under current training
+            self.usersDBRef.child("ExerciseList").child(training.trainingID).child(exercise.exerciseID).setValue([
+                "name" : exercise.exerciseName,
+                "numberOfSeries" : exercise.exerciseNumberOfSeries])
+            
+            // Upload exercies series info under current date
+            self.usersDBRef.child("UsersExercises").child(userID).child(exercise.exerciseID).setValue(exercise.exerciseName)
         }
+        
     }
     
-    // Can`t return [Training] in a closure, i use @escaping
-    func uploadTrainings(userID: String, completion: @escaping ([Training])->()) {
+    //MARK: Update training under current user
+    func updateUsersTrainingsToOnDB(id: String, training: Training) {
+        self.usersDBRef.child("UsersTrainings").child(id).updateChildValues(
+            [training.trainingID : training.trainingName])
+    }
+    //MARK: Update basic info about training (no sepcific membership)
+    func updateTrainingOnDB(training: Training) {
+        self.usersDBRef.child("Trainings").child(training.trainingID).updateChildValues(
+            ["name" : training.trainingName,
+             "description" : training.trainingDescription,
+             "initialDate" : training.initialDate]
+        )
+    }
+    //MARK: Update list of exercises under current training
+    func updateTrainingsExerciseListOnDB(training: Training) {
+        for exercise in training.listOfExercises {
+            self.usersDBRef.child("ExerciseList").child(training.trainingID).child(exercise.exerciseID).updateChildValues([
+                "name" : exercise.exerciseName,
+                "numberOfSeries" : exercise.exerciseNumberOfSeries])
+        }
+    }
+    //MARK: Download list of trainings, and store this data in enviroment
+    func downloadTrainingsFromDB(userID: String) {
         
-        // Properties for storing temporary data during read process of database,
-        // it will be use as a whole to setup "userTrainings/listOfTrainings"
-        var tempListOfTrainings = [Training]()
-        var tempTrainingsIDs = [String]()
-        var tempTrainingNames = [String]()
-        var tempTrainingSubscriptions = [String]()
-        var tempTrainingDates = [String]()
-        var tempExercisesForEachTraining = [[Exercise]]()
+        var ids = [String]()
+        var names = [String]()
+        var descriptions = [String]()
+        var dates = [String]()
+        var allExercises = [[Exercise]]()
+        var index = 0
         
-        // DataBase read proces node-by-node, assigning values to needed temporary properties
-        self.usersDBRef.child("Trainings").child(userID).observe(.value) { (userSnapshot) in
-            
+        self.usersDBRef.child("UsersTrainings").child(userID).observeSingleEvent(of: .value) { (userSnapshot) in
             if userSnapshot.exists() {
-                
-                if let trainingsData = userSnapshot.children.allObjects as? [DataSnapshot] {
-                    
-                    if !trainingsData.isEmpty {
-                        
-                        for training in trainingsData {
-                            
-                            if let trainingDetails = training.value as? [String : AnyObject] {
+                if let snapChildren = userSnapshot.children.allObjects as? [DataSnapshot] {
+                    for trainingID in snapChildren {
+                        self.usersDBRef.child("Trainings").child(trainingID.key).observeSingleEvent(of: .value) { (trainingSnapshot) in
+                            if let trainingInfo = trainingSnapshot.value as? [String : Any] {
+                                let name = trainingInfo["name"] as! String
+                                let description = trainingInfo["description"] as! String
+                                let date = trainingInfo["initialDate"] as! String
                                 
-                                tempTrainingsIDs.append(training.key)
-                                tempTrainingNames.append(trainingDetails["name"] as! String)
-                                tempTrainingSubscriptions.append(trainingDetails["subscription"] as! String)
-                                tempTrainingDates.append(trainingDetails["date"] as! String)
-                                
-                                if let exercises = trainingDetails["Exercises"] as? Dictionary<String, Any> {
-                                    
-                                    var tempExercises = [Exercise]()
-                                    
-                                    for exercise in exercises {
-                                        
-                                        let tempExercise = Exercise(name: exercise.key)
-                                        
-                                        if let series = exercise.value as? Dictionary<String, Any> {
-                                            tempExercise.exerciseNumberOfSerises = series["Series"] as! Int
-                                        }
-                                        tempExercises.append(tempExercise)
-                                    }
-                                    tempExercisesForEachTraining.append(tempExercises)
-                                }
+                                ids.append(trainingID.key)
+                                names.append(name)
+                                descriptions.append(description)
+                                dates.append(date)
                             }
                         }
-                        // Settingup listOfTrainings using temporary properties
-                        for index in 0..<userSnapshot.childrenCount {
-                            let tempTraining = Training(id: tempTrainingsIDs[Int(index)],
-                                                        name: tempTrainingNames[Int(index)],
-                                                        subscription: tempTrainingSubscriptions[Int(index)],
-                                                        date: tempTrainingDates[Int(index)],
-                                                        exercises: tempExercisesForEachTraining[Int(index)])
-                            tempListOfTrainings.append(tempTraining)
+                        self.usersDBRef.child("ExerciseList").child(trainingID.key).observeSingleEvent(of: .value) { (exerciseSnapshot) in
+                            var exercises = [Exercise]()
+                            for child in exerciseSnapshot.children {
+                                let exerciseInfo = child  as! DataSnapshot
+                                let dict = exerciseInfo.value as! [String : Any]
+                                let exercise = Exercise(id: exerciseInfo.key as String,
+                                                        name: dict["name"] as! String,
+                                                        numberOfSeries: dict["numberOfSeries"] as! Int)
+                                exercises.append(exercise)
+                            }
+                            allExercises.append(exercises)
+                            let training = Training(id: ids[index],
+                                                    name: names[index], // FIXME: index out of range
+                                                    description: descriptions[index],
+                                                    date: dates[index],
+                                                    exercises: allExercises[index])
+                            self.userSession?.userTrainings.append(training)
+                            index += 1
                         }
-                        completion(tempListOfTrainings)
                     }
                 }
             }
         }
-        
-    }
-
-    func deleteTrainingFromFBR(userTrainings: UserTrainings, training: Training) {
-        self.usersDBRef.child("Trainings").child(userTrainings.userID).child(training.trainingID).removeValue()
     }
     
-    //=================================================================
-    
-    //=================== Exercise to Stats ===========================
-    
-    
-    func addExerciseStatstoFBR(id: String, date: String, exercise: Exercise) {
-        
-        var seriesCounter = 1
-        
-        self.usersDBRef.child("Exercises").child(id).child(exercise.exerciseID).child("name").setValue(exercise.exerciseName)
-        self.usersDBRef.child("Exercises").child(id).child(exercise.exerciseID).child("Dates").child(date).child("Number Of Series").setValue(exercise.exerciseNumberOfSerises)
-        
-        for series in exercise.exerciseSeries {
-            seriesCounter += 1
-            self.usersDBRef.child("Exercises").child(id).child(exercise.exerciseID).child("Dates").child(date).child("Series").child(String(seriesCounter)).setValue(
-                ["repeats" : series.exerciseRepeats,
-                 "weight" : series.exerciseWeight])
-        }
+    func deleteTrainingFromDB(userID: String, training: Training) {
+        self.usersDBRef.child("Trainings").child(training.trainingID).removeValue()
+        self.usersDBRef.child("UserTrainings").child(userID).child(training.trainingID).removeValue()
+        self.usersDBRef.child("ExerciseList").child(training.trainingID).removeValue()
     }
 }
