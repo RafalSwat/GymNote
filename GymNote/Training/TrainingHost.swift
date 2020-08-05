@@ -22,9 +22,19 @@ struct TrainingHost: View {
     var body: some View {
         VStack {
             if editMode {
-                EditTrainingView(training: $draftTraining)
-                    .onAppear {
-                        self.draftTraining = self.training
+                ZStack {
+                    EditTrainingView(training: $draftTraining)
+                        .onAppear {
+                            self.draftTraining = self.training
+                    }
+                    if showWarning {
+                        WarningAlert(showAlert: $showWarning,
+                                     title: "Warning",
+                                     message: warningMessage,
+                                     buttonTitle: "Ok",
+                                     action: {})
+                            
+                    }
                 }
             } else {
                 TrainingView(training: training)
