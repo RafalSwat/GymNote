@@ -18,10 +18,9 @@ struct NoteView: View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(listOfTrainings, id: \.trainingID) { training in
-                        TrainingRow(training: training, listOfTraining: self.$listOfTrainings)
+                    ForEach(self.session.userSession?.userTrainings ?? [Training](), id: \.trainingID) { training in
+                        TrainingRow(training: training)
                     }
-                    
                 }
                 AddButton(addButtonText: "Add New Training",
                           action: {},
@@ -38,19 +37,20 @@ struct NoteView: View {
             }
         }
     }
-
 }
+
+
 struct NoteView_Previews: PreviewProvider {
     
     static var prevListOfTrainings = [Training(id: UUID().uuidString,
                                                name: "My Training",
-                                               subscription: "My litte subscription",
+                                               description: "My litte subscription",
                                                date: "01-Jan-2020",
                                                exercises: [Exercise(name: "My Exercise")])]
     
     static var previews: some View {
         NavigationView {
-            NoteView(listOfTrainings: prevListOfTrainings)
+            NoteView()
         }
     }
 }
