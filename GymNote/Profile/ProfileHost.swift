@@ -33,7 +33,7 @@ struct ProfileHost: View {
                 }),
                 trailing: EditModeButton(editMode: $editMode, editAction: {
                     self.session.userSession?.userProfile = self.draftProfile
-                    self.session.updateProfileOnFBR(user: self.draftProfile)
+                    self.session.updateProfileOnDB(user: self.draftProfile)
                 })
             )
         }
