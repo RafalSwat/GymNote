@@ -28,9 +28,11 @@ struct WarningAlert: View {
             
             
             Text(message)
-                
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
                 .padding(.horizontal)
                 .padding(.top)
+                
 
                     Button(action: {
 
@@ -48,6 +50,7 @@ struct WarningAlert: View {
         }
         .background(Color.gray)
         .cornerRadius(15)
+        .padding()
     }
 }
 
