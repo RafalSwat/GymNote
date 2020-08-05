@@ -16,7 +16,9 @@ struct TrainingHost: View {
     @State var training: Training
     @State var draftTraining = Training()
     
-    
+    @State var showWarning = true
+    @State var warningMessage = ""
+
     var body: some View {
         VStack {
             if editMode {
