@@ -14,27 +14,38 @@ class Training: Hashable {
 
     var trainingID: String
     var trainingName: String
-    var trainingSubscription: String
+    var trainingDescription: String
     var initialDate: String
     var listOfExercises: [Exercise]
     
     init() {
         self.trainingID = UUID().uuidString
-        self.trainingName = "My Training"
-        self.trainingSubscription = "My Little Subscription"
+        self.trainingName = ""//"My Training"
+        self.trainingDescription = ""//My Little Description"
         self.initialDate = "01-Jan-2020"
-        self.listOfExercises = [Exercise(name: "My Exercise")]
+        self.listOfExercises = [Exercise]()
+    }
+    init(id: String,
+         name: String,
+         description: String,
+         date: String) {
+        
+        self.trainingID = id
+        self.trainingName = name
+        self.trainingDescription = description
+        self.initialDate = date
+        self.listOfExercises = [Exercise]()
     }
     
     init(id: String,
          name: String,
-         subscription: String,
+         description: String,
          date: String,
          exercises: [Exercise]) {
         
         self.trainingID = id
         self.trainingName = name
-        self.trainingSubscription = subscription
+        self.trainingDescription = description
         self.initialDate = date
         self.listOfExercises = exercises
     }
