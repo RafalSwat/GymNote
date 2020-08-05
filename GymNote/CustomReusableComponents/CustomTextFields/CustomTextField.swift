@@ -32,9 +32,9 @@ struct CustomTextfield: UIViewRepresentable {
 
 }
 
-extension  UITextField {
-    @objc func doneButtonTapped(button: UIBarButtonItem) {
-        self.resignFirstResponder()
-    } 
-}
+//extension  UITextField {
+//    @objc func doneButtonTapped(button: UIBarButtonItem) {
+//        self.resignFirstResponder()
+//    } 
+//}
 
