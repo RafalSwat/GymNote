@@ -10,52 +10,67 @@ import Foundation
 
 class Exercise: Hashable, Identifiable {
     
-    var exerciseID = UUID().uuidString
+    var exerciseID: String
     var exerciseName: String
     var exerciseSeries: [Series]
     var exerciseIsCheck: Bool
-    var exerciseNumberOfSerises: Int
+    var exerciseNumberOfSeries: Int
     
-    //MARK: String is a built-in type, which means it is hashable by default
-//    public var hashValue: Int {
-//        return exerciseName.hashValue
-//    }
-    func hash(into hasher: inout Hasher) {
-        return hasher.combine(exerciseName)
+    init(name: String) {
+        
+        self.exerciseID = UUID().uuidString
+        self.exerciseName = name
+        self.exerciseSeries = [Series]()
+        self.exerciseIsCheck = false
+        self.exerciseNumberOfSeries = 1
     }
     
-    
-    //MARK: Hashable inherits from Equatable so our struct must implemented requirements for both
-    //We must implemented func that compare two var, to chceck if there are equal or not (Equatable protocol)
-    public static func == (lhs: Exercise, rhs: Exercise) -> Bool {
-        return lhs.exerciseName == rhs.exerciseName
-    }
-
     init(name: String,
+         isCheck: Bool) {
+        
+        self.exerciseID = UUID().uuidString
+        self.exerciseName = name
+        self.exerciseSeries = [Series]()
+        self.exerciseIsCheck = isCheck
+        self.exerciseNumberOfSeries = 1
+    }
+    init(id: String,
+         name: String,
+         numberOfSeries: Int) {
+        
+        self.exerciseID = id
+        self.exerciseName = name
+        self.exerciseSeries = [Series]()
+        self.exerciseIsCheck = false
+        self.exerciseNumberOfSeries = numberOfSeries
+    }
+    
+    init(id: String,
+         name: String,
          series: [Series],
          isCheck: Bool,
          numberOfSeries: Int) {
         
+        self.exerciseID = id
         self.exerciseName = name
         self.exerciseSeries = series
         self.exerciseIsCheck = isCheck
-        self.exerciseNumberOfSerises = numberOfSeries
+        self.exerciseNumberOfSeries = numberOfSeries
     }
-    
-    init(name: String, isCheck: Bool) {
-        
-        self.exerciseName = name
-        self.exerciseSeries = [Series]()
-        self.exerciseIsCheck = isCheck
-        self.exerciseNumberOfSerises = 1
+
+    //MARK: String is a built-in type, which means it is hashable by default
+    //    public var hashValue: Int {
+    //        return exerciseName.hashValue
+    //    }
+    func hash(into hasher: inout Hasher) {
+        return hasher.combine(exerciseName)
     }
-    
-    init(name: String) {
         
-        self.exerciseName = name
-        self.exerciseSeries = [Series]()
-        self.exerciseIsCheck = false
-        self.exerciseNumberOfSerises = 1
+        
+    //MARK: Hashable inherits from Equatable so our struct must implemented requirements for both
+    //We must implemented func that compare two var, to chceck if there are equal or not (Equatable protocol)
+    public static func == (lhs: Exercise, rhs: Exercise) -> Bool {
+        return lhs.exerciseName == rhs.exerciseName
     }
 
 }
