@@ -23,9 +23,10 @@ struct EditTrainingView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             Spacer()
-                            TextField("Enter your name: ", text: $training.trainingName)
+                            TextField("Enter name... ", text: $training.trainingName)
                                 .font(.title)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .frame(maxWidth: UIScreen.main.bounds.width/1.75)
                         }
                         HStack {
                             Text("Subscription:")
@@ -34,6 +35,7 @@ struct EditTrainingView: View {
                             Spacer()
                             TextField("Enter your name: ", text: $training.trainingSubscription)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .frame(maxWidth: UIScreen.main.bounds.width/1.75)
                         }
                     }.padding(.vertical)
                 }
