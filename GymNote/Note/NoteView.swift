@@ -11,7 +11,6 @@ import SwiftUI
 struct NoteView: View {
     
     @EnvironmentObject var session: FireBaseSession
-    @State var listOfTrainings: [Training]
     @State private var passageToAddTraining = false
     let newTraining = Training()
     
