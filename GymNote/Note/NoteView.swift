@@ -31,11 +31,7 @@ struct NoteView: View {
             }
             .navigationBarTitle("Training List")
         }
-        .onAppear {
-            if self.session.userSession != nil {
-                self.listOfTrainings = self.session.userSession!.userTrainings.listOfTrainings
-            }
-        }
+
     }
 }
 
