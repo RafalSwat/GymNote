@@ -29,11 +29,11 @@ struct EditTrainingView: View {
                                 .frame(maxWidth: UIScreen.main.bounds.width/1.75)
                         }
                         HStack {
-                            Text("Subscription:")
+                            Text("Description:")
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             Spacer()
-                            TextField("Enter your name: ", text: $training.trainingSubscription)
+                            TextField("Enter your description... ", text: $training.trainingDescription)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .frame(maxWidth: UIScreen.main.bounds.width/1.75)
                         }

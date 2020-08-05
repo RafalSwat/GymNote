@@ -25,7 +25,7 @@ struct SetSeriesView: View {
             
             Button(action: {
                 self.series += 1
-                self.exercise.exerciseNumberOfSerises = self.series
+                self.exercise.exerciseNumberOfSeries = self.series
             }) {
                 Image(systemName: "plus.square")
                     .font(.largeTitle)
@@ -36,7 +36,7 @@ struct SetSeriesView: View {
             Button(action: {
                 if self.series >= 2 {
                     self.series -= 1
-                    self.exercise.exerciseNumberOfSerises = self.series
+                    self.exercise.exerciseNumberOfSeries = self.series
                 }
             }) {
                 Image(systemName: "minus.square")
@@ -46,7 +46,7 @@ struct SetSeriesView: View {
 
         }
         .onAppear() {
-            self.series = self.exercise.exerciseNumberOfSerises
+            self.series = self.exercise.exerciseNumberOfSeries
         }
         
     }
