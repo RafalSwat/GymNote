@@ -34,23 +34,7 @@ struct SignupView: View {
             
             Button("SignUp", action: {
                 if self.isNotEmpty() && self.arePasswordEqual() {
-                    self.showWarning = false
                     self.signUp()
-                    
-                    if !self.session.errorAppearDuringAuth {
-                        self.alreadySignIn = true
-                        self.showWarning = false
-                        
-                    } else {
-                        if let fbrError = self.session.errorDiscription {
-                            self.showWarning = true
-                            self.warningText = fbrError
-                            
-                        } else {
-                            self.showWarning = true
-                            self.warningText = "Unknow error... please try again"
-                        }
-                    }
                     
                 } else if !self.isNotEmpty() {
                     self.showWarning = true
@@ -105,7 +89,21 @@ struct SignupView: View {
     }
     
     func signUp() {
-        self.session.signUp(email: email, password: password)
+        self.session.signUp(email: email, password: password, completion: { errorDuringSignUp, errorDescription in
+            self.showWarning = errorDuringSignUp
+            
+            if !self.showWarning {
+                self.alreadySignIn = true
+                
+            } else {
+                if let fbrError = errorDescription {
+                    self.warningText = fbrError
+                    
+                } else {
+                    self.warningText = "Unknow error... please try again"
+                }
+            }
+        })
     }
 }
 

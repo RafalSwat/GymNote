@@ -12,28 +12,41 @@ struct NoteView: View {
     
     @EnvironmentObject var session: FireBaseSession
     @State private var passageToAddTraining = false
-    let newTraining = Training()
+    @State var listOfTrainings = [Training]()
+    @State var showDetailsArray = [Bool]()
+    @State var showButtonsArray = [Bool]()
     
     var body: some View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(self.session.userSession?.userTrainings ?? [Training](), id: \.trainingID) { training in
-                        TrainingRow(training: training)
+                    ForEach(0..<self.listOfTrainings.count, id: \.self) { index in
+                        TrainingRow(listOfTrainings: self.$listOfTrainings,
+                                    training: self.listOfTrainings[index],
+                                    showButtons: self.$showButtonsArray[index],
+                                    showDetails: self.$showDetailsArray[index])
                     }
+                }
+                .onAppear {
+                    if let list = self.session.userSession?.userTrainings {
+                        self.listOfTrainings = list
+                    }
+                    self.showDetailsArray = Array(repeating: false, count: (self.session.userSession?.userTrainings.count)!)
+                    self.showButtonsArray = Array(repeating: false, count: (self.session.userSession?.userTrainings.count)!)
                 }
                 AddButton(addButtonText: "Add New Training",
                           action: {},
                           addingMode: self.$passageToAddTraining)
                     .padding()
                 
-                NavigationLink(destination: TrainingHost(editMode: true, training: newTraining), isActive: self.$passageToAddTraining, label: { EmptyView() })
+                NavigationLink(destination: TrainingHost(editMode: true, training: Training()), isActive: self.$passageToAddTraining, label: { EmptyView() })
             }
-            .navigationBarTitle("Training List")
         }
-
+        .navigationBarTitle("Training List")
     }
+    
 }
+
 
 
 struct NoteView_Previews: PreviewProvider {

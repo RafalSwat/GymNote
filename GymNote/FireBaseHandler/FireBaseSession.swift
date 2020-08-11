@@ -24,17 +24,11 @@ class FireBaseSession: ObservableObject {
     
     //-------------------- Error properties handler ----------------------------
     
-    @Published var errorAppearDuringAuth: Bool = true {
-        didSet {self.didChange.send(self)}
-    }
-    @Published var errorAppearDuringImageTransfer: Bool = true {
-        didSet {self.didChange.send(self)}
-    }
-    @Published var errorDiscription: String? {
-        didSet {self.didChange.send(self)}
-    }
-    
     var handle: AuthStateDidChangeListenerHandle?
+    
+    func setupErrorDescription(errorString: String, errorDescription: @escaping (String)->()) {
+        errorDescription(errorString)
+    }
     
     //MARK: Setup user data
     func listen() {
@@ -47,47 +41,43 @@ class FireBaseSession: ObservableObject {
         }
     }
     //MARK: Signup method
-    func signUp(email: String, password: String) {
+    func signUp(email: String, password: String, completion: @escaping (Bool, String?)->()) {
         Auth.auth().createUser(withEmail: email, password: password) {
             (user, error) in
             
             if error != nil {
-                self.errorAppearDuringAuth = true
+                completion(true, error?.localizedDescription)
             } else {
-                self.errorAppearDuringAuth = false
+                completion(false, error?.localizedDescription)
             }
             if user != nil {
                 print("Got a new user: \(email)")
             } else {
                 if let specificError = error?.localizedDescription {
                     print(specificError)
-                    self.errorDiscription = specificError
                 } else {
                     print("Error:  can`t register!")
-                    self.errorDiscription = "Error:  can`t register!"
                 }
             }
         }
     }
     //MARK: Signin method
-    func signIn(email: String, password: String) {
+    func signIn(email: String, password: String, completion: @escaping (Bool, String?)->()) {
         Auth.auth().signIn(withEmail: email, password: password) {
             (user, error) in
             
             if error != nil {
-                self.errorAppearDuringAuth = true
+                completion(true, error?.localizedDescription)
             } else {
-                self.errorAppearDuringAuth = false
+                completion(false, error?.localizedDescription)
             }
             if user != nil {
                 print("Welcome back: \(email)")
             } else {
                 if let specificError = error?.localizedDescription {
                     print(specificError)
-                    self.errorDiscription = specificError
                 } else {
                     print("Error:  can`t login!")
-                    self.errorDiscription = "Error:  can`t login!"
                 }
             }
         }
@@ -147,13 +137,13 @@ class FireBaseSession: ObservableObject {
                 self.userSession = UserData(profile: userProfile)
                 
                 if let newUser = self.userSession?.userProfile {
-                    self.uploadUserToDB(user: newUser)
+                    self.uploadUserToDB(user: newUser, completion: {_ in }) //TODO: do sth with this completion!!! you lazy bastard 
                 }
             }
         }
     }
     //MARK: Adding new user to data base
-    func uploadUserToDB(user: UserProfile) {
+    func uploadUserToDB(user: UserProfile, completion: @escaping (Bool)->()) {
         usersDBRef.child("Users").child(user.userID).child("Profile").setValue(
             ["userID" : user.userID,
              "email": user.userEmail,
@@ -166,11 +156,14 @@ class FireBaseSession: ObservableObject {
                 (error, reference) in
                 
                 if error != nil {
+                    completion(true)
                     if let specificError = error?.localizedDescription {
                         print(specificError)
                     } else {
                         print("Error:  can`t login!")
                     }
+                } else {
+                    completion(false)
                 }
         }
         uploadImageToDB(uiimage: user.userImage, id: user.userID)
@@ -203,15 +196,11 @@ class FireBaseSession: ObservableObject {
     func downloadImageFromDB(id: String, completion: @escaping (UIImage)->()){
         usersDBStorage.child("Images").child(id).getData(maxSize: 10*1024*1024) { (imageData, error) in
             if let err = error {
-                self.errorAppearDuringImageTransfer = true
-                self.errorDiscription = "Could`t get image data from FireBase DataBase!: \(err.localizedDescription)"
                 print("Could`t get image data from FireBase DataBase!: \(err.localizedDescription)")
             } else {
                 if let image = imageData {
                     completion(UIImage(data: image)!)
                 } else {
-                    self.errorAppearDuringImageTransfer = true
-                    self.errorDiscription = "Error: Could`t unwrap image-data to an image!"
                     print("Error: Could`t unwrap image-data to an image!")
                 }
             }
@@ -226,37 +215,97 @@ class FireBaseSession: ObservableObject {
     }
     
     //MARK: Save training in the database
-    func uploadTrainingToDB(userID: String, training: Training) {
+    func uploadTrainingToDB(userID: String, training: Training, completion: @escaping (Bool, String?)->()) {
+        
+//        var errorUserTrainings: Bool?
+//        var errorTrainings: Bool?
+//        var errorExerciseList: Bool?
+//        var errorUserExercises: Bool?
+//        var errorDescription: String?
         
         // Upload training under current user
-        self.usersDBRef.child("UsersTrainings").child(userID).child(training.trainingID).setValue(training.trainingName)
+        self.usersDBRef.child("UsersTrainings").child(userID).child(training.trainingID).setValue(training.trainingName) {
+            (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Data path: [UserTrainings/...] could not be saved: \(error.localizedDescription).")
+                //errorDescription = error.localizedDescription
+                completion(true, error.localizedDescription)
+            } else {
+                print("Data path: [UserTrainings/...] saved successfully!")
+                //errorUserTrainings = false
+                completion(false, nil)
+            }
+        }
         
         // Upload basic info about training (no sepcific membership)
         self.usersDBRef.child("Trainings").child(training.trainingID).setValue(
             ["name" : training.trainingName,
              "description" : training.trainingDescription,
-             "initialDate" : training.initialDate]
-        )
+             "initialDate" : training.initialDate]) {
+                (error:Error?, ref:DatabaseReference) in
+                if let error = error {
+                    print("Data path: [Trainings/...] could not be saved: \(error.localizedDescription).")
+                    //errorDescription = error.localizedDescription
+                    completion(true, error.localizedDescription)
+                } else {
+                    print("Data path: [Trainings/...] saved successfully!")
+                    //errorTrainings = false
+                    completion(false, nil)
+                }
+        }
         for exercise in training.listOfExercises {
             
             // Upload list of exercises under current training
             self.usersDBRef.child("ExerciseList").child(training.trainingID).child(exercise.exerciseID).setValue([
                 "name" : exercise.exerciseName,
-                "numberOfSeries" : exercise.exerciseNumberOfSeries])
+                "numberOfSeries" : exercise.exerciseNumberOfSeries]) {
+                    (error:Error?, ref:DatabaseReference) in
+                    if let error = error {
+                        print("Data path: [ExerciseList/\(training.trainingID)/...] could not be saved: \(error.localizedDescription).")
+                        //errorDescription = error.localizedDescription
+                        completion(true, error.localizedDescription)
+                    } else {
+                        print("Data path: [ExerciseList/\(training.trainingID)/...] saved successfully!")
+                        //errorExerciseList = false
+                        completion(false, nil)
+                    }
+            }
             
             // Upload exercies series info under current date
-            self.usersDBRef.child("UsersExercises").child(userID).child(exercise.exerciseID).setValue(exercise.exerciseName)
+            self.usersDBRef.child("UsersExercises").child(userID).child(exercise.exerciseID).setValue(exercise.exerciseName) {
+                (error:Error?, ref:DatabaseReference) in
+                if let error = error {
+                    print("Data path: [UserExercise/...] could not be saved: \(error.localizedDescription).")
+                    //errorDescription = error.localizedDescription
+                    completion(true, error.localizedDescription)
+                } else {
+                    print("Data path: [UserExercise/...] saved successfully!")
+                    //errorUserExercises = false
+                    completion(false, nil)
+                }
+            }
+//            if (errorUserTrainings == false &&
+//                errorTrainings == false &&
+//                errorExerciseList == false &&
+//                errorUserExercises == false) {
+//                completion(false, nil)
+//
+//            } else if (errorUserTrainings == true &&
+//                errorTrainings == true &&
+//                errorExerciseList == true &&
+//                errorUserExercises == true){
+//                completion(true, "An error occur during saving reason: \(errorDescription ?? "Connection time out")")
+//            }
+            
         }
-        
     }
-    
     //MARK: Update training under current user
     func updateUsersTrainingsToOnDB(id: String, training: Training) {
         self.usersDBRef.child("UsersTrainings").child(id).updateChildValues(
             [training.trainingID : training.trainingName])
     }
     //MARK: Update basic info about training (no sepcific membership)
-    func updateTrainingOnDB(training: Training) {
+    func updateTrainingOnDBs(training: Training) {
         self.usersDBRef.child("Trainings").child(training.trainingID).updateChildValues(
             ["name" : training.trainingName,
              "description" : training.trainingDescription,
@@ -310,9 +359,9 @@ class FireBaseSession: ObservableObject {
                             allExercises.append(exercises)
                             let training = Training(id: ids[index],
                                                     name: names[index], // FIXME: index out of range
-                                                    description: descriptions[index],
-                                                    date: dates[index],
-                                                    exercises: allExercises[index])
+                                description: descriptions[index],
+                                date: dates[index],
+                                exercises: allExercises[index])
                             self.userSession?.userTrainings.append(training)
                             index += 1
                         }
@@ -322,9 +371,31 @@ class FireBaseSession: ObservableObject {
         }
     }
     
-    func deleteTrainingFromDB(userID: String, training: Training) {
-        self.usersDBRef.child("Trainings").child(training.trainingID).removeValue()
-        self.usersDBRef.child("UserTrainings").child(userID).child(training.trainingID).removeValue()
-        self.usersDBRef.child("ExerciseList").child(training.trainingID).removeValue()
+    func deleteTrainingFromDB(userID: String, training: Training, completion: @escaping (Bool, String?)->()) {
+        
+        self.usersDBRef.child("Trainings").child(training.trainingID).removeValue() { error, _ in
+            if error != nil {
+                completion(true, error?.localizedDescription)
+            } else {
+                print("Data for path: [Trainings/...] removed successfully!")
+                completion(false, nil)
+            }
+        }
+        self.usersDBRef.child("UsersTrainings").child(userID).child(training.trainingID).removeValue() { error, _ in
+            if error != nil {
+                completion(true, error?.localizedDescription)
+            } else {
+                print("Data for path: [UsersTrainings/...] removed successfully!")
+                completion(false, nil)
+            }}
+        self.usersDBRef.child("ExerciseList").child(training.trainingID).removeValue() { error, _ in
+            if error != nil {
+                completion(true, error?.localizedDescription)
+            } else {
+                print("Data for path: [ExerciseList/...] removed successfully!")
+                completion(false, nil)
+            }
+        }
+
     }
 }

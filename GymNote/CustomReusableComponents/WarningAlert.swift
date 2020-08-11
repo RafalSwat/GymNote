@@ -38,6 +38,7 @@ struct WarningAlert: View {
 
                         withAnimation {
                             self.showAlert = false
+                            //self.action()
                         }
                     }) {
                         Text(buttonTitle)

@@ -12,25 +12,18 @@ struct HomeView: View {
     
     @EnvironmentObject var session: FireBaseSession
     @Binding var alreadySignIn: Bool
-
+    
     var body: some View {
         NavigationView {
+            
             VStack {
                 Image("staticImage")
                 Text("Welcome: \(session.userSession?.userProfile.userEmail ?? "...")")
             }
             .navigationBarItems(leading: SignOutButton(signIn: $alreadySignIn))
-            .onAppear{
-                self.getUser()
-            }
-        }  
-    }
-    
-    //MARK: Functions
-    func getUser() {
-        self.session.listen()
-    }
-    
+            
+        }
+    }  
 }
 
 struct HomeView_Previews: PreviewProvider {

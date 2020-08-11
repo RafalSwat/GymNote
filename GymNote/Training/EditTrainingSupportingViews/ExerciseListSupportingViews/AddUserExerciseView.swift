@@ -35,14 +35,15 @@ struct AddUserExerciseView: View {
                     if self.exerciseName != "" {
                         withAnimation {
                             let newExercise = Exercise(name: self.exerciseName, isCheck: self.isCheck)
-                            self.list.insert(newExercise, at: self.list.startIndex)
+                            self.addTrainingSafely(exercise: newExercise)
                             self.exerciseName = ""
                             self.showAddView = false
-                            
+                            UIApplication.shared.endEditing() // hide keyboard
                         }
                     } else {
                         withAnimation {
                             self.showAddView = false
+                            UIApplication.shared.endEditing() // hide keyboard
                         }
                     }
                 }) {
@@ -52,6 +53,10 @@ struct AddUserExerciseView: View {
                 }
             }.padding()
         }.background(colorScheme == .light ? Color.magnesium :  Color.customDark)
+    }
+    func addTrainingSafely(exercise: Exercise) {
+        self.list.insert(exercise, at: self.list.startIndex)
+        sleep(1) // dont know why but error occur when user tapeed addbutton to quickly
     }
 }
 

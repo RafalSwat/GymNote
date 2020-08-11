@@ -13,9 +13,10 @@ struct LoginView: View {
     //MARK: Properties
     @EnvironmentObject var session: FireBaseSession
     
-    @State private var email: String = ""//"a@a.com"
-    @State private var password: String = ""//"123456"
+    @State private var email: String = ""
+    @State private var password: String = ""
     @State var warningText = ""
+    @State var showWarning = false
     @Binding var alreadySignIn: Bool
     
     //MARK: View
@@ -31,26 +32,14 @@ struct LoginView: View {
             Button("Login", action: {
                 if self.isNotEmpty() {
                     self.logIn()
-                    
-                    if !self.session.errorAppearDuringAuth {
-                        self.alreadySignIn = true
-                        self.session.errorAppearDuringAuth = false
-                    } else {
-                        if let fbrError = self.session.errorDiscription {
-                            self.session.errorAppearDuringAuth = true
-                            self.warningText = fbrError
-                            
-                        }
-                    }
-    
-                } else if !self.isNotEmpty() {
-                    self.session.errorAppearDuringAuth = true
+                } else  {
+                    self.showWarning = true
                 }
             })
                 .buttonStyle(RectangularButtonStyle())
                 .padding(.top, 15)
             
-            if self.session.errorAppearDuringAuth{
+            if self.showWarning{
                 Text(warningText)
                     .font(.caption)
                     .foregroundColor(.red)
@@ -78,7 +67,17 @@ struct LoginView: View {
     }
     
     func logIn() {
-        self.session.signIn(email: email, password: password)
+        self.session.signIn(email: email, password: password, completion: { errorDuringLogin, errorDescription in
+            self.showWarning = errorDuringLogin
+            
+            if !self.showWarning {
+                self.alreadySignIn = true
+            } else {
+                if let fbrError = errorDescription {
+                    self.warningText = fbrError
+                }
+            }
+        })
     }
 }
 

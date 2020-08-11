@@ -11,13 +11,16 @@ import SwiftUI
 struct EditModeButton: View {
     
     @Binding var editMode: Bool
+    
     var editAction: () -> Void
     
     var body: some View {
         Button(action: {
             if self.editMode {
                 self.editAction()
+                
                 self.editMode = false
+                
             } else {
                 self.editMode = true
             }

@@ -11,12 +11,12 @@ import SwiftUI
 struct TrainingRow: View {
     
     @EnvironmentObject var session: FireBaseSession
+    @Binding var listOfTrainings: [Training]
     @State var training: Training
-    @State private var showButtons = false
-    @State var showDetails = false
+    @Binding var showButtons: Bool
+    @Binding var showDetails: Bool
     @State var goToTraining = false
-    @Binding var listOfTraining: [Training]
-    
+
     var body: some View {
         VStack {
             HStack {
@@ -24,7 +24,7 @@ struct TrainingRow: View {
                     VStack(alignment: .leading) {
                         Text(training.trainingName)
                             .font(.title)
-                        Text(training.trainingSubscription)
+                        Text(training.trainingDescription)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }.padding(.bottom)
@@ -32,7 +32,7 @@ struct TrainingRow: View {
                     VStack(alignment: .leading) {
                         Text(training.trainingName)
                             .font(.headline)
-                        Text(training.trainingSubscription)
+                        Text(training.trainingDescription)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
@@ -57,7 +57,11 @@ struct TrainingRow: View {
                             .offset(x: 0, y: 2)
                         
                         DeleteButton(deleteAction: {
-                            self.removeTraining(at: self.listOfTraining.firstIndex(of: self.training)!)
+                            if let indexOfTrainingToRemove = self.session.userSession?.userTrainings.firstIndex(of: self.training) {
+                                self.removeTraining(at: indexOfTrainingToRemove)
+                                self.session.userSession?.userTrainings.remove(at: indexOfTrainingToRemove)
+                                self.listOfTrainings.remove(at: indexOfTrainingToRemove)
+                            }
                         })
                             .opacity(showButtons ? 1 : 0).animation(.default)
                             .buttonStyle(BorderlessButtonStyle())
@@ -77,10 +81,16 @@ struct TrainingRow: View {
         }
     }
     
+    
     func removeTraining(at index: Int) {
-        
-        self.listOfTraining.remove(at: index)
-        self.session.deleteTrainingFromFBR(userTrainings: self.session.userSession!.userTrainings, training: training)
+        if let userID = self.session.userSession?.userProfile.userID {
+            self.session.deleteTrainingFromDB(userID: userID, training: training) { errorOccur, errorDescription in
+                if errorOccur {
+                    print(errorDescription ?? "Unknow error occur during removing training!")
+                }
+                
+            }
+        }
     }
     
 }
@@ -88,16 +98,21 @@ struct TrainingRow: View {
 
 struct TrainingRow_Previews: PreviewProvider {
     
-    static var prevTraining = Training(id: UUID().uuidString,
-                                       name: "My Program",
-                                       subscription: "My litte subscription ",
-                                       date: "01-Jan-2020",
-                                       exercises: [Exercise(name: "My Exercise")])
+    @State static var prevTraining = Training(id: UUID().uuidString,
+                                              name: "My Program",
+                                              description: "My litte subscription ",
+                                              date: "01-Jan-2020",
+                                              exercises: [Exercise(name: "My Exercise")])
     
     @State static var prevListOfTraining = [Training]()
+    @State static var prevShowButtons = false
+    @State static var prevShowDetails = false
     
     static var previews: some View {
-        TrainingRow(training: prevTraining, listOfTraining: $prevListOfTraining)
+        TrainingRow(listOfTrainings: $prevListOfTraining,
+                    training: prevTraining,
+                    showButtons: $prevShowButtons,
+                    showDetails: $prevShowDetails)
     }
 }
 

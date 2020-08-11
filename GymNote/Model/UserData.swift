@@ -18,6 +18,7 @@ final class UserData: ObservableObject {
     init(profile: UserProfile) {
         self.userProfile = profile
         self.userTrainings = [Training]()
+        
     }
 }
 

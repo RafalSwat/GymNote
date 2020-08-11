@@ -42,13 +42,14 @@ struct SwipeGesture:  ViewModifier {
                             if value.translation.width < -(self.thirdScreenWidth) {
                                 self.draggedOffset = CGSize(width: 0/*-(self.thirdScreenWidth)*/, height: value.translation.height)
                                 self.showContetnt = true
+                                
                             } else {
                                 self.draggedOffset = .zero
                             }
                         } else {
                             self.draggedOffset = .zero
-                            self.showContetnt = false
-                        }
+                            self.showContetnt = false} 
+                        
                     }
                 }
         )

@@ -10,8 +10,6 @@ import SwiftUI
 
 struct Try: View {
     
-    var repeats: Binding<[String]>
-    var weights: Binding<[String]>
     var index: Int
     
     @State var reps: String
@@ -19,15 +17,15 @@ struct Try: View {
     
     var body: some View {
         HStack {
-            CustomTextfield(text: self.$reps, keyType: .decimalPad, placeHolder: "  reps")
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 50)
+            NumberTextField(text: self.$reps, keyType: .decimalPad, placeHolder: "  reps")
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 40, maxHeight: 60)
                 .overlay(
                     RoundedRectangle(cornerRadius: 6)
                         .stroke(Color(red: 0.7, green: 0.7, blue: 0.7), lineWidth: 1)
                 )
 
-            CustomTextfield(text: self.$reps, keyType: .decimalPad, placeHolder: "  weight")
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 50)
+            NumberTextField(text: self.$reps, keyType: .decimalPad, placeHolder: "  weight")
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 40, maxHeight: 60)
                 .overlay(
                     RoundedRectangle(cornerRadius: 6)
                         .stroke(Color(red: 0.7, green: 0.7, blue: 0.7), lineWidth: 1)
@@ -35,22 +33,15 @@ struct Try: View {
             )
         }
     }
-    
-    func action() {
-        self.repeats.wrappedValue[self.index] = self.reps
-        self.weights.wrappedValue[self.index] = self.weight
-    }
 }
 
 struct Try_Previews: PreviewProvider {
     
-    
-    @State static var prevArray = ["1"]
     static var prevIndex = 0
     @State static var prevText = ""
     
     
     static var previews: some View {
-        Try(repeats: $prevArray, weights: $prevArray, index: prevIndex, reps: prevText, weight: prevText)
+        Try(index: prevIndex, reps: prevText, weight: prevText)
     }
 }

@@ -13,11 +13,9 @@ struct ExerciseView: View {
     @EnvironmentObject var session: FireBaseSession
     var exercise: Exercise
     @Binding var conform: Bool
-    
-    @State var repeats = [String]()
-    @State var weights = [String]()
+    @State var repeats = ""
     @State var weight = ""
-    @State var rep = ""
+    
     
     var body: some View {
         
@@ -29,46 +27,26 @@ struct ExerciseView: View {
                 Spacer()
                 Text("Series:")
                     .foregroundColor(.secondary)
-                Text("\(exercise.exerciseNumberOfSerises)x")
+                Text("\(exercise.exerciseNumberOfSeries)")
             }
             .padding(.bottom)
-            HStack {
-                
-                Text("repeats")
-                    .padding(.leading, 40)
-                    .foregroundColor(.secondary)
-                Spacer()
-                Text("weight")
-                    .padding(.trailing, 40)
-                    .foregroundColor(.secondary)
-            }
             
-            ForEach (0 ..< self.weights.count, id: \.self) { index in
+            ForEach (0 ..< self.exercise.exerciseNumberOfSeries, id: \.self) { index in
                 HStack {
-//                    SeriesTextFields(repeats: self.$repeats,
-//                                     weights: self.$weights,
-//                                     index: index,
-//                                     reps: self.rep,
-//                                     weight: self.weight)
-                    Try(repeats: self.$repeats,
-                        weights: self.$weights,
-                        index: index,
-                        reps: self.rep,
-                        weight: self.weight)
+                    Text("\(index + 1).   ")
+                        .frame(minWidth: 10, maxWidth: 20, minHeight: 0, maxHeight: .infinity)
+
+                    Try(index: index,
+                        reps: self.repeats,
+                        weight: self.weight
+                    )
                 }
             }
         }
-        .onAppear() {
-            self.repeats = Array(repeating: "", count: self.exercise.exerciseNumberOfSerises)
-            self.weights = Array(repeating: "", count: self.exercise.exerciseNumberOfSerises)
-        }
-    }
-    
-    
-    func saveSeries() {
-        for index in 0..<(exercise.exerciseNumberOfSerises) {
-            self.exercise.exerciseSeries[index] = Series(repeats: Int(repeats[index])!, weight: Int(weights[index])!)
-        }
+//        .onAppear() {
+//            self.repeats = Array(repeating: "", count: self.exercise.exerciseNumberOfSeries)
+//            self.weights = Array(repeating: "", count: self.exercise.exerciseNumberOfSeries)
+//        }
     }
 }
 

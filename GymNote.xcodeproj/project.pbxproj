@@ -21,7 +21,7 @@
 		073DEAF2249EA864008F3C72 /* EditTrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAF1249EA864008F3C72 /* EditTrainingView.swift */; };
 		073DEAF7249F456D008F3C72 /* EditExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAF6249F456D008F3C72 /* EditExerciseView.swift */; };
 		073DEAF9249F4FF2008F3C72 /* TrainingHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAF8249F4FF2008F3C72 /* TrainingHost.swift */; };
-		073DEAFB24A4FF37008F3C72 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAFA24A4FF37008F3C72 /* CustomTextField.swift */; };
+		073DEAFB24A4FF37008F3C72 /* NumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAFA24A4FF37008F3C72 /* NumberTextField.swift */; };
 		073DEAFD24A4FF88008F3C72 /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAFC24A4FF88008F3C72 /* Try.swift */; };
 		073DEF9C2433556100644ED3 /* SetSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEF9B2433556100644ED3 /* SetSeriesView.swift */; };
 		073E6C9523AA215800A06E80 /* TitleBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073E6C9423AA215800A06E80 /* TitleBelt.swift */; };
@@ -34,12 +34,16 @@
 		07426608240BFD2A003F2C32 /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07426607240BFD2A003F2C32 /* AddButton.swift */; };
 		0742660D240C11C6003F2C32 /* ExercisesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0742660C240C11C6003F2C32 /* ExercisesListView.swift */; };
 		0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0742660E240C1B72003F2C32 /* ExerciseListRow.swift */; };
+		07428FD924E2A4380062B892 /* SeriesTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07428FD824E2A4380062B892 /* SeriesTextFields.swift */; };
 		0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757023E23A4D89500030991 /* RectangularButtonStyle.swift */; };
 		0757024323A4EAD500030991 /* ColorfulPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757024223A4EAD500030991 /* ColorfulPicker.swift */; };
 		075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F223FF19ED006613A2 /* DateConverter.swift */; };
 		075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F4240683C4006613A2 /* FireBaseSession.swift */; };
-		075DE10C242A2CB8005666A7 /* SeriesTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075DE10B242A2CB8005666A7 /* SeriesTextFields.swift */; };
-		075F9BC324D9BDA4005ADFF1 /* DecimalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BC224D9BDA4005ADFF1 /* DecimalTextField.swift */; };
+		075F9BC524DD4FE8005ADFF1 /* Indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BC424DD4FE8005ADFF1 /* Indicator.swift */; };
+		075F9BC824DD8383005ADFF1 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BC724DD8383005ADFF1 /* StatsView.swift */; };
+		075F9BCA24DDC150005ADFF1 /* ExerciseStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BC924DDC150005ADFF1 /* ExerciseStatistics.swift */; };
+		075F9BCC24DDC1BF005ADFF1 /* ExerciseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BCB24DDC1BF005ADFF1 /* ExerciseData.swift */; };
+		075F9BCF24DDC8A4005ADFF1 /* Algorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BCE24DDC8A4005ADFF1 /* Algorithms.swift */; };
 		077ECD4123B0F020005A1B76 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECD4023B0F020005A1B76 /* ProfileEditView.swift */; };
 		077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECD4223B0F4A1005A1B76 /* UserData.swift */; };
 		07840A92248ACD8100FC3019 /* CancelEditModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07840A91248ACD8100FC3019 /* CancelEditModeButton.swift */; };
@@ -87,7 +91,7 @@
 		073DEAF1249EA864008F3C72 /* EditTrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingView.swift; sourceTree = "<group>"; };
 		073DEAF6249F456D008F3C72 /* EditExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExerciseView.swift; sourceTree = "<group>"; };
 		073DEAF8249F4FF2008F3C72 /* TrainingHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingHost.swift; sourceTree = "<group>"; };
-		073DEAFA24A4FF37008F3C72 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		073DEAFA24A4FF37008F3C72 /* NumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberTextField.swift; sourceTree = "<group>"; };
 		073DEAFC24A4FF88008F3C72 /* Try.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Try.swift; sourceTree = "<group>"; };
 		073DEF9B2433556100644ED3 /* SetSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSeriesView.swift; sourceTree = "<group>"; };
 		073E6C9423AA215800A06E80 /* TitleBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBelt.swift; sourceTree = "<group>"; };
@@ -100,12 +104,16 @@
 		07426607240BFD2A003F2C32 /* AddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButton.swift; sourceTree = "<group>"; };
 		0742660C240C11C6003F2C32 /* ExercisesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesListView.swift; sourceTree = "<group>"; };
 		0742660E240C1B72003F2C32 /* ExerciseListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListRow.swift; sourceTree = "<group>"; };
+		07428FD824E2A4380062B892 /* SeriesTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesTextFields.swift; sourceTree = "<group>"; };
 		0757023E23A4D89500030991 /* RectangularButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButtonStyle.swift; sourceTree = "<group>"; };
 		0757024223A4EAD500030991 /* ColorfulPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulPicker.swift; sourceTree = "<group>"; };
 		075A31F223FF19ED006613A2 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		075A31F4240683C4006613A2 /* FireBaseSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseSession.swift; sourceTree = "<group>"; };
-		075DE10B242A2CB8005666A7 /* SeriesTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesTextFields.swift; sourceTree = "<group>"; };
-		075F9BC224D9BDA4005ADFF1 /* DecimalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTextField.swift; sourceTree = "<group>"; };
+		075F9BC424DD4FE8005ADFF1 /* Indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Indicator.swift; sourceTree = "<group>"; };
+		075F9BC724DD8383005ADFF1 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		075F9BC924DDC150005ADFF1 /* ExerciseStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseStatistics.swift; sourceTree = "<group>"; };
+		075F9BCB24DDC1BF005ADFF1 /* ExerciseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseData.swift; sourceTree = "<group>"; };
+		075F9BCE24DDC8A4005ADFF1 /* Algorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Algorithms.swift; sourceTree = "<group>"; };
 		077ECD4023B0F020005A1B76 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		077ECD4223B0F4A1005A1B76 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		07840A91248ACD8100FC3019 /* CancelEditModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelEditModeButton.swift; sourceTree = "<group>"; };
@@ -254,12 +262,28 @@
 			isa = PBXGroup;
 			children = (
 				07C0B99B23A273D9001632A0 /* SwitchableSecureField.swift */,
-				075DE10B242A2CB8005666A7 /* SeriesTextFields.swift */,
-				073DEAFA24A4FF37008F3C72 /* CustomTextField.swift */,
-				075F9BC224D9BDA4005ADFF1 /* DecimalTextField.swift */,
+				073DEAFA24A4FF37008F3C72 /* NumberTextField.swift */,
 				073DEAFC24A4FF88008F3C72 /* Try.swift */,
+				07428FD824E2A4380062B892 /* SeriesTextFields.swift */,
 			);
 			path = CustomTextFields;
+			sourceTree = "<group>";
+		};
+		075F9BC624DD835E005ADFF1 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				075F9BC724DD8383005ADFF1 /* StatsView.swift */,
+				075F9BCD24DDC85E005ADFF1 /* StatsMechanics */,
+			);
+			path = Stats;
+			sourceTree = "<group>";
+		};
+		075F9BCD24DDC85E005ADFF1 /* StatsMechanics */ = {
+			isa = PBXGroup;
+			children = (
+				075F9BCE24DDC8A4005ADFF1 /* Algorithms.swift */,
+			);
+			path = StatsMechanics;
 			sourceTree = "<group>";
 		};
 		077ECD3F23B0EFF6005A1B76 /* Profile */ = {
@@ -331,6 +355,7 @@
 				07840A96248BA06100FC3019 /* Note */,
 				073DEAE7249E5CCA008F3C72 /* Training */,
 				077ECD3F23B0EFF6005A1B76 /* Profile */,
+				075F9BC624DD835E005ADFF1 /* Stats */,
 				07C0B99D23A2A812001632A0 /* CustomReusableComponents */,
 				07C0B96F2397BE03001632A0 /* Assets.xcassets */,
 				07C0B9742397BE03001632A0 /* LaunchScreen.storyboard */,
@@ -356,6 +381,8 @@
 				07C0B9822397DE58001632A0 /* UserProfile.swift */,
 				0740B3C6242E0F56003D7520 /* Training.swift */,
 				074265FE240BC6C6003F2C32 /* Exercise.swift */,
+				075F9BC924DDC150005ADFF1 /* ExerciseStatistics.swift */,
+				075F9BCB24DDC1BF005ADFF1 /* ExerciseData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -390,6 +417,7 @@
 				07F55DA124AF3D790024AB1A /* ActionAlert.swift */,
 				07F55DA324AF3E690024AB1A /* WarningAlert.swift */,
 				07C922E72411582400AF6010 /* DualColorCheckmark.swift */,
+				075F9BC424DD4FE8005ADFF1 /* Indicator.swift */,
 			);
 			path = CustomReusableComponents;
 			sourceTree = "<group>";
@@ -511,6 +539,7 @@
 			files = (
 				073DEAEC249E658C008F3C72 /* ExerciseView.swift in Sources */,
 				0740B3C7242E0F56003D7520 /* Training.swift in Sources */,
+				075F9BCA24DDC150005ADFF1 /* ExerciseStatistics.swift in Sources */,
 				07F55DA224AF3D790024AB1A /* ActionAlert.swift in Sources */,
 				07840A94248B9D9400FC3019 /* ContentView.swift in Sources */,
 				07840A92248ACD8100FC3019 /* CancelEditModeButton.swift in Sources */,
@@ -528,23 +557,24 @@
 				07C922E424110A5700AF6010 /* AddBarItem.swift in Sources */,
 				07C0B99823A144DF001632A0 /* KeyboardHost.swift in Sources */,
 				073E6C9523AA215800A06E80 /* TitleBelt.swift in Sources */,
-				075F9BC324D9BDA4005ADFF1 /* DecimalTextField.swift in Sources */,
+				07428FD924E2A4380062B892 /* SeriesTextFields.swift in Sources */,
 				075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */,
 				07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */,
+				075F9BCF24DDC8A4005ADFF1 /* Algorithms.swift in Sources */,
 				07840A9B248BD4E900FC3019 /* EditModeButton.swift in Sources */,
 				07FCCE732482C8AD008FE164 /* ProfileHost.swift in Sources */,
 				07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */,
 				077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */,
 				0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */,
 				07F55DA424AF3E690024AB1A /* WarningAlert.swift in Sources */,
-				075DE10C242A2CB8005666A7 /* SeriesTextFields.swift in Sources */,
 				073DEADA248ED394008F3C72 /* TrainingDetails.swift in Sources */,
+				075F9BCC24DDC1BF005ADFF1 /* ExerciseData.swift in Sources */,
 				073DEAF2249EA864008F3C72 /* EditTrainingView.swift in Sources */,
 				073F482723F55F47003011F0 /* CaptureImageView.swift in Sources */,
 				073B917A23A4025800F38F1D /* CircleImage.swift in Sources */,
 				074265FF240BC6C6003F2C32 /* Exercise.swift in Sources */,
 				07426608240BFD2A003F2C32 /* AddButton.swift in Sources */,
-				073DEAFB24A4FF37008F3C72 /* CustomTextField.swift in Sources */,
+				073DEAFB24A4FF37008F3C72 /* NumberTextField.swift in Sources */,
 				0727887123AA473500092E24 /* ProfileView.swift in Sources */,
 				073DEAF9249F4FF2008F3C72 /* TrainingHost.swift in Sources */,
 				073DEAF7249F456D008F3C72 /* EditExerciseView.swift in Sources */,
@@ -557,6 +587,7 @@
 				0720992123F7417E00B75CF5 /* DoneConformAlert.swift in Sources */,
 				0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */,
 				073DEAFD24A4FF88008F3C72 /* Try.swift in Sources */,
+				075F9BC524DD4FE8005ADFF1 /* Indicator.swift in Sources */,
 				07C0B98E239A73C8001632A0 /* HomeView.swift in Sources */,
 				07426605240BCE20003F2C32 /* DateBelt.swift in Sources */,
 				07FCCE6F24817238008FE164 /* MainContainer.swift in Sources */,
@@ -564,6 +595,7 @@
 				07C0B99C23A273D9001632A0 /* SwitchableSecureField.swift in Sources */,
 				073F482923F5604C003011F0 /* Coordinator.swift in Sources */,
 				073DEAE4249A54D4008F3C72 /* DeleteButton.swift in Sources */,
+				075F9BC824DD8383005ADFF1 /* StatsView.swift in Sources */,
 				07C0B96C2397BE00001632A0 /* SceneDelegate.swift in Sources */,
 				0757024323A4EAD500030991 /* ColorfulPicker.swift in Sources */,
 				073DEAE2249A4F66008F3C72 /* UseButton.swift in Sources */,

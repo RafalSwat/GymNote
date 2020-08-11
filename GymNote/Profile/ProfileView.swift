@@ -69,7 +69,7 @@ struct ProfileView: View {
             if self.showAlert {
                 WarningAlert(showAlert: self.$showAlert,
                              title: "Warninig",
-                             message: self.session.errorDiscription!,
+                             message: "",//self.session.errorDiscription!,
                              buttonTitle: "ok",
                              action: {})
             }

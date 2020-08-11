@@ -15,21 +15,31 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            
             if self.alreadySignIn {
-                MainContainer(alreadySignIn: $alreadySignIn)
+                ZStack {
+                    if session.userSession == nil {
+                        Indicator()
+                    } else {
+                        MainContainer(alreadySignIn: $alreadySignIn)
+                    }
+                }
+                .onAppear{
+                    self.getUser()
+                }
             } else {
                 WelcomeView(alreadySignIn: $alreadySignIn)
             }
         }.onAppear {
-            if self.session.tryAutoSignIn() {
-                self.alreadySignIn = true
-            } else {
-                self.alreadySignIn = false
-            }
+            self.alreadySignIn = self.session.tryAutoSignIn()
+   
         }
         
     }
+    //MARK: Functions
+    func getUser() {
+        self.session.listen()
+    }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

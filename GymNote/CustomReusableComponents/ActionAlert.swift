@@ -55,6 +55,7 @@ struct ActionAlert: View {
         }
         
         .cornerRadius(20)
+        .padding()
     }
 }
 

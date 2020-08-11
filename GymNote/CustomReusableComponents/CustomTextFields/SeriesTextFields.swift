@@ -2,46 +2,60 @@
 //  SeriesTextFields.swift
 //  GymNote
 //
-//  Created by Rafał Swat on 24/03/2020.
+//  Created by Rafał Swat on 11/08/2020.
 //  Copyright © 2020 Rafał Swat. All rights reserved.
 //
 
+import Foundation
 import SwiftUI
 
 struct SeriesTextFields: View {
-    var repeats: Binding<[String]>
-    var weights: Binding<[String]>
+    
     var index: Int
     
     @State var reps: String
     @State var weight: String
     
+    var decimalFormatter: NumberFormatter = {
+        let f = NumberFormatter()
+        f.isLenient = true
+        f.numberStyle = .none
+        f.maximumFractionDigits = 1
+        f.minimumFractionDigits = 1
+        f.alwaysShowsDecimalSeparator = true
+        return f
+    }()
+    
     var body: some View {
         HStack {
-            TextField("", text: self.$reps, onCommit: {
-                self.repeats.wrappedValue[self.index] = self.reps
-            })
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .keyboardType(.decimalPad)
             
-            TextField("", text: self.$weight, onCommit: {
-                self.weights.wrappedValue[self.index] = self.weight
+            TextField("repeats", value: $reps, formatter: self.decimalFormatter, onEditingChanged: { edit in
+                // Editing has finished
+                if !edit {
+                    print("COMMITED! \(self.reps)");
+                }
             })
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 40, maxHeight: 60)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(Color(red: 0.7, green: 0.7, blue: 0.7), lineWidth: 1)
+                        )
                 .keyboardType(.decimalPad)
-        }
-    }
-}
+            TextField("weight", value: $weight, formatter: self.decimalFormatter, onEditingChanged: { edit in
+                // Editing has finished
+                if !edit {
+                    print("COMMITED! \(self.weight)");
+                }
+            })
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 40, maxHeight: 60)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(Color(red: 0.7, green: 0.7, blue: 0.7), lineWidth: 1)
+                        )
+                .keyboardType(.decimalPad)
 
-struct SeriesTextFields_Previews: PreviewProvider {
-    
-    @State static var prevArray = ["1"]
-    static var prevIndex = 0
-    @State static var prevText = ""
-    
-    
-    static var previews: some View {
-        SeriesTextFields(repeats: $prevArray, weights: $prevArray, index: prevIndex, reps: prevText, weight: prevText)
+
+        }
     }
 }
 

@@ -19,7 +19,7 @@ class DateConverter {
     
     func convertFromString(dateString: String) -> Date {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d, yyyy"
+        formatter.dateFormat = "d MMM yyyy"
         if let dateTypeDate = formatter.date(from: dateString) {
             return dateTypeDate
         } else {

@@ -27,7 +27,7 @@ struct TrainingView: View {
                                 .padding(.horizontal)
                                 .padding(.bottom)
                             
-                            Text(training.trainingSubscription)
+                            Text(training.trainingDescription)
                                 .padding(.horizontal)
                             Text("last training: \(dataString)")
                                 .padding(.horizontal)
@@ -48,13 +48,7 @@ struct TrainingView: View {
                                 
                                 self.conform = true
                                 
-                                let userID = self.session.userSession!.userTrainings.userID
-                                let currentDate = DateConverter.dateFormat.string(from: Date())
-                                
-                                for exercise in self.training.listOfExercises {
-                                    self.session.userSession!.userStats.insert(exercise, at: self.session.userSession!.userStats.startIndex)
-                                    self.session.addExerciseStatstoFBR(id: userID, date: currentDate, exercise: exercise)
-                                }
+                                //TODO: save exercises included series stuff
                                 
                             }) {
                                 HStack {

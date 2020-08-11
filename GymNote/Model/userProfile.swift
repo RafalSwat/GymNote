@@ -49,7 +49,7 @@ struct UserProfile {
         self.userGender = gender
         self.userImage = profileImage
         self.userHeight = height
-        self.userDateOfBirth = Date()
+        self.userDateOfBirth = userDateOfBirth
     }
 
 

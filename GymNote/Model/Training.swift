@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class Training: Hashable {
+class Training: Hashable, ObservableObject {
 
     var trainingID: String
     var trainingName: String

@@ -75,19 +75,28 @@ class Exercise: Hashable, Identifiable {
 
 }
 struct Series {
+    var seriesID: String
     var exerciseRepeats: Int
     var exerciseWeight: Int?
     
+    init() {
+        self.seriesID = UUID().uuidString
+        self.exerciseRepeats = 1
+        self.exerciseWeight = 0
+    }
+    init(repeats: Int) {
+        self.seriesID = UUID().uuidString
+        self.exerciseRepeats = repeats
+        self.exerciseWeight = 0
+    }
     init(repeats: Int, weight: Int) {
+        self.seriesID = UUID().uuidString
         self.exerciseRepeats = repeats
         self.exerciseWeight = weight
     }
-    init(repeats: Int) {
+    init(id: String, repeats: Int, weight: Int) {
+        self.seriesID = id
         self.exerciseRepeats = repeats
-        self.exerciseWeight = 0
-    }
-    init() {
-        self.exerciseRepeats = 1
-        self.exerciseWeight = 0
+        self.exerciseWeight = weight
     }
 }
