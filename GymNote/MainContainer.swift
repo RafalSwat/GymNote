@@ -44,7 +44,8 @@ struct MainContainer: View {
                     .font(.largeTitle)
                     .padding()
             }.tag(2)
-            StatsView()
+            //StatsView()
+            ChartView()
                 .tabItem {
                     VStack {
                         Image(systemName: "waveform.path.ecg")

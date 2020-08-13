@@ -41,8 +41,9 @@ struct NoteView: View {
                 
                 NavigationLink(destination: TrainingHost(editMode: true, training: Training()), isActive: self.$passageToAddTraining, label: { EmptyView() })
             }
+            .navigationBarTitle("Training List")
         }
-        .navigationBarTitle("Training List")
+        
     }
     
 }
