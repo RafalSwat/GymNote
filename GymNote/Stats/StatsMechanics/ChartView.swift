@@ -16,7 +16,7 @@ struct ChartView: View {
     var body: some View {
         VStack {
             if !self.points.isEmpty {
-                LineChartView(points: points)
+                LineChartView(stats: stats)
             }
         }
         .onAppear {

@@ -39,6 +39,8 @@
 		0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757023E23A4D89500030991 /* RectangularButtonStyle.swift */; };
 		0757024323A4EAD500030991 /* ColorfulPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757024223A4EAD500030991 /* ColorfulPicker.swift */; };
 		0759DECC24E43BED00DBCC26 /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759DECB24E43BED00DBCC26 /* LineChartView.swift */; };
+		0759DECE24E54CFE00DBCC26 /* ArrayQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759DECD24E54CFE00DBCC26 /* ArrayQuery.swift */; };
+		0759DED024E5553400DBCC26 /* ChartDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759DECF24E5553400DBCC26 /* ChartDot.swift */; };
 		075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F223FF19ED006613A2 /* DateConverter.swift */; };
 		075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F4240683C4006613A2 /* FireBaseSession.swift */; };
 		075F9BC824DD8383005ADFF1 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BC724DD8383005ADFF1 /* StatsView.swift */; };
@@ -111,6 +113,8 @@
 		0757023E23A4D89500030991 /* RectangularButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButtonStyle.swift; sourceTree = "<group>"; };
 		0757024223A4EAD500030991 /* ColorfulPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulPicker.swift; sourceTree = "<group>"; };
 		0759DECB24E43BED00DBCC26 /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
+		0759DECD24E54CFE00DBCC26 /* ArrayQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayQuery.swift; sourceTree = "<group>"; };
+		0759DECF24E5553400DBCC26 /* ChartDot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDot.swift; sourceTree = "<group>"; };
 		075A31F223FF19ED006613A2 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		075A31F4240683C4006613A2 /* FireBaseSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseSession.swift; sourceTree = "<group>"; };
 		075F9BC724DD8383005ADFF1 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
@@ -179,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				07C0B99723A144DF001632A0 /* KeyboardHost.swift */,
+				0759DECD24E54CFE00DBCC26 /* ArrayQuery.swift */,
 				07C922E52411140000AF6010 /* NavigationConfigurator.swift */,
 				073DEADF2498F852008F3C72 /* SwipeGesture.swift */,
 				07C922DF2410EA2300AF6010 /* SearchBar.swift */,
@@ -289,6 +294,7 @@
 				075F9BCE24DDC8A4005ADFF1 /* Algorithms.swift */,
 				07AC9DE824E323420025AD39 /* ChartView.swift */,
 				0759DECB24E43BED00DBCC26 /* LineChartView.swift */,
+				0759DECF24E5553400DBCC26 /* ChartDot.swift */,
 			);
 			path = StatsMechanics;
 			sourceTree = "<group>";
@@ -544,6 +550,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				073DEAEC249E658C008F3C72 /* ExerciseView.swift in Sources */,
+				0759DECE24E54CFE00DBCC26 /* ArrayQuery.swift in Sources */,
 				0740B3C7242E0F56003D7520 /* Training.swift in Sources */,
 				075F9BCA24DDC150005ADFF1 /* ExerciseStatistics.swift in Sources */,
 				0759DECC24E43BED00DBCC26 /* LineChartView.swift in Sources */,
@@ -556,6 +563,7 @@
 				07C0B9832397DE58001632A0 /* UserProfile.swift in Sources */,
 				077ECD4123B0F020005A1B76 /* ProfileEditView.swift in Sources */,
 				0742660D240C11C6003F2C32 /* ExercisesListView.swift in Sources */,
+				0759DED024E5553400DBCC26 /* ChartDot.swift in Sources */,
 				07C0B98923990D0E001632A0 /* LoginView.swift in Sources */,
 				073DEAD8248ECCD7008F3C72 /* TrainingRow.swift in Sources */,
 				07C0B987239816EA001632A0 /* WelcomeView.swift in Sources */,
