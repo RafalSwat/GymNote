@@ -11,17 +11,15 @@ import SwiftUI
 struct ChartView: View {
     
     @State var stats = [TempStats]()
-    @State var points = [CGPoint]()
     
     var body: some View {
         VStack {
-            if !self.points.isEmpty {
+            if !self.stats.isEmpty {
                 LineChartView(stats: stats)
             }
         }
         .onAppear {
             self.setupStats()
-            self.setupPoints()
         }
     }
     
@@ -33,44 +31,6 @@ struct ChartView: View {
         }
     }
     
-    func setupPoints() {
-        for index in 0..<self.stats.count{
-            let point = setupPoint(statistic: self.stats[index])
-            self.points.append(point)
-        }
-    }
-    
-    func setupPoint(statistic: TempStats) -> CGPoint {
-        let xRatio = self.widthMultiplier(availablewidth: UIScreen.main.bounds.width/1.1, count: self.stats.count)
-        let yRatio = self.heightMultiplier(availableHeight: UIScreen.main.bounds.height/2, range: 20) // <--- maxValue + 3 - (for now best idea)
-        
-        //let xPoint = self.relativeXFormDate(date: statistic.date, multiplier: xRatio)
-        let xPoint = self.relativeX(x: Double(statistic.date), multiplier: xRatio)
-        let yPoint = self.relativeY(y: statistic.weight, multiplier: yRatio)
-        
-        let point = CGPoint(x: xPoint, y: UIScreen.main.bounds.height/2 - yPoint)
-        
-        return point
-    }
-    
-    func heightMultiplier(availableHeight: CGFloat, range: Int) -> CGFloat {
-        availableHeight / CGFloat(range)
-    }
-    
-    func widthMultiplier(availablewidth: CGFloat, count: Int) -> CGFloat {
-        availablewidth / CGFloat(count)
-    }
-    
-    func relativeY(y : Double, multiplier: CGFloat) -> CGFloat {
-        CGFloat(y) * multiplier
-    }
-    func relativeX(x : Double, multiplier: CGFloat) -> CGFloat {
-        CGFloat(x) * multiplier
-    }
-    
-    func relativeXFormDate(date: Date, multiplier: CGFloat) -> CGFloat {
-        CGFloat(Calendar.current.ordinality(of: .day, in: .year, for: date)!) * multiplier
-    }
     
     
 }
