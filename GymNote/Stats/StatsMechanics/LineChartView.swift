@@ -169,11 +169,11 @@ struct LineChartView: View {
         let maxValue = values.max()
         let minValue = values.min()
         
-        let maxDate = dates.max()
+        //let maxDate = dates.max()
         let minDate = dates.min()
         
         let rangeValue = maxValue! - minValue!
-        let rangeDates = maxDate! - minDate!   //Double(dates.count)
+        let rangeDates = Double(self.datesRange.count)
         
         var normalizeValues = [Double]()
         var normalizeDates = [Double]()
