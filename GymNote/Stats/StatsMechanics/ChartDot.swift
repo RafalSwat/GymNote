@@ -17,10 +17,10 @@ struct ChartDot: View {
             Circle()
                 .fill(Color(colorScheme == .light ? UIColor.white : UIColor.black))
             Circle()
-                .stroke(Color(colorScheme == .light ? UIColor.black : UIColor.white), style: StrokeStyle(lineWidth: 2))
+                .stroke(Color(colorScheme == .light ? UIColor.black : UIColor.white), style: StrokeStyle(lineWidth: 3))
         }
-        .frame(width: 6, height: 6)
-        .shadow(color: Color.secondary, radius: 6, x: 0, y: 6)
+        .frame(width: 8, height: 8)
+        .shadow(color: Color.secondary, radius: 8, x: 0, y: 8)
     }
 }
 

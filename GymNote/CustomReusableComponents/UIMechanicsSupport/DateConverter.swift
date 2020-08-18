@@ -16,6 +16,13 @@ class DateConverter {
         formatter.timeStyle = .none
         return formatter
     }()
+    static let shortDateFormat: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        return formatter
+    }()
+    
     
     func convertFromString(dateString: String) -> Date {
         let formatter = DateFormatter()
@@ -29,4 +36,26 @@ class DateConverter {
         
     }
     
+    func fillUpArrayWithDates(startDate: Date, endDate: Date) -> [Date] {
+
+        var dates:[Date] = []
+        var currentDate = startDate
+        let interval = Double(3600*24)   //one day
+
+        while currentDate <= endDate {
+            currentDate = currentDate.addingTimeInterval(interval)
+            dates.append(currentDate)
+        }
+
+        return dates
+        
+    }
+    
+}
+extension Date {
+
+    static func - (lhs: Date, rhs: Date) -> TimeInterval {
+        return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
+    }
+
 }

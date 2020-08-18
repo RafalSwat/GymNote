@@ -10,13 +10,16 @@ import SwiftUI
 
 struct ChartView: View {
     
+    
     @State var stats = [TempStats]()
+    @State var stats2 = [TempStats]()
     
     var body: some View {
         VStack {
-            if !self.stats.isEmpty {
-                LineChartView(stats: stats)
+            if !self.stats2.isEmpty {
+                LineChartView(stats: stats2)
             }
+            
         }
         .onAppear {
             self.setupStats()
@@ -25,10 +28,28 @@ struct ChartView: View {
     
     func setupStats() {
         
-        for i in 0..<10 {
-            let statistic = TempStats(date: i + 1, weight: Double.random(in: 0..<20))
-            self.stats.append(statistic)
-        }
+//        for i in 0..<10 {
+//            let statistic = TempStats(date: i + 1, weight: Double.random(in: 0..<20))
+//            self.stats.append(statistic)
+//        }
+        let dateControver = DateConverter()
+        
+        self.stats2 = [TempStats(date: dateControver.convertFromString(dateString: "10 Aug 2020"), weight: 11),
+                        TempStats(date: dateControver.convertFromString(dateString: "11 Aug 2020"), weight: 15),
+                        TempStats(date: dateControver.convertFromString(dateString: "12 Aug 2020"), weight: 12),
+                        TempStats(date: dateControver.convertFromString(dateString: "13 Aug 2020"), weight: 11),
+                        TempStats(date: dateControver.convertFromString(dateString: "14 Aug 2020"), weight: 9),
+                        TempStats(date: dateControver.convertFromString(dateString: "15 Aug 2020"), weight: 16),
+                        TempStats(date: dateControver.convertFromString(dateString: "16 Aug 2020"), weight: 13),
+                        TempStats(date: dateControver.convertFromString(dateString: "17 Aug 2020"), weight: 6),
+                        TempStats(date: dateControver.convertFromString(dateString: "18 Aug 2020"), weight: 7),
+                        TempStats(date: dateControver.convertFromString(dateString: "19 Aug 2020"), weight: 16),
+                        TempStats(date: dateControver.convertFromString(dateString: "20 Aug 2020"), weight: 16),
+                        TempStats(date: dateControver.convertFromString(dateString: "21 Aug 2020"), weight: 14),
+                        TempStats(date: dateControver.convertFromString(dateString: "22 Aug 2020"), weight: 12),
+                        TempStats(date: dateControver.convertFromString(dateString: "23 Aug 2020"), weight: 10),
+                        TempStats(date: dateControver.convertFromString(dateString: "24 Aug 2020"), weight: 8),
+                        TempStats(date: dateControver.convertFromString(dateString: "25 Aug 2020"), weight: 12)]
     }
     
     
@@ -44,10 +65,10 @@ struct ChartView_Previews: PreviewProvider {
 class TempStats {
     var id: String
     //var date: Date
-    var date: Int
+    var date: Date
     var weight: Double
     
-    init(date: Int,
+    init(date: Date,
          weight: Double) {
         
         self.id = UUID().uuidString
@@ -56,7 +77,7 @@ class TempStats {
     }
     
     init(id: String,
-         date: Int,
+         date: Date,
          weight: Double) {
         
         self.id = id

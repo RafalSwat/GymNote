@@ -24,9 +24,9 @@ struct LineChartView: View {
             ZStack {
                 GeometryReader { reader in
                     Path { p in
-                        
-                        let points = self.convertStatsToPoints(stats: self.stats, maxWidth: reader.size.width, maxHeight: reader.size.height)
-                        
+
+                        let points = self.convertDataToPoints(stats: self.stats, maxHeight: reader.size.height/2, maxWidth: reader.size.width)
+  
                         p.move(to: points[0])
                         for index in 1..<points.count {
                             p.addLine(to: points[index])
@@ -38,66 +38,90 @@ struct LineChartView: View {
                                            lineWidth: 3)
                     if self.showDotChart {
                         ChartDot()
-                            .offset(x: self.dotLocation.x, y: self.dotLocation.y)
+                            .offset(x: self.dotLocation.x-2, y: self.dotLocation.y-3)
                         
                         Text("\(self.stats[self.choosenIndex].weight, specifier: "%.2f")")
-                            .offset(x: self.dotLocation.x-5, y: self.dotLocation.y-20)
+                            .offset(x: self.dotLocation.x-8, y: self.dotLocation.y-25)
                         
                     }
                     //setup horizontal lines
-                    ForEach(0..<10) { counterY in
+                    ForEach(0..<10) { iterator in
                         Group {
                             Path { p in
-                                let yPoint = Int(reader.size.height/2)/10*(counterY+1)
+                                let yPoint = self.estimateYLocalization(value: Double(iterator+1),
+                                                                        maxValue: Double(10),
+                                                                        minValue: Double(1),
+                                                                        maxHeight: reader.size.height)
+                                let xStartPoint = self.estimateXLocalization(value: Double(1),
+                                                                             maxValue: Double(self.stats.count),
+                                                                             minValue: Double(0),
+                                                                             maxWidth: reader.size.width)
+                                let xEndPoint = self.estimateXLocalization(value: Double(self.stats.count),
+                                                                          maxValue: Double(self.stats.count),
+                                                                          minValue: Double(0),
+                                                                          maxWidth: reader.size.width)
                                 
-                                p.move(to: CGPoint(x: CGFloat(34),
+                                p.move(to: CGPoint(x: CGFloat(xStartPoint),
                                                    y: CGFloat(yPoint)))
-                                p.addLine(to: CGPoint(x: CGFloat(reader.size.width - 20),
+                                p.addLine(to: CGPoint(x: CGFloat(xEndPoint),
                                                       y: CGFloat(yPoint)))
                             }
                             .stroke(Color.secondary, lineWidth: 1)
                         }
                     }
-                    ForEach(0..<10) { counterY in
-                        Text("\(self.evaluteValueForYAxis(for: self.stats) * Double(10-counterY), specifier: "%.1f")")
-                            .offset(x: CGFloat(9), y: CGFloat(Int(reader.size.height/20)*(counterY+1))-8)
-                            .foregroundColor(Color.secondary)
-                            .font(.caption)
-                    }
+                    
                     //setup vertical lines to grid
-                    ForEach(1..<self.stats.count + 1) { counterX in
+                    ForEach(1..<self.stats.count + 1) { iterator in
                         Group {
                             Path { p in
-                                let xPoint = Int(reader.size.width-30)/self.stats.count*counterX
-                                p.move(to: CGPoint(x: xPoint+10,
+                                let xPoint = self.estimateXLocalization(value: Double(iterator),
+                                                                        maxValue: Double(self.stats.count + 1),
+                                                                        minValue: Double(1),
+                                                                        maxWidth: reader.size.width)
+                                p.move(to: CGPoint(x: xPoint,
                                                    y: 0))
-                                p.addLine(to: CGPoint(x: xPoint+10,
+                                p.addLine(to: CGPoint(x: Int(xPoint),
                                                       y: Int((reader.size.height)/2)))
+                                
                             }
                             .stroke(Color.secondary, lineWidth: 1)
                         }
                     }
                     //setup decription for x axis
-                    ForEach(1..<self.stats.count) { index in
-                        Text("\(self.stats[index-1].date)")
-                            .offset(x: CGFloat(Int(reader.size.width-30)/self.stats.count*index)+5,
-                                    y: CGFloat(Int((reader.size.height)/2)))
+                    ForEach(0..<self.stats.count) { index in
+                        Text("\(DateConverter.shortDateFormat.string(from: self.stats[index].date))")
+                            .rotationEffect(.degrees(-60))
+                            .offset(x: self.estimateXLocalization(value: Double(index),
+                                                                  maxValue: Double(self.stats.count),
+                                                                  minValue: Double(0),
+                                                                  maxWidth: reader.size.width) - CGFloat(self.stats.count),
+                                    y: CGFloat(Int((reader.size.height)/2))+20)
                             .foregroundColor(Color.secondary)
-                            .font(.caption)
+                            .font(.system(size: 9))
                     }
-                    Text("\(self.stats.last!.date)")
-                        .offset(x: CGFloat(Int(reader.size.width-30)/self.stats.count*10)+5,
-                                y: CGFloat(Int((reader.size.height)/2)))
-                        .foregroundColor(Color.secondary)
-                        .font(.caption)
                     
-                    Path { p in
-                        p.addRect(CGRect(x: 5,
-                                         y: 0,
-                                         width: (reader.size.width - 10),
-                                         height: reader.size.height/2 + 20))
-                    }
-                    .stroke(Color.secondary, lineWidth: 4)
+                        //setup description for y axis
+                        ForEach(0..<10) { index in
+                            Text("\(self.estimateYAxisDescription(line: 9-index), specifier: "%.1f")")
+                                .offset(x: self.estimateXLocalization(value: Double(0),
+                                                                      maxValue: Double(self.stats.count),
+                                                                      minValue: Double(0),
+                                                                      maxWidth: reader.size.width)-10,
+                                        y: self.estimateYLocalization(value: Double(index+1),
+                                                                      maxValue: Double(10),
+                                                                      minValue: Double(1),
+                                                                      maxHeight: reader.size.height)-5)
+                                .foregroundColor(Color.secondary)
+                                .font(.system(size: 13))
+                        }
+                    
+//                    Path { p in
+//                        p.addRect(CGRect(x: 5,
+//                                         y: 0,
+//                                         width: (reader.size.width - 10),
+//                                         height: reader.size.height/2 + 60))
+//                    }
+//                    .stroke(Color.secondary, lineWidth: 4)
                 }
             }
             .gesture(DragGesture()
@@ -106,13 +130,13 @@ struct LineChartView: View {
                 withAnimation {
                     self.dotLocation = self.getClosestDataPoint(point: value.location,
                                                                 width: geometry.size.width,
-                                                                height: geometry.size.height)
+                                                                height: geometry.size.height/2)
                     self.horizontalLineLocation = self.getClosestDataPoint(point: value.location,
                                                                            width: geometry.size.width,
-                                                                           height: geometry.size.height)
+                                                                           height: geometry.size.height/2)
                     self.choosenIndex = self.getDataAssociatedWithpoint(at: self.dotLocation,
                                                                         width: geometry.size.width,
-                                                                        height: geometry.size.height)
+                                                                        height: geometry.size.height/2)
                 }
             })
                 .onEnded({ value in
@@ -120,57 +144,122 @@ struct LineChartView: View {
                     withAnimation {
                         self.dotLocation = self.getClosestDataPoint(point: value.location,
                                                                     width: geometry.size.width,
-                                                                    height: geometry.size.height)
+                                                                    height: geometry.size.height/2)
                         self.horizontalLineLocation = self.getClosestDataPoint(point: value.location,
                                                                                width: geometry.size.width,
-                                                                               height: geometry.size.height)
+                                                                               height: geometry.size.height/2)
                     }
                 })
             )
         }
+    }
+    //MARK: function that is responsible for normalization the data
+    func normalizeData(data: [TempStats]) -> [DoubleData] {
+        var values = [Double]()
+        var dates = [Double]()
         
+        for index in 0..<data.count {
+            
+            let dataAsDouble = Double(Calendar.current.ordinality(of: .day, in: .year, for: stats[index].date)!)
+            
+            values.append(data[index].weight)
+            dates.append(dataAsDouble)
+        }
+        let maxValue = values.max()
+        let minValue = values.min()
+        
+        let maxDate = dates.max()
+        let minDate = dates.min()
+        
+        let rangeValue = maxValue! - minValue!
+        let rangeDates = maxDate! - minDate!   //Double(dates.count)
+        
+        var normalizeValues = [Double]()
+        var normalizeDates = [Double]()
+        
+        for index in 0..<values.count {
+            let normlizeValue = (values[index] - minValue!)/rangeValue
+            let normalizeDate = (dates[index] - minDate!)/rangeDates
+            normalizeValues.append(normlizeValue)
+            normalizeDates.append(normalizeDate)
+        }
+        var doubleData = [DoubleData]()
+        for index in 0..<values.count {
+            let elementOfDoubleData = DoubleData(data: normalizeDates[index],
+                                                 value: normalizeValues[index])
+            doubleData.append(elementOfDoubleData)
+        }
+        return doubleData
+    }
+    func normalizePoint(value: Double, maxValue: Double, minValue: Double) -> Double {
+        let range = maxValue - minValue
+        let normalizeValue = (value - minValue)/range
+        return normalizeValue
     }
     
-    //MARK: function responsible for representing stats data as points on na graph
-    func convertStatsToPoints(stats: [TempStats], maxWidth: CGFloat, maxHeight: CGFloat) -> [CGPoint] {
+    func convertDataToPoints(stats: [TempStats], maxHeight: CGFloat, maxWidth: CGFloat) -> [CGPoint] {
+        let data = normalizeData(data: stats)
+        var yPoints = [CGFloat]()
+        var xPoints = [CGFloat]()
         var points = [CGPoint]()
+        
+        let chartWidth = maxWidth/1.2
+        
+        for index in 0..<data.count {
+            let convertValueY = maxHeight * CGFloat(data[index].valueAsDouble)
+            yPoints.append(convertValueY)
+        }
         for index in 0..<stats.count {
-            let xRatio = self.widthMultiplier(availablewidth: maxWidth-30, count: stats.count)
-            let yRatio = self.heightMultiplier(availableHeight: maxHeight/2, range: 20) // <--- maxValue + 3 - (for now best idea)
-            
-            //let xPoint = self.relativeXFormDate(date: statistic.date, multiplier: xRatio)
-            let xPoint = self.relativeX(x: Double(stats[index].date), multiplier: xRatio)
-            let yPoint = self.relativeY(y: stats[index].weight, multiplier: yRatio)
-            
-            let point = CGPoint(x: xPoint+10, y: maxHeight/2 - yPoint)
+            let convertValueX = chartWidth * CGFloat(data[index].dateAsDouble)
+            xPoints.append(convertValueX)
+        }
+        for index in 0..<stats.count {
+            let point = CGPoint(x: xPoints[index]+(maxWidth-chartWidth), y: maxHeight-yPoints[index])
             points.append(point)
         }
         return points
     }
     
-    //MARK: support functions for convert function
-    func heightMultiplier(availableHeight: CGFloat, range: Int) -> CGFloat {
-        availableHeight / CGFloat(range)
+    func estimateXLocalization(value: Double, maxValue: Double, minValue: Double, maxWidth: CGFloat) -> CGFloat {
+        let chartWidth = maxWidth/1.2
+        let shiftX = maxWidth - chartWidth
+        let normalizeX = self.normalizePoint(value: value,
+                                             maxValue: Double(self.stats.count + 1),
+                                             minValue: Double(1))
+        let scaleX = CGFloat(normalizeX) * chartWidth
+        let xPoint = scaleX + CGFloat(shiftX)
+        return xPoint
     }
     
-    func widthMultiplier(availablewidth: CGFloat, count: Int) -> CGFloat {
-        availablewidth / CGFloat(count)
+    func estimateYLocalization(value: Double, maxValue: Double, minValue: Double, maxHeight: CGFloat) -> CGFloat {
+        let chartHeight = maxHeight/2
+        let normalizeY = self.normalizePoint(value: value,
+                                             maxValue: maxValue,
+                                             minValue: minValue)
+        let yPoint = CGFloat(normalizeY) * chartHeight
+        return yPoint
     }
     
-    func relativeY(y : Double, multiplier: CGFloat) -> CGFloat {
-        CGFloat(y) * multiplier
-    }
-    func relativeX(x : Double, multiplier: CGFloat) -> CGFloat {
-        CGFloat(x) * multiplier
-    }
-    
-    func relativeXFormDate(date: Date, multiplier: CGFloat) -> CGFloat {
-        CGFloat(Calendar.current.ordinality(of: .day, in: .year, for: date)!) * multiplier
+    func estimateYAxisDescription(line: Int) -> Double {
+        var values = [Double]()
+        
+        for index in 0..<self.stats.count {
+            values.append(Double(stats[index].weight))
+        }
+        let maxValue = values.max()
+        let minValue = values.min()
+        let range = maxValue! - minValue!
+        let shift = range/9
+        
+        let value = minValue! + (Double(line) * shift)
+        
+        return value
+        
     }
     
     //MARK: function to evaluate closest point on chart to gesture location
     func getClosestDataPoint(point: CGPoint, width:CGFloat, height: CGFloat) -> CGPoint {
-        let points = self.convertStatsToPoints(stats: self.stats, maxWidth: width, maxHeight: height)
+        let points = self.convertDataToPoints(stats: self.stats, maxHeight: height, maxWidth: width)
         var pointsX = [CGFloat]()
         var pointsY = [CGFloat]()
         
@@ -192,7 +281,7 @@ struct LineChartView: View {
     
     //MARK: function return index that is used to extract real value from stats (then the value is print out on chart)
     func getDataAssociatedWithpoint(at point: CGPoint, width: CGFloat, height: CGFloat) -> Int {
-        let points = self.convertStatsToPoints(stats: self.stats, maxWidth: width, maxHeight: height)
+        let points = self.convertDataToPoints(stats: self.stats, maxHeight: height, maxWidth: width)
         var pointsY = [CGFloat]()
         for pointY in points {
             pointsY.append(pointY.y)
@@ -202,21 +291,21 @@ struct LineChartView: View {
         return index
     }
     
-    //MARK: function evaluate shift for each horizontal line description for given data
-    func evaluteValueForYAxis(for data: [TempStats]) -> Double {
+    func findMinValue(for data: [TempStats]) -> Double {
         var valueArray = [Double]()
         for value in data {
             valueArray.append(value.weight)
         }
-        
-        let maxY = valueArray.max()
-        let minY = valueArray.min()
-        
-        let range = (maxY! - minY!)
-        
-        let shift = range/10
-        return shift
+        return valueArray.min()!
     }
+    func findMaxValue(for data: [TempStats]) -> Double {
+        var valueArray = [Double]()
+        for value in data {
+            valueArray.append(value.weight)
+        }
+        return valueArray.max()!
+    }
+    
 }
 
 
@@ -228,5 +317,17 @@ struct LineChartView_Previews: PreviewProvider {
     
     static var previews: some View {
         LineChartView(stats: prevStats)
+    }
+}
+
+class DoubleData {
+    var dateAsDouble: Double
+    var valueAsDouble: Double
+    
+    init(data: Double,
+         value: Double) {
+        
+        self.dateAsDouble = data
+        self.valueAsDouble = value
     }
 }
