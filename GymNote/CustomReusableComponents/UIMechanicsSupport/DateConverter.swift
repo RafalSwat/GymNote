@@ -42,7 +42,7 @@ class DateConverter {
         var currentDate = startDate
         let interval = Double(3600*24)   //one day
 
-        while currentDate <= endDate {
+        while currentDate.timeIntervalSinceReferenceDate <= endDate.timeIntervalSinceReferenceDate {
             currentDate = currentDate.addingTimeInterval(interval)
             dates.append(currentDate)
         }

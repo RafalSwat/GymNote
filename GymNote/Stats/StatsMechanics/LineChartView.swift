@@ -11,6 +11,7 @@ import SwiftUI
 struct LineChartView: View {
     
     var stats: [TempStats]
+    var datesRange: [Date]
     var lineGradient = Gradient(colors: [Color.yellow,
                                          Color.orange,
                                          Color.red])
@@ -53,11 +54,11 @@ struct LineChartView: View {
                                                                         minValue: Double(1),
                                                                         maxHeight: reader.size.height)
                                 let xStartPoint = self.estimateXLocalization(value: Double(1),
-                                                                             maxValue: Double(self.stats.count),
+                                                                             maxValue: Double(self.datesRange.count),
                                                                              minValue: Double(0),
                                                                              maxWidth: reader.size.width)
-                                let xEndPoint = self.estimateXLocalization(value: Double(self.stats.count),
-                                                                          maxValue: Double(self.stats.count),
+                                let xEndPoint = self.estimateXLocalization(value: Double(self.datesRange.count),
+                                                                          maxValue: Double(self.datesRange.count),
                                                                           minValue: Double(0),
                                                                           maxWidth: reader.size.width)
                                 
@@ -71,11 +72,11 @@ struct LineChartView: View {
                     }
                     
                     //setup vertical lines to grid
-                    ForEach(1..<self.stats.count + 1) { iterator in
+                    ForEach(1..<self.datesRange.count + 1) { iterator in
                         Group {
                             Path { p in
                                 let xPoint = self.estimateXLocalization(value: Double(iterator),
-                                                                        maxValue: Double(self.stats.count + 1),
+                                                                        maxValue: Double(self.datesRange.count + 1),
                                                                         minValue: Double(1),
                                                                         maxWidth: reader.size.width)
                                 p.move(to: CGPoint(x: xPoint,
@@ -88,13 +89,13 @@ struct LineChartView: View {
                         }
                     }
                     //setup decription for x axis
-                    ForEach(0..<self.stats.count) { index in
-                        Text("\(DateConverter.shortDateFormat.string(from: self.stats[index].date))")
+                    ForEach(0..<self.datesRange.count) { index in
+                        Text("\(DateConverter.shortDateFormat.string(from: self.datesRange[index]))")
                             .rotationEffect(.degrees(-60))
                             .offset(x: self.estimateXLocalization(value: Double(index),
-                                                                  maxValue: Double(self.stats.count),
+                                                                  maxValue: Double(self.datesRange.count),
                                                                   minValue: Double(0),
-                                                                  maxWidth: reader.size.width) - CGFloat(self.stats.count),
+                                                                  maxWidth: reader.size.width) - CGFloat(self.datesRange.count),
                                     y: CGFloat(Int((reader.size.height)/2))+20)
                             .foregroundColor(Color.secondary)
                             .font(.system(size: 9))
@@ -224,7 +225,7 @@ struct LineChartView: View {
         let chartWidth = maxWidth/1.2
         let shiftX = maxWidth - chartWidth
         let normalizeX = self.normalizePoint(value: value,
-                                             maxValue: Double(self.stats.count + 1),
+                                             maxValue: Double(self.datesRange.count + 1),
                                              minValue: Double(1))
         let scaleX = CGFloat(normalizeX) * chartWidth
         let xPoint = scaleX + CGFloat(shiftX)
@@ -313,10 +314,11 @@ struct LineChartView: View {
 struct LineChartView_Previews: PreviewProvider {
     
     static var prevStats = [TempStats]()
+    static var prevDatesrange = [Date]()
     
     
     static var previews: some View {
-        LineChartView(stats: prevStats)
+        LineChartView(stats: prevStats, datesRange: prevDatesrange)
     }
 }
 
