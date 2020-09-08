@@ -217,12 +217,6 @@ class FireBaseSession: ObservableObject {
     //MARK: Save training in the database
     func uploadTrainingToDB(userID: String, training: Training, completion: @escaping (Bool, String?)->()) {
         
-//        var errorUserTrainings: Bool?
-//        var errorTrainings: Bool?
-//        var errorExerciseList: Bool?
-//        var errorUserExercises: Bool?
-//        var errorDescription: String?
-        
         // Upload training under current user
         self.usersDBRef.child("UsersTrainings").child(userID).child(training.trainingID).setValue(training.trainingName) {
             (error:Error?, ref:DatabaseReference) in
@@ -258,6 +252,7 @@ class FireBaseSession: ObservableObject {
             // Upload list of exercises under current training
             self.usersDBRef.child("ExerciseList").child(training.trainingID).child(exercise.exerciseID).setValue([
                 "name" : exercise.exerciseName,
+                "createdByUser" : exercise.exerciseCreatedByUser,
                 "numberOfSeries" : exercise.exerciseNumberOfSeries]) {
                     (error:Error?, ref:DatabaseReference) in
                     if let error = error {
@@ -284,19 +279,6 @@ class FireBaseSession: ObservableObject {
                     completion(false, nil)
                 }
             }
-//            if (errorUserTrainings == false &&
-//                errorTrainings == false &&
-//                errorExerciseList == false &&
-//                errorUserExercises == false) {
-//                completion(false, nil)
-//
-//            } else if (errorUserTrainings == true &&
-//                errorTrainings == true &&
-//                errorExerciseList == true &&
-//                errorUserExercises == true){
-//                completion(true, "An error occur during saving reason: \(errorDescription ?? "Connection time out")")
-//            }
-            
         }
     }
     //MARK: Update training under current user
@@ -317,6 +299,7 @@ class FireBaseSession: ObservableObject {
         for exercise in training.listOfExercises {
             self.usersDBRef.child("ExerciseList").child(training.trainingID).child(exercise.exerciseID).updateChildValues([
                 "name" : exercise.exerciseName,
+                "createdByUser" : exercise.exerciseCreatedByUser,
                 "numberOfSeries" : exercise.exerciseNumberOfSeries])
         }
     }
@@ -353,7 +336,9 @@ class FireBaseSession: ObservableObject {
                                 let dict = exerciseInfo.value as! [String : Any]
                                 let exercise = Exercise(id: exerciseInfo.key as String,
                                                         name: dict["name"] as! String,
+                                                        createdByUser: dict["createdByUser"] as! Bool,
                                                         numberOfSeries: dict["numberOfSeries"] as! Int)
+                                
                                 exercises.append(exercise)
                             }
                             allExercises.append(exercises)

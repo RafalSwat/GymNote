@@ -43,16 +43,16 @@
 		0759DED024E5553400DBCC26 /* ChartDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759DECF24E5553400DBCC26 /* ChartDot.swift */; };
 		075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F223FF19ED006613A2 /* DateConverter.swift */; };
 		075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F4240683C4006613A2 /* FireBaseSession.swift */; };
-		075F9BC824DD8383005ADFF1 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BC724DD8383005ADFF1 /* StatsView.swift */; };
 		075F9BCA24DDC150005ADFF1 /* ExerciseStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BC924DDC150005ADFF1 /* ExerciseStatistics.swift */; };
 		075F9BCC24DDC1BF005ADFF1 /* ExerciseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BCB24DDC1BF005ADFF1 /* ExerciseData.swift */; };
-		075F9BCF24DDC8A4005ADFF1 /* Algorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BCE24DDC8A4005ADFF1 /* Algorithms.swift */; };
+		07608DE924FD0F90003497E3 /* LineChartModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07608DE824FD0F8F003497E3 /* LineChartModelView.swift */; };
 		077ECD4123B0F020005A1B76 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECD4023B0F020005A1B76 /* ProfileEditView.swift */; };
 		077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECD4223B0F4A1005A1B76 /* UserData.swift */; };
 		07840A92248ACD8100FC3019 /* CancelEditModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07840A91248ACD8100FC3019 /* CancelEditModeButton.swift */; };
 		07840A94248B9D9400FC3019 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07840A93248B9D9400FC3019 /* ContentView.swift */; };
 		07840A99248BA17900FC3019 /* SignOutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07840A98248BA17900FC3019 /* SignOutButton.swift */; };
 		07840A9B248BD4E900FC3019 /* EditModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07840A9A248BD4E900FC3019 /* EditModeButton.swift */; };
+		078D3A0D2507F86B002291FC /* ChartMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078D3A0C2507F86B002291FC /* ChartMenuView.swift */; };
 		07AC9DE924E323420025AD39 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AC9DE824E323420025AD39 /* ChartView.swift */; };
 		07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B9692397BE00001632A0 /* AppDelegate.swift */; };
 		07C0B96C2397BE00001632A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B96B2397BE00001632A0 /* SceneDelegate.swift */; };
@@ -117,16 +117,16 @@
 		0759DECF24E5553400DBCC26 /* ChartDot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDot.swift; sourceTree = "<group>"; };
 		075A31F223FF19ED006613A2 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		075A31F4240683C4006613A2 /* FireBaseSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseSession.swift; sourceTree = "<group>"; };
-		075F9BC724DD8383005ADFF1 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		075F9BC924DDC150005ADFF1 /* ExerciseStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseStatistics.swift; sourceTree = "<group>"; };
 		075F9BCB24DDC1BF005ADFF1 /* ExerciseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseData.swift; sourceTree = "<group>"; };
-		075F9BCE24DDC8A4005ADFF1 /* Algorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Algorithms.swift; sourceTree = "<group>"; };
+		07608DE824FD0F8F003497E3 /* LineChartModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartModelView.swift; sourceTree = "<group>"; };
 		077ECD4023B0F020005A1B76 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		077ECD4223B0F4A1005A1B76 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		07840A91248ACD8100FC3019 /* CancelEditModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelEditModeButton.swift; sourceTree = "<group>"; };
 		07840A93248B9D9400FC3019 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		07840A98248BA17900FC3019 /* SignOutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutButton.swift; sourceTree = "<group>"; };
 		07840A9A248BD4E900FC3019 /* EditModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeButton.swift; sourceTree = "<group>"; };
+		078D3A0C2507F86B002291FC /* ChartMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartMenuView.swift; sourceTree = "<group>"; };
 		07AC9DE824E323420025AD39 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		07C0B9662397BE00001632A0 /* GymNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07C0B9692397BE00001632A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -282,7 +282,8 @@
 		075F9BC624DD835E005ADFF1 /* Stats */ = {
 			isa = PBXGroup;
 			children = (
-				075F9BC724DD8383005ADFF1 /* StatsView.swift */,
+				07AC9DE824E323420025AD39 /* ChartView.swift */,
+				078D3A0C2507F86B002291FC /* ChartMenuView.swift */,
 				075F9BCD24DDC85E005ADFF1 /* StatsMechanics */,
 			);
 			path = Stats;
@@ -291,9 +292,8 @@
 		075F9BCD24DDC85E005ADFF1 /* StatsMechanics */ = {
 			isa = PBXGroup;
 			children = (
-				075F9BCE24DDC8A4005ADFF1 /* Algorithms.swift */,
-				07AC9DE824E323420025AD39 /* ChartView.swift */,
 				0759DECB24E43BED00DBCC26 /* LineChartView.swift */,
+				07608DE824FD0F8F003497E3 /* LineChartModelView.swift */,
 				0759DECF24E5553400DBCC26 /* ChartDot.swift */,
 			);
 			path = StatsMechanics;
@@ -571,11 +571,11 @@
 				07C922E02410EA2300AF6010 /* SearchBar.swift in Sources */,
 				07C922E424110A5700AF6010 /* AddBarItem.swift in Sources */,
 				07C0B99823A144DF001632A0 /* KeyboardHost.swift in Sources */,
+				078D3A0D2507F86B002291FC /* ChartMenuView.swift in Sources */,
 				073E6C9523AA215800A06E80 /* TitleBelt.swift in Sources */,
 				07428FD924E2A4380062B892 /* SeriesTextFields.swift in Sources */,
 				075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */,
 				07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */,
-				075F9BCF24DDC8A4005ADFF1 /* Algorithms.swift in Sources */,
 				07840A9B248BD4E900FC3019 /* EditModeButton.swift in Sources */,
 				07FCCE732482C8AD008FE164 /* ProfileHost.swift in Sources */,
 				07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */,
@@ -606,11 +606,11 @@
 				07C0B98E239A73C8001632A0 /* HomeView.swift in Sources */,
 				07426605240BCE20003F2C32 /* DateBelt.swift in Sources */,
 				07FCCE6F24817238008FE164 /* MainContainer.swift in Sources */,
+				07608DE924FD0F90003497E3 /* LineChartModelView.swift in Sources */,
 				0736F9DD23CA3F0C00626599 /* ChangeButton.swift in Sources */,
 				07C0B99C23A273D9001632A0 /* SwitchableSecureField.swift in Sources */,
 				073F482923F5604C003011F0 /* Coordinator.swift in Sources */,
 				073DEAE4249A54D4008F3C72 /* DeleteButton.swift in Sources */,
-				075F9BC824DD8383005ADFF1 /* StatsView.swift in Sources */,
 				07AC9DE924E323420025AD39 /* ChartView.swift in Sources */,
 				07C0B96C2397BE00001632A0 /* SceneDelegate.swift in Sources */,
 				0757024323A4EAD500030991 /* ColorfulPicker.swift in Sources */,

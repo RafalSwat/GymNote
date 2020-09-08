@@ -34,7 +34,7 @@ struct AddUserExerciseView: View {
                 Button(action: {
                     if self.exerciseName != "" {
                         withAnimation {
-                            let newExercise = Exercise(name: self.exerciseName, isCheck: self.isCheck)
+                            let newExercise = Exercise(name: self.exerciseName, createdByUser: true, isCheck: self.isCheck)
                             self.addTrainingSafely(exercise: newExercise)
                             self.exerciseName = ""
                             self.showAddView = false

@@ -14,6 +14,7 @@ class Exercise: Hashable, Identifiable {
     var exerciseName: String
     var exerciseSeries: [Series]
     var exerciseIsCheck: Bool
+    var exerciseCreatedByUser: Bool
     var exerciseNumberOfSeries: Int
     
     init(name: String) {
@@ -22,6 +23,7 @@ class Exercise: Hashable, Identifiable {
         self.exerciseName = name
         self.exerciseSeries = [Series]()
         self.exerciseIsCheck = false
+        self.exerciseCreatedByUser = false
         self.exerciseNumberOfSeries = 1
     }
     
@@ -32,6 +34,18 @@ class Exercise: Hashable, Identifiable {
         self.exerciseName = name
         self.exerciseSeries = [Series]()
         self.exerciseIsCheck = isCheck
+        self.exerciseCreatedByUser = false
+        self.exerciseNumberOfSeries = 1
+    }
+    init(name: String,
+         createdByUser: Bool,
+         isCheck: Bool) {
+        
+        self.exerciseID = UUID().uuidString
+        self.exerciseName = name
+        self.exerciseSeries = [Series]()
+        self.exerciseIsCheck = isCheck
+        self.exerciseCreatedByUser = createdByUser
         self.exerciseNumberOfSeries = 1
     }
     init(id: String,
@@ -42,19 +56,33 @@ class Exercise: Hashable, Identifiable {
         self.exerciseName = name
         self.exerciseSeries = [Series]()
         self.exerciseIsCheck = false
+        self.exerciseCreatedByUser = false
         self.exerciseNumberOfSeries = numberOfSeries
     }
-    
+    init(id: String,
+         name: String,
+         createdByUser: Bool,
+         numberOfSeries: Int) {
+        
+        self.exerciseID = id
+        self.exerciseName = name
+        self.exerciseSeries = [Series]()
+        self.exerciseIsCheck = false
+        self.exerciseCreatedByUser = createdByUser
+        self.exerciseNumberOfSeries = numberOfSeries
+    }
     init(id: String,
          name: String,
          series: [Series],
          isCheck: Bool,
+         createdByUser: Bool,
          numberOfSeries: Int) {
         
         self.exerciseID = id
         self.exerciseName = name
         self.exerciseSeries = series
         self.exerciseIsCheck = isCheck
+        self.exerciseCreatedByUser = createdByUser
         self.exerciseNumberOfSeries = numberOfSeries
     }
 

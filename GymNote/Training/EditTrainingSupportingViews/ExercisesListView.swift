@@ -15,6 +15,7 @@ struct ExercisesListView: View {
     @State var choosenExercise = [Exercise]() // Exercise selected but not conform
     @State var addExerciseMode = false
     @State var searchText = ""
+    @State var showCreatedByUserOnly = false
     
     @State var listOfExercises = [
         Exercise(id: "5AA41935-1D78-42FD-9A8A-F80CDF76AB7C", name: "Squats", numberOfSeries: 1),
@@ -34,6 +35,9 @@ struct ExercisesListView: View {
         Exercise(id: "CE2F9401-A50B-4D89-884E-45E5A8195B26", name: "Sit-ups", numberOfSeries: 1)
     ]
     
+    
+    
+    
     func conformExercise() {
         selectedExercises += choosenExercise
     }
@@ -44,10 +48,17 @@ struct ExercisesListView: View {
                 if (addExerciseMode) {
                     AddUserExerciseView(showAddView: self.$addExerciseMode, list: self.$listOfExercises)
                 }
-                
-                SearchBar(text: $searchText)
+                HStack {
+                    SearchBar(text: $searchText)
+//                    Button(action: {}) {
+//                        Image(systemName: "hammer")
+//                            .foregroundColor(.orange)
+//                            .font(.headline)
+//                    }.padding(.horizontal, 5)
+                }
                 
                 List {
+
                     ForEach(self.listOfExercises.filter {
                         // search mechanics: If searchText is empty, then give it all list.
                         //                   If some elements of the list contains searchText show only them
@@ -57,7 +68,9 @@ struct ExercisesListView: View {
                             // and add exercise to selected array base on Exercise model property: "isChcek".
                             // "isCheck" is a Bool that changes according to the "contains" method.
                             
-                            ExerciseListRow(exerciseName: exercise.exerciseName, isCheck: self.choosenExercise.contains(exercise)) {
+                            ExerciseListRow(exerciseName: exercise.exerciseName,
+                                            isCheck: self.choosenExercise.contains(exercise),
+                                            createdbyUser: exercise.exerciseCreatedByUser) {
                                 if self.choosenExercise.contains(exercise) {
                                     self.choosenExercise.removeAll(where: { $0 == exercise })
                                 }

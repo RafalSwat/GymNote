@@ -45,8 +45,8 @@ class DateConverter {
         dates.append(currentDate)
         
         while currentDate.timeIntervalSinceReferenceDate < endDate.timeIntervalSinceReferenceDate {
-            currentDate = currentDate.addingTimeInterval(interval)
             dates.append(currentDate)
+            currentDate = currentDate.addingTimeInterval(interval)
         }
 
         return dates

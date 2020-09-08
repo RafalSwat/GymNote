@@ -16,6 +16,9 @@ struct EditExerciseView: View {
         HStack {
             VStack {
                 HStack {
+                    if exercise.exerciseCreatedByUser {
+                        Image(systemName: "hammer")
+                    }
                     Text(exercise.exerciseName)
                         .font(.headline)
                     Spacer()

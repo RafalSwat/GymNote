@@ -21,6 +21,9 @@ struct ExerciseView: View {
         
         VStack {
             HStack {
+                if exercise.exerciseCreatedByUser {
+                    Image(systemName: "hammer")
+                }
                 Text(exercise.exerciseName)
                     .font(.title)
                     .fixedSize(horizontal: false, vertical: true)

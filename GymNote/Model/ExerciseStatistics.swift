@@ -9,16 +9,18 @@
 import Foundation
 import SwiftUI
 
-struct ExerciseStatistics {
+struct ExerciseStatistics: Equatable {
     
     var exerciseID: String
     var exerciseName: String
+    var exerciseCreatedByUser: Bool
     var exerciseData: [ExerciseData]
     
     //test init
     init() {
         self.exerciseID = UUID().uuidString
         self.exerciseName = "My Exercise"
+        self.exerciseCreatedByUser = false
         self.exerciseData = [ExerciseData()]
     }
     
@@ -28,7 +30,23 @@ struct ExerciseStatistics {
         
         self.exerciseID = id
         self.exerciseName = name
+        self.exerciseCreatedByUser = false
         self.exerciseData = data
     }
     
+    init(id: String,
+         name: String,
+         createdByUser: Bool,
+         data: [ExerciseData]) {
+        
+        self.exerciseID = id
+        self.exerciseName = name
+        self.exerciseCreatedByUser = createdByUser
+        self.exerciseData = data
+    }
+    
+    public static func == (lhs: ExerciseStatistics, rhs: ExerciseStatistics) -> Bool {
+        return lhs.exerciseID == rhs.exerciseID
+    }
+
 }

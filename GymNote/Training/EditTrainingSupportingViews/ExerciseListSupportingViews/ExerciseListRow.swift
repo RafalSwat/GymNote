@@ -12,11 +12,15 @@ struct ExerciseListRow: View {
     
     var exerciseName: String
     var isCheck: Bool
+    var createdbyUser: Bool
     var action: () -> Void
     
     var body: some View {
         Button(action: self.action) {
             HStack {
+                if self.createdbyUser {
+                    Image(systemName: "hammer")
+                }
                 Text(self.exerciseName)
                 if self.isCheck {
                     Spacer()
@@ -33,7 +37,7 @@ struct ExerciseListRow_Previews: PreviewProvider {
     static func prevAction(){return}
     
     static var previews: some View {
-        ExerciseListRow(exerciseName: "exercise", isCheck: false, action: prevAction)
+        ExerciseListRow(exerciseName: "exercise", isCheck: false, createdbyUser: true, action: prevAction)
     }
 }
 
