@@ -52,6 +52,7 @@ struct ChartView: View {
                                 }
                             }
                         }
+                        .listStyle(PlainListStyle())
                         .onAppear {
                             self.setupStats()
                         }

@@ -96,7 +96,7 @@ struct ProfileEditView: View {
                                 Text("")
                         }
                     }
-                }
+                }.listStyle(GroupedListStyle())
                 
                 if (doneChangingPhoto) {
                     CaptureImageView(isShown: $doneChangingPhoto, image: $profile.userImage)

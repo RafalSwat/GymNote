@@ -27,6 +27,7 @@ struct NoteView: View {
                                     showDetails: self.$showDetailsArray[index])
                     }
                 }
+                .listStyle(GroupedListStyle())
                 .onAppear {
                     if let list = self.session.userSession?.userTrainings {
                         self.listOfTrainings = list

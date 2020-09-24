@@ -46,10 +46,6 @@ struct ExerciseView: View {
                 }
             }
         }
-//        .onAppear() {
-//            self.repeats = Array(repeating: "", count: self.exercise.exerciseNumberOfSeries)
-//            self.weights = Array(repeating: "", count: self.exercise.exerciseNumberOfSeries)
-//        }
     }
 }
 
