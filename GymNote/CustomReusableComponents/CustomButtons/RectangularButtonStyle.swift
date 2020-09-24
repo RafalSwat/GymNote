@@ -14,7 +14,7 @@ struct RectangularButtonStyle: ButtonStyle {
     var minWidth  = CGFloat(0)
     var maxWidth = CGFloat.infinity
     var minHeight = CGFloat(0)
-    var maxHeight = UIScreen.main.bounds.height/12
+    var maxHeight = CGFloat(50)
     
     public func makeBody(configuration: RectangularButtonStyle.Configuration) -> some View {
         
@@ -22,7 +22,7 @@ struct RectangularButtonStyle: ButtonStyle {
             .frame(minWidth: minWidth, maxWidth: maxWidth, minHeight: minHeight, maxHeight: maxHeight)
             .foregroundColor(.white)
             .background(LinearGradient(gradient: Gradient(colors: [fromColor, toColor]), startPoint: .leading, endPoint: .trailing))
-            .cornerRadius(5)
+            .cornerRadius(10)
             .compositingGroup()
             .shadow(color: Color(UIColor.darkGray), radius: 10)
             .opacity(configuration.isPressed ? 0.5 : 1.0)
