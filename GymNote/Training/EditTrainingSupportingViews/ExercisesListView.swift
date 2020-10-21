@@ -40,6 +40,9 @@ struct ExercisesListView: View {
     
     func conformExercise() {
         selectedExercises += choosenExercise
+        for index in self.selectedExercises.indices { 
+            selectedExercises[index].exerciseOrderInList = index
+        }
     }
     
     var body: some View {
@@ -50,11 +53,6 @@ struct ExercisesListView: View {
                 }
                 HStack {
                     SearchBar(text: $searchText)
-//                    Button(action: {}) {
-//                        Image(systemName: "hammer")
-//                            .foregroundColor(.orange)
-//                            .font(.headline)
-//                    }.padding(.horizontal, 5)
                 }
                 
                 List {
@@ -108,6 +106,7 @@ struct ExercisesListView_Previews: PreviewProvider {
     static var previews: some View {
         ExercisesListView(finishTyping: $prevFinishTyping,
                           selectedExercises: $prevSelectedExercise)
+                           
     }
 }
 

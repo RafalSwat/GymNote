@@ -26,15 +26,19 @@ struct MainContainer: View {
                     .font(.largeTitle)
                     .padding()
             }.tag(0)
-            NoteView()
-                .tabItem {
-                    VStack {
-                        Image(systemName: "pencil.and.ellipsis.rectangle")
-                        Text("Note")
-                    }
-                    .font(.largeTitle)
-                    .padding()
-            }.tag(1)
+            if #available(iOS 14.0, *) {
+                NoteView()
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "pencil.and.ellipsis.rectangle")
+                            Text("Note")
+                        }
+                        .font(.largeTitle)
+                        .padding()
+                    }.tag(1)
+            } else {
+                // Fallback on earlier versions
+            }
             ProfileHost()
                 .tabItem {
                     VStack {

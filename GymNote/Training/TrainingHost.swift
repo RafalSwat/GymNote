@@ -8,13 +8,14 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct TrainingHost: View {
     
     @EnvironmentObject var session: FireBaseSession
     @Environment(\.presentationMode) var presentationMode
     @State var editMode = false
-    @State var training: Training
-    @State var draftTraining = Training()
+    @ObservedObject var training: Training
+    @StateObject var draftTraining = Training()
     
     @State var showWarning = false
     @State var warningMessage = ""
@@ -23,10 +24,10 @@ struct TrainingHost: View {
         VStack {
             if editMode {
                 ZStack {
-                    EditTrainingView(training: $draftTraining)
+                    EditTrainingView(training: draftTraining)
                         .onAppear {
-                            self.draftTraining = self.training
-                    }
+                            self.assignTrainingToDraftTraining()
+                        }
                     if showWarning {
                         WarningAlert(showAlert: $showWarning,
                                      title: "Warning",
@@ -42,7 +43,7 @@ struct TrainingHost: View {
         }
         .navigationBarItems(
             leading: CancelEditModeButton(editMode: $editMode, cancelAction: {
-                self.draftTraining = self.training
+                self.assignTrainingToDraftTraining()
                 self.presentationMode.wrappedValue.dismiss()
             }),
             trailing:
@@ -56,9 +57,23 @@ struct TrainingHost: View {
                         Text(self.editMode == true ? "Done" : "Edit")
                     }
         )
-
     }
     //MARK: Functions
+    func assignTrainingToDraftTraining() {
+        self.draftTraining.trainingID = self.training.trainingID
+        self.draftTraining.trainingName = self.training.trainingName
+        self.draftTraining.trainingDescription = self.training.trainingDescription
+        self.draftTraining.initialDate = self.training.initialDate
+        self.draftTraining.listOfExercises = self.training.listOfExercises
+    }
+    func assignDraftTrainingToTraining() {
+        self.training.trainingID = self.draftTraining.trainingID
+        self.training.trainingName = self.draftTraining.trainingName
+        self.training.trainingDescription = self.draftTraining.trainingDescription
+        self.training.initialDate = self.draftTraining.initialDate
+        self.training.listOfExercises = self.draftTraining.listOfExercises
+    }
+
     func saveTrainingInTheDB() {
         if draftTraining.listOfExercises.isEmpty {
             self.warningMessage = "You can`t confirm training without any exercises! Please, add some exercises to your program."
@@ -66,7 +81,7 @@ struct TrainingHost: View {
         } else if draftTraining.trainingName == "" {
             draftTraining.trainingName = DateConverter.dateFormat.string(from: Date())
             if let id = self.session.userSession?.userProfile.userID {
-                self.training = self.draftTraining
+                self.assignDraftTrainingToTraining()
                 self.session.uploadTrainingToDB(userID: id, training: training, completion: { errorOccur, error in
                     // if error during saving occur then edit mode must be true (user stays in EditMode util tapped cancel)
                     self.editMode = errorOccur
@@ -79,7 +94,7 @@ struct TrainingHost: View {
             }
         } else {
             if let id = self.session.userSession?.userProfile.userID {
-                self.training = self.draftTraining
+                self.assignDraftTrainingToTraining()
                 self.session.uploadTrainingToDB(userID: id, training: training, completion: { errorOccur, error in
                     // if error during saving occur then edit mode must be true (user stays in EditMode util tapped cancel)
                     self.editMode = errorOccur
@@ -112,7 +127,11 @@ struct TrainingHost_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            TrainingHost(training: prevTraining)
+            if #available(iOS 14.0, *) {
+                TrainingHost(training: prevTraining)
+            } else {
+                // Fallback on earlier versions
+            }
         }
     }
 }

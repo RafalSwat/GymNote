@@ -8,13 +8,14 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct TrainingRow: View {
     
     @EnvironmentObject var session: FireBaseSession
-    @Binding var listOfTrainings: [Training]
-    @State var training: Training
-    @Binding var showButtons: Bool
-    @Binding var showDetails: Bool
+    @ObservedObject var listOfTrainings: ObservableArray<Training>
+    @StateObject var training: Training
+    @State var showButtons = false
+    @State var showDetails = false
     @State var goToTraining = false
 
     var body: some View {
@@ -60,7 +61,7 @@ struct TrainingRow: View {
                             if let indexOfTrainingToRemove = self.session.userSession?.userTrainings.firstIndex(of: self.training) {
                                 self.removeTraining(at: indexOfTrainingToRemove)
                                 self.session.userSession?.userTrainings.remove(at: indexOfTrainingToRemove)
-                                self.listOfTrainings.remove(at: indexOfTrainingToRemove)
+                                self.listOfTrainings.array.remove(at: indexOfTrainingToRemove)
                             }
                         })
                             .opacity(showButtons ? 1 : 0).animation(.default)
@@ -73,11 +74,20 @@ struct TrainingRow: View {
             if showDetails {
                 TrainingDetails(training: training)
             }
+            
             NavigationLink(destination: TrainingHost(training: training, draftTraining: training), isActive: self.$goToTraining) { EmptyView() }
+
         }
         .contentShape(Rectangle())
         .onTapGesture {
             withAnimation { self.showDetails.toggle() }
+        }
+        .onAppear {
+            withAnimation {
+                self.showButtons = false
+                self.showDetails = false
+            }
+            
         }
     }
     
@@ -109,10 +119,12 @@ struct TrainingRow_Previews: PreviewProvider {
     @State static var prevShowDetails = false
     
     static var previews: some View {
-        TrainingRow(listOfTrainings: $prevListOfTraining,
-                    training: prevTraining,
-                    showButtons: $prevShowButtons,
-                    showDetails: $prevShowDetails)
+        if #available(iOS 14.0, *) {
+            TrainingRow(listOfTrainings: ObservableArray(array: [Training]()).observeChildrenChanges(),
+                        training: prevTraining)
+        } else {
+            // Fallback on earlier versions
+        }
     }
 }
 

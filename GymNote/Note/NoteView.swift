@@ -8,32 +8,35 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct NoteView: View {
     
     @EnvironmentObject var session: FireBaseSession
     @State private var passageToAddTraining = false
-    @State var listOfTrainings = [Training]()
-    @State var showDetailsArray = [Bool]()
-    @State var showButtonsArray = [Bool]()
+    @StateObject var listOfTrainings: ObservableArray<Training> = ObservableArray(array: [Training]()).observeChildrenChanges()
     
     var body: some View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(0..<self.listOfTrainings.count, id: \.self) { index in
-                        TrainingRow(listOfTrainings: self.$listOfTrainings,
-                                    training: self.listOfTrainings[index],
-                                    showButtons: self.$showButtonsArray[index],
-                                    showDetails: self.$showDetailsArray[index])
+//                    ForEach(0..<self.listOfTrainings.array.count, id: \.self) { index in
+//                        TrainingRow(listOfTrainings: self.listOfTrainings,
+//                                    training: self.listOfTrainings.array[index],
+//                                    showButtons: self.$showButtonsArray[index],
+//                                    showDetails: self.$showDetailsArray[index])
+//                    }
+                    ForEach(self.listOfTrainings.array, id: \.trainingID) { training in
+                        TrainingRow(listOfTrainings: self.listOfTrainings,
+                                    training: training)
+                        
                     }
+                    
                 }
                 .listStyle(GroupedListStyle())
                 .onAppear {
                     if let list = self.session.userSession?.userTrainings {
-                        self.listOfTrainings = list
+                        self.listOfTrainings.array = list
                     }
-                    self.showDetailsArray = Array(repeating: false, count: (self.session.userSession?.userTrainings.count)!)
-                    self.showButtonsArray = Array(repeating: false, count: (self.session.userSession?.userTrainings.count)!)
                 }
                 AddButton(addButtonText: "Add New Training",
                           action: {},
@@ -61,7 +64,11 @@ struct NoteView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            NoteView()
+            if #available(iOS 14.0, *) {
+                NoteView()
+            } else {
+                // Fallback on earlier versions
+            }
         }
     }
 }

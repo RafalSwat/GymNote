@@ -36,6 +36,7 @@
 		0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0742660E240C1B72003F2C32 /* ExerciseListRow.swift */; };
 		07428FD924E2A4380062B892 /* SeriesTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07428FD824E2A4380062B892 /* SeriesTextFields.swift */; };
 		07428FDB24E2BEDC0062B892 /* Indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07428FDA24E2BEDC0062B892 /* Indicator.swift */; };
+		0743927E252DDD0A00430BD6 /* KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0743927D252DDD0A00430BD6 /* KeyboardHandler.swift */; };
 		0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757023E23A4D89500030991 /* RectangularButtonStyle.swift */; };
 		0757024323A4EAD500030991 /* ColorfulPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757024223A4EAD500030991 /* ColorfulPicker.swift */; };
 		0759DECC24E43BED00DBCC26 /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759DECB24E43BED00DBCC26 /* LineChartView.swift */; };
@@ -72,6 +73,7 @@
 		07C922E62411140000AF6010 /* NavigationConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E52411140000AF6010 /* NavigationConfigurator.swift */; };
 		07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E72411582400AF6010 /* DualColorCheckmark.swift */; };
 		07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */; };
+		07EA01E6253C6B42003A13FA /* ObservableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07EA01E5253C6B41003A13FA /* ObservableArray.swift */; };
 		07F55DA224AF3D790024AB1A /* ActionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F55DA124AF3D790024AB1A /* ActionAlert.swift */; };
 		07F55DA424AF3E690024AB1A /* WarningAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F55DA324AF3E690024AB1A /* WarningAlert.swift */; };
 		07FCCE6F24817238008FE164 /* MainContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FCCE6E24817238008FE164 /* MainContainer.swift */; };
@@ -110,6 +112,7 @@
 		0742660E240C1B72003F2C32 /* ExerciseListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListRow.swift; sourceTree = "<group>"; };
 		07428FD824E2A4380062B892 /* SeriesTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesTextFields.swift; sourceTree = "<group>"; };
 		07428FDA24E2BEDC0062B892 /* Indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Indicator.swift; sourceTree = "<group>"; };
+		0743927D252DDD0A00430BD6 /* KeyboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHandler.swift; sourceTree = "<group>"; };
 		0757023E23A4D89500030991 /* RectangularButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButtonStyle.swift; sourceTree = "<group>"; };
 		0757024223A4EAD500030991 /* ColorfulPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulPicker.swift; sourceTree = "<group>"; };
 		0759DECB24E43BED00DBCC26 /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
@@ -148,6 +151,7 @@
 		07C922E52411140000AF6010 /* NavigationConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationConfigurator.swift; sourceTree = "<group>"; };
 		07C922E72411582400AF6010 /* DualColorCheckmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualColorCheckmark.swift; sourceTree = "<group>"; };
 		07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserExerciseView.swift; sourceTree = "<group>"; };
+		07EA01E5253C6B41003A13FA /* ObservableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableArray.swift; sourceTree = "<group>"; };
 		07F55DA124AF3D790024AB1A /* ActionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionAlert.swift; sourceTree = "<group>"; };
 		07F55DA324AF3E690024AB1A /* WarningAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningAlert.swift; sourceTree = "<group>"; };
 		07FCCE6E24817238008FE164 /* MainContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainer.swift; sourceTree = "<group>"; };
@@ -183,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				07C0B99723A144DF001632A0 /* KeyboardHost.swift */,
+				0743927D252DDD0A00430BD6 /* KeyboardHandler.swift */,
 				0759DECD24E54CFE00DBCC26 /* ArrayQuery.swift */,
 				07C922E52411140000AF6010 /* NavigationConfigurator.swift */,
 				073DEADF2498F852008F3C72 /* SwipeGesture.swift */,
@@ -396,6 +401,7 @@
 				074265FE240BC6C6003F2C32 /* Exercise.swift */,
 				075F9BC924DDC150005ADFF1 /* ExerciseStatistics.swift */,
 				075F9BCB24DDC1BF005ADFF1 /* ExerciseData.swift */,
+				07EA01E5253C6B41003A13FA /* ObservableArray.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -578,6 +584,7 @@
 				07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */,
 				07840A9B248BD4E900FC3019 /* EditModeButton.swift in Sources */,
 				07FCCE732482C8AD008FE164 /* ProfileHost.swift in Sources */,
+				0743927E252DDD0A00430BD6 /* KeyboardHandler.swift in Sources */,
 				07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */,
 				077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */,
 				0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */,
@@ -596,6 +603,7 @@
 				073DEAE9249E5F11008F3C72 /* TrainingView.swift in Sources */,
 				07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */,
 				07428FDB24E2BEDC0062B892 /* Indicator.swift in Sources */,
+				07EA01E6253C6B42003A13FA /* ObservableArray.swift in Sources */,
 				075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */,
 				07C0B98B23992267001632A0 /* SignupView.swift in Sources */,
 				07C922E62411140000AF6010 /* NavigationConfigurator.swift in Sources */,

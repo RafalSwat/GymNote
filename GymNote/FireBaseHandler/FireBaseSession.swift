@@ -253,7 +253,8 @@ class FireBaseSession: ObservableObject {
             self.usersDBRef.child("ExerciseList").child(training.trainingID).child(exercise.exerciseID).setValue([
                 "name" : exercise.exerciseName,
                 "createdByUser" : exercise.exerciseCreatedByUser,
-                "numberOfSeries" : exercise.exerciseNumberOfSeries]) {
+                "numberOfSeries" : exercise.exerciseNumberOfSeries,
+                "order" : exercise.exerciseOrderInList]) {
                     (error:Error?, ref:DatabaseReference) in
                     if let error = error {
                         print("Data path: [ExerciseList/\(training.trainingID)/...] could not be saved: \(error.localizedDescription).")
@@ -337,16 +338,19 @@ class FireBaseSession: ObservableObject {
                                 let exercise = Exercise(id: exerciseInfo.key as String,
                                                         name: dict["name"] as! String,
                                                         createdByUser: dict["createdByUser"] as! Bool,
-                                                        numberOfSeries: dict["numberOfSeries"] as! Int)
+                                                        numberOfSeries: dict["numberOfSeries"] as! Int,
+                                                        orderInList: dict["order"] as! Int)
                                 
                                 exercises.append(exercise)
+                                exercises = exercises.sorted(by: { $0.exerciseOrderInList < $1.exerciseOrderInList })
                             }
                             allExercises.append(exercises)
+                            
                             let training = Training(id: ids[index],
                                                     name: names[index], // FIXME: index out of range
-                                description: descriptions[index],
-                                date: dates[index],
-                                exercises: allExercises[index])
+                                                    description: descriptions[index],
+                                                    date: dates[index],
+                                                    exercises: allExercises[index])
                             self.userSession?.userTrainings.append(training)
                             index += 1
                         }

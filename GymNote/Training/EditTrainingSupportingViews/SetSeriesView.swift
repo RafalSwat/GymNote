@@ -11,18 +11,11 @@ import SwiftUI
 struct SetSeriesView: View {
     
     @Environment(\.colorScheme) var colorScheme: ColorScheme
-    @Binding var exercise: Exercise // binding from list of selected 
-    @State var series = 1
+    @ObservedObject var exercise: Exercise // binding from list of selected
+    @Binding var series: Int
     
     var body: some View {
         HStack {
-            
-            Text("number of series:")
-                .font(.callout)
-                .foregroundColor(.secondary)
-            Text(String(series))
-            Spacer()
-            
             Button(action: {
                 self.series += 1
                 self.exercise.exerciseNumberOfSeries = self.series
@@ -45,18 +38,15 @@ struct SetSeriesView: View {
             }.buttonStyle(BorderlessButtonStyle())
 
         }
-        .onAppear() {
-            self.series = self.exercise.exerciseNumberOfSeries
-        }
-        
     }
 }
 
 struct SetSeriesView_Previews: PreviewProvider {
     
     @State static var prevTempExercise = Exercise(name: "example1")
+    @State static var prevSeries = 1
     
     static var previews: some View {
-        SetSeriesView(exercise: $prevTempExercise)
+        SetSeriesView(exercise: prevTempExercise, series: $prevSeries)
     }
 }

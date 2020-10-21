@@ -12,11 +12,11 @@ import SwiftUI
 
 class Training: Hashable, ObservableObject {
 
-    var trainingID: String
-    var trainingName: String
-    var trainingDescription: String
-    var initialDate: String
-    var listOfExercises: [Exercise]
+    @Published var trainingID: String
+    @Published var trainingName: String
+    @Published var trainingDescription: String
+    @Published var initialDate: String
+    @Published var listOfExercises: [Exercise]
     
     init() {
         self.trainingID = UUID().uuidString

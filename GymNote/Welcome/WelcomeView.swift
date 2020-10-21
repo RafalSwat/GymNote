@@ -17,21 +17,21 @@ struct WelcomeView: View {
     
     //MARK: View
     var body: some View {
-        KeyboardHost {
-            VStack {
-                Image("staticImage")
-                
-                ColorfulPicker(selection: $isRegistered)
-                
-                if isRegistered {
-                    LoginView(alreadySignIn: $alreadySignIn)
-                } else {
-                    SignupView(alreadySignIn: $alreadySignIn)
-                }
+        
+        VStack {
+            Image("staticImage")
+            
+            ColorfulPicker(selection: $isRegistered)
+            
+            if isRegistered {
+                LoginView(alreadySignIn: $alreadySignIn)
+            } else {
+                SignupView(alreadySignIn: $alreadySignIn)
             }
-            .padding()
-            .edgesIgnoringSafeArea(.vertical)
         }
+        .padding()
+        .edgesIgnoringSafeArea(.vertical)
+        
         .navigationBarTitle("Welcome", displayMode: .inline)
         .navigationBarBackButtonHidden(true)
     }

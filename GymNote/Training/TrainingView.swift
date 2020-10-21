@@ -11,12 +11,15 @@ import SwiftUI
 struct TrainingView: View {
     
     @EnvironmentObject var session: FireBaseSession
+    
     var training: Training
     let dataString = DateConverter.dateFormat.string(from: Date())
+    
     @State var conform = false
+    @State private var keyboardHandler = KeyboardHandler()
+    
     
     var body: some View {
-        KeyboardHost {
             VStack(alignment: .leading) {
                 List {
                     Section(header: Text("")) {
@@ -66,8 +69,12 @@ struct TrainingView: View {
                 .listStyle(PlainListStyle())
                 .navigationBarBackButtonHidden(false)
                 .navigationBarTitle(Text(training.trainingName), displayMode: .inline)
+                .padding(.bottom, keyboardHandler.keyboardHeight)
+                .animation(.default)
+                .edgesIgnoringSafeArea(.bottom)
             }
-        }
+            
+        
     }
 }
 

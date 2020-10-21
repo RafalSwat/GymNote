@@ -10,12 +10,17 @@ import SwiftUI
 
 struct EditExerciseView: View {
     
-    @Binding var exercise: Exercise
+    @ObservedObject var exercise: Exercise
+    @Binding var editMode: EditMode
+    @State var series = 1
     
     var body: some View {
         HStack {
             VStack {
                 HStack {
+                    Text("\(exercise.exerciseOrderInList + 1). ")
+                        .font(.headline)
+                     
                     if exercise.exerciseCreatedByUser {
                         Image(systemName: "hammer")
                     }
@@ -23,17 +28,35 @@ struct EditExerciseView: View {
                         .font(.headline)
                     Spacer()
                 }
-                SetSeriesView(exercise: $exercise)
+                HStack {
+                    Text("number of series:")
+                        .font(.callout)
+                        .foregroundColor(.secondary)
+                    Text(String(series))
+                        .onAppear() {
+                            self.series = self.exercise.exerciseNumberOfSeries
+                        }
+                    Spacer()
+                }
+                
             }
-        }.padding(.bottom, 10)
+            .offset(x: editMode == .active ? -40 : 0)
+            
+            Spacer()
+            SetSeriesView(exercise: exercise, series: $series)
+        }
+        .padding(.bottom, 10)
+        
     }
 }
 
 struct EditE$xerciseView_Previews: PreviewProvider {
     
     @State static var prevExercise = Exercise(name: "My Exercise")
+    @State static var prevEditMode = EditMode.inactive
     
     static var previews: some View {
-        EditExerciseView(exercise: $prevExercise)
+        EditExerciseView(exercise: prevExercise,
+                         editMode: $prevEditMode)
     }
 }
