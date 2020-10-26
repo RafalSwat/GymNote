@@ -13,6 +13,7 @@ struct EditTrainingView: View {
     @ObservedObject var training: Training
     @State var addMode = false
     @State var editMode = EditMode.inactive
+    @State var deleteMode = false
     
     var body: some View {
         VStack {
@@ -45,37 +46,42 @@ struct EditTrainingView: View {
                     Text("List of exercises")
                         .padding(.bottom, 5)
                     Spacer()
-                    Button(action: {
-                        if self.editMode == .inactive {
-                            self.editMode = .active
-                        } else {
-                            self.editMode = .inactive
-                        }
-                    }, label: {
-                        if self.editMode == .inactive {
-                            Image(systemName: "list.number")
-                                .font(.system(size: 20))
-                                .padding(.bottom, 5)
-                                .padding(.trailing, 8)
-                            
-                        } else {
-                            Image(systemName: "checkmark.square")
-                                .font(.system(size: 20))
-                                .padding(.bottom, 5)
-                                .padding(.trailing, 8)
-                        }
-                        
-                    })
+                    EditTrainingListOptions(editMode: $editMode,
+                                            deleteMode: $deleteMode)
                 }) {
 
                     ForEach(training.listOfExercises, id: \.exerciseID) { exercise in
+                        HStack {
                         EditExerciseView(exercise: exercise,
-                                         editMode: $editMode)
+                                         editMode: $editMode,
+                                         deleteMode: $deleteMode)
+                            if deleteMode {
+                                Button(action: {
+                                    guard let index = self.training.listOfExercises.firstIndex(of: exercise) else { return }
+                                    training.listOfExercises.remove(at: index)
+                                    
+                                    for index in 0..<training.listOfExercises.count {
+                                        self.training.listOfExercises[index].exerciseOrderInList = index
+                                    }
+                                }, label: {
+                                    Image(systemName: "trash")
+                                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                                        .foregroundColor(.red)
+                                        .padding(.leading)
+                                        .offset(y: -5)
+                                }).buttonStyle(PlainButtonStyle())
+                            }
+                        }
                             .onLongPressGesture{
                                 if self.editMode == .inactive {
-                                    self.editMode = .active
+                                    withAnimation {
+                                        self.editMode = .active
+                                        self.deleteMode = false
+                                    }
                                 } else {
-                                    self.editMode = .inactive
+                                    withAnimation {
+                                        self.editMode = .inactive
+                                    }
                                 }
                             }
                         
@@ -88,7 +94,6 @@ struct EditTrainingView: View {
                         }
                         
                     }
-                    
                 }
             }
             .listStyle(GroupedListStyle())

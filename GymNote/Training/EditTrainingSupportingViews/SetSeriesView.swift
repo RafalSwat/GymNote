@@ -13,6 +13,7 @@ struct SetSeriesView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @ObservedObject var exercise: Exercise // binding from list of selected
     @Binding var series: Int
+    @Binding var deleteMode: Bool
     
     var body: some View {
         HStack {
@@ -36,7 +37,6 @@ struct SetSeriesView: View {
                     .font(.largeTitle)
                     .foregroundColor(Color.red)
             }.buttonStyle(BorderlessButtonStyle())
-
         }
     }
 }
@@ -45,8 +45,9 @@ struct SetSeriesView_Previews: PreviewProvider {
     
     @State static var prevTempExercise = Exercise(name: "example1")
     @State static var prevSeries = 1
+    @State static var prevDeleteMode = false
     
     static var previews: some View {
-        SetSeriesView(exercise: prevTempExercise, series: $prevSeries)
+        SetSeriesView(exercise: prevTempExercise, series: $prevSeries, deleteMode: $prevDeleteMode)
     }
 }

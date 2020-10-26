@@ -79,6 +79,7 @@
 		07FCCE6F24817238008FE164 /* MainContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FCCE6E24817238008FE164 /* MainContainer.swift */; };
 		07FCCE7124817470008FE164 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FCCE7024817470008FE164 /* NoteView.swift */; };
 		07FCCE732482C8AD008FE164 /* ProfileHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FCCE722482C8AC008FE164 /* ProfileHost.swift */; };
+		07FF8E052546A8C4006D6732 /* EditTrainingListOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF8E042546A8C4006D6732 /* EditTrainingListOptions.swift */; };
 		EE22211229E4F6CC85548A14 /* libPods-GymNote.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C61A15B211046CA7B1058E /* libPods-GymNote.a */; };
 /* End PBXBuildFile section */
 
@@ -157,6 +158,7 @@
 		07FCCE6E24817238008FE164 /* MainContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainer.swift; sourceTree = "<group>"; };
 		07FCCE7024817470008FE164 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		07FCCE722482C8AC008FE164 /* ProfileHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHost.swift; sourceTree = "<group>"; };
+		07FF8E042546A8C4006D6732 /* EditTrainingListOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingListOptions.swift; sourceTree = "<group>"; };
 		48C61A15B211046CA7B1058E /* libPods-GymNote.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GymNote.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E06D0181E3AC8D4902FEB597 /* Pods-GymNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymNote.release.xcconfig"; path = "Target Support Files/Pods-GymNote/Pods-GymNote.release.xcconfig"; sourceTree = "<group>"; };
 		F9FD2D2FE6EC2B044CD864E0 /* Pods-GymNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymNote.debug.xcconfig"; path = "Target Support Files/Pods-GymNote/Pods-GymNote.debug.xcconfig"; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				073DEAF6249F456D008F3C72 /* EditExerciseView.swift */,
+				07FF8E042546A8C4006D6732 /* EditTrainingListOptions.swift */,
 				073DEF9B2433556100644ED3 /* SetSeriesView.swift */,
 				0742660C240C11C6003F2C32 /* ExercisesListView.swift */,
 				0740B3CB24321E40003D7520 /* ExerciseListSupportingViews */,
@@ -596,6 +599,7 @@
 				073B917A23A4025800F38F1D /* CircleImage.swift in Sources */,
 				074265FF240BC6C6003F2C32 /* Exercise.swift in Sources */,
 				07426608240BFD2A003F2C32 /* AddButton.swift in Sources */,
+				07FF8E052546A8C4006D6732 /* EditTrainingListOptions.swift in Sources */,
 				073DEAFB24A4FF37008F3C72 /* NumberTextField.swift in Sources */,
 				0727887123AA473500092E24 /* ProfileView.swift in Sources */,
 				073DEAF9249F4FF2008F3C72 /* TrainingHost.swift in Sources */,

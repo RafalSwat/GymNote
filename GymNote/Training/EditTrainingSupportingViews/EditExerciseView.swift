@@ -12,6 +12,7 @@ struct EditExerciseView: View {
     
     @ObservedObject var exercise: Exercise
     @Binding var editMode: EditMode
+    @Binding var deleteMode: Bool
     @State var series = 1
     
     var body: some View {
@@ -42,8 +43,11 @@ struct EditExerciseView: View {
             }
             .offset(x: editMode == .active ? -40 : 0)
             
+            
             Spacer()
-            SetSeriesView(exercise: exercise, series: $series)
+            SetSeriesView(exercise: exercise,
+                          series: $series,
+                          deleteMode: $deleteMode)
         }
         .padding(.bottom, 10)
         
@@ -52,11 +56,14 @@ struct EditExerciseView: View {
 
 struct EditE$xerciseView_Previews: PreviewProvider {
     
+    //static var prevListOfExercises = [Exercise]()
     @State static var prevExercise = Exercise(name: "My Exercise")
     @State static var prevEditMode = EditMode.inactive
+    @State static var prevDeleteMode = false
     
     static var previews: some View {
         EditExerciseView(exercise: prevExercise,
-                         editMode: $prevEditMode)
+                         editMode: $prevEditMode,
+                         deleteMode: $prevDeleteMode)
     }
 }
