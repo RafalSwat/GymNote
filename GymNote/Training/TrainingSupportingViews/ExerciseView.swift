@@ -38,11 +38,14 @@ struct ExerciseView: View {
                 HStack {
                     Text("\(index + 1).   ")
                         .frame(minWidth: 10, maxWidth: 20, minHeight: 0, maxHeight: .infinity)
+                    
+                    SeriesTextFields(repetitions: $repeats,
+                                     weight: $weight)
 
-                    Try(index: index,
-                        reps: self.repeats,
-                        weight: self.weight
-                    )
+//                    Try(index: index,
+//                        reps: self.repeats,
+//                        weight: self.weight
+//                    )
                 }
             }
         }

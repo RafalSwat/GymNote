@@ -38,12 +38,10 @@ struct AddUserExerciseView: View {
                             self.addTrainingSafely(exercise: newExercise)
                             self.exerciseName = ""
                             self.showAddView = false
-                            UIApplication.shared.endEditing() // hide keyboard
                         }
                     } else {
                         withAnimation {
                             self.showAddView = false
-                            UIApplication.shared.endEditing() // hide keyboard
                         }
                     }
                 }) {

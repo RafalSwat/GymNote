@@ -21,7 +21,6 @@
 		073DEAF2249EA864008F3C72 /* EditTrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAF1249EA864008F3C72 /* EditTrainingView.swift */; };
 		073DEAF7249F456D008F3C72 /* EditExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAF6249F456D008F3C72 /* EditExerciseView.swift */; };
 		073DEAF9249F4FF2008F3C72 /* TrainingHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAF8249F4FF2008F3C72 /* TrainingHost.swift */; };
-		073DEAFB24A4FF37008F3C72 /* NumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAFA24A4FF37008F3C72 /* NumberTextField.swift */; };
 		073DEAFD24A4FF88008F3C72 /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAFC24A4FF88008F3C72 /* Try.swift */; };
 		073DEF9C2433556100644ED3 /* SetSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEF9B2433556100644ED3 /* SetSeriesView.swift */; };
 		073E6C9523AA215800A06E80 /* TitleBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073E6C9423AA215800A06E80 /* TitleBelt.swift */; };
@@ -34,9 +33,7 @@
 		07426608240BFD2A003F2C32 /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07426607240BFD2A003F2C32 /* AddButton.swift */; };
 		0742660D240C11C6003F2C32 /* ExercisesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0742660C240C11C6003F2C32 /* ExercisesListView.swift */; };
 		0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0742660E240C1B72003F2C32 /* ExerciseListRow.swift */; };
-		07428FD924E2A4380062B892 /* SeriesTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07428FD824E2A4380062B892 /* SeriesTextFields.swift */; };
 		07428FDB24E2BEDC0062B892 /* Indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07428FDA24E2BEDC0062B892 /* Indicator.swift */; };
-		0743927E252DDD0A00430BD6 /* KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0743927D252DDD0A00430BD6 /* KeyboardHandler.swift */; };
 		0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757023E23A4D89500030991 /* RectangularButtonStyle.swift */; };
 		0757024323A4EAD500030991 /* ColorfulPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757024223A4EAD500030991 /* ColorfulPicker.swift */; };
 		0759DECC24E43BED00DBCC26 /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759DECB24E43BED00DBCC26 /* LineChartView.swift */; };
@@ -65,7 +62,6 @@
 		07C0B98923990D0E001632A0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B98823990D0E001632A0 /* LoginView.swift */; };
 		07C0B98B23992267001632A0 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B98A23992267001632A0 /* SignupView.swift */; };
 		07C0B98E239A73C8001632A0 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B98D239A73C8001632A0 /* HomeView.swift */; };
-		07C0B99823A144DF001632A0 /* KeyboardHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B99723A144DF001632A0 /* KeyboardHost.swift */; };
 		07C0B99C23A273D9001632A0 /* SwitchableSecureField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B99B23A273D9001632A0 /* SwitchableSecureField.swift */; };
 		07C922E02410EA2300AF6010 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922DF2410EA2300AF6010 /* SearchBar.swift */; };
 		07C922E22411078700AF6010 /* ExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E12411078700AF6010 /* ExitButton.swift */; };
@@ -80,6 +76,7 @@
 		07FCCE7124817470008FE164 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FCCE7024817470008FE164 /* NoteView.swift */; };
 		07FCCE732482C8AD008FE164 /* ProfileHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FCCE722482C8AC008FE164 /* ProfileHost.swift */; };
 		07FF8E052546A8C4006D6732 /* EditTrainingListOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF8E042546A8C4006D6732 /* EditTrainingListOptions.swift */; };
+		07FF8E5125496DED006D6732 /* SeriesTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF8E5025496DED006D6732 /* SeriesTextFields.swift */; };
 		EE22211229E4F6CC85548A14 /* libPods-GymNote.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C61A15B211046CA7B1058E /* libPods-GymNote.a */; };
 /* End PBXBuildFile section */
 
@@ -98,7 +95,6 @@
 		073DEAF1249EA864008F3C72 /* EditTrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingView.swift; sourceTree = "<group>"; };
 		073DEAF6249F456D008F3C72 /* EditExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExerciseView.swift; sourceTree = "<group>"; };
 		073DEAF8249F4FF2008F3C72 /* TrainingHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingHost.swift; sourceTree = "<group>"; };
-		073DEAFA24A4FF37008F3C72 /* NumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberTextField.swift; sourceTree = "<group>"; };
 		073DEAFC24A4FF88008F3C72 /* Try.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Try.swift; sourceTree = "<group>"; };
 		073DEF9B2433556100644ED3 /* SetSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSeriesView.swift; sourceTree = "<group>"; };
 		073E6C9423AA215800A06E80 /* TitleBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBelt.swift; sourceTree = "<group>"; };
@@ -111,9 +107,7 @@
 		07426607240BFD2A003F2C32 /* AddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButton.swift; sourceTree = "<group>"; };
 		0742660C240C11C6003F2C32 /* ExercisesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesListView.swift; sourceTree = "<group>"; };
 		0742660E240C1B72003F2C32 /* ExerciseListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListRow.swift; sourceTree = "<group>"; };
-		07428FD824E2A4380062B892 /* SeriesTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesTextFields.swift; sourceTree = "<group>"; };
 		07428FDA24E2BEDC0062B892 /* Indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Indicator.swift; sourceTree = "<group>"; };
-		0743927D252DDD0A00430BD6 /* KeyboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHandler.swift; sourceTree = "<group>"; };
 		0757023E23A4D89500030991 /* RectangularButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButtonStyle.swift; sourceTree = "<group>"; };
 		0757024223A4EAD500030991 /* ColorfulPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulPicker.swift; sourceTree = "<group>"; };
 		0759DECB24E43BED00DBCC26 /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
@@ -144,7 +138,6 @@
 		07C0B98823990D0E001632A0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		07C0B98A23992267001632A0 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		07C0B98D239A73C8001632A0 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		07C0B99723A144DF001632A0 /* KeyboardHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHost.swift; sourceTree = "<group>"; };
 		07C0B99B23A273D9001632A0 /* SwitchableSecureField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchableSecureField.swift; sourceTree = "<group>"; };
 		07C922DF2410EA2300AF6010 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		07C922E12411078700AF6010 /* ExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitButton.swift; sourceTree = "<group>"; };
@@ -159,6 +152,7 @@
 		07FCCE7024817470008FE164 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		07FCCE722482C8AC008FE164 /* ProfileHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHost.swift; sourceTree = "<group>"; };
 		07FF8E042546A8C4006D6732 /* EditTrainingListOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingListOptions.swift; sourceTree = "<group>"; };
+		07FF8E5025496DED006D6732 /* SeriesTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesTextFields.swift; sourceTree = "<group>"; };
 		48C61A15B211046CA7B1058E /* libPods-GymNote.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GymNote.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E06D0181E3AC8D4902FEB597 /* Pods-GymNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymNote.release.xcconfig"; path = "Target Support Files/Pods-GymNote/Pods-GymNote.release.xcconfig"; sourceTree = "<group>"; };
 		F9FD2D2FE6EC2B044CD864E0 /* Pods-GymNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymNote.debug.xcconfig"; path = "Target Support Files/Pods-GymNote/Pods-GymNote.debug.xcconfig"; sourceTree = "<group>"; };
@@ -188,8 +182,6 @@
 		073DEADE2498F7C2008F3C72 /* UIMechanicsSupport */ = {
 			isa = PBXGroup;
 			children = (
-				07C0B99723A144DF001632A0 /* KeyboardHost.swift */,
-				0743927D252DDD0A00430BD6 /* KeyboardHandler.swift */,
 				0759DECD24E54CFE00DBCC26 /* ArrayQuery.swift */,
 				07C922E52411140000AF6010 /* NavigationConfigurator.swift */,
 				073DEADF2498F852008F3C72 /* SwipeGesture.swift */,
@@ -280,9 +272,8 @@
 			isa = PBXGroup;
 			children = (
 				07C0B99B23A273D9001632A0 /* SwitchableSecureField.swift */,
-				073DEAFA24A4FF37008F3C72 /* NumberTextField.swift */,
 				073DEAFC24A4FF88008F3C72 /* Try.swift */,
-				07428FD824E2A4380062B892 /* SeriesTextFields.swift */,
+				07FF8E5025496DED006D6732 /* SeriesTextFields.swift */,
 			);
 			path = CustomTextFields;
 			sourceTree = "<group>";
@@ -579,15 +570,12 @@
 				07FCCE7124817470008FE164 /* NoteView.swift in Sources */,
 				07C922E02410EA2300AF6010 /* SearchBar.swift in Sources */,
 				07C922E424110A5700AF6010 /* AddBarItem.swift in Sources */,
-				07C0B99823A144DF001632A0 /* KeyboardHost.swift in Sources */,
 				078D3A0D2507F86B002291FC /* ChartMenuView.swift in Sources */,
 				073E6C9523AA215800A06E80 /* TitleBelt.swift in Sources */,
-				07428FD924E2A4380062B892 /* SeriesTextFields.swift in Sources */,
 				075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */,
 				07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */,
 				07840A9B248BD4E900FC3019 /* EditModeButton.swift in Sources */,
 				07FCCE732482C8AD008FE164 /* ProfileHost.swift in Sources */,
-				0743927E252DDD0A00430BD6 /* KeyboardHandler.swift in Sources */,
 				07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */,
 				077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */,
 				0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */,
@@ -600,8 +588,8 @@
 				074265FF240BC6C6003F2C32 /* Exercise.swift in Sources */,
 				07426608240BFD2A003F2C32 /* AddButton.swift in Sources */,
 				07FF8E052546A8C4006D6732 /* EditTrainingListOptions.swift in Sources */,
-				073DEAFB24A4FF37008F3C72 /* NumberTextField.swift in Sources */,
 				0727887123AA473500092E24 /* ProfileView.swift in Sources */,
+				07FF8E5125496DED006D6732 /* SeriesTextFields.swift in Sources */,
 				073DEAF9249F4FF2008F3C72 /* TrainingHost.swift in Sources */,
 				073DEAF7249F456D008F3C72 /* EditExerciseView.swift in Sources */,
 				073DEAE9249E5F11008F3C72 /* TrainingView.swift in Sources */,

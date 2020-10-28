@@ -25,92 +25,92 @@ struct ProfileEditView: View {
     
     var body: some View {
         
-        KeyboardHost {
-            ZStack {
-                List {
-                    Section(header: Text("Profile picture")) {
-                        HStack{
-                            Spacer()
-                            VStack {
-                                ZStack {
-                                    
-                                    CircleImage(image: Image(uiImage: profile.userImage))
-                                        .padding(.top, 20)
-                                        .padding(.bottom, 15)
-                                    ChangeButton(isChanged: $doneChangingPhoto)
-                                        .offset(x: 30, y: 40)
-                                        .scaleEffect(1.7)
-                                }
-                                Text("\(profile.userName) \(profile.userSurname)")
-                                    .font(.title)
+        
+        ZStack {
+            List {
+                Section(header: Text("Profile picture")) {
+                    HStack{
+                        Spacer()
+                        VStack {
+                            ZStack {
+                                
+                                CircleImage(image: Image(uiImage: profile.userImage))
+                                    .padding(.top, 20)
+                                    .padding(.bottom, 15)
+                                ChangeButton(isChanged: $doneChangingPhoto)
+                                    .offset(x: 30, y: 40)
+                                    .scaleEffect(1.7)
                             }
-                            Spacer()
+                            Text("\(profile.userName) \(profile.userSurname)")
+                                .font(.title)
                         }
+                        Spacer()
                     }
-                    
-                    Section(header: Text("Basic info")) {
-                        HStack {
-                            Text("Name:")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                            Spacer()
-                            TextField("Enter your name: ", text: $profile.userName)
-                        }
-                        HStack {
-                            Text("Surname: ")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                            Spacer()
-                            TextField("Enter your surname: ", text: $profile.userSurname)
-                        }}
-                    Section(header: Text("Height")) {
-                        
-                        
-                        Picker(
-                            selection: $profile.userHeight,
-                            label: EmptyView()) {
-                            
-                            ForEach(self.userPossibleHeight, id: \.self) {
-                                Text("\($0) cm")
-                            }
-                        }
-                        .pickerStyle(WheelPickerStyle())
-                        .labelsHidden()
-                        .frame(width: UIScreen.main.bounds.width/1.11)
-                        .clipped()
-                        
-                        
-                    }
-                    Section(header: Text("Gender")) {
-                        Picker(
-                            selection: self.$profile.userGender,
-                            label: EmptyView()) {
-                            
-                            ForEach(Gender.allCases, id: \.self) {
-                                Text("\($0.rawValue)").tag($0.rawValue)
-                            }
-                        }
-                    }
-                    
-                    .pickerStyle(SegmentedPickerStyle())
-                    .padding(.vertical)
-                    
-                    Section(header: Text("Date of birth")) {
-                        DatePicker(
-                            selection: $profile.userDateOfBirth,
-                            in: ...Date(),
-                            displayedComponents: .date) {
-                            
-                            Text("")
-                        }
-                    }
-                }.listStyle(GroupedListStyle())
-                
-                if (doneChangingPhoto) {
-                    CaptureImageView(isShown: $doneChangingPhoto, image: $profile.userImage)
                 }
+                
+                Section(header: Text("Basic info")) {
+                    HStack {
+                        Text("Name:")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                        TextField("Enter your name: ", text: $profile.userName)
+                    }
+                    HStack {
+                        Text("Surname: ")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                        TextField("Enter your surname: ", text: $profile.userSurname)
+                    }}
+                Section(header: Text("Height")) {
+                    
+                    
+                    Picker(
+                        selection: $profile.userHeight,
+                        label: EmptyView()) {
+                        
+                        ForEach(self.userPossibleHeight, id: \.self) {
+                            Text("\($0) cm")
+                        }
+                    }
+                    .pickerStyle(WheelPickerStyle())
+                    .labelsHidden()
+                    .frame(width: UIScreen.main.bounds.width/1.11)
+                    .clipped()
+                    
+                    
+                }
+                Section(header: Text("Gender")) {
+                    Picker(
+                        selection: self.$profile.userGender,
+                        label: EmptyView()) {
+                        
+                        ForEach(Gender.allCases, id: \.self) {
+                            Text("\($0.rawValue)").tag($0.rawValue)
+                        }
+                    }
+                }
+                
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.vertical)
+                
+                Section(header: Text("Date of birth")) {
+                    DatePicker(
+                        selection: $profile.userDateOfBirth,
+                        in: ...Date(),
+                        displayedComponents: .date) {
+                        
+                        Text("")
+                    }
+                }
+            }.listStyle(GroupedListStyle())
+            
+            if (doneChangingPhoto) {
+                CaptureImageView(isShown: $doneChangingPhoto, image: $profile.userImage)
             }
         }
+        
         .onAppear {
             self.setupGender()
         }

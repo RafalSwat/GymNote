@@ -16,9 +16,7 @@ struct TrainingView: View {
     let dataString = DateConverter.dateFormat.string(from: Date())
     
     @State var conform = false
-    @State private var keyboardHandler = KeyboardHandler()
-    
-    
+
     var body: some View {
             VStack(alignment: .leading) {
                 List {
@@ -69,9 +67,10 @@ struct TrainingView: View {
                 .listStyle(PlainListStyle())
                 .navigationBarBackButtonHidden(false)
                 .navigationBarTitle(Text(training.trainingName), displayMode: .inline)
-                .padding(.bottom, keyboardHandler.keyboardHeight)
                 .animation(.default)
-                .edgesIgnoringSafeArea(.bottom)
+                .gesture(DragGesture().onChanged{ _ in
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
+                })
             }
             
         
