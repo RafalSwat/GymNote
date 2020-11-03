@@ -24,7 +24,7 @@ struct RectangularButtonStyle: ButtonStyle {
             .background(LinearGradient(gradient: Gradient(colors: [fromColor, toColor]), startPoint: .leading, endPoint: .trailing))
             .cornerRadius(10)
             .compositingGroup()
-            .shadow(color: Color(UIColor.darkGray), radius: 10)
+            .shadow(color: Color.customShadow, radius: 5)
             .opacity(configuration.isPressed ? 0.5 : 1.0)
             .scaleEffect(configuration.isPressed ? 0.8 : 1.0)
         

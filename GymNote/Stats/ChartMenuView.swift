@@ -23,7 +23,7 @@ struct ChartMenuView: View {
                     Spacer()
                     
                     if(displayMode == .weight) {
-                        DualColorCheckmark()
+                        Image(systemName: "checkmark")
                     }
                 }}
             Divider()
@@ -35,7 +35,7 @@ struct ChartMenuView: View {
                     Spacer()
                     
                     if(displayMode == .repetition) {
-                        DualColorCheckmark()
+                        Image(systemName: "checkmark")
                     }
                 }
             }
@@ -62,7 +62,9 @@ struct ChartMenuView: View {
             }
             
             
-        }.font(.caption)
+        }
+        .font(.caption)
+        .padding()
     }
 }
 

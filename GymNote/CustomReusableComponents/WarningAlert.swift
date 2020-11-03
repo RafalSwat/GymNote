@@ -24,7 +24,7 @@ struct WarningAlert: View {
                 .font(.headline)
                 .foregroundColor(Color.white)
                 .frame(maxWidth: .infinity)
-                .background(LinearGradient(gradient: Gradient(colors:[Color.gray, Color.customDark, Color.gray]), startPoint: .trailing, endPoint: .leading))
+                //.background(LinearGradient(gradient: Gradient(colors:[Color.gray, Color.customDark, Color.gray]), startPoint: .trailing, endPoint: .leading))
             
             
             Text(message)
@@ -44,12 +44,10 @@ struct WarningAlert: View {
                         Text(buttonTitle)
                             .fontWeight(.semibold)
                     }
-                    .buttonStyle(RectangularButtonStyle(fromColor: .red, toColor: .orange, minWidth: 0, maxWidth: UIScreen.main.bounds.width/3, minHeight: 0, maxHeight: 35))
-                        
+                    .buttonStyle(RectangularButtonStyle(fromColor: Color.customLight, toColor: Color.customDark, minWidth: 0, maxWidth: UIScreen.main.bounds.width/3, minHeight: 0, maxHeight: 35))
                     .padding()
-
         }
-        .background(Color.gray)
+        .background(LinearGradient(gradient: Gradient(colors:[Color.customLight, Color.customDark]), startPoint: .bottomLeading, endPoint: .topTrailing))
         .cornerRadius(15)
         .padding()
     }

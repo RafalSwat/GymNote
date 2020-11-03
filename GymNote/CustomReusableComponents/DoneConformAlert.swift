@@ -62,12 +62,6 @@ struct DoneConformAlert: View {
 
     }
 }
-//MARK: move me to another file!
-extension Color {
-    static let customDark = Color("customDark")
-    static let magnesium = Color("magnesium")
-    static let darkRed = Color("darkRed")
-}
 
 struct DoneConformAlert_Previews: PreviewProvider {
     @State static var prevShowAlert = true

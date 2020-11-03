@@ -50,6 +50,7 @@
 		07840A99248BA17900FC3019 /* SignOutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07840A98248BA17900FC3019 /* SignOutButton.swift */; };
 		07840A9B248BD4E900FC3019 /* EditModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07840A9A248BD4E900FC3019 /* EditModeButton.swift */; };
 		078D3A0D2507F86B002291FC /* ChartMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078D3A0C2507F86B002291FC /* ChartMenuView.swift */; };
+		079BF91F2551C3400066B903 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079BF91E2551C3400066B903 /* ColorExtension.swift */; };
 		07AC9DE924E323420025AD39 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AC9DE824E323420025AD39 /* ChartView.swift */; };
 		07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B9692397BE00001632A0 /* AppDelegate.swift */; };
 		07C0B96C2397BE00001632A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C0B96B2397BE00001632A0 /* SceneDelegate.swift */; };
@@ -123,6 +124,7 @@
 		07840A98248BA17900FC3019 /* SignOutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutButton.swift; sourceTree = "<group>"; };
 		07840A9A248BD4E900FC3019 /* EditModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeButton.swift; sourceTree = "<group>"; };
 		078D3A0C2507F86B002291FC /* ChartMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartMenuView.swift; sourceTree = "<group>"; };
+		079BF91E2551C3400066B903 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		07AC9DE824E323420025AD39 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		07C0B9662397BE00001632A0 /* GymNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07C0B9692397BE00001632A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 				073B917923A4025800F38F1D /* CircleImage.swift */,
 				0757024223A4EAD500030991 /* ColorfulPicker.swift */,
 				0720992023F7417E00B75CF5 /* DoneConformAlert.swift */,
+				079BF91E2551C3400066B903 /* ColorExtension.swift */,
 				07F55DA124AF3D790024AB1A /* ActionAlert.swift */,
 				07F55DA324AF3E690024AB1A /* WarningAlert.swift */,
 				07C922E72411582400AF6010 /* DualColorCheckmark.swift */,
@@ -555,6 +558,7 @@
 				07840A94248B9D9400FC3019 /* ContentView.swift in Sources */,
 				07840A92248ACD8100FC3019 /* CancelEditModeButton.swift in Sources */,
 				07840A99248BA17900FC3019 /* SignOutButton.swift in Sources */,
+				079BF91F2551C3400066B903 /* ColorExtension.swift in Sources */,
 				073DEAE02498F852008F3C72 /* SwipeGesture.swift in Sources */,
 				07C922E22411078700AF6010 /* ExitButton.swift in Sources */,
 				07C0B9832397DE58001632A0 /* UserProfile.swift in Sources */,

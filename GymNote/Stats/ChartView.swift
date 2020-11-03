@@ -16,19 +16,10 @@ struct ChartView: View {
     @State var showMenu: Bool = false
     
     var body: some View {
-        
-            let drag = DragGesture()
-                .onEnded {
-                    if $0.translation.width < -100 {
-                        withAnimation {
-                            self.showMenu = false
-                        }
-                    }
-            }
             
             return GeometryReader { geometry in
                 NavigationView {
-                ZStack(alignment: .leading) {
+                ZStack(alignment: .topTrailing) {
                     VStack {
                         if self.chosenStats != nil {
                             LineChartView(stats: self.chosenStats!, chartCase: .weight)
@@ -57,24 +48,28 @@ struct ChartView: View {
                             self.setupStats()
                         }
                     }
-                    .offset(x: self.showMenu ? geometry.size.width/2 : 0)
-                    .transition(.move(edge: .leading))
-                    if self.showMenu {
+                    if showMenu {
                         ChartMenuView(displayMode: .weight)
-                            .frame(width: geometry.size.width/2)
-                            .transition(.move(edge: .leading))
+                            .frame(width: 200, height: 300)
+                            .background(LinearGradient(gradient: Gradient(colors:[Color.customLight, Color.customDark]), startPoint: .bottomLeading, endPoint: .topTrailing))
+                            .cornerRadius(10)
+                            .shadow(color: Color.customShadow, radius: 5)
+                            .transition(
+                                AnyTransition.scale(scale: 0.01)
+                                    .combined(with: AnyTransition.offset(x: geometry.size.width/2,
+                                                                         y: -geometry.size.height/2))
+                            )
+                            
                     }
                 }
                 .padding(.top)
                 .navigationBarTitle(Text(self.chartTitle), displayMode: .inline)
                 .navigationBarItems(trailing: Button(action: {
-                    withAnimation { self.showMenu.toggle() }
+                    withAnimation(.spring()) { self.showMenu.toggle() }
                 }) {
                     Image(systemName: "line.horizontal.3")
                         .font(.title)
-                    
                 })
-                .gesture(drag)
             }
         }
     }
