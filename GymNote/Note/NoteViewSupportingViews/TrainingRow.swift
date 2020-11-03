@@ -17,6 +17,9 @@ struct TrainingRow: View {
     @State var showButtons = false
     @State var showDetails = false
     @State var goToTraining = false
+    @Binding var showAlert: Bool
+    @Binding var selectedTraining: Training?
+
 
     var body: some View {
         VStack {
@@ -58,10 +61,9 @@ struct TrainingRow: View {
                             .offset(x: 0, y: 2)
                         
                         DeleteButton(deleteAction: {
-                            if let indexOfTrainingToRemove = self.session.userSession?.userTrainings.firstIndex(of: self.training) {
-                                self.removeTraining(at: indexOfTrainingToRemove)
-                                self.session.userSession?.userTrainings.remove(at: indexOfTrainingToRemove)
-                                self.listOfTrainings.array.remove(at: indexOfTrainingToRemove)
+                            withAnimation(.easeInOut) {
+                                self.showAlert.toggle()
+                                self.selectedTraining = training
                             }
                         })
                             .opacity(showButtons ? 1 : 0).animation(.default)
@@ -89,20 +91,9 @@ struct TrainingRow: View {
             }
             
         }
+
+        
     }
-    
-    
-    func removeTraining(at index: Int) {
-        if let userID = self.session.userSession?.userProfile.userID {
-            self.session.deleteTrainingFromDB(userID: userID, training: training) { errorOccur, errorDescription in
-                if errorOccur {
-                    print(errorDescription ?? "Unknow error occur during removing training!")
-                }
-                
-            }
-        }
-    }
-    
 }
 
 
@@ -117,11 +108,16 @@ struct TrainingRow_Previews: PreviewProvider {
     @State static var prevListOfTraining = [Training]()
     @State static var prevShowButtons = false
     @State static var prevShowDetails = false
+    @State static var prevShowAlert = false
+    @State static var prevSelectedTraining: Training?
+
     
     static var previews: some View {
         if #available(iOS 14.0, *) {
             TrainingRow(listOfTrainings: ObservableArray(array: [Training]()).observeChildrenChanges(),
-                        training: prevTraining)
+                        training: prevTraining,
+                        showAlert: $prevShowAlert,
+                        selectedTraining: $prevSelectedTraining)
         } else {
             // Fallback on earlier versions
         }

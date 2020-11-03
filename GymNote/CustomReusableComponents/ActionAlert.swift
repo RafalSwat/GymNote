@@ -22,12 +22,19 @@ struct ActionAlert: View {
         
         VStack {
             Text(title)
-                .font(.title)
+                .padding(.vertical, 5)
+                .font(.headline)
+                .foregroundColor(Color.white)
                 .frame(maxWidth: .infinity)
+                .background(LinearGradient(gradient: Gradient(colors:[Color.gray, Color.customDark, Color.gray]), startPoint: .trailing, endPoint: .leading))
             
             Divider()
             
             Text(message)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+                .padding(.top)
             
             HStack {
                 Group {
@@ -36,7 +43,7 @@ struct ActionAlert: View {
                     }) {
                         Text(secondButtonTitle)
                     }
-                        .buttonStyle(RectangularButtonStyle())
+                    .buttonStyle(RectangularButtonStyle(fromColor: .darkRed, toColor: .red, minWidth: 0, maxWidth: UIScreen.main.bounds.width/3, minHeight: 0, maxHeight: 35))
                         .padding()
                         
                     
@@ -46,13 +53,16 @@ struct ActionAlert: View {
                     }) {
                         Text(firstButtonTitle)
                     }
-                        .buttonStyle(RectangularButtonStyle())
+                        .buttonStyle(RectangularButtonStyle(fromColor: .red, toColor: .orange, minWidth: 0, maxWidth: UIScreen.main.bounds.width/3, minHeight: 0, maxHeight: 35))
                         
                         .padding()
                         
                 }
             }
         }
+        .background(Color.gray)
+        .cornerRadius(15)
+        .padding()
         
         .cornerRadius(20)
         .padding()

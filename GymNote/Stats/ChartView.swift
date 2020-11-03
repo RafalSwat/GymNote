@@ -130,7 +130,8 @@ struct ChartView: View {
                                               weight: Int.random(in: 0..<20))
                     series.append(singleSeries)
                 }
-                let singleData = ExerciseData(numberOfSeries: 3,
+                let singleData = ExerciseData(dataID: UUID().uuidString,
+                                              numberOfSeries: 3,
                                               date: dummyDates[i],
                                               series: series)
                 exerciseData.append(singleData)

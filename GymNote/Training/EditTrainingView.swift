@@ -49,12 +49,12 @@ struct EditTrainingView: View {
                     EditTrainingListOptions(editMode: $editMode,
                                             deleteMode: $deleteMode)
                 }) {
-
+                    
                     ForEach(training.listOfExercises, id: \.exerciseID) { exercise in
                         HStack {
-                        EditExerciseView(exercise: exercise,
-                                         editMode: $editMode,
-                                         deleteMode: $deleteMode)
+                            EditExerciseView(exercise: exercise,
+                                             editMode: $editMode,
+                                             deleteMode: $deleteMode)
                             if deleteMode {
                                 Button(action: {
                                     guard let index = self.training.listOfExercises.firstIndex(of: exercise) else { return }
@@ -72,18 +72,18 @@ struct EditTrainingView: View {
                                 }).buttonStyle(PlainButtonStyle())
                             }
                         }
-                            .onLongPressGesture{
-                                if self.editMode == .inactive {
-                                    withAnimation {
-                                        self.editMode = .active
-                                        self.deleteMode = false
-                                    }
-                                } else {
-                                    withAnimation {
-                                        self.editMode = .inactive
-                                    }
+                        .onLongPressGesture{
+                            if self.editMode == .inactive {
+                                withAnimation {
+                                    self.editMode = .active
+                                    self.deleteMode = false
+                                }
+                            } else {
+                                withAnimation {
+                                    self.editMode = .inactive
                                 }
                             }
+                        }
                         
                     }
                     .onMove { (source: IndexSet, destination: Int) -> Void in
@@ -103,7 +103,7 @@ struct EditTrainingView: View {
                 .sheet(isPresented: $addMode) {
                     ExercisesListView(finishTyping: self.$addMode, selectedExercises: self.$training.listOfExercises)
                 }
-                
+            
         }
         .environment(\.editMode, $editMode)
         .navigationBarBackButtonHidden(true)

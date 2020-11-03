@@ -14,7 +14,7 @@ struct WarningAlert: View {
     var title: String
     var message: String
     var buttonTitle: String
-    var action: () -> Void
+    //var action: () -> Void
     
     
     var body: some View {
@@ -44,7 +44,7 @@ struct WarningAlert: View {
                         Text(buttonTitle)
                             .fontWeight(.semibold)
                     }
-                    .buttonStyle(RectangularButtonStyle(fromColor: .gray, toColor: .gray, minWidth: 0, maxWidth: UIScreen.main.bounds.width/3, minHeight: 0, maxHeight: UIScreen.main.bounds.height/15))
+                    .buttonStyle(RectangularButtonStyle(fromColor: .red, toColor: .orange, minWidth: 0, maxWidth: UIScreen.main.bounds.width/3, minHeight: 0, maxHeight: 35))
                         
                     .padding()
 
@@ -62,15 +62,11 @@ struct WarningAlert_Previews: PreviewProvider {
     static var prevMessage = "Alert Message"
     static var prevButtonTitle = "Ok"
     
-    static func prevAction() {
-        print("Prev Alert Action")
-    }
     
     static var previews: some View {
         WarningAlert(showAlert: $prevShowAlert,
                      title: prevTitle,
                      message: prevMessage,
-                     buttonTitle: prevButtonTitle,
-                     action: prevAction)
+                     buttonTitle: prevButtonTitle)
     }
 }

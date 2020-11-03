@@ -387,4 +387,49 @@ class FireBaseSession: ObservableObject {
         }
 
     }
+    
+    func uploadUserStatistics(userID: String, statistics: ExerciseStatistics, completion: @escaping (Bool, String?)->()) {
+        
+        for data in statistics.exerciseData {
+            
+            let dataString = DateConverter.dateFormat.string(from: data.exerciseDate)
+            
+            self.usersDBRef.child("UserStatistics").child(userID).child(statistics.exerciseID).child(data.exerciseDataID).setValue(dataString) {
+                (error:Error?, ref:DatabaseReference) in
+                if let error = error {
+                    print("Data path: [UserStatistics/...] could not be saved: \(error.localizedDescription).")
+                    completion(true, error.localizedDescription)
+                } else {
+                    print("Data path: [UserStatistics/...] saved successfully!")
+                    completion(false, nil)
+                }
+            }
+            
+            for series in data.exerciseSeries {
+                self.usersDBRef.child("StatisticList").child(data.exerciseDataID).child(series.seriesID).setValue(1) {
+                    (error:Error?, ref:DatabaseReference) in
+                    if let error = error {
+                        print("Data path: [StatisticList/...] could not be saved: \(error.localizedDescription).")
+                        completion(true, error.localizedDescription)
+                    } else {
+                        print("Data path: [StatisticList/...] saved successfully!")
+                        completion(false, nil)
+                    }
+                }
+                
+                self.usersDBRef.child("Statistics").child(series.seriesID).setValue(
+                    ["repetitions" : series.exerciseRepeats,
+                     "weight" : series.exerciseWeight]) {
+                    (error:Error?, ref:DatabaseReference) in
+                    if let error = error {
+                        print("Data path: [Statistics/...] could not be saved: \(error.localizedDescription).")
+                        completion(true, error.localizedDescription)
+                    } else {
+                        print("Data path: [Statistics/...] saved successfully!")
+                        completion(false, nil)
+                    }
+                }
+            }
+        }
+    }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-struct ExerciseStatistics: Equatable {
+class ExerciseStatistics: Equatable, ObservableObject {
     
     var exerciseID: String
     var exerciseName: String
@@ -21,7 +21,7 @@ struct ExerciseStatistics: Equatable {
         self.exerciseID = UUID().uuidString
         self.exerciseName = "My Exercise"
         self.exerciseCreatedByUser = false
-        self.exerciseData = [ExerciseData()]
+        self.exerciseData = [ExerciseData]()
     }
     
     init(id: String,

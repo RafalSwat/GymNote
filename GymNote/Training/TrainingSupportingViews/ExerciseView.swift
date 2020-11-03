@@ -13,9 +13,8 @@ struct ExerciseView: View {
     @EnvironmentObject var session: FireBaseSession
     var exercise: Exercise
     @Binding var conform: Bool
-    @State var repeats = ""
-    @State var weight = ""
-    
+    @Binding var arrayOfReps: [String]
+    @Binding var arrayOfWeights: [String]
     
     var body: some View {
         
@@ -39,13 +38,9 @@ struct ExerciseView: View {
                     Text("\(index + 1).   ")
                         .frame(minWidth: 10, maxWidth: 20, minHeight: 0, maxHeight: .infinity)
                     
-                    SeriesTextFields(repetitions: $repeats,
-                                     weight: $weight)
-
-//                    Try(index: index,
-//                        reps: self.repeats,
-//                        weight: self.weight
-//                    )
+                    SeriesTextFields(repetitions: self.$arrayOfReps[index],
+                                     weight: self.$arrayOfWeights[index])
+                    
                 }
             }
         }
@@ -56,8 +51,12 @@ struct ExerciseView_Previews: PreviewProvider {
     
     static var prevExercise = Exercise(name: "My Exercise")
     @State static var prevConform = false
+    @State static var array = [String]()
     
     static var previews: some View {
-        ExerciseView(exercise: prevExercise, conform: $prevConform)
+        ExerciseView(exercise: prevExercise,
+                     conform: $prevConform,
+                     arrayOfReps: $array,
+                     arrayOfWeights: $array)
     }
 }

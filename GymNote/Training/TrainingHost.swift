@@ -18,27 +18,38 @@ struct TrainingHost: View {
     @StateObject var draftTraining = Training()
     
     @State var showWarning = false
+    @State var warningTitle = "Warning"
     @State var warningMessage = ""
-
+    
     var body: some View {
         VStack {
             if editMode {
                 ZStack {
-                    EditTrainingView(training: draftTraining)
-                        .onAppear {
-                            self.assignTrainingToDraftTraining()
+                    ZStack {
+                        
+                        EditTrainingView(training: draftTraining)
+                            .onAppear {
+                                self.assignTrainingToDraftTraining()
+                            }
+                            .disabled(showWarning)
+                            .navigationBarHidden(showWarning)
+                        if showWarning {
+                            Color.black.opacity(0.7)
                         }
+                    }
                     if showWarning {
                         WarningAlert(showAlert: $showWarning,
-                                     title: "Warning",
+                                     title: warningTitle,
                                      message: warningMessage,
-                                     buttonTitle: "Ok",
-                                     action: {})
-                            
+                                     buttonTitle: "Ok")
+                        
                     }
                 }
             } else {
-                TrainingView(training: training)
+                TrainingView(training: training,
+                             showWarning: $showWarning,
+                             alertTitle: $warningTitle,
+                             alertMessage: $warningMessage)
             }
         }
         .navigationBarItems(
@@ -53,9 +64,9 @@ struct TrainingHost: View {
                     } else {
                         self.editMode = true
                     }
-                    }) {
-                        Text(self.editMode == true ? "Done" : "Edit")
-                    }
+                }) {
+                    Text(self.editMode == true ? "Done" : "Edit")
+                }
         )
     }
     //MARK: Functions
@@ -73,11 +84,13 @@ struct TrainingHost: View {
         self.training.initialDate = self.draftTraining.initialDate
         self.training.listOfExercises = self.draftTraining.listOfExercises
     }
-
+    
     func saveTrainingInTheDB() {
         if draftTraining.listOfExercises.isEmpty {
             self.warningMessage = "You can`t confirm training without any exercises! Please, add some exercises to your program."
-            self.showWarning = true
+            withAnimation(.easeInOut) {
+                self.showWarning = true
+            }
         } else if draftTraining.trainingName == "" {
             draftTraining.trainingName = DateConverter.dateFormat.string(from: Date())
             if let id = self.session.userSession?.userProfile.userID {
@@ -85,7 +98,9 @@ struct TrainingHost: View {
                 self.session.uploadTrainingToDB(userID: id, training: training, completion: { errorOccur, error in
                     // if error during saving occur then edit mode must be true (user stays in EditMode util tapped cancel)
                     self.editMode = errorOccur
-                    self.showWarning = errorOccur
+                    withAnimation(.easeInOut) {
+                        self.showWarning = errorOccur
+                    }
                     if let errorDescription =  error {
                         self.warningMessage = errorDescription
                     }
@@ -98,7 +113,9 @@ struct TrainingHost: View {
                 self.session.uploadTrainingToDB(userID: id, training: training, completion: { errorOccur, error in
                     // if error during saving occur then edit mode must be true (user stays in EditMode util tapped cancel)
                     self.editMode = errorOccur
-                    self.showWarning = errorOccur
+                    withAnimation(.easeInOut) {
+                        self.showWarning = errorOccur
+                    }
                     if let errorDescription =  error {
                         self.warningMessage = errorDescription
                     }
