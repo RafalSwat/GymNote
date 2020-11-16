@@ -44,13 +44,12 @@ struct TrainingRow: View {
                 
                 Spacer()
                 ZStack {
-                    if !showButtons {
-                        Image(systemName: "chevron.left")
-                            .offset(x: UIScreen.main.bounds.width/7, y: 0)
-                    }
                     HStack {
                         if showButtons {
                             Image(systemName: "chevron.right")
+                        } else {
+                            Image(systemName: "chevron.left")
+                                .offset(x: UIScreen.main.bounds.width/3.6, y: 0)
                         }
                         
                         UseButton(useAction: {
@@ -77,7 +76,9 @@ struct TrainingRow: View {
                 TrainingDetails(training: training)
             }
             
-            NavigationLink(destination: TrainingHost(training: training, draftTraining: training), isActive: self.$goToTraining) { EmptyView() }
+            NavigationLink(destination: TrainingHost(training: training, draftTraining: training), isActive: self.$goToTraining) { EmptyView()}
+                .frame(width: 0)
+                .opacity(0)
 
         }
         .contentShape(Rectangle())
@@ -103,7 +104,7 @@ struct TrainingRow_Previews: PreviewProvider {
                                               name: "My Program",
                                               description: "My litte subscription ",
                                               date: "01-Jan-2020",
-                                              exercises: [Exercise(name: "My Exercise")])
+                                              exercises: [TrainingsComponent(exercise: Exercise(), numberOfSeries: 1, orderInList: 1)])
     
     @State static var prevListOfTraining = [Training]()
     @State static var prevShowButtons = false

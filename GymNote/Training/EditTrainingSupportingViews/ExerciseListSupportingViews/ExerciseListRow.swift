@@ -33,7 +33,7 @@ struct ExerciseListRow: View {
 
 struct ExerciseListRow_Previews: PreviewProvider {
     
-    static var prevExercise = Exercise(name: "example exercise")
+    static var prevExercise = Exercise()
     static func prevAction(){return}
     
     static var previews: some View {

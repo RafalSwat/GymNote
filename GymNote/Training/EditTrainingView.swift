@@ -50,14 +50,14 @@ struct EditTrainingView: View {
                                             deleteMode: $deleteMode)
                 }) {
                     
-                    ForEach(training.listOfExercises, id: \.exerciseID) { exercise in
+                    ForEach(training.listOfExercises, id: \.self) { trainingComponent in
                         HStack {
-                            EditExerciseView(exercise: exercise,
+                            EditExerciseView(trainingComponent: trainingComponent,
                                              editMode: $editMode,
                                              deleteMode: $deleteMode)
                             if deleteMode {
                                 Button(action: {
-                                    guard let index = self.training.listOfExercises.firstIndex(of: exercise) else { return }
+                                    guard let index = self.training.listOfExercises.firstIndex(of: trainingComponent) else { return }
                                     training.listOfExercises.remove(at: index)
                                     
                                     for index in 0..<training.listOfExercises.count {
@@ -101,7 +101,7 @@ struct EditTrainingView: View {
             AddButton(addingMode: $addMode)
                 .padding()
                 .sheet(isPresented: $addMode) {
-                    ExercisesListView(finishTyping: self.$addMode, selectedExercises: self.$training.listOfExercises)
+                    ExercisesListView(finishTyping: self.$addMode, selectedComponents: self.$training.listOfExercises)
                 }
             
         }

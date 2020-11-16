@@ -13,103 +13,22 @@ class Exercise: Hashable, Identifiable, ObservableObject {
     
     var exerciseID: String
     var exerciseName: String
-    @Published var exerciseSeries: [Series]
-    @Published var exerciseIsCheck: Bool
     var exerciseCreatedByUser: Bool
-    @Published var exerciseNumberOfSeries: Int
-    @Published var exerciseOrderInList: Int
     
-    init(name: String) {
+    init(id: String,
+         name: String,
+         createdByUser: Bool) {
         
-        self.exerciseID = UUID().uuidString
+        self.exerciseID = id
         self.exerciseName = name
-        self.exerciseSeries = [Series]()
-        self.exerciseIsCheck = false
+        self.exerciseCreatedByUser = createdByUser
+    }
+    init() {
+        self.exerciseID = "1"
+        self.exerciseName = "my exercise"
         self.exerciseCreatedByUser = false
-        self.exerciseNumberOfSeries = 1
-        self.exerciseOrderInList = 0
     }
-    
-    init(name: String,
-         isCheck: Bool) {
-        
-        self.exerciseID = UUID().uuidString
-        self.exerciseName = name
-        self.exerciseSeries = [Series]()
-        self.exerciseIsCheck = isCheck
-        self.exerciseCreatedByUser = false
-        self.exerciseNumberOfSeries = 1
-        self.exerciseOrderInList = 0
-    }
-    init(name: String,
-         createdByUser: Bool,
-         isCheck: Bool) {
-        
-        self.exerciseID = UUID().uuidString
-        self.exerciseName = name
-        self.exerciseSeries = [Series]()
-        self.exerciseIsCheck = isCheck
-        self.exerciseCreatedByUser = createdByUser
-        self.exerciseNumberOfSeries = 1
-        self.exerciseOrderInList = 0
-    }
-    init(id: String,
-         name: String,
-         numberOfSeries: Int) {
-        
-        self.exerciseID = id
-        self.exerciseName = name
-        self.exerciseSeries = [Series]()
-        self.exerciseIsCheck = false
-        self.exerciseCreatedByUser = false
-        self.exerciseNumberOfSeries = numberOfSeries
-        self.exerciseOrderInList = 0
-    }
-    init(id: String,
-         name: String,
-         createdByUser: Bool,
-         numberOfSeries: Int,
-         orderInList: Int) {
-        
-        self.exerciseID = id
-        self.exerciseName = name
-        self.exerciseSeries = [Series]()
-        self.exerciseIsCheck = false
-        self.exerciseCreatedByUser = createdByUser
-        self.exerciseNumberOfSeries = numberOfSeries
-        self.exerciseOrderInList = orderInList
-    }
-    init(id: String,
-         name: String,
-         series: [Series],
-         isCheck: Bool,
-         createdByUser: Bool,
-         numberOfSeries: Int) {
-        
-        self.exerciseID = id
-        self.exerciseName = name
-        self.exerciseSeries = series
-        self.exerciseIsCheck = isCheck
-        self.exerciseCreatedByUser = createdByUser
-        self.exerciseNumberOfSeries = numberOfSeries
-        self.exerciseOrderInList = 0
-    }
-    init(id: String,
-         name: String,
-         series: [Series],
-         isCheck: Bool,
-         createdByUser: Bool,
-         numberOfSeries: Int,
-         orderInList: Int) {
-        
-        self.exerciseID = id
-        self.exerciseName = name
-        self.exerciseSeries = series
-        self.exerciseIsCheck = isCheck
-        self.exerciseCreatedByUser = createdByUser
-        self.exerciseNumberOfSeries = numberOfSeries
-        self.exerciseOrderInList = orderInList
-    }
+
     
 
     //MARK: String is a built-in type, which means it is hashable by default

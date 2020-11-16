@@ -103,7 +103,7 @@ struct NoteView_Previews: PreviewProvider {
                                                name: "My Training",
                                                description: "My litte subscription",
                                                date: "01-Jan-2020",
-                                               exercises: [Exercise(name: "My Exercise")])]
+                                               exercises: [TrainingsComponent(exercise: Exercise(), numberOfSeries: 1, orderInList: 1)])]
     
     static var previews: some View {
         NavigationView {

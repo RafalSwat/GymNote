@@ -14,7 +14,7 @@ struct AddUserExerciseView: View {
     @State var exerciseName = ""
     @State var isCheck = true
     @Binding var showAddView: Bool
-    @Binding var list: [Exercise]
+    @Binding var list: [TrainingsComponent]
     
     var body: some View {
         VStack {
@@ -34,8 +34,12 @@ struct AddUserExerciseView: View {
                 Button(action: {
                     if self.exerciseName != "" {
                         withAnimation {
-                            let newExercise = Exercise(name: self.exerciseName, createdByUser: true, isCheck: self.isCheck)
-                            self.addTrainingSafely(exercise: newExercise)
+                            let newComponent = TrainingsComponent(exercise: Exercise(id: UUID().uuidString,
+                                                                                    name: self.exerciseName,
+                                                                                    createdByUser: true),
+                                                                 numberOfSeries: 1,
+                                                                 orderInList: 1)
+                            self.addTrainingSafely(trainingComponent: newComponent)
                             self.exerciseName = ""
                             self.showAddView = false
                         }
@@ -52,15 +56,15 @@ struct AddUserExerciseView: View {
             }.padding()
         }.background(colorScheme == .light ? Color.magnesium :  Color.customDark)
     }
-    func addTrainingSafely(exercise: Exercise) {
-        self.list.insert(exercise, at: self.list.startIndex)
+    func addTrainingSafely(trainingComponent: TrainingsComponent) {
+        self.list.insert(trainingComponent, at: self.list.startIndex)
         sleep(1) // dont know why but error occur when user tapeed addbutton to quickly
     }
 }
 
 struct AddUserExerciseView_Previews: PreviewProvider {
     
-    @State static var prevList = [Exercise]()
+    @State static var prevList = [TrainingsComponent]()
     @State static var prevShowAddView = true
     
     static var previews: some View {

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct EditExerciseView: View {
     
-    @ObservedObject var exercise: Exercise
+    @ObservedObject var trainingComponent: TrainingsComponent
     @Binding var editMode: EditMode
     @Binding var deleteMode: Bool
     @State var series = 1
@@ -19,13 +19,13 @@ struct EditExerciseView: View {
         HStack {
             VStack {
                 HStack {
-                    Text("\(exercise.exerciseOrderInList + 1). ")
+                    Text("\(trainingComponent.exerciseOrderInList + 1). ")
                         .font(.headline)
                      
-                    if exercise.exerciseCreatedByUser {
+                    if trainingComponent.exercise.exerciseCreatedByUser {
                         Image(systemName: "hammer")
                     }
-                    Text(exercise.exerciseName)
+                    Text(trainingComponent.exercise.exerciseName)
                         .font(.headline)
                     Spacer()
                 }
@@ -35,7 +35,7 @@ struct EditExerciseView: View {
                         .foregroundColor(.secondary)
                     Text(String(series))
                         .onAppear() {
-                            self.series = self.exercise.exerciseNumberOfSeries
+                            self.series = self.trainingComponent.exerciseNumberOfSeries
                         }
                     Spacer()
                 }
@@ -45,7 +45,7 @@ struct EditExerciseView: View {
             
             
             Spacer()
-            SetSeriesView(exercise: exercise,
+            SetSeriesView(trainingComponent: trainingComponent,
                           series: $series,
                           deleteMode: $deleteMode)
         }
@@ -57,12 +57,12 @@ struct EditExerciseView: View {
 struct EditE$xerciseView_Previews: PreviewProvider {
     
     //static var prevListOfExercises = [Exercise]()
-    @State static var prevExercise = Exercise(name: "My Exercise")
+    @State static var prevExercise = TrainingsComponent(exercise: Exercise(), numberOfSeries: 1, orderInList: 1)
     @State static var prevEditMode = EditMode.inactive
     @State static var prevDeleteMode = false
     
     static var previews: some View {
-        EditExerciseView(exercise: prevExercise,
+        EditExerciseView(trainingComponent: prevExercise,
                          editMode: $prevEditMode,
                          deleteMode: $prevDeleteMode)
     }

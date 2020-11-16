@@ -218,7 +218,7 @@ class FireBaseSession: ObservableObject {
     func uploadTrainingToDB(userID: String, training: Training, completion: @escaping (Bool, String?)->()) {
         
         // Upload training under current user
-        self.usersDBRef.child("UsersTrainings").child(userID).child(training.trainingID).setValue(training.trainingName) {
+        self.usersDBRef.child("UsersTrainings").child(userID).child(training.trainingID).setValue(1) {
             (error:Error?, ref:DatabaseReference) in
             if let error = error {
                 print("Data path: [UserTrainings/...] could not be saved: \(error.localizedDescription).")
@@ -247,14 +247,14 @@ class FireBaseSession: ObservableObject {
                     completion(false, nil)
                 }
         }
-        for exercise in training.listOfExercises {
+        for trainingComponent in training.listOfExercises {
             
             // Upload list of exercises under current training
-            self.usersDBRef.child("ExerciseList").child(training.trainingID).child(exercise.exerciseID).setValue([
-                "name" : exercise.exerciseName,
-                "createdByUser" : exercise.exerciseCreatedByUser,
-                "numberOfSeries" : exercise.exerciseNumberOfSeries,
-                "order" : exercise.exerciseOrderInList]) {
+            self.usersDBRef.child("ExerciseList").child(training.trainingID).child(trainingComponent.exercise.exerciseID).setValue([
+                "name" : trainingComponent.exercise.exerciseName,
+                "createdByUser" : trainingComponent.exercise.exerciseCreatedByUser,
+                "numberOfSeries" : trainingComponent.exerciseNumberOfSeries,
+                "order" : trainingComponent.exerciseOrderInList]) {
                     (error:Error?, ref:DatabaseReference) in
                     if let error = error {
                         print("Data path: [ExerciseList/\(training.trainingID)/...] could not be saved: \(error.localizedDescription).")
@@ -266,20 +266,7 @@ class FireBaseSession: ObservableObject {
                         completion(false, nil)
                     }
             }
-            
-            // Upload exercies series info under current date
-            self.usersDBRef.child("UsersExercises").child(userID).child(exercise.exerciseID).setValue(exercise.exerciseName) {
-                (error:Error?, ref:DatabaseReference) in
-                if let error = error {
-                    print("Data path: [UserExercise/...] could not be saved: \(error.localizedDescription).")
-                    //errorDescription = error.localizedDescription
-                    completion(true, error.localizedDescription)
-                } else {
-                    print("Data path: [UserExercise/...] saved successfully!")
-                    //errorUserExercises = false
-                    completion(false, nil)
-                }
-            }
+        
         }
     }
     //MARK: Update training under current user
@@ -297,11 +284,11 @@ class FireBaseSession: ObservableObject {
     }
     //MARK: Update list of exercises under current training
     func updateTrainingsExerciseListOnDB(training: Training) {
-        for exercise in training.listOfExercises {
-            self.usersDBRef.child("ExerciseList").child(training.trainingID).child(exercise.exerciseID).updateChildValues([
-                "name" : exercise.exerciseName,
-                "createdByUser" : exercise.exerciseCreatedByUser,
-                "numberOfSeries" : exercise.exerciseNumberOfSeries])
+        for trainingComponent in training.listOfExercises {
+            self.usersDBRef.child("ExerciseList").child(training.trainingID).child(trainingComponent.exercise.exerciseID).updateChildValues([
+                "name" : trainingComponent.exercise.exerciseName,
+                "createdByUser" : trainingComponent.exercise.exerciseCreatedByUser,
+                "numberOfSeries" : trainingComponent.exerciseNumberOfSeries])
         }
     }
     //MARK: Download list of trainings, and store this data in enviroment
@@ -311,7 +298,7 @@ class FireBaseSession: ObservableObject {
         var names = [String]()
         var descriptions = [String]()
         var dates = [String]()
-        var allExercises = [[Exercise]]()
+        var allExercises = [[TrainingsComponent]]()
         var index = 0
         
         self.usersDBRef.child("UsersTrainings").child(userID).observeSingleEvent(of: .value) { (userSnapshot) in
@@ -331,20 +318,21 @@ class FireBaseSession: ObservableObject {
                             }
                         }
                         self.usersDBRef.child("ExerciseList").child(trainingID.key).observeSingleEvent(of: .value) { (exerciseSnapshot) in
-                            var exercises = [Exercise]()
+                            var trainingComponents = [TrainingsComponent]()
                             for child in exerciseSnapshot.children {
                                 let exerciseInfo = child  as! DataSnapshot
                                 let dict = exerciseInfo.value as! [String : Any]
-                                let exercise = Exercise(id: exerciseInfo.key as String,
-                                                        name: dict["name"] as! String,
-                                                        createdByUser: dict["createdByUser"] as! Bool,
-                                                        numberOfSeries: dict["numberOfSeries"] as! Int,
-                                                        orderInList: dict["order"] as! Int)
                                 
-                                exercises.append(exercise)
-                                exercises = exercises.sorted(by: { $0.exerciseOrderInList < $1.exerciseOrderInList })
+                                let trainingComponent = TrainingsComponent(exercise: Exercise(id: exerciseInfo.key as String,
+                                                                                              name: dict["name"] as! String,
+                                                                                              createdByUser: dict["createdByUser"] as! Bool),
+                                                                           numberOfSeries: dict["numberOfSeries"] as! Int,
+                                                                           orderInList: dict["order"] as! Int)
+                                
+                                trainingComponents.append(trainingComponent)
+                                trainingComponents = trainingComponents.sorted(by: { $0.exerciseOrderInList < $1.exerciseOrderInList })
                             }
-                            allExercises.append(exercises)
+                            allExercises.append(trainingComponents)
                             
                             let training = Training(id: ids[index],
                                                     name: names[index], // FIXME: index out of range

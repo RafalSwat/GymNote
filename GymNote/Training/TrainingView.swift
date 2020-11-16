@@ -49,7 +49,7 @@ struct TrainingView: View {
                     Section(header: Text("")) {
                         if !self.setOfArraysOfReps.isEmpty {
                             ForEach(0..<training.listOfExercises.count, id: \.self) { exerciseIndex in
-                                ExerciseView(exercise: training.listOfExercises[exerciseIndex],
+                                ExerciseView(trainingComponent: training.listOfExercises[exerciseIndex],
                                              conform: self.$conform,
                                              arrayOfReps: self.$setOfArraysOfReps[exerciseIndex],
                                              arrayOfWeights: self.$setOfArraysOfWeights[exerciseIndex])
@@ -145,9 +145,9 @@ struct TrainingView: View {
                                                 numberOfSeries: training.listOfExercises[exerciseIndex].exerciseNumberOfSeries,
                                                 date: Date(),
                                                 series: tempSeries)
-            let temExerciseStats = ExerciseStatistics(id: training.listOfExercises[exerciseIndex].exerciseID,
-                                                      name: training.listOfExercises[exerciseIndex].exerciseName,
-                                                      createdByUser: training.listOfExercises[exerciseIndex].exerciseCreatedByUser,
+            let temExerciseStats = ExerciseStatistics(id: training.listOfExercises[exerciseIndex].exercise.exerciseID,
+                                                      name: training.listOfExercises[exerciseIndex].exercise.exerciseName,
+                                                      createdByUser: training.listOfExercises[exerciseIndex].exercise.exerciseCreatedByUser,
                                                       data: [tempExerciseData])
             tempArrayOfStats.append(temExerciseStats)
         }

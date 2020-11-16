@@ -11,7 +11,7 @@ import SwiftUI
 struct SetSeriesView: View {
     
     @Environment(\.colorScheme) var colorScheme: ColorScheme
-    @ObservedObject var exercise: Exercise // binding from list of selected
+    @ObservedObject var trainingComponent: TrainingsComponent // binding from list of selected
     @Binding var series: Int
     @Binding var deleteMode: Bool
     
@@ -19,7 +19,7 @@ struct SetSeriesView: View {
         HStack {
             Button(action: {
                 self.series += 1
-                self.exercise.exerciseNumberOfSeries = self.series
+                self.trainingComponent.exerciseNumberOfSeries = self.series
             }) {
                 Image(systemName: "plus.square")
                     .font(.largeTitle)
@@ -30,7 +30,7 @@ struct SetSeriesView: View {
             Button(action: {
                 if self.series >= 2 {
                     self.series -= 1
-                    self.exercise.exerciseNumberOfSeries = self.series
+                    self.trainingComponent.exerciseNumberOfSeries = self.series
                 }
             }) {
                 Image(systemName: "minus.square")
@@ -43,11 +43,11 @@ struct SetSeriesView: View {
 
 struct SetSeriesView_Previews: PreviewProvider {
     
-    @State static var prevTempExercise = Exercise(name: "example1")
+    @State static var prevTempExercise = TrainingsComponent(exercise: Exercise(), numberOfSeries: 1, orderInList: 1)
     @State static var prevSeries = 1
     @State static var prevDeleteMode = false
     
     static var previews: some View {
-        SetSeriesView(exercise: prevTempExercise, series: $prevSeries, deleteMode: $prevDeleteMode)
+        SetSeriesView(trainingComponent: prevTempExercise, series: $prevSeries, deleteMode: $prevDeleteMode)
     }
 }

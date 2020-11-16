@@ -14,14 +14,14 @@ struct TrainingDetails: View {
     
     var body: some View {
 
-        ForEach(training.listOfExercises) { exercise in
+        ForEach(training.listOfExercises) { trainingsComponent in
             HStack {
-                Text(exercise.exerciseName)
+                Text(trainingsComponent.exercise.exerciseName)
                 Spacer()
                 Text("series:")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                Text(String(exercise.exerciseNumberOfSeries))
+                Text(String(trainingsComponent.exerciseNumberOfSeries))
             }
         }
     }
@@ -33,7 +33,7 @@ struct TrainingDetails_Previews: PreviewProvider {
                                        name: "My Program",
                                        description: "My litte subscription ",
                                        date: "01-Jan-2020",
-                                       exercises: [Exercise(name: "My Exercise")])
+                                       exercises: [TrainingsComponent(exercise: Exercise(), numberOfSeries: 1, orderInList: 1)])
     
     static var previews: some View {
         TrainingDetails(training: prevTraining)

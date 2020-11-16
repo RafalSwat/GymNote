@@ -96,21 +96,36 @@ struct ChartView: View {
                           dateControver.convertFromString(dateString: "21 Aug 2020"),
                           dateControver.convertFromString(dateString: "22 Aug 2020")]
         
-        let listOfExercises = [Exercise(id: "5AA41935-1D78-42FD-9A8A-F80CDF76AB7C", name: "Squats", numberOfSeries: 1),
-                               Exercise(id: "CE1A2ED7-E760-4523-B280-F75426DD7F4A", name: "Deadlifts", numberOfSeries: 1),
-                               Exercise(id: "01B57CEA-7A36-441A-9094-A66349C3ABC6", name: "Jump rope",numberOfSeries: 1),
-                               Exercise(id: "61C6036D-2E94-4CD1-AEB9-6AF140EC30EA", name: "Dumbbell jump squat", numberOfSeries: 1),
-                               Exercise(id: "AC181865-0D1B-4366-ACDF-5B5353E2997E", name: "Bench press", numberOfSeries: 1),
-                               Exercise(id: "F45A4713-46B0-4C39-AE36-7996FDEBD1ED", name: "Dips", numberOfSeries: 1),
-                               Exercise(id: "35C52F7D-2FA9-48E7-B14B-75398008C370", name: "Chin-ups", numberOfSeries: 1),
-                               Exercise(id: "424FD6CB-A94C-4DD4-AC4F-3AD58A2FAF46", name: "Pull-ups", numberOfSeries: 1),
-                               Exercise(id: "59140E5A-740B-4FAD-892D-5E816290DC79", name: "Overhead press", numberOfSeries: 1),
-                               Exercise(id: "C3FB49BE-E369-4D8E-9F51-A14B9A6EF9E0", name: "Reverse grip", numberOfSeries: 1),
-                               Exercise(id: "1B828797-2EA9-4023-A06F-A7FC5F0AEBE8", name: "Close grip bench press",numberOfSeries: 1),
-                               Exercise(id: "0E146666-A55E-4C83-854A-609A5CBE2462", name: "Close grip pull-up", numberOfSeries: 1),
-                               Exercise(id: "E74597A5-AA8C-4505-BB5F-3047394FB089", name: "Dumbbell curl", numberOfSeries: 1),
-                               Exercise(id: "8494FBCA-3773-474F-BB6D-77256BEF4CAF", name: "Wrist Curls", numberOfSeries: 1),
-                               Exercise(id: "CE2F9401-A50B-4D89-884E-45E5A8195B26", name: "Sit-ups", numberOfSeries: 1)]
+        let listOfExercises = [TrainingsComponent(exercise: Exercise(id: "5AA41935-1D78-42FD-9A8A-F80CDF76AB7C", name: "Squats", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false),
+                               TrainingsComponent(exercise: Exercise(id: "CE1A2ED7-E760-4523-B280-F75426DD7F4A", name: "Deadlifts", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false),
+                               TrainingsComponent(exercise: Exercise(id: "01B57CEA-7A36-441A-9094-A66349C3ABC6", name: "Jump rope", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false),
+                               TrainingsComponent(exercise: Exercise(id: "61C6036D-2E94-4CD1-AEB9-6AF140EC30EA", name: "Dumbbell jump squat", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false),
+                               TrainingsComponent(exercise: Exercise(id: "AC181865-0D1B-4366-ACDF-5B5353E2997E", name: "Bench press", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false),
+                               TrainingsComponent(exercise: Exercise(id: "F45A4713-46B0-4C39-AE36-7996FDEBD1ED", name: "Dips", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false),
+                               TrainingsComponent(exercise: Exercise(id: "35C52F7D-2FA9-48E7-B14B-75398008C370", name: "Chin-ups", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false),
+                               TrainingsComponent(exercise: Exercise(id: "424FD6CB-A94C-4DD4-AC4F-3AD58A2FAF46", name: "Pull-ups", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false),
+                               TrainingsComponent(exercise: Exercise(id: "59140E5A-740B-4FAD-892D-5E816290DC79", name: "Overhead press", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false),
+                               TrainingsComponent(exercise: Exercise(id: "C3FB49BE-E369-4D8E-9F51-A14B9A6EF9E0", name: "Reverse grip", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false),
+                               TrainingsComponent(exercise: Exercise(id: "1B828797-2EA9-4023-A06F-A7FC5F0AEBE8", name: "Close grip bench press", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false),
+                               TrainingsComponent(exercise: Exercise(id: "0E146666-A55E-4C83-854A-609A5CBE2462", name: "Close grip pull-up", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false),
+                               TrainingsComponent(exercise: Exercise(id: "E74597A5-AA8C-4505-BB5F-3047394FB089", name: "Dumbbell curl", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false),
+                               TrainingsComponent(exercise: Exercise(id: "8494FBCA-3773-474F-BB6D-77256BEF4CAF", name: "Wrist Curls", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false),
+                               TrainingsComponent(exercise: Exercise(id: "CE2F9401-A50B-4D89-884E-45E5A8195B26", name: "Sit-ups", createdByUser: false),
+                                                  numberOfSeries: 1, orderInList: 1, isCheck: false)]
         
         var exerciseStatistic = [ExerciseStatistics]()
         
@@ -131,8 +146,8 @@ struct ChartView: View {
                                               series: series)
                 exerciseData.append(singleData)
             }
-            let singleStatistic = ExerciseStatistics(id: listOfExercises[index].exerciseID,
-                                                     name: listOfExercises[index].exerciseName,
+            let singleStatistic = ExerciseStatistics(id: listOfExercises[index].exercise.exerciseID,
+                                                     name: listOfExercises[index].exercise.exerciseName,
                                                      data: exerciseData)
             exerciseStatistic.append(singleStatistic)
         }

@@ -16,14 +16,14 @@ class Training: Hashable, ObservableObject {
     @Published var trainingName: String
     @Published var trainingDescription: String
     @Published var initialDate: String
-    @Published var listOfExercises: [Exercise]
+    @Published var listOfExercises: [TrainingsComponent]
     
     init() {
         self.trainingID = UUID().uuidString
         self.trainingName = ""//"My Training"
         self.trainingDescription = ""//My Little Description"
         self.initialDate = "01-Jan-2020"
-        self.listOfExercises = [Exercise]()
+        self.listOfExercises = [TrainingsComponent]()
     }
     init(id: String,
          name: String,
@@ -34,14 +34,14 @@ class Training: Hashable, ObservableObject {
         self.trainingName = name
         self.trainingDescription = description
         self.initialDate = date
-        self.listOfExercises = [Exercise]()
+        self.listOfExercises = [TrainingsComponent]()
     }
     
     init(id: String,
          name: String,
          description: String,
          date: String,
-         exercises: [Exercise]) {
+         exercises: [TrainingsComponent]) {
         
         self.trainingID = id
         self.trainingName = name
