@@ -142,12 +142,11 @@ struct TrainingView: View {
                                          weight: Int(setOfArraysOfWeights[exerciseIndex][seriesIndex]) ?? 0))
             }
             let tempExerciseData = ExerciseData(dataID: UUID().uuidString,
-                                                numberOfSeries: training.listOfExercises[exerciseIndex].exerciseNumberOfSeries,
                                                 date: Date(),
                                                 series: tempSeries)
-            let temExerciseStats = ExerciseStatistics(id: training.listOfExercises[exerciseIndex].exercise.exerciseID,
-                                                      name: training.listOfExercises[exerciseIndex].exercise.exerciseName,
-                                                      createdByUser: training.listOfExercises[exerciseIndex].exercise.exerciseCreatedByUser,
+            let temExerciseStats = ExerciseStatistics(exercise: Exercise(id: training.listOfExercises[exerciseIndex].exercise.exerciseID,
+                                                                         name: training.listOfExercises[exerciseIndex].exercise.exerciseName,
+                                                                         createdByUser: training.listOfExercises[exerciseIndex].exercise.exerciseCreatedByUser),
                                                       data: [tempExerciseData])
             tempArrayOfStats.append(temExerciseStats)
         }

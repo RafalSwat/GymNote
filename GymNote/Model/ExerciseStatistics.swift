@@ -11,42 +11,18 @@ import SwiftUI
 
 class ExerciseStatistics: Equatable, ObservableObject {
     
-    var exerciseID: String
-    var exerciseName: String
-    var exerciseCreatedByUser: Bool
+    var exercise: Exercise
     var exerciseData: [ExerciseData]
     
-    //test init
-    init() {
-        self.exerciseID = UUID().uuidString
-        self.exerciseName = "My Exercise"
-        self.exerciseCreatedByUser = false
-        self.exerciseData = [ExerciseData]()
-    }
-    
-    init(id: String,
-         name: String,
+    init(exercise: Exercise,
          data: [ExerciseData]) {
-        
-        self.exerciseID = id
-        self.exerciseName = name
-        self.exerciseCreatedByUser = false
+        self.exercise = exercise
         self.exerciseData = data
     }
     
-    init(id: String,
-         name: String,
-         createdByUser: Bool,
-         data: [ExerciseData]) {
-        
-        self.exerciseID = id
-        self.exerciseName = name
-        self.exerciseCreatedByUser = createdByUser
-        self.exerciseData = data
-    }
     
     public static func == (lhs: ExerciseStatistics, rhs: ExerciseStatistics) -> Bool {
-        return lhs.exerciseID == rhs.exerciseID
+        return lhs.exercise.exerciseID == rhs.exercise.exerciseID
     }
 
 }

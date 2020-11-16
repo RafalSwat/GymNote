@@ -378,11 +378,32 @@ class FireBaseSession: ObservableObject {
     
     func uploadUserStatisticsToDB(userID: String, statistics: ExerciseStatistics, completion: @escaping (Bool, String?)->()) {
         
+        let id = statistics.exercise.exerciseID
+        let name = statistics.exercise.exerciseName
+        let createdByUser = statistics.exercise.exerciseCreatedByUser
+        
+        self.usersDBRef.child("UserStatistics").child(userID).child(id).setValue([
+            "name" : name,
+            "createdByUser" : createdByUser]) {
+            
+            (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Data path: [UserStatistics/...] could not be saved: \(error.localizedDescription).")
+                completion(true, error.localizedDescription)
+            } else {
+                print("Data path: [UserStatistics/...] saved successfully!")
+                completion(false, nil)
+            }
+        }
+        
         for data in statistics.exerciseData {
             
             let dataString = DateConverter.dateFormat.string(from: data.exerciseDate)
+            let dataID = data.exerciseDataID
             
-            self.usersDBRef.child("UserStatistics").child(userID).child(statistics.exerciseID).child(data.exerciseDataID).setValue(dataString) {
+            self.usersDBRef.child("UserStatistics").child(userID).child(id).child("ExerciseData").setValue([
+                dataID : dataString]) {
+                
                 (error:Error?, ref:DatabaseReference) in
                 if let error = error {
                     print("Data path: [UserStatistics/...] could not be saved: \(error.localizedDescription).")
@@ -393,27 +414,22 @@ class FireBaseSession: ObservableObject {
                 }
             }
             
-            for series in data.exerciseSeries {
-                self.usersDBRef.child("StatisticList").child(data.exerciseDataID).child(series.seriesID).setValue(1) {
-                    (error:Error?, ref:DatabaseReference) in
-                    if let error = error {
-                        print("Data path: [StatisticList/...] could not be saved: \(error.localizedDescription).")
-                        completion(true, error.localizedDescription)
-                    } else {
-                        print("Data path: [StatisticList/...] saved successfully!")
-                        completion(false, nil)
-                    }
-                }
+            for seriesDetails in data.exerciseSeries {
                 
-                self.usersDBRef.child("Statistics").child(series.seriesID).setValue(
-                    ["repetitions" : series.exerciseRepeats,
-                     "weight" : series.exerciseWeight]) {
+                let seriesID = seriesDetails.seriesID
+                let reps = seriesDetails.exerciseRepeats
+                let weight = seriesDetails.exerciseWeight
+                
+                self.usersDBRef.child("Series").child(dataID).child(seriesID).setValue([
+                    "repeats" : reps,
+                    "weight" : weight]) {
+                    
                     (error:Error?, ref:DatabaseReference) in
                     if let error = error {
-                        print("Data path: [Statistics/...] could not be saved: \(error.localizedDescription).")
+                        print("Data path: [Series/...] could not be saved: \(error.localizedDescription).")
                         completion(true, error.localizedDescription)
                     } else {
-                        print("Data path: [Statistics/...] saved successfully!")
+                        print("Data path: [Series/...] saved successfully!")
                         completion(false, nil)
                     }
                 }
@@ -424,32 +440,52 @@ class FireBaseSession: ObservableObject {
     func downloadUserStatisticsFromDB(userID: String) {
         self.usersDBRef.child("UserStatistics").child(userID).observeSingleEvent(of: .value) { (userStatsSnapShot) in
             
-            var ids = [String]()
-            var names = [String]()
-            var createdByUsers = [Bool]()
-            var exercisesData = [[ExerciseData]]()
-            
             if userStatsSnapShot.exists() {
                 if let snapChildren = userStatsSnapShot.children.allObjects as? [DataSnapshot] {
                     for child in snapChildren {
                         
-                        ids.append(child.key)
-                        
-                        if let childOfChild = child.value as? [String : Any] {
+                        if let statsDict = child.value as? [String : Any]{
+                            let exerciseID = child.key
+                            let exerciseName = statsDict["name"] as! String
+                            let exerciseCreatedByUser = statsDict["createdByUser"] as! Bool
+                            let exercisesDataDict = statsDict["ExerciseData"] as! [String : String]
+                            var exerciseData = [ExerciseData]()
                             
-                            for key in childOfChild.keys {
-                                print("exerciseDataID: \(key)")
-                                print("exerciseDate: \(String(describing: childOfChild["\(key)"]))")
+                            for data in exercisesDataDict {
+                                let exerciseDataID = data.key
+                                let exerciseDate = DateConverter().convertFromString(dateString: data.value)
                                 
-                                self.usersDBRef.child("StatisticList").child(key).observeSingleEvent(of: .value) { (seriesSnapshot) in
-                                    print("seriesID")
-                                }
+                                exerciseData.append(ExerciseData(dataID: exerciseDataID,
+                                                                 date: exerciseDate,
+                                                                 series: [Series]()))
                             }
+                            
+                            let exerciseStats = ExerciseStatistics(exercise: Exercise(id: exerciseID,
+                                                                                      name: exerciseName,
+                                                                                      createdByUser: exerciseCreatedByUser),
+                                                                   data: exerciseData)
+                            print("name: \(exerciseStats.exercise.exerciseName)")
+                            print("id: \(exerciseStats.exercise.exerciseID)")
+                            print("created: \(exerciseStats.exercise.exerciseCreatedByUser)")
+                            print("DATA: ")
+                            for data in exerciseStats.exerciseData {
+                                print("data id: \(data.exerciseDataID)")
+                                print("date: \(data.exerciseDate)")
+                            }
+                            print("---------------------------------------------------------")
+                            
                         }
-                
-                        
                     }
                 }
+            }
+        }
+    }
+    func downloadSeriesFromDB(userID: String, exerciseDataID: String) {
+        self.usersDBRef.child("Series").child(exerciseDataID).observeSingleEvent(of: .value) { (seriesSnapshot) in
+            if seriesSnapshot.exists() {
+                let seriesDict = seriesSnapshot.value as! [String : Any]
+                print("reps: \(seriesDict["repeats"] as! Int)")
+                print("weight: \(seriesDict["repeats"] as! Int)")
             }
         }
     }

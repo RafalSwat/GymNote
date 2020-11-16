@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct ChartView: View {
+    @EnvironmentObject var session: FireBaseSession
     @State var stats = [ExerciseStatistics]()
     @State var chosenStats: LineChartModelView?
     @State var chosenIndex: Int?
@@ -27,18 +28,21 @@ struct ChartView: View {
                                 .padding(.bottom, 20)
                         }
                         List {
-                            ForEach(self.stats, id: \.exerciseID) { exercise in
+                            ForEach(self.stats, id: \.exercise.exerciseID) { exerciseStats in
                                 Button(action: { withAnimation {
-                                    self.chosenStats = LineChartModelView(data: exercise)
+                                    self.chosenStats = LineChartModelView(data: exerciseStats)
                                     self.setupDataToChart()
-                                    self.chosenIndex = self.stats.firstIndex(of: exercise)
-                                    self.chartTitle = self.stats[self.chosenIndex!].exerciseName}
+                                    self.chosenIndex = self.stats.firstIndex(of: exerciseStats)
+                                    self.chartTitle = self.stats[self.chosenIndex!].exercise.exerciseName
+                                    self.session.downloadSeriesFromDB(userID: (self.session.userSession?.userProfile.userID)!,
+                                                                      exerciseDataID: "66BA8A21-1ACA-4204-9107-97D22D027783")
+                                }
                                 }) {
                                     HStack {
-                                        if exercise.exerciseCreatedByUser {
+                                        if exerciseStats.exercise.exerciseCreatedByUser {
                                             Image(systemName: "hammer")
                                         }
-                                        Text("\(exercise.exerciseName)")
+                                        Text("\(exerciseStats.exercise.exerciseName)")
                                     }
                                 }
                             }
@@ -141,13 +145,13 @@ struct ChartView: View {
                     series.append(singleSeries)
                 }
                 let singleData = ExerciseData(dataID: UUID().uuidString,
-                                              numberOfSeries: 3,
                                               date: dummyDates[i],
                                               series: series)
                 exerciseData.append(singleData)
             }
-            let singleStatistic = ExerciseStatistics(id: listOfExercises[index].exercise.exerciseID,
-                                                     name: listOfExercises[index].exercise.exerciseName,
+            let singleStatistic = ExerciseStatistics(exercise: Exercise(id: listOfExercises[index].exercise.exerciseID,
+                                                                        name: listOfExercises[index].exercise.exerciseName,
+                                                                        createdByUser: listOfExercises[index].exercise.exerciseCreatedByUser),
                                                      data: exerciseData)
             exerciseStatistic.append(singleStatistic)
         }

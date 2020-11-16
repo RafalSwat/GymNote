@@ -47,7 +47,7 @@ class LineChartModelView: ObservableObject {
             var averageRepeatValue = 0
             var averageWeightValue = 0
             
-            for seriesIndex in 0..<self.data.exerciseData[dataIndex].exerciseNumberOfSeries {
+            for seriesIndex in 0..<self.data.exerciseData[dataIndex].exerciseSeries.count {
                 tempRepeatSum += self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseRepeats
                 tempWeightSum += self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseWeight ?? 0
                 
@@ -55,8 +55,8 @@ class LineChartModelView: ObservableObject {
                 weights.append(Double(self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseWeight ?? 0))
             }
             
-            averageRepeatValue = Int(tempRepeatSum/self.data.exerciseData[dataIndex].exerciseNumberOfSeries)
-            averageWeightValue = Int(tempWeightSum/self.data.exerciseData[dataIndex].exerciseNumberOfSeries)
+            averageRepeatValue = Int(tempRepeatSum/self.data.exerciseData[dataIndex].exerciseSeries.count)
+            averageWeightValue = Int(tempWeightSum/self.data.exerciseData[dataIndex].exerciseSeries.count)
             averageValuesOfRepeats.append(Double(averageRepeatValue))
             averageValuesOfWeights.append(Double(averageWeightValue))
             dates.append(dataAsDouble)
@@ -123,14 +123,14 @@ class LineChartModelView: ObservableObject {
                 for series in self.data.exerciseData[index].exerciseSeries {
                     sum += series.exerciseRepeats
                 }
-                let averageValue = Double(sum)/Double(self.data.exerciseData[index].exerciseNumberOfSeries)
+                let averageValue = Double(sum)/Double(self.data.exerciseData[index].exerciseSeries.count)
                 arryOfAveragesValues.append(averageValue)
             } else if chartCase == .weight {
                 var sum = 0
                 for series in self.data.exerciseData[index].exerciseSeries {
                     sum += series.exerciseWeight ?? 0
                 }
-                let averageValue = Double(sum)/Double(self.data.exerciseData[index].exerciseNumberOfSeries)
+                let averageValue = Double(sum)/Double(self.data.exerciseData[index].exerciseSeries.count)
                 arryOfAveragesValues.append(averageValue)
             }
         }

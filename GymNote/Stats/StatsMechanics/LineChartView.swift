@@ -221,7 +221,7 @@ struct LineChartView: View {
         var values = [Double]()
         
         for dataIndex in 0..<self.stats.data.exerciseData.count {
-            for seriesIndex in 0..<self.stats.data.exerciseData[dataIndex].exerciseNumberOfSeries {
+            for seriesIndex in 0..<self.stats.data.exerciseData[dataIndex].exerciseSeries.count {
                 if self.chartCase == .weight {
                     values.append(Double(self.stats.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseWeight ?? 0))
                 } else if self.chartCase == .repetition {
@@ -322,7 +322,7 @@ struct LineChartView: View {
 
 struct LineChartView_Previews: PreviewProvider {
     
-    static var prevStats = LineChartModelView(data: ExerciseStatistics())
+    static var prevStats = LineChartModelView(data: ExerciseStatistics(exercise: Exercise(), data: [ExerciseData]()))
 
     static var previews: some View {
         LineChartView(stats: prevStats, chartCase: .weight)
