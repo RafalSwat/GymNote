@@ -388,7 +388,7 @@ class FireBaseSession: ObservableObject {
 
     }
     
-    func uploadUserStatistics(userID: String, statistics: ExerciseStatistics, completion: @escaping (Bool, String?)->()) {
+    func uploadUserStatisticsToDB(userID: String, statistics: ExerciseStatistics, completion: @escaping (Bool, String?)->()) {
         
         for data in statistics.exerciseData {
             
@@ -427,6 +427,39 @@ class FireBaseSession: ObservableObject {
                     } else {
                         print("Data path: [Statistics/...] saved successfully!")
                         completion(false, nil)
+                    }
+                }
+            }
+        }
+    }
+    
+    func downloadUserStatisticsFromDB(userID: String) {
+        self.usersDBRef.child("UserStatistics").child(userID).observeSingleEvent(of: .value) { (userStatsSnapShot) in
+            
+            var ids = [String]()
+            var names = [String]()
+            var createdByUsers = [Bool]()
+            var exercisesData = [[ExerciseData]]()
+            
+            if userStatsSnapShot.exists() {
+                if let snapChildren = userStatsSnapShot.children.allObjects as? [DataSnapshot] {
+                    for child in snapChildren {
+                        
+                        ids.append(child.key)
+                        
+                        if let childOfChild = child.value as? [String : Any] {
+                            
+                            for key in childOfChild.keys {
+                                print("exerciseDataID: \(key)")
+                                print("exerciseDate: \(String(describing: childOfChild["\(key)"]))")
+                                
+                                self.usersDBRef.child("StatisticList").child(key).observeSingleEvent(of: .value) { (seriesSnapshot) in
+                                    print("seriesID")
+                                }
+                            }
+                        }
+                
+                        
                     }
                 }
             }

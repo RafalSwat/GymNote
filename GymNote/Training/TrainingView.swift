@@ -154,7 +154,7 @@ struct TrainingView: View {
         self.trainingStats.array = tempArrayOfStats
     }
     func saveStatisticToDataBase(statsToSave: ExerciseStatistics) {
-        self.session.uploadUserStatistics(userID: (self.session.userSession?.userProfile.userID)!,
+        self.session.uploadUserStatisticsToDB(userID: (self.session.userSession?.userProfile.userID)!,
                                           statistics: statsToSave,
                                           completion: { errorOccur, error in
                                             self.showWarning = errorOccur

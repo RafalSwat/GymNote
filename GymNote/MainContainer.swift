@@ -50,6 +50,9 @@ struct MainContainer: View {
             }.tag(2)
             //StatsView()
             ChartView()
+                .onAppear {
+                    session.downloadUserStatisticsFromDB(userID: (session.userSession?.userProfile.userID)!)
+                }
                 .tabItem {
                     VStack {
                         Image(systemName: "waveform.path.ecg")
