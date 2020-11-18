@@ -401,9 +401,9 @@ class FireBaseSession: ObservableObject {
             let dataString = DateConverter.dateFormat.string(from: data.exerciseDate)
             let dataID = data.exerciseDataID
             
-            self.usersDBRef.child("UserStatistics").child(userID).child(id).child("ExerciseData").setValue([
-                dataID : dataString]) {
-                
+            
+            self.usersDBRef.child("UserExercisesData").child(userID).child(id).child(dataID).setValue(dataString) {
+
                 (error:Error?, ref:DatabaseReference) in
                 if let error = error {
                     print("Data path: [UserStatistics/...] could not be saved: \(error.localizedDescription).")
@@ -417,10 +417,12 @@ class FireBaseSession: ObservableObject {
             for seriesDetails in data.exerciseSeries {
                 
                 let seriesID = seriesDetails.seriesID
+                let orderInSeries = seriesDetails.orderInSeries
                 let reps = seriesDetails.exerciseRepeats
                 let weight = seriesDetails.exerciseWeight
                 
                 self.usersDBRef.child("Series").child(dataID).child(seriesID).setValue([
+                    "order" : orderInSeries,
                     "repeats" : reps,
                     "weight" : weight]) {
                     
@@ -438,55 +440,91 @@ class FireBaseSession: ObservableObject {
     }
     
     func downloadUserStatisticsFromDB(userID: String) {
+        
+        var exerciseIDs = [String]()
+        var exerciseNames = [String]()
+        var exerciseAsUserCreations = [Bool]()
+        var exercisesData = [[ExerciseData]]()
+        var index = 0
+        
         self.usersDBRef.child("UserStatistics").child(userID).observeSingleEvent(of: .value) { (userStatsSnapShot) in
             
             if userStatsSnapShot.exists() {
                 if let snapChildren = userStatsSnapShot.children.allObjects as? [DataSnapshot] {
                     for child in snapChildren {
                         
-                        if let statsDict = child.value as? [String : Any]{
+                        var exerciseData = [ExerciseData]()
+                        
+                        if let statsDict = child.value as? [String : Any] {
                             let exerciseID = child.key
                             let exerciseName = statsDict["name"] as! String
                             let exerciseCreatedByUser = statsDict["createdByUser"] as! Bool
-                            let exercisesDataDict = statsDict["ExerciseData"] as! [String : String]
-                            var exerciseData = [ExerciseData]()
                             
-                            for data in exercisesDataDict {
-                                let exerciseDataID = data.key
-                                let exerciseDate = DateConverter().convertFromString(dateString: data.value)
-                                
-                                exerciseData.append(ExerciseData(dataID: exerciseDataID,
-                                                                 date: exerciseDate,
-                                                                 series: [Series]()))
+                            exerciseIDs.append(exerciseID)
+                            exerciseNames.append(exerciseName)
+                            exerciseAsUserCreations.append(exerciseCreatedByUser)
+                            
+                            self.usersDBRef.child("UserExercisesData").child(userID).child(exerciseID).observeSingleEvent(of: .value) { (exerciseDataSnapshot) in
+                                if let snapDataChildren = exerciseDataSnapshot.children.allObjects as? [DataSnapshot] {
+                                    for childData in snapDataChildren {
+                                        let exerciseDataID = childData.key
+                                        let exerciseDate = DateConverter().convertFromString(dateString: childData.value as! String)
+                                        
+                                        exerciseData.append(ExerciseData(dataID: exerciseDataID,
+                                                                         date: exerciseDate,
+                                                                         series: [Series]()))
+                                    }
+                                    exercisesData.append(exerciseData)
+                                }
+                                let exerciseStatistic = ExerciseStatistics(exercise: Exercise(id: exerciseIDs[index],
+                                                                                              name: exerciseNames[index],
+                                                                                              createdByUser: exerciseAsUserCreations[index]),
+                                                                           data: exercisesData[index])
+                                self.userSession?.userStatistics.append(exerciseStatistic)
+                                index += 1
                             }
-                            
-                            let exerciseStats = ExerciseStatistics(exercise: Exercise(id: exerciseID,
-                                                                                      name: exerciseName,
-                                                                                      createdByUser: exerciseCreatedByUser),
-                                                                   data: exerciseData)
-                            print("name: \(exerciseStats.exercise.exerciseName)")
-                            print("id: \(exerciseStats.exercise.exerciseID)")
-                            print("created: \(exerciseStats.exercise.exerciseCreatedByUser)")
-                            print("DATA: ")
-                            for data in exerciseStats.exerciseData {
-                                print("data id: \(data.exerciseDataID)")
-                                print("date: \(data.exerciseDate)")
-                            }
-                            print("---------------------------------------------------------")
-                            
                         }
                     }
                 }
             }
         }
     }
-    func downloadSeriesFromDB(userID: String, exerciseDataID: String) {
+    func downloadSeriesFromDB(userID: String, exerciseDataID: String, completion: @escaping (Bool)->()) {
         self.usersDBRef.child("Series").child(exerciseDataID).observeSingleEvent(of: .value) { (seriesSnapshot) in
-            if seriesSnapshot.exists() {
-                let seriesDict = seriesSnapshot.value as! [String : Any]
-                print("reps: \(seriesDict["repeats"] as! Int)")
-                print("weight: \(seriesDict["repeats"] as! Int)")
+            
+            var series = [Series]()
+            
+            if let seriesSnapChildren = seriesSnapshot.children.allObjects as? [DataSnapshot] {
+                for seriesSnapChild in seriesSnapChildren {
+                    
+                    let seriesDict = seriesSnapChild.value as! [String : Any]
+                    let seriesID = seriesSnapChild.key
+                    let orederInSeries = seriesDict["order"] as! Int
+                    let repeats = seriesDict["repeats"] as? Int
+                    let weight = seriesDict["weight"] as? Int
+                    
+                    let singleSeries = Series(id: seriesID,
+                                              order: orederInSeries,
+                                              repeats: repeats ?? 1,
+                                              weight: weight ?? 0)
+                    series.append(singleSeries)
+                }
+                series = series.sorted(by: {$0.orderInSeries < $1.orderInSeries })
+                
+                
+                let exerciseIndex = self.userSession?.userStatistics.firstIndex(where: {
+                    ($0.exerciseData.firstIndex(where: {
+                        $0.exerciseDataID == exerciseDataID
+                    }) != nil) == true })
+                
+                let exerciseDataIndex = self.userSession?.userStatistics[exerciseIndex!].exerciseData.firstIndex(where: {
+                    $0.exerciseDataID == exerciseDataID
+                })
+                
+                self.userSession?.userStatistics[exerciseIndex!].exerciseData[exerciseDataIndex!].exerciseSeries.append(contentsOf: series)
+                
             }
+            completion(true)
         }
     }
 }

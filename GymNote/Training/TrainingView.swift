@@ -138,6 +138,7 @@ struct TrainingView: View {
             
             for seriesIndex in 0..<training.listOfExercises[exerciseIndex].exerciseNumberOfSeries {
                 tempSeries.append(Series(id: UUID().uuidString,
+                                         order: Int(seriesIndex),
                                          repeats: Int(setOfArraysOfReps[exerciseIndex][seriesIndex]) ?? 0,
                                          weight: Int(setOfArraysOfWeights[exerciseIndex][seriesIndex]) ?? 0))
             }

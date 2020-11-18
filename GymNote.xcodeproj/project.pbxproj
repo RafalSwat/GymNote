@@ -34,6 +34,7 @@
 		0742660F240C1B72003F2C32 /* ExerciseListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0742660E240C1B72003F2C32 /* ExerciseListRow.swift */; };
 		07428FDB24E2BEDC0062B892 /* Indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07428FDA24E2BEDC0062B892 /* Indicator.swift */; };
 		075077A425629A8700A46D60 /* TrainingsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075077A325629A8700A46D60 /* TrainingsComponent.swift */; };
+		07507897256507BA00A46D60 /* Series.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07507896256507BA00A46D60 /* Series.swift */; };
 		0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757023E23A4D89500030991 /* RectangularButtonStyle.swift */; };
 		0757024323A4EAD500030991 /* ColorfulPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0757024223A4EAD500030991 /* ColorfulPicker.swift */; };
 		0759DECC24E43BED00DBCC26 /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759DECB24E43BED00DBCC26 /* LineChartView.swift */; };
@@ -109,6 +110,7 @@
 		0742660E240C1B72003F2C32 /* ExerciseListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListRow.swift; sourceTree = "<group>"; };
 		07428FDA24E2BEDC0062B892 /* Indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Indicator.swift; sourceTree = "<group>"; };
 		075077A325629A8700A46D60 /* TrainingsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingsComponent.swift; sourceTree = "<group>"; };
+		07507896256507BA00A46D60 /* Series.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Series.swift; sourceTree = "<group>"; };
 		0757023E23A4D89500030991 /* RectangularButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButtonStyle.swift; sourceTree = "<group>"; };
 		0757024223A4EAD500030991 /* ColorfulPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulPicker.swift; sourceTree = "<group>"; };
 		0759DECB24E43BED00DBCC26 /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 				0740B3C6242E0F56003D7520 /* Training.swift */,
 				075077A325629A8700A46D60 /* TrainingsComponent.swift */,
 				074265FE240BC6C6003F2C32 /* Exercise.swift */,
+				07507896256507BA00A46D60 /* Series.swift */,
 				075F9BC924DDC150005ADFF1 /* ExerciseStatistics.swift */,
 				075F9BCB24DDC1BF005ADFF1 /* ExerciseData.swift */,
 				07EA01E5253C6B41003A13FA /* ObservableArray.swift */,
@@ -614,6 +617,7 @@
 				0736F9DD23CA3F0C00626599 /* ChangeButton.swift in Sources */,
 				07C0B99C23A273D9001632A0 /* SwitchableSecureField.swift in Sources */,
 				073F482923F5604C003011F0 /* Coordinator.swift in Sources */,
+				07507897256507BA00A46D60 /* Series.swift in Sources */,
 				073DEAE4249A54D4008F3C72 /* DeleteButton.swift in Sources */,
 				07AC9DE924E323420025AD39 /* ChartView.swift in Sources */,
 				07C0B96C2397BE00001632A0 /* SceneDelegate.swift in Sources */,

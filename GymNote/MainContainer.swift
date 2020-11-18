@@ -49,18 +49,19 @@ struct MainContainer: View {
                     .padding()
             }.tag(2)
             //StatsView()
-            ChartView()
-                .onAppear {
-                    session.downloadUserStatisticsFromDB(userID: (session.userSession?.userProfile.userID)!)
-                }
-                .tabItem {
-                    VStack {
-                        Image(systemName: "waveform.path.ecg")
-                        Text("Stats")
-                    }
-                    .font(.largeTitle)
-                    .padding()
-            }.tag(3)
+            if #available(iOS 14.0, *) {
+                ChartView()
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "waveform.path.ecg")
+                            Text("Stats")
+                        }
+                        .font(.largeTitle)
+                        .padding()
+                    }.tag(3)
+            } else {
+                // Fallback on earlier versions
+            }
             
         }
         .accentColor(Color.orange)

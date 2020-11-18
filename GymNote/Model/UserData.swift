@@ -15,7 +15,7 @@ final class UserData: ObservableObject {
     @Published var userProfile: UserProfile
     @Published var userTrainings: [Training]
     @Published var userStatistics: [ExerciseStatistics]
-    
+
     init(profile: UserProfile) {
         self.userProfile = profile
         self.userTrainings = [Training]()
