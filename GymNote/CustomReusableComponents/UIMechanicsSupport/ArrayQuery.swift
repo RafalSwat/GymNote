@@ -21,6 +21,7 @@ class ArrayQuery {
 
         // To use binary search, your array must be ever-increasing or ever-decreasing
         // Here, we require that the array must be ever-increasing
+        
         for index in 1..<array.count {
             if array[index - 1] > array[index] {
                 fatalError("Array must be monotonous increasing. Did you forget to sort it?")

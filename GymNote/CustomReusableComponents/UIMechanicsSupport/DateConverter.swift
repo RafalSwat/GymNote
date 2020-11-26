@@ -26,7 +26,7 @@ class DateConverter {
     
     func convertFromString(dateString: String) -> Date {
         let formatter = DateFormatter()
-        formatter.dateFormat = "d MMM yyyy"
+        formatter.dateFormat = "MMM d, yyyy"
         if let dateTypeDate = formatter.date(from: dateString) {
             return dateTypeDate
         } else {
@@ -42,13 +42,11 @@ class DateConverter {
         var currentDate = startDate
         let interval = Double(3600*24)   //one day
         
-        dates.append(currentDate)
-        
         while currentDate.timeIntervalSinceReferenceDate < endDate.timeIntervalSinceReferenceDate {
             dates.append(currentDate)
             currentDate = currentDate.addingTimeInterval(interval)
         }
-
+        dates.append(currentDate)
         return dates
         
     }

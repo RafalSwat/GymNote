@@ -12,20 +12,29 @@ import SwiftUI
 class LineChartModelView: ObservableObject {
     
     @Published var data: ExerciseStatistics
+    @Published var chartCase: ChartCase
     
+    @Published var dataDates = [Date]()
     @Published var datesInRange = [Date]()
+    
     @Published var dataAsDouble = [StatsAsDoubles]()
-    @Published var dataRepsOnAverage = [Double]()
-    @Published var dataWeightsOnAverage = [Double]()
+    @Published var dataValesAverage = [Double]()
     
-    @Published var dataHightestValueOfReps = [Double]()
-    @Published var dataLowestValueOfReps = [Double]()
-    @Published var dataHightestValueOfWeights = [Double]()
-    @Published var dataLowestValueOfWeights = [Double]()
+    @Published var dataHightestValue = [Double]()
+    @Published var dataLowestValue = [Double]()
+    
+    @Published var numberOfHorizontalLines = 10
+    @Published var numberOfVerticalLines = 0
+    @Published var numberOfValuesOnChart = 0
+    
+    @Published var maxYValue: Double = 0
+    @Published var minYValue: Double = 0
+    @Published var stepMultiplier: Double = 0
     
     
-    init(data: ExerciseStatistics) {
+    init(data: ExerciseStatistics, chartCase: ChartCase) {
         self.data = data
+        self.chartCase = chartCase
     }
 
     func normalizeData() {
@@ -65,14 +74,12 @@ class LineChartModelView: ObservableObject {
         let minRepeat = repeats.min()
         let maxWeight = weights.max()
         let minWeight = weights.min()
-        
-        
-        //let maxDate = dates.max()
+
         let minDate = dates.min()
         
         let repeatRange = maxRepeat! - minRepeat!
         let weightRange = maxWeight! - minWeight!
-        let dateRange = Double(self.datesInRange.count)
+        let dateRange = self.datesInRange.count //Double(dates.count)
         
         var normalizeRepeats = [Double]()
         var normalizeWeights = [Double]()
@@ -81,7 +88,7 @@ class LineChartModelView: ObservableObject {
         for index in 0..<averageValuesOfRepeats.count {
             let normalizeRepeat = (averageValuesOfRepeats[index] - minRepeat!)/repeatRange
             let normalizeWeight = (averageValuesOfWeights[index] - minWeight!)/weightRange
-            let normalizeDate = (dates[index] - minDate!)/dateRange
+            let normalizeDate = (dates[index] - minDate!)/Double(dateRange)
             normalizeRepeats.append(normalizeRepeat)
             normalizeWeights.append(normalizeWeight)
             normalizeDates.append(normalizeDate)
@@ -110,10 +117,12 @@ class LineChartModelView: ObservableObject {
         }
         let min = dates.min()!
         let max = dates.max()!
+        
+        self.dataDates = dates
         self.datesInRange = DateConverter().fillUpArrayWithDates(startDate: min, endDate: max)
     }
-    
-    func getAverage(chartCase: ChartCase) {
+
+    func setupAverageValues() {
         
         var arryOfAveragesValues = [Double]()
         
@@ -134,13 +143,9 @@ class LineChartModelView: ObservableObject {
                 arryOfAveragesValues.append(averageValue)
             }
         }
-        if chartCase == .repetition {
-            self.dataRepsOnAverage = arryOfAveragesValues
-        } else if chartCase == .weight {
-            self.dataWeightsOnAverage = arryOfAveragesValues
-        }
+        self.dataValesAverage = arryOfAveragesValues
     }
-    func getMinAndMax(chartCase: ChartCase) {
+    func setupMinAndMaxValues() {
         
         var arrayOfMinValues = [Double]()
         var arrayOfMaxValues = [Double]()
@@ -156,23 +161,58 @@ class LineChartModelView: ObservableObject {
                 for series in self.data.exerciseData[index].exerciseSeries {
                     arrayOfValues.append(Double(series.exerciseWeight ?? 0))
                 }
-            } else { return }
+            }
             
             let minValue = arrayOfValues.min() ?? 0
             let maxValue = arrayOfValues.max()!
             arrayOfMinValues.append(minValue)
             arrayOfMaxValues.append(maxValue)
         }
+        self.dataLowestValue = arrayOfMinValues
+        self.dataHightestValue = arrayOfMaxValues
+    }
+    
+    
+    func evaluateNumberOfVerticalLines() {
+        if self.datesInRange.count != 0 {
+            self.numberOfVerticalLines = self.datesInRange.count
+        }
         
-        if chartCase == .weight {
-            self.dataLowestValueOfWeights = arrayOfMinValues
-            self.dataHightestValueOfWeights = arrayOfMaxValues
-        } else if chartCase == .repetition {
-            self.dataLowestValueOfReps = arrayOfMinValues
-            self.dataHightestValueOfReps = arrayOfMaxValues
+    }
+    func evaluateNumberOfValuesOnChart() {
+        if self.dataDates.count != 0 {
+            self.numberOfValuesOnChart = self.dataDates.count
         }
     }
     
+    func setupRangeOfValues() {
+        
+        var arrayOfvalues = [Double]()
+        
+        if self.chartCase == .repetition {
+            for element in self.data.exerciseData {
+                for index in 0..<element.exerciseSeries.count{
+                    arrayOfvalues.append(Double(element.exerciseSeries[index].exerciseRepeats))
+                }
+            }
+        } else if self.chartCase == .weight {
+            for element in self.data.exerciseData {
+                for index in 0..<element.exerciseSeries.count{
+                    arrayOfvalues.append(Double(element.exerciseSeries[index].exerciseWeight ?? 0))
+                }
+            }
+        } else {
+            fatalError("Error: can not find chart case! (reps/weights)")
+        }
+        let max = arrayOfvalues.max()!
+        let min = arrayOfvalues.min()!
+        let range = max - min
+        let step = range/10
+        
+        self.maxYValue = max
+        self.minYValue = min
+        self.stepMultiplier = step
+    }
 }
 
 class StatsAsDoubles {
