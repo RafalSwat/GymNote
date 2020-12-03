@@ -11,6 +11,7 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct TrainingView: View {
     
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var session: FireBaseSession
     @StateObject var trainingStats: ObservableArray<ExerciseStatistics> = ObservableArray(array: [ExerciseStatistics]())
     @State var setOfArraysOfReps = [[String]]()
@@ -96,7 +97,10 @@ struct TrainingView: View {
                             message: (alertMessage == "" ? "Do you want to finish typing your training and save data to statistics?" : alertMessage),
                             firstButtonTitle: "Yes",
                             secondButtonTitle: "Cancel",
-                            action: self.saveTrainingToStatistics)
+                            action: {
+                                self.saveTrainingToStatistics()
+                                self.presentationMode.wrappedValue.dismiss()
+                            })
             }
             
         }
@@ -117,10 +121,12 @@ struct TrainingView: View {
         }
     }
     func saveTrainingToStatistics() {
+        
         self.saveAsStatistics()
         if !self.trainingStats.array.isEmpty {
             for index in 0..<self.trainingStats.array.count {
                 self.saveStatisticToDataBase(statsToSave: self.trainingStats.array[index])
+                self.addStatisticToUserData(statsToAdd: self.trainingStats.array[index])
             }
         } else {
             self.showWarning = true
@@ -142,8 +148,10 @@ struct TrainingView: View {
                                          repeats: Int(setOfArraysOfReps[exerciseIndex][seriesIndex]) ?? 0,
                                          weight: Int(setOfArraysOfWeights[exerciseIndex][seriesIndex]) ?? 0))
             }
+            let currentDate = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date()) ?? Date()
+            
             let tempExerciseData = ExerciseData(dataID: UUID().uuidString,
-                                                date: Date(),
+                                                date: currentDate,
                                                 series: tempSeries)
             let temExerciseStats = ExerciseStatistics(exercise: Exercise(id: training.listOfExercises[exerciseIndex].exercise.exerciseID,
                                                                          name: training.listOfExercises[exerciseIndex].exercise.exerciseName,
@@ -163,6 +171,13 @@ struct TrainingView: View {
                                                 self.alertMessage = errorDescription
                                             }
                                           })
+    }
+    func addStatisticToUserData(statsToAdd: ExerciseStatistics) {
+        if self.session.userSession?.userStatistics.count != 0 {
+            if let index = self.session.userSession?.userStatistics.firstIndex(where: { $0.exercise.exerciseID == statsToAdd.exercise.exerciseID }) {
+                self.session.userSession?.userStatistics[index].exerciseData.append(contentsOf: statsToAdd.exerciseData)
+            }
+        }
     }
 }
 

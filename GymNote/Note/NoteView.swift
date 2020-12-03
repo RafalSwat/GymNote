@@ -16,6 +16,7 @@ struct NoteView: View {
     @StateObject var listOfTrainings: ObservableArray<Training> = ObservableArray(array: [Training]()).observeChildrenChanges()
     @State var showAlert = false
     @State var trainingToRemove: Training?
+    @State var didAppear = false
     
     var body: some View {
         NavigationView {
@@ -33,8 +34,11 @@ struct NoteView: View {
                     }
                     .listStyle(GroupedListStyle())
                     .onAppear {
-                        if let list = self.session.userSession?.userTrainings {
-                            self.listOfTrainings.array = list
+                        if !didAppear {
+                            self.setupListOfTrainings()
+                            self.didAppear = true
+                        } else {
+                            self.updateTrainingIfNeeded()
                         }
                     }
                     AddButton(addButtonText: "Add New Training",
@@ -53,46 +57,62 @@ struct NoteView: View {
                 
                 if showAlert {
                     if let training = self.trainingToRemove {
-                    ActionAlert(showAlert: $showAlert,
-                                title: "Warning",
-                                message: "Are you sure you want to delete \(training.trainingName)?",
-                                firstButtonTitle: "Yes",
-                                secondButtonTitle: "No",
-                                action: {
-                                    
-                                    withAnimation(.easeInOut) {
-                                        self.deleteTraining(trainingToRemove: training)
-                                    }
-                                    
-                                    self.showAlert = false
-                                })
+                        ActionAlert(showAlert: $showAlert,
+                                    title: "Warning",
+                                    message: "Are you sure you want to delete \(training.trainingName)?",
+                                    firstButtonTitle: "Yes",
+                                    secondButtonTitle: "No",
+                                    action: {
+                                        
+                                        withAnimation(.easeInOut) {
+                                            self.deleteTraining(trainingToRemove: training)
+                                        }
+                                        
+                                        self.showAlert = false
+                                    })
+                    }
+                }
+                
+                
+            }
+        }
+    }
+    func setupListOfTrainings() {
+        if let userID = self.session.userSession?.userProfile.userID {
+            self.session.downloadTrainingsFromDB(userID: userID) { finishDownloading in
+                if finishDownloading {
+                    if let list = self.session.userSession?.userTrainings {
+                        self.listOfTrainings.array = list
+                    }
                 }
             }
-            
-            
         }
     }
-}
-
-func deleteTraining(trainingToRemove: Training) {
-    if let indexOfTrainingToRemove = self.session.userSession?.userTrainings.firstIndex(of: trainingToRemove) {
-        self.removeTrainingFromDB(at: indexOfTrainingToRemove, trainingToRemove: trainingToRemove)
-        self.session.userSession?.userTrainings.remove(at: indexOfTrainingToRemove)
-        self.listOfTrainings.array.remove(at: indexOfTrainingToRemove)
+    func updateTrainingIfNeeded() {
+        if self.listOfTrainings.array.count != self.session.userSession?.userTrainings.count {
+            self.listOfTrainings.array = self.session.userSession!.userTrainings
+        }
     }
-}
-
-func removeTrainingFromDB(at index: Int, trainingToRemove: Training) {
-    if let userID = self.session.userSession?.userProfile.userID {
-        self.session.deleteTrainingFromDB(userID: userID, training: trainingToRemove) { errorOccur, errorDescription in
-            if errorOccur {
-                print(errorDescription ?? "Unknow error occur during removing training!")
+    
+    func deleteTraining(trainingToRemove: Training) {
+        if let indexOfTrainingToRemove = self.session.userSession?.userTrainings.firstIndex(of: trainingToRemove) {
+            self.removeTrainingFromDB(at: indexOfTrainingToRemove, trainingToRemove: trainingToRemove)
+            self.session.userSession?.userTrainings.remove(at: indexOfTrainingToRemove)
+            self.listOfTrainings.array.remove(at: indexOfTrainingToRemove)
+        }
+    }
+    
+    func removeTrainingFromDB(at index: Int, trainingToRemove: Training) {
+        if let userID = self.session.userSession?.userProfile.userID {
+            self.session.deleteTrainingFromDB(userID: userID, training: trainingToRemove) { errorOccur, errorDescription in
+                if errorOccur {
+                    print(errorDescription ?? "Unknow error occur during removing training!")
+                }
+                
             }
-            
         }
     }
-}
-
+    
 }
 
 

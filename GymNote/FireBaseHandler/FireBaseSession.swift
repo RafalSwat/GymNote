@@ -121,7 +121,6 @@ class FireBaseSession: ObservableObject {
                                                       height: value["height"] as! Int,
                                                       userDateOfBirth: convertDate)
                         self.userSession = UserData(profile: userProfile)
-                        self.downloadTrainingsFromDB(userID: userID)
                     })
                 } 
             } else {
@@ -292,7 +291,7 @@ class FireBaseSession: ObservableObject {
         }
     }
     //MARK: Download list of trainings, and store this data in enviroment
-    func downloadTrainingsFromDB(userID: String) {
+    func downloadTrainingsFromDB(userID: String, completion: @escaping (Bool)->()) {
         
         var ids = [String]()
         var names = [String]()
@@ -341,6 +340,9 @@ class FireBaseSession: ObservableObject {
                                                     exercises: allExercises[index])
                             self.userSession?.userTrainings.append(training)
                             index += 1
+                            if ids.count == index {
+                                completion(true)
+                            }
                         }
                     }
                 }
@@ -439,18 +441,22 @@ class FireBaseSession: ObservableObject {
         }
     }
     
-    func downloadUserStatisticsFromDB(userID: String) {
+    func downloadUserStatisticsFromDB(userID: String, completion: @escaping (Bool)->()) {
         
         var exerciseIDs = [String]()
         var exerciseNames = [String]()
         var exerciseAsUserCreations = [Bool]()
         var exercisesData = [[ExerciseData]]()
         var index = 0
+        var size = 0
         
         self.usersDBRef.child("UserStatistics").child(userID).observeSingleEvent(of: .value) { (userStatsSnapShot) in
             
             if userStatsSnapShot.exists() {
                 if let snapChildren = userStatsSnapShot.children.allObjects as? [DataSnapshot] {
+                    
+                    size = snapChildren.count
+                    
                     for child in snapChildren {
                         
                         var exerciseData = [ExerciseData]()
@@ -476,12 +482,19 @@ class FireBaseSession: ObservableObject {
                                     }
                                     exercisesData.append(exerciseData)
                                 }
+                                
                                 let exerciseStatistic = ExerciseStatistics(exercise: Exercise(id: exerciseIDs[index],
                                                                                               name: exerciseNames[index],
                                                                                               createdByUser: exerciseAsUserCreations[index]),
-                                                                           data: exercisesData[index])
+                                                                           data: exercisesData[index].sorted(by: {$0.exerciseDate < $1.exerciseDate}))
                                 self.userSession?.userStatistics.append(exerciseStatistic)
+                                
                                 index += 1
+                                
+                                if index == size
+                                {
+                                    completion(true)
+                                }
                             }
                         }
                     }
@@ -489,6 +502,7 @@ class FireBaseSession: ObservableObject {
             }
         }
     }
+    
     func downloadSeriesFromDB(userID: String, exerciseDataID: String, completion: @escaping (Bool)->()) {
         self.usersDBRef.child("Series").child(exerciseDataID).observeSingleEvent(of: .value) { (seriesSnapshot) in
             

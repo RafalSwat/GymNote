@@ -16,67 +16,44 @@ struct ChartView: View {
     @State var chosenIndex: Int?
     @State var chartTitle = "Stats"
     @State var showMenu: Bool = false
-    @State var show = false
+    @State var statsLoadedSuccessfully = false
+    @State var didAppear = false
     
     var body: some View {
         
         return GeometryReader { geometry in
             NavigationView {
                 ZStack(alignment: .topTrailing) {
-                    
-                    if !show {
+                    if !self.statsLoadedSuccessfully {
                         Indicator()
-                        Button("DUPA", action: {
-                            //print("\(self.session.userSession!.userStatistics[0].exercise.exerciseName)")
-                            self.show.toggle()
-                        })
-                        
                     } else {
-                    
-                    VStack {
-                        
-                        if self.chosenStats != nil {
-                            LineChartView(stats: self.chosenStats!, chartCase: .repetition)
-                                .transition(.scale)
-                                .padding(.bottom, 20)
-                        }
-                        List {
-                            ForEach(self.session.userSession!.userStatistics, id: \.exercise.exerciseID) { exerciseStats in
-                                Button(action: { withAnimation {
-                                    var counter = 0
-                                    self.chosenStats = nil
-                                    self.chosenIndex = self.session.userSession!.userStatistics.firstIndex(of: exerciseStats)
-                                    self.chartTitle = self.session.userSession!.userStatistics[self.chosenIndex!].exercise.exerciseName
-                                    for singleExerciseData in exerciseStats.exerciseData {
-                                        self.session.downloadSeriesFromDB(userID: (self.session.userSession?.userProfile.userID)!,
-                                                                          exerciseDataID: singleExerciseData.exerciseDataID, completion: { finishUpload in
-                                                                            if finishUpload {
-                                                                                counter += 1
-                                                                                if counter == exerciseStats.exerciseData.count {
-                                                                                    let stats = LineChartModelView(data:  self.session.userSession!.userStatistics[self.chosenIndex!],
-                                                                                                                          chartCase: .repetition)
-                                                                                    
-                                                                                    self.setupStats(stats: stats)
-                                                                                    self.chosenStats = stats
-                                                                                }
-                                                                            }
-                                                                          })
+                        VStack {
+                            if self.chosenStats != nil {
+                                LineChartView(stats: self.chosenStats!, chartCase: .repetition)
+                                    .transition(.scale)
+                                    .padding(.bottom, 20)
+                            }
+                            List {
+                                ForEach(self.session.userSession?.userStatistics ?? [ExerciseStatistics](), id: \.exercise.exerciseID) { exerciseStats in
+                                    Button(action: { withAnimation {
+                                        self.chosenStats = nil
+                                        self.chooseIndex(stats: exerciseStats)
+                                        self.setupTitle()
+                                        self.setupSeriesForGivenStats(statistics: exerciseStats, chartCase: .repetition)
                                     }
-                                }
-                                }) {
-                                    HStack {
-                                        if exerciseStats.exercise.exerciseCreatedByUser {
-                                            Image(systemName: "hammer")
+                                    }) {
+                                        HStack {
+                                            if exerciseStats.exercise.exerciseCreatedByUser {
+                                                Image(systemName: "hammer")
+                                            }
+                                            Text("\(exerciseStats.exercise.exerciseName)")
                                         }
-                                        Text("\(exerciseStats.exercise.exerciseName)")
                                     }
                                 }
                             }
-                            
+                            .listStyle(PlainListStyle())
                         }
-                        .listStyle(PlainListStyle())
                     }
-                }
                     if showMenu {
                         ChartMenuView(displayMode: .repetition)
                             .frame(width: 200, height: 300)
@@ -88,7 +65,6 @@ struct ChartView: View {
                                     .combined(with: AnyTransition.offset(x: geometry.size.width/2,
                                                                          y: -geometry.size.height/2))
                             )
-                        
                     }
                 }
                 .padding(.top)
@@ -100,11 +76,47 @@ struct ChartView: View {
                         .font(.title)
                 })
                 .onAppear {
-                    if self.session.userSession?.userStatistics.count == 0 {
-                        self.session.downloadUserStatisticsFromDB(userID: (session.userSession?.userProfile.userID)!)
+                    if !didAppear {
+                        self.setupUserStatisticsIfNeeded()
+                        self.didAppear = true
                     }
                 }
             }
+        }
+    }
+    func setupUserStatisticsIfNeeded() {
+        if self.session.userSession?.userStatistics.count == 0 {
+            self.session.downloadUserStatisticsFromDB(userID: (session.userSession?.userProfile.userID)!, completion: { finishedLoadingStats in
+                self.statsLoadedSuccessfully = finishedLoadingStats
+            })
+        }
+    }
+    func chooseIndex(stats: ExerciseStatistics) {
+        self.chosenIndex = self.session.userSession!.userStatistics.firstIndex(of: stats)
+    }
+    func setupTitle() {
+        if self.chosenIndex != nil {
+            self.chartTitle = self.session.userSession!.userStatistics[self.chosenIndex!].exercise.exerciseName
+        } else {
+            self.chartTitle = ""
+        }
+    }
+    func setupSeriesForGivenStats(statistics: ExerciseStatistics, chartCase: ChartCase) {
+        var counter = 0
+        for singleExerciseData in statistics.exerciseData {
+            self.session.downloadSeriesFromDB(userID: (self.session.userSession?.userProfile.userID)!,
+                                              exerciseDataID: singleExerciseData.exerciseDataID, completion: { finishUpload in
+                                                if finishUpload {
+                                                    counter += 1
+                                                    if counter == statistics.exerciseData.count {
+                                                        let stats = LineChartModelView(data:  self.session.userSession!.userStatistics[self.chosenIndex!],
+                                                                                       chartCase: chartCase)
+                                                        
+                                                        self.setupStats(stats: stats)
+                                                        self.chosenStats = stats
+                                                    }
+                                                }
+                                              })
         }
     }
     func setupStats(stats: LineChartModelView) {
@@ -116,6 +128,7 @@ struct ChartView: View {
         stats.evaluateNumberOfValuesOnChart()
         stats.setupRangeOfValues()
     }
+    
 }
 struct ChartView_Previews: PreviewProvider {
     static var previews: some View {

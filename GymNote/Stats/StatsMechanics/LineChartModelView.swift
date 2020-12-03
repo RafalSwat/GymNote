@@ -48,34 +48,34 @@ class LineChartModelView: ObservableObject {
         
         for dataIndex in 0..<self.data.exerciseData.count {
             
-            let dataAsDouble = Double(Calendar.current.ordinality(of: .day, in: .year, for: data.exerciseData[dataIndex].exerciseDate)!)
+            let dateAsDouble = Double(Calendar.current.ordinality(of: .day, in: .year, for: data.exerciseData[dataIndex].exerciseDate)!)
             
-            
-            var tempRepeatSum = 0
-            var tempWeightSum = 0
-            var averageRepeatValue = 0
-            var averageWeightValue = 0
+            var tempRepeatSum = 0.0
+            var tempWeightSum = 0.0
+            var averageRepeatValue = 0.0
+            var averageWeightValue = 0.0
             
             for seriesIndex in 0..<self.data.exerciseData[dataIndex].exerciseSeries.count {
-                tempRepeatSum += self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseRepeats
-                tempWeightSum += self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseWeight ?? 0
+                tempRepeatSum += Double(self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseRepeats)
+                tempWeightSum += Double(self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseWeight ?? 0)
                 
                 repeats.append(Double(self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseRepeats))
                 weights.append(Double(self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseWeight ?? 0))
             }
             
-            averageRepeatValue = Int(tempRepeatSum/self.data.exerciseData[dataIndex].exerciseSeries.count)
-            averageWeightValue = Int(tempWeightSum/self.data.exerciseData[dataIndex].exerciseSeries.count)
+            averageRepeatValue = tempRepeatSum/Double(self.data.exerciseData[dataIndex].exerciseSeries.count)
+            averageWeightValue = tempWeightSum/Double(self.data.exerciseData[dataIndex].exerciseSeries.count)
             averageValuesOfRepeats.append(Double(averageRepeatValue))
             averageValuesOfWeights.append(Double(averageWeightValue))
-            dates.append(dataAsDouble)
+            dates.append(dateAsDouble)
         }
         let maxRepeat = repeats.max()
         let minRepeat = repeats.min()
         let maxWeight = weights.max()
         let minWeight = weights.min()
 
-        let minDate = dates.min()
+        let minDate = self.datesInRange.min()
+        let minDoubleDate = Double(Calendar.current.ordinality(of: .day, in: .year, for: minDate!)!)
         
         let repeatRange = maxRepeat! - minRepeat!
         let weightRange = maxWeight! - minWeight!
@@ -88,7 +88,7 @@ class LineChartModelView: ObservableObject {
         for index in 0..<averageValuesOfRepeats.count {
             let normalizeRepeat = (averageValuesOfRepeats[index] - minRepeat!)/repeatRange
             let normalizeWeight = (averageValuesOfWeights[index] - minWeight!)/weightRange
-            let normalizeDate = (dates[index] - minDate!)/Double(dateRange)
+            let normalizeDate = (dates[index] - minDoubleDate)/Double(dateRange)
             normalizeRepeats.append(normalizeRepeat)
             normalizeWeights.append(normalizeWeight)
             normalizeDates.append(normalizeDate)
@@ -118,8 +118,10 @@ class LineChartModelView: ObservableObject {
         let min = dates.min()!
         let max = dates.max()!
         
-        self.dataDates = dates
+        self.dataDates = dates.sorted()
         self.datesInRange = DateConverter().fillUpArrayWithDates(startDate: min, endDate: max)
+        
+        
     }
 
     func setupAverageValues() {
@@ -154,12 +156,12 @@ class LineChartModelView: ObservableObject {
             var arrayOfValues = [Double]()
             
             if chartCase == .weight {
-                for series in self.data.exerciseData[index].exerciseSeries {
-                    arrayOfValues.append(Double(series.exerciseWeight ?? 0))
+                for seriesIndex in 0..<self.data.exerciseData[index].exerciseSeries.count {
+                    arrayOfValues.append(Double(self.data.exerciseData[index].exerciseSeries[seriesIndex].exerciseWeight ?? 0))
                 }
             } else if chartCase == .repetition {
-                for series in self.data.exerciseData[index].exerciseSeries {
-                    arrayOfValues.append(Double(series.exerciseWeight ?? 0))
+                for seriesIndex in 0..<self.data.exerciseData[index].exerciseSeries.count {
+                    arrayOfValues.append(Double(self.data.exerciseData[index].exerciseSeries[seriesIndex].exerciseRepeats))
                 }
             }
             

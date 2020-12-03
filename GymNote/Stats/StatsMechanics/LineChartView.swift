@@ -24,6 +24,7 @@ struct LineChartView: View {
                                          Color.red])
     
     
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -54,38 +55,39 @@ struct LineChartView: View {
                             .font(.caption)
                     }
                     //setup horizontal lines
-                    ForEach(0..<self.stats.numberOfHorizontalLines, id: \.self) { iterator in
+                    ForEach(0..<self.stats.numberOfHorizontalLines+1, id: \.self) { iterator in
                         Group {
                             Path { p in
-                                let yPoint = self.estimateYLocalization(value: Double(Double(iterator+1) * self.stats.stepMultiplier),
-                                                                        maxValue: self.stats.maxYValue,
-                                                                        minValue: self.stats.minYValue,
+                                let yPoint = self.estimateYLocalization(value: (Double(iterator+1) * self.stats.stepMultiplier),
+                                                                        maxValue: Double(11 * self.stats.stepMultiplier),
+                                                                        minValue: Double(1 * self.stats.stepMultiplier),
                                                                         maxHeight: reader.size.height)
-                                let xStartPoint = self.estimateXLocalization(value: Double(0),
-                                                                             maxValue: Double(self.stats.datesInRange.count),
-                                                                             minValue: Double(0),
+                                let xStartPoint = self.estimateXLocalization(value: Double(1),
+                                                                             maxValue: Double(self.stats.numberOfVerticalLines+1),
+                                                                             minValue: Double(1),
                                                                              maxWidth: reader.size.width)
-                                let xEndPoint = self.estimateXLocalization(value: Double(self.stats.datesInRange.count-1),
-                                                                           maxValue: Double(self.stats.datesInRange.count),
-                                                                           minValue: Double(0),
+                                let xEndPoint = self.estimateXLocalization(value: Double(self.stats.numberOfVerticalLines),
+                                                                           maxValue: Double(self.stats.numberOfVerticalLines+1),
+                                                                           minValue: Double(1),
                                                                            maxWidth: reader.size.width)
-                                p.move(to: CGPoint(x: CGFloat(xStartPoint),
-                                                   y: CGFloat(yPoint)))
-                                p.addLine(to: CGPoint(x: CGFloat(xEndPoint),
-                                                      y: CGFloat(yPoint)))
+                                
+                                p.move(to: CGPoint(x: xStartPoint,
+                                                   y: yPoint))
+                                p.addLine(to: CGPoint(x: xEndPoint,
+                                                      y: yPoint))
                             }
                             .stroke(Color.secondary, lineWidth: 1)
                         }
                     }
                     // setup description to y axis
-                    ForEach(0..<self.stats.numberOfHorizontalLines, id: \.self) { index in
+                    ForEach(0..<self.stats.numberOfHorizontalLines+1, id: \.self) { index in
                         let xPoint = self.estimateXLocalization(value: Double(1),
                                                                 maxValue: Double(self.stats.datesInRange.count+1),
                                                                 minValue: Double(1),
                                                                 maxWidth: reader.size.width)-35
-                        let yPoint = self.estimateYLocalization(value: Double(Double(index+10) * self.stats.stepMultiplier),
-                                                                maxValue: self.stats.maxYValue,
-                                                                minValue: self.stats.minYValue,
+                        let yPoint = self.estimateYLocalization(value: Double(Double(index+1) * self.stats.stepMultiplier),
+                                                                maxValue: Double(11 * self.stats.stepMultiplier),
+                                                                minValue: Double(1 * self.stats.stepMultiplier),
                                                                 maxHeight: reader.size.height)-5
                         Text("\(self.estimateYAxisDescription(line: index), specifier: "%.1f")")
                             .offset(x: xPoint,
@@ -99,19 +101,25 @@ struct LineChartView: View {
                         Group {
                             Path { p in
                                 let xPoint = self.estimateXLocalization(value: Double(iterator+1),
-                                                                        maxValue: Double(self.stats.datesInRange.count+1),
+                                                                        maxValue: Double(self.stats.numberOfVerticalLines+1),
                                                                         minValue: Double(1),
                                                                         maxWidth: reader.size.width)
                                 
-                                let yPoint = self.estimateYLocalization(value: Double(10 * self.stats.stepMultiplier),
-                                                                        maxValue: self.stats.maxYValue,
-                                                                        minValue: self.stats.minYValue,
+                                let yStartPoint = self.estimateYLocalization(value: Double(11 * self.stats.stepMultiplier),
+                                                                        maxValue: Double(11 * self.stats.stepMultiplier),
+                                                                        minValue: Double(1 * self.stats.stepMultiplier),
                                                                         maxHeight: reader.size.height)
                                 
+                                let yEndPoint = self.estimateYLocalization(value: Double(1 * self.stats.stepMultiplier),
+                                                                           maxValue: Double(11 * self.stats.stepMultiplier),
+                                                                           minValue: Double(1 * self.stats.stepMultiplier),
+                                                                           maxHeight: reader.size.height)
+                                
+                                
                                 p.move(to: CGPoint(x: xPoint,
-                                                   y: yPoint))
-                                p.addLine(to: CGPoint(x: Int(xPoint),
-                                                      y: Int((reader.size.height))))
+                                                   y: yStartPoint))
+                                p.addLine(to: CGPoint(x: xPoint,
+                                                      y: yEndPoint))
                                 
                             }
                             .stroke(Color.secondary, lineWidth: 1)
@@ -119,21 +127,25 @@ struct LineChartView: View {
                     }
                     ForEach(0..<self.stats.numberOfValuesOnChart, id: \.self) { iterator in
                         //Setup min max bars
-                        if let indexX = self.stats.datesInRange.firstIndex(of: self.stats.dataDates[iterator]) {
-                            
+                        //if let indexX = self.stats.datesInRange.firstIndex(of: self.stats.dataDates[iterator]) {
+                        if let indexX = self.stats.datesInRange.firstIndex(where:
+                                                                            { (Calendar.current.compare($0, to: self.stats.dataDates[iterator], toGranularity: .day)) == .orderedSame }) {
+                        
                             Path { p in
                                 let xPoint = self.estimateXLocalization(value: Double(indexX+1),
                                                                         maxValue: Double(self.stats.datesInRange.count+1),
                                                                         minValue: Double(1),
                                                                         maxWidth: reader.size.width)
-                                let yStartPoint = self.estimateYLocalization(value: self.stats.dataLowestValue[iterator],
+
+                                let yStartPoint = self.estimateYLocalization(value: self.stats.dataHightestValue[iterator],
                                                                              maxValue: self.stats.maxYValue,
                                                                              minValue: self.stats.minYValue,
                                                                              maxHeight: reader.size.height)
-                                let yEndPoint = self.estimateYLocalization(value: self.stats.dataHightestValue[iterator],
+                                let yEndPoint = self.estimateYLocalization(value: self.stats.dataLowestValue[iterator],
                                                                            maxValue: self.stats.maxYValue,
                                                                            minValue: self.stats.minYValue,
                                                                            maxHeight: reader.size.height)
+                                
                                 p.move(to: CGPoint(x: xPoint,
                                                    y: yStartPoint))
                                 p.addLine(to: CGPoint(x: xPoint,
@@ -179,6 +191,7 @@ struct LineChartView: View {
                                 self.horizontalLineLocation = self.getClosestDataPoint(point: value.location,
                                                                                        width: geometry.size.width,
                                                                                        height: geometry.size.height)
+                                self.choosenIndex = 0
                             }
                         })
             )
@@ -207,11 +220,15 @@ struct LineChartView: View {
             let convertValueX = chartWidth * CGFloat(data[index].dateAsDouble)
             xPoints.append(convertValueX)
         }
+        
+        let shiftX = maxWidth - chartWidth
+        
         for index in 0..<data.count {
-            let point = CGPoint(x: xPoints[index]+(maxWidth-chartWidth), y: maxHeight-yPoints[index])
+            let point = CGPoint(x: xPoints[index]+shiftX, y: maxHeight-yPoints[index])
             points.append(point)
         }
         return points
+        
     }
     
     func estimateXLocalization(value: Double, maxValue: Double, minValue: Double, maxWidth: CGFloat) -> CGFloat {
@@ -226,11 +243,10 @@ struct LineChartView: View {
     }
     
     func estimateYLocalization(value: Double, maxValue: Double, minValue: Double, maxHeight: CGFloat) -> CGFloat {
-        let chartHeight = maxHeight
         let normalizeY = self.stats.normalizePoint(value: value,
                                                    maxValue: maxValue,
                                                    minValue: minValue)
-        let yPoint = CGFloat(normalizeY) * chartHeight
+        let yPoint = CGFloat(normalizeY) * maxHeight
         return maxHeight - yPoint
     }
     
@@ -241,10 +257,8 @@ struct LineChartView: View {
     func getClosestDataPoint(point: CGPoint, width:CGFloat, height: CGFloat) -> CGPoint {
         let points = self.convertDataToPoints(data: self.stats.dataAsDouble, maxHeight: height, maxWidth: width)
         var pointsX = [CGFloat]()
-        var pointsY = [CGFloat]()
         
         for point in points {
-            pointsY.append(point.y)
             pointsX.append(point.x)
         }
         
@@ -254,20 +268,20 @@ struct LineChartView: View {
         let index = pointsX.firstIndex(of: closestValue)
         
         if (index! >= 0 && index! < points.count) {
-            return CGPoint(x: points[index!].x-3, y: points[index!].y)
+            return CGPoint(x: points[index!].x, y: points[index!].y)
         }
         return .zero
     }
     
     func getDataAssociatedWithpoint(at point: CGPoint, width: CGFloat, height: CGFloat) -> Int {
         let points = self.convertDataToPoints(data: self.stats.dataAsDouble, maxHeight: height, maxWidth: width)
-        var pointsY = [CGFloat]()
-        for pointY in points {
-            pointsY.append(pointY.y)
+        var pointsX = [CGFloat]()
+        for point in points {
+            pointsX.append(point.x)
         }
-        
-        let index = pointsY.firstIndex(of: point.y) ?? 0
-        return index
+        let indexX = pointsX.firstIndex(of: point.x) ?? 0
+
+        return indexX
     }
 }
 

@@ -39,10 +39,15 @@ class DateConverter {
     func fillUpArrayWithDates(startDate: Date, endDate: Date) -> [Date] {
 
         var dates:[Date] = []
-        var currentDate = startDate
         let interval = Double(3600*24)   //one day
         
-        while currentDate.timeIntervalSinceReferenceDate < endDate.timeIntervalSinceReferenceDate {
+        //MARK: for chart aesthetics the range will be greater
+        let start = startDate.timeIntervalSinceReferenceDate - interval
+        let end = endDate.timeIntervalSinceReferenceDate + interval
+        
+        var currentDate = Date(timeIntervalSinceReferenceDate: start)
+
+        while currentDate.timeIntervalSinceReferenceDate < end {
             dates.append(currentDate)
             currentDate = currentDate.addingTimeInterval(interval)
         }
