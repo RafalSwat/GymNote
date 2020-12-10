@@ -13,30 +13,46 @@ class LineChartModelView: ObservableObject {
     
     @Published var data: ExerciseStatistics
     @Published var chartCase: ChartCase
+    @Published var dateFrom: Date
+    @Published var dateTo: Date
     
     @Published var dataDates = [Date]()
     @Published var datesInRange = [Date]()
     
     @Published var dataAsDouble = [StatsAsDoubles]()
-    @Published var dataValesAverage = [Double]()
     
-    @Published var dataHightestValue = [Double]()
-    @Published var dataLowestValue = [Double]()
+    @Published var repsOnAverage = [Double]()
+    @Published var weightsOnAverage = [Double]()
+    
+    @Published var repsHightestValue = [Double]()
+    @Published var repsLowestValue = [Double]()
+    @Published var weightsHightestValue = [Double]()
+    @Published var weightsLowestValue = [Double]()
     
     @Published var numberOfHorizontalLines = 10
     @Published var numberOfVerticalLines = 0
     @Published var numberOfValuesOnChart = 0
     
-    @Published var maxYValue: Double = 0
-    @Published var minYValue: Double = 0
-    @Published var stepMultiplier: Double = 0
+    @Published var maxRepsValue: Double = 0
+    @Published var minRepsValue: Double = 0
+    @Published var stepRepsMultiplier: Double = 0
+    @Published var maxWeightValue: Double = 0
+    @Published var minWeightValue: Double = 0
+    @Published var stepWeightMultiplier: Double = 0
     
     
-    init(data: ExerciseStatistics, chartCase: ChartCase) {
+    
+    
+    init(data: ExerciseStatistics,
+         chartCase: ChartCase,
+         fromDate: Date,
+         toDate: Date) {
         self.data = data
         self.chartCase = chartCase
+        self.dateFrom = fromDate
+        self.dateTo = toDate
     }
-
+    
     func normalizeData() {
         
         var repeats = [Double]()
@@ -113,65 +129,72 @@ class LineChartModelView: ObservableObject {
         var dates = [Date]()
         
         for elementOfData in self.data.exerciseData {
-            dates.append(elementOfData.exerciseDate)
+            let date = elementOfData.exerciseDate
+            if date >= self.dateFrom && date <= self.dateTo {
+                dates.append(elementOfData.exerciseDate)
+            }
         }
-        let min = dates.min()!
-        let max = dates.max()!
         
         self.dataDates = dates.sorted()
-        self.datesInRange = DateConverter().fillUpArrayWithDates(startDate: min, endDate: max)
-        
-        
+        self.datesInRange = DateConverter().fillUpArrayWithDates(startDate: self.dateFrom,
+                                                                 endDate: self.dateTo)
     }
 
     func setupAverageValues() {
         
-        var arryOfAveragesValues = [Double]()
+        var repeatsOnAverage = [Double]()
+        var weightsOnAverage = [Double]()
         
         for index in 0..<self.data.exerciseData.count {
-            if chartCase == .repetition {
-                var sum = 0
-                for series in self.data.exerciseData[index].exerciseSeries {
-                    sum += series.exerciseRepeats
-                }
-                let averageValue = Double(sum)/Double(self.data.exerciseData[index].exerciseSeries.count)
-                arryOfAveragesValues.append(averageValue)
-            } else if chartCase == .weight {
-                var sum = 0
-                for series in self.data.exerciseData[index].exerciseSeries {
-                    sum += series.exerciseWeight ?? 0
-                }
-                let averageValue = Double(sum)/Double(self.data.exerciseData[index].exerciseSeries.count)
-                arryOfAveragesValues.append(averageValue)
+            
+            var repeatSum = 0
+            var weigthtSum = 0
+            for series in self.data.exerciseData[index].exerciseSeries {
+                repeatSum += series.exerciseRepeats
+                weigthtSum += series.exerciseWeight ?? 1
             }
+            let averageRepeat = Double(repeatSum)/Double(self.data.exerciseData[index].exerciseSeries.count)
+            let averageWeight = Double(weigthtSum)/Double(self.data.exerciseData[index].exerciseSeries.count)
+            
+            repeatsOnAverage.append(averageRepeat)
+            weightsOnAverage.append(averageWeight)
         }
-        self.dataValesAverage = arryOfAveragesValues
+        self.repsOnAverage = repeatsOnAverage
+        self.weightsOnAverage = weightsOnAverage
     }
+    
     func setupMinAndMaxValues() {
         
-        var arrayOfMinValues = [Double]()
-        var arrayOfMaxValues = [Double]()
+        var repsMinValues = [Double]()
+        var repsMaxValues = [Double]()
+        
+        var weightsMinValues = [Double]()
+        var weightsMaxValues = [Double]()
         
         for index in 0..<self.data.exerciseData.count {
-            var arrayOfValues = [Double]()
+            var repsAllValues = [Double]()
+            var weightsAllValues = [Double]()
             
-            if chartCase == .weight {
-                for seriesIndex in 0..<self.data.exerciseData[index].exerciseSeries.count {
-                    arrayOfValues.append(Double(self.data.exerciseData[index].exerciseSeries[seriesIndex].exerciseWeight ?? 0))
-                }
-            } else if chartCase == .repetition {
-                for seriesIndex in 0..<self.data.exerciseData[index].exerciseSeries.count {
-                    arrayOfValues.append(Double(self.data.exerciseData[index].exerciseSeries[seriesIndex].exerciseRepeats))
-                }
+            for seriesIndex in 0..<self.data.exerciseData[index].exerciseSeries.count {
+                repsAllValues.append(Double(self.data.exerciseData[index].exerciseSeries[seriesIndex].exerciseRepeats))
+                weightsAllValues.append(Double(self.data.exerciseData[index].exerciseSeries[seriesIndex].exerciseWeight ?? 0))
             }
             
-            let minValue = arrayOfValues.min() ?? 0
-            let maxValue = arrayOfValues.max()!
-            arrayOfMinValues.append(minValue)
-            arrayOfMaxValues.append(maxValue)
+            
+            let repsMinValue = repsAllValues.min() ?? 1
+            let repsMaxValue = repsAllValues.max()!
+            let weightMinValue = weightsAllValues.min() ?? 1
+            let weightMaxValue = weightsAllValues.max()!
+            
+            repsMinValues.append(repsMinValue)
+            repsMaxValues.append(repsMaxValue)
+            weightsMinValues.append(weightMinValue)
+            weightsMaxValues.append(weightMaxValue)
         }
-        self.dataLowestValue = arrayOfMinValues
-        self.dataHightestValue = arrayOfMaxValues
+        self.repsHightestValue = repsMaxValues
+        self.repsLowestValue = repsMinValues
+        self.weightsHightestValue = weightsMaxValues 
+        self.weightsLowestValue = weightsMinValues
     }
     
     
@@ -189,31 +212,31 @@ class LineChartModelView: ObservableObject {
     
     func setupRangeOfValues() {
         
-        var arrayOfvalues = [Double]()
+        var arrayOfRepsValues = [Double]()
+        var arrayOfWeightValues = [Double]()
         
-        if self.chartCase == .repetition {
-            for element in self.data.exerciseData {
-                for index in 0..<element.exerciseSeries.count{
-                    arrayOfvalues.append(Double(element.exerciseSeries[index].exerciseRepeats))
-                }
+        for element in self.data.exerciseData {
+            for index in 0..<element.exerciseSeries.count{
+                arrayOfRepsValues.append(Double(element.exerciseSeries[index].exerciseRepeats))
+                arrayOfWeightValues.append(Double(element.exerciseSeries[index].exerciseWeight ?? 0))
             }
-        } else if self.chartCase == .weight {
-            for element in self.data.exerciseData {
-                for index in 0..<element.exerciseSeries.count{
-                    arrayOfvalues.append(Double(element.exerciseSeries[index].exerciseWeight ?? 0))
-                }
-            }
-        } else {
-            fatalError("Error: can not find chart case! (reps/weights)")
         }
-        let max = arrayOfvalues.max()!
-        let min = arrayOfvalues.min()!
-        let range = max - min
-        let step = range/10
+        let maxReps = arrayOfRepsValues.max()!
+        let minReps = arrayOfRepsValues.min()!
+        let rangeReps = maxReps - minReps
+        let stepReps = rangeReps/10
         
-        self.maxYValue = max
-        self.minYValue = min
-        self.stepMultiplier = step
+        let maxWeights = arrayOfWeightValues.max()!
+        let minWeights = arrayOfWeightValues.min()!
+        let rangeWeights = maxWeights - minWeights
+        let stepWeights = rangeWeights/10
+        
+        self.maxRepsValue = maxReps
+        self.minRepsValue = minReps
+        self.stepRepsMultiplier = stepReps
+        self.maxWeightValue = maxWeights
+        self.minWeightValue = minWeights
+        self.stepWeightMultiplier = stepWeights
     }
 }
 
@@ -237,4 +260,7 @@ enum ChartCase {
     case weight
 }
 
-
+enum ChartDisplayedValues {
+    case greatest
+    case average
+}

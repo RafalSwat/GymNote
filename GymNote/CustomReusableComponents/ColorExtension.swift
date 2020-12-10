@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 
 extension Color {
+    static let customOrange = Color("customOrange")
     static let customShadow = Color("customShadow")
     static let customLight = Color("customLight")
     static let customDark = Color("customDark")

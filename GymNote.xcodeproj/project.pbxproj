@@ -45,6 +45,8 @@
 		075F9BCA24DDC150005ADFF1 /* ExerciseStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BC924DDC150005ADFF1 /* ExerciseStatistics.swift */; };
 		075F9BCC24DDC1BF005ADFF1 /* ExerciseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BCB24DDC1BF005ADFF1 /* ExerciseData.swift */; };
 		07608DE924FD0F90003497E3 /* LineChartModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07608DE824FD0F8F003497E3 /* LineChartModelView.swift */; };
+		0764EBA2257A54B200C33430 /* CheckmarkToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0764EBA1257A54B200C33430 /* CheckmarkToggleStyle.swift */; };
+		0764EBA525822EB200C33430 /* SmallRectangularButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0764EBA425822EB200C33430 /* SmallRectangularButtonStyle.swift */; };
 		077ECD4123B0F020005A1B76 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECD4023B0F020005A1B76 /* ProfileEditView.swift */; };
 		077ECD4323B0F4A1005A1B76 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECD4223B0F4A1005A1B76 /* UserData.swift */; };
 		07840A92248ACD8100FC3019 /* CancelEditModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07840A91248ACD8100FC3019 /* CancelEditModeButton.swift */; };
@@ -121,6 +123,8 @@
 		075F9BC924DDC150005ADFF1 /* ExerciseStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseStatistics.swift; sourceTree = "<group>"; };
 		075F9BCB24DDC1BF005ADFF1 /* ExerciseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseData.swift; sourceTree = "<group>"; };
 		07608DE824FD0F8F003497E3 /* LineChartModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartModelView.swift; sourceTree = "<group>"; };
+		0764EBA1257A54B200C33430 /* CheckmarkToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkToggleStyle.swift; sourceTree = "<group>"; };
+		0764EBA425822EB200C33430 /* SmallRectangularButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallRectangularButtonStyle.swift; sourceTree = "<group>"; };
 		077ECD4023B0F020005A1B76 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		077ECD4223B0F4A1005A1B76 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		07840A91248ACD8100FC3019 /* CancelEditModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelEditModeButton.swift; sourceTree = "<group>"; };
@@ -259,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				0757023E23A4D89500030991 /* RectangularButtonStyle.swift */,
+				0764EBA425822EB200C33430 /* SmallRectangularButtonStyle.swift */,
 				073DEAE1249A4F66008F3C72 /* UseButton.swift */,
 				073DEAE3249A54D4008F3C72 /* DeleteButton.swift */,
 				0736F9DC23CA3F0C00626599 /* ChangeButton.swift */,
@@ -436,6 +441,7 @@
 				07F55DA124AF3D790024AB1A /* ActionAlert.swift */,
 				07F55DA324AF3E690024AB1A /* WarningAlert.swift */,
 				07C922E72411582400AF6010 /* DualColorCheckmark.swift */,
+				0764EBA1257A54B200C33430 /* CheckmarkToggleStyle.swift */,
 			);
 			path = CustomReusableComponents;
 			sourceTree = "<group>";
@@ -597,6 +603,7 @@
 				07426608240BFD2A003F2C32 /* AddButton.swift in Sources */,
 				07FF8E052546A8C4006D6732 /* EditTrainingListOptions.swift in Sources */,
 				0727887123AA473500092E24 /* ProfileView.swift in Sources */,
+				0764EBA2257A54B200C33430 /* CheckmarkToggleStyle.swift in Sources */,
 				07FF8E5125496DED006D6732 /* SeriesTextFields.swift in Sources */,
 				073DEAF9249F4FF2008F3C72 /* TrainingHost.swift in Sources */,
 				073DEAF7249F456D008F3C72 /* EditExerciseView.swift in Sources */,
@@ -604,6 +611,7 @@
 				07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */,
 				07428FDB24E2BEDC0062B892 /* Indicator.swift in Sources */,
 				07EA01E6253C6B42003A13FA /* ObservableArray.swift in Sources */,
+				0764EBA525822EB200C33430 /* SmallRectangularButtonStyle.swift in Sources */,
 				075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */,
 				07C0B98B23992267001632A0 /* SignupView.swift in Sources */,
 				07C922E62411140000AF6010 /* NavigationConfigurator.swift in Sources */,

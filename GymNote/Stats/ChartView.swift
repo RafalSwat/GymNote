@@ -10,14 +10,23 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct ChartView: View {
+    
     @EnvironmentObject var session: FireBaseSession
     @State var stats = [ExerciseStatistics]()
     @State var chosenStats: LineChartModelView?
     @State var chosenIndex: Int?
     @State var chartTitle = "Stats"
-    @State var showMenu: Bool = false
     @State var statsLoadedSuccessfully = false
     @State var didAppear = false
+    
+    @State var showMenu: Bool = false
+    @State var displayMode: ChartCase = .repetition
+    @State var displayValue: ChartDisplayedValues = .average
+    @State var showTrendLine: Bool = false
+    @State var minMaxBares: Bool = true
+    @State var startDate = Date()
+    @State var endDate = Date()
+    @State var changeDateRange = false
     
     var body: some View {
         
@@ -29,7 +38,10 @@ struct ChartView: View {
                     } else {
                         VStack {
                             if self.chosenStats != nil {
-                                LineChartView(stats: self.chosenStats!, chartCase: .repetition)
+                                LineChartView(stats: self.chosenStats!,
+                                              chartCase: self.$displayMode,
+                                              minMaxBares: self.$minMaxBares,
+                                              displayValue: self.$displayValue)
                                     .transition(.scale)
                                     .padding(.bottom, 20)
                             }
@@ -39,7 +51,8 @@ struct ChartView: View {
                                         self.chosenStats = nil
                                         self.chooseIndex(stats: exerciseStats)
                                         self.setupTitle()
-                                        self.setupSeriesForGivenStats(statistics: exerciseStats, chartCase: .repetition)
+                                        self.setupSeriesForGivenStats(statistics: exerciseStats,
+                                                                      chartCase: self.displayMode)
                                     }
                                     }) {
                                         HStack {
@@ -55,9 +68,16 @@ struct ChartView: View {
                         }
                     }
                     if showMenu {
-                        ChartMenuView(displayMode: .repetition)
-                            .frame(width: 200, height: 300)
-                            .background(LinearGradient(gradient: Gradient(colors:[Color.customLight, Color.customDark]), startPoint: .bottomLeading, endPoint: .topTrailing))
+                        ChartMenuView(displayMode: self.$displayMode,
+                                      displayValue: self.$displayValue,
+                                      showTrendLine: self.$showTrendLine,
+                                      minMaxBares: self.$minMaxBares,
+                                      showStatsFromDate: self.$startDate,
+                                      showStatsToDate: self.$endDate,
+                                      choosenStas: self.$chosenStats)
+                            .frame(width: 280, height: 380)
+                            .background(LinearGradient(gradient: Gradient(colors:[Color.customLight, Color.customDark]),
+                                                       startPoint: .bottomLeading, endPoint: .topTrailing))
                             .cornerRadius(10)
                             .shadow(color: Color.customShadow, radius: 5)
                             .transition(
@@ -109,9 +129,12 @@ struct ChartView: View {
                                                 if finishUpload {
                                                     counter += 1
                                                     if counter == statistics.exerciseData.count {
-                                                        let stats = LineChartModelView(data:  self.session.userSession!.userStatistics[self.chosenIndex!],
-                                                                                       chartCase: chartCase)
-                                                        
+                                                        let statsToShow = self.session.userSession!.userStatistics[self.chosenIndex!]
+                                                        self.estimateDateRange(statistics: statistics)
+                                                        let stats = LineChartModelView(data: statsToShow,
+                                                                                       chartCase: chartCase,
+                                                                                       fromDate: self.startDate,
+                                                                                       toDate: self.endDate)
                                                         self.setupStats(stats: stats)
                                                         self.chosenStats = stats
                                                     }
@@ -119,6 +142,8 @@ struct ChartView: View {
                                               })
         }
     }
+    
+    
     func setupStats(stats: LineChartModelView) {
         stats.setupDatesRange()
         stats.normalizeData()
@@ -129,6 +154,17 @@ struct ChartView: View {
         stats.setupRangeOfValues()
     }
     
+    func estimateDateRange(statistics: ExerciseStatistics) {
+        var dates = [Date]()
+        for singleData in statistics.exerciseData {
+            dates.append(singleData.exerciseDate)
+        }
+        let min = dates.min() ?? Date()
+        let max = dates.max() ?? Date()
+        
+        self.startDate = min
+        self.endDate = max
+    }
 }
 struct ChartView_Previews: PreviewProvider {
     static var previews: some View {

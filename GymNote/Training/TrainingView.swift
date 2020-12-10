@@ -145,8 +145,8 @@ struct TrainingView: View {
             for seriesIndex in 0..<training.listOfExercises[exerciseIndex].exerciseNumberOfSeries {
                 tempSeries.append(Series(id: UUID().uuidString,
                                          order: Int(seriesIndex),
-                                         repeats: Int(setOfArraysOfReps[exerciseIndex][seriesIndex]) ?? 0,
-                                         weight: Int(setOfArraysOfWeights[exerciseIndex][seriesIndex]) ?? 0))
+                                         repeats: Int(setOfArraysOfReps[exerciseIndex][seriesIndex]) ?? 1,
+                                         weight: Int(setOfArraysOfWeights[exerciseIndex][seriesIndex]) ?? 1))
             }
             let currentDate = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date()) ?? Date()
             
