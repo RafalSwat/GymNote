@@ -26,7 +26,6 @@ struct ChartView: View {
     @State var minMaxBares: Bool = true
     @State var startDate = Date()
     @State var endDate = Date()
-    @State var changeDateRange = false
     
     var body: some View {
         
@@ -37,11 +36,32 @@ struct ChartView: View {
                         Indicator()
                     } else {
                         VStack {
+                            if showMenu {
+                                ChartMenuView(displayMode: self.$displayMode,
+                                              displayValue: self.$displayValue,
+                                              showTrendLine: self.$showTrendLine,
+                                              minMaxBares: self.$minMaxBares,
+                                              showStatsFromDate: self.$startDate,
+                                              showStatsToDate: self.$endDate,
+                                              choosenStas: self.$chosenStats)
+                                    .frame(height: 130)
+                                    .background(LinearGradient(gradient: Gradient(colors:[Color.orange, Color.red]),
+                                                               startPoint: .bottomLeading, endPoint: .topTrailing))
+                                    .shadow(color: Color.customShadow, radius: 5)
+                                    .transition(
+                                        AnyTransition.scale(scale: 0.01)
+                                            .combined(with: AnyTransition.offset(x: geometry.size.width/2,
+                                                                                 y: -geometry.size.height/2))
+                                    )
+                                    .padding(.bottom, 30)
+                            }
+                            
                             if self.chosenStats != nil {
                                 LineChartView(stats: self.chosenStats!,
                                               chartCase: self.$displayMode,
                                               minMaxBares: self.$minMaxBares,
-                                              displayValue: self.$displayValue)
+                                              displayValue: self.$displayValue,
+                                              showTrendLine: self.$showTrendLine)
                                     .transition(.scale)
                                     .padding(.bottom, 20)
                             }
@@ -66,25 +86,6 @@ struct ChartView: View {
                             }
                             .listStyle(PlainListStyle())
                         }
-                    }
-                    if showMenu {
-                        ChartMenuView(displayMode: self.$displayMode,
-                                      displayValue: self.$displayValue,
-                                      showTrendLine: self.$showTrendLine,
-                                      minMaxBares: self.$minMaxBares,
-                                      showStatsFromDate: self.$startDate,
-                                      showStatsToDate: self.$endDate,
-                                      choosenStas: self.$chosenStats)
-                            .frame(width: 280, height: 380)
-                            .background(LinearGradient(gradient: Gradient(colors:[Color.customLight, Color.customDark]),
-                                                       startPoint: .bottomLeading, endPoint: .topTrailing))
-                            .cornerRadius(10)
-                            .shadow(color: Color.customShadow, radius: 5)
-                            .transition(
-                                AnyTransition.scale(scale: 0.01)
-                                    .combined(with: AnyTransition.offset(x: geometry.size.width/2,
-                                                                         y: -geometry.size.height/2))
-                            )
                     }
                 }
                 .padding(.top)

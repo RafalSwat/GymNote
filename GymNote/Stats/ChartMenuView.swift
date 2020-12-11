@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ChartMenuView: View {
     
+    @State var position: CGFloat = .zero
+    
     @Binding var displayMode: ChartCase
     @Binding var displayValue: ChartDisplayedValues
     @Binding var showTrendLine: Bool
@@ -19,84 +21,107 @@ struct ChartMenuView: View {
     @Binding var choosenStas: LineChartModelView?
     
     var body: some View {
-        VStack {
-            Picker(selection: $displayMode, label: Text("Chart case")) {
-                Text("repeats").tag(ChartCase.repetition)
-                Text("weights").tag(ChartCase.weight)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .background(LinearGradient(gradient: Gradient(colors: [.orange, .red]), startPoint: .leading, endPoint: .trailing))
-            .cornerRadius(7)
-            .shadow(color: Color.black, radius: 3)
-            .padding(.bottom, 20)
+        ScrollView(.horizontal, showsIndicators: true) {
             
-            Picker(selection: $displayValue, label: Text("Displayed value")) {
-                Text("average").tag(ChartDisplayedValues.average)
-                Text("greatest").tag(ChartDisplayedValues.greatest)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .background(LinearGradient(gradient: Gradient(colors: [.orange, .red]), startPoint: .leading, endPoint: .trailing))
-            .cornerRadius(7)
-            .shadow(color: Color.black, radius: 3)
-            .padding(.bottom, 20)
-            
-            Divider()
-            
-            Toggle(isOn: self.$showTrendLine) {
-                Text("Trend line")
-                    .font(.subheadline)
-                    .padding(.leading, 5)
-            }.toggleStyle(CheckmarkToggleStyle())
-            
-            Toggle(isOn: self.$minMaxBares) {
-                Text("Min-Max Bars")
-                    .font(.subheadline)
-                    .padding(.leading, 5)
-            }.toggleStyle(CheckmarkToggleStyle())
-            
-            
-            Divider()
-            ZStack {
-                Rectangle()
-                    .fill(LinearGradient(gradient: Gradient(colors: [.customLight, .customDark]), startPoint: .bottomLeading, endPoint: .topTrailing))
-                    .cornerRadius(10)
-                    .shadow(color: Color.customShadow, radius: 3)
-                VStack {
-                    Button(action: {
-                        self.applyNewDataRangeToStats()
-                    }) {
-                        HStack {
-                            Spacer()
-                            Text("Apply data chages")
-                                .font(.system(size: 13, weight: .semibold, design: .default))
-                                .padding(3)
-                            Spacer()
+            if #available(iOS 14.0, *) {
+                ScrollViewReader { reader in
+                    HStack {
+                        ZStack {
+                            Rectangle()
+                                .fill(LinearGradient(gradient: Gradient(colors: [.customLight, .customDark]), startPoint: .bottomLeading, endPoint: .topTrailing))
+                                .cornerRadius(10)
+                                .shadow(color: Color.customShadow, radius: 3)
+                        VStack {
+                            Picker(selection: $displayMode, label: Text("Chart case")) {
+                                Text("repeats").tag(ChartCase.repetition)
+                                Text("weights").tag(ChartCase.weight)
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                            .background(LinearGradient(gradient: Gradient(colors: [.orange, .red]), startPoint: .leading, endPoint: .trailing))
+                            .cornerRadius(7)
+                            .shadow(color: Color.black, radius: 3)
+                            .padding(.bottom, 20)
+                            
+                            Picker(selection: $displayValue, label: Text("Displayed value")) {
+                                Text("average").tag(ChartDisplayedValues.average)
+                                Text("greatest").tag(ChartDisplayedValues.greatest)
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                            .background(LinearGradient(gradient: Gradient(colors: [.orange, .red]), startPoint: .leading, endPoint: .trailing))
+                            .cornerRadius(7)
+                            .shadow(color: Color.black, radius: 3)
                         }
+                        .id(0)
+                        .padding()
+                        }
+                        
+                        ZStack {
+                            Rectangle()
+                                .fill(LinearGradient(gradient: Gradient(colors: [.customLight, .customDark]), startPoint: .bottomLeading, endPoint: .topTrailing))
+                                .cornerRadius(10)
+                                .shadow(color: Color.customShadow, radius: 3)
+                        VStack {
+                            Toggle(isOn: self.$showTrendLine) {
+                                Text("Trend line")
+                            }.toggleStyle(CheckmarkToggleStyle())
+                            Divider()
+                            Toggle(isOn: self.$minMaxBares) {
+                                Text("Min-Max Bars")
+                            }.toggleStyle(CheckmarkToggleStyle())
+                        }
+                        .id(1)
+                        .padding()
+                        }
+                        
+                        ZStack {
+                            Rectangle()
+                                .fill(LinearGradient(gradient: Gradient(colors: [.customLight, .customDark]), startPoint: .bottomLeading, endPoint: .topTrailing))
+                                .cornerRadius(10)
+                                .shadow(color: Color.customShadow, radius: 3)
+                            VStack {
+                                Button(action: {
+                                    self.applyNewDataRangeToStats()
+                                }) {
+                                    HStack {
+                                        Spacer()
+                                        Text("Apply data changes")
+                                            .font(.system(size: 13, weight: .semibold, design: .default))
+                                            .padding(3)
+                                        Spacer()
+                                    }
+                                }
+                                .buttonStyle(SmallRectangularButtonStyle())
+                                .frame(minWidth: 150, maxWidth: .infinity)
+                                .padding(.bottom, 5)
+                                
+                                HStack {
+                                    Text("Stats from:")
+                                        .font(.subheadline)
+                                        .foregroundColor(Color.customShadow)
+                                    DatePicker("", selection: $showStatsFromDate, in: showStatsFromDate...showStatsToDate, displayedComponents: .date)
+                                        .shadow(color: Color.black, radius: 1)
+                                }
+                                HStack {
+                                    Text("Stats to:    ")
+                                        .font(.subheadline)
+                                        .foregroundColor(Color.customShadow)
+                                    DatePicker("", selection: $showStatsToDate, in: showStatsFromDate...showStatsToDate, displayedComponents: .date)
+                                        .shadow(color: Color.black, radius: 1)
+                                }
+                            }
+                            .padding()
+                        }
+                        .id(2)
+                        
+                        
                     }
-                    .buttonStyle(SmallRectangularButtonStyle())
-                    .frame(minWidth: 100, maxWidth: .infinity)
-                    
-                    HStack {
-                        Text("Stats from:")
-                            .font(.subheadline)
-                            .foregroundColor(Color.customShadow)
-                        DatePicker("", selection: $showStatsFromDate, in: showStatsFromDate...showStatsToDate, displayedComponents: .date)
-                            .shadow(color: Color.black, radius: 1)
-                    }
-                    HStack {
-                        Text("Stats to:")
-                            .font(.subheadline)
-                            .foregroundColor(Color.customShadow)
-                        DatePicker("", selection: $showStatsToDate, in: showStatsFromDate...showStatsToDate, displayedComponents: .date)
-                            .shadow(color: Color.black, radius: 1)
-                    }
+                    .padding()
                 }
-                .padding()
+            } else {
+                // Fallback on earlier versions
             }
-            Divider()
+          
         }
-        .padding()
-
     }
     
     func applyNewDataRangeToStats() {
@@ -115,10 +140,20 @@ struct ChartMenuView: View {
                                               chartCase: self.displayMode,
                                               fromDate: showStatsFromDate,
                                               toDate: showStatsToDate)
+            self.setupStats(stats: newStats)
             self.choosenStas = newStats
         }
     }
     
+    func setupStats(stats: LineChartModelView) {
+        stats.setupDatesRange()
+        stats.normalizeData()
+        stats.setupAverageValues()
+        stats.setupMinAndMaxValues()
+        stats.evaluateNumberOfVerticalLines()
+        stats.evaluateNumberOfValuesOnChart()
+        stats.setupRangeOfValues()
+    }
     
 }
 

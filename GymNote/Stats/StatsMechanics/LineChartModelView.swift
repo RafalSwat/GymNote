@@ -85,16 +85,25 @@ class LineChartModelView: ObservableObject {
             averageValuesOfWeights.append(Double(averageWeightValue))
             dates.append(dateAsDouble)
         }
-        let maxRepeat = repeats.max()
-        let minRepeat = repeats.min()
-        let maxWeight = weights.max()
-        let minWeight = weights.min()
+        var maxRepeat = repeats.max()!
+        var minRepeat = repeats.min()!
+        var maxWeight = weights.max()!
+        var minWeight = weights.min()!
+        
+        if maxRepeat == minRepeat {
+            maxRepeat += 1
+            minRepeat -= 1
+        }
+        if maxWeight == minWeight {
+            maxWeight += 1
+            minWeight -= 1
+        }
 
         let minDate = self.datesInRange.min()
         let minDoubleDate = Double(Calendar.current.ordinality(of: .day, in: .year, for: minDate!)!)
         
-        let repeatRange = maxRepeat! - minRepeat!
-        let weightRange = maxWeight! - minWeight!
+        let repeatRange = maxRepeat - minRepeat
+        let weightRange = maxWeight - minWeight
         let dateRange = self.datesInRange.count //Double(dates.count)
         
         var normalizeRepeats = [Double]()
@@ -102,8 +111,8 @@ class LineChartModelView: ObservableObject {
         var normalizeDates = [Double]()
         
         for index in 0..<averageValuesOfRepeats.count {
-            let normalizeRepeat = (averageValuesOfRepeats[index] - minRepeat!)/repeatRange
-            let normalizeWeight = (averageValuesOfWeights[index] - minWeight!)/weightRange
+            let normalizeRepeat = (averageValuesOfRepeats[index] - minRepeat)/repeatRange
+            let normalizeWeight = (averageValuesOfWeights[index] - minWeight)/weightRange
             let normalizeDate = (dates[index] - minDoubleDate)/Double(dateRange)
             normalizeRepeats.append(normalizeRepeat)
             normalizeWeights.append(normalizeWeight)
@@ -120,8 +129,14 @@ class LineChartModelView: ObservableObject {
     }
     
     func normalizePoint(value: Double, maxValue: Double, minValue: Double) -> Double {
-        let range = maxValue - minValue
-        let normalizeValue = (value - minValue)/range
+        var max = maxValue
+        var min = minValue
+        if max == min {
+            max += 1
+            min -= 1
+        }
+        let range = max - min
+        let normalizeValue = (value - min)/range
         return normalizeValue
     }
     
@@ -221,13 +236,22 @@ class LineChartModelView: ObservableObject {
                 arrayOfWeightValues.append(Double(element.exerciseSeries[index].exerciseWeight ?? 0))
             }
         }
-        let maxReps = arrayOfRepsValues.max()!
-        let minReps = arrayOfRepsValues.min()!
+        var maxReps = arrayOfRepsValues.max()!
+        var minReps = arrayOfRepsValues.min()!
+        if maxReps == minReps {
+            maxReps += 1
+            minReps -= 1
+        }
         let rangeReps = maxReps - minReps
         let stepReps = rangeReps/10
         
-        let maxWeights = arrayOfWeightValues.max()!
-        let minWeights = arrayOfWeightValues.min()!
+        
+        var maxWeights = arrayOfWeightValues.max()!
+        var minWeights = arrayOfWeightValues.min()!
+        if maxWeights == minWeights {
+            maxWeights += 1
+            minWeights -= 1
+        }
         let rangeWeights = maxWeights - minWeights
         let stepWeights = rangeWeights/10
         
@@ -237,6 +261,51 @@ class LineChartModelView: ObservableObject {
         self.maxWeightValue = maxWeights
         self.minWeightValue = minWeights
         self.stepWeightMultiplier = stepWeights
+    }
+    
+    func setupDataForTrendLine(xValues: [CGFloat], yValues: [CGFloat]) -> StartEndPoits {
+        if xValues.count == yValues.count {
+            var sumX = 0.0
+            var sumY = 0.0
+            for x in xValues {
+                sumX += Double(x)
+            }
+            for y in xValues {
+                sumY += Double(y)
+            }
+            let averageX = sumX/Double(xValues.count)
+            let averageY = sumY/Double(yValues.count)
+            
+            var fractionSumX = [Double]()
+            var fractionSumY = [Double]()
+            var productXY = [Double]()
+            var squareX = [Double]()
+            for index in 0..<xValues.count {
+                fractionSumX.append(Double(xValues[index]) - averageX)
+                fractionSumY.append(Double(yValues[index]) - averageY)
+                productXY.append(fractionSumX[index] * fractionSumY[index])
+                
+                let deviationX = (Double(xValues[index]) - averageX)
+                squareX.append(deviationX * deviationX)
+            }
+            var nominator = 0.0
+            var denominator = 0.0
+            for index in 0..<productXY.count {
+                nominator += productXY[index]
+                denominator += squareX[index]
+            }
+            let a = nominator / denominator
+            let b = averageY - a * averageX
+            
+            let startPointY = a * Double(xValues.first!) + b
+            let endPointY = a * Double(xValues.last!) + b
+        
+            let startEndPoint = StartEndPoits(startPoint: CGFloat(startPointY), endPoint: CGFloat(endPointY))
+            return startEndPoint
+        } else {
+            print("Error: number of values x is NOT equal to numbers of values y!")
+            fatalError()
+        }
     }
 }
 
@@ -252,6 +321,16 @@ class StatsAsDoubles {
         self.dateAsDouble = date
         self.repeatsAsDouble = repeats
         self.weightsAsDouble = weights
+    }
+}
+class StartEndPoits {
+    var startPoint: CGFloat
+    var endPoint: CGFloat
+    
+    init(startPoint: CGFloat,
+         endPoint: CGFloat) {
+        self.startPoint = startPoint
+        self.endPoint = endPoint
     }
 }
 

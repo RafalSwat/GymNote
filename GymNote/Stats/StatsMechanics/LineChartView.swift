@@ -15,6 +15,7 @@ struct LineChartView: View {
     @Binding var chartCase: ChartCase
     @Binding var minMaxBares: Bool
     @Binding var displayValue: ChartDisplayedValues
+    @Binding var showTrendLine: Bool
     
     @State var dotLocation: CGPoint = .zero
     @State var horizontalLineLocation: CGPoint = .zero
@@ -43,6 +44,18 @@ struct LineChartView: View {
                                            startPoint: UnitPoint(x: 0.0, y: 1.0),
                                            endPoint: UnitPoint(x: 0.0, y: 0.0)),
                             lineWidth: 3)
+                    //if self.showTrendLine == true {
+                        //if self.stats.data.count != 1 {
+                            Path { p in
+                                
+                                let points = self.estimateTrendLine(stats: self.stats.dataAsDouble, maxHeight: reader.size.height, maxWidth: reader.size.width)
+                                p.move(to: points.first!)
+                                p.addLine(to: points.last!)
+                                
+                            }.stroke(Color.blue, lineWidth: 5)
+                        //}
+                    //}
+                    
                     if self.showDotChart {
                         let description = self.estimateDotDescription()
                         ChartDot()
@@ -56,6 +69,7 @@ struct LineChartView: View {
                             .foregroundColor(Color.secondary)
                             .font(.caption)
                     }
+                    
                     //setup horizontal lines
                     ForEach(0..<self.stats.numberOfHorizontalLines+1, id: \.self) { iterator in
                         Group {
@@ -136,7 +150,6 @@ struct LineChartView: View {
                     if self.minMaxBares {
                         ForEach(0..<self.stats.numberOfValuesOnChart, id: \.self) { iterator in
                             //Setup min max bars
-                            //if let indexX = self.stats.datesInRange.firstIndex(of: self.stats.dataDates[iterator]) {
                             if let indexX = self.stats.datesInRange.firstIndex(where:
                                                                                 { (Calendar.current.compare($0, to: self.stats.dataDates[iterator], toGranularity: .day)) == .orderedSame }) {
                             
@@ -267,6 +280,7 @@ struct LineChartView: View {
                                                                    minValue: self.stats.minRepsValue,
                                                                    maxHeight: maxHeight)
                     yPoints.append(convertValueY)
+                    
                 } else if self.chartCase == .weight {
                     let convertValueY = self.estimateYLocalization(value: self.stats.weightsHightestValue[index],
                                                                    maxValue: self.stats.maxWeightValue,
@@ -297,6 +311,28 @@ struct LineChartView: View {
             return points
         }
         
+    }
+    func estimateTrendLine(stats: [StatsAsDoubles], maxHeight: CGFloat, maxWidth: CGFloat) -> [CGPoint] {
+  
+        let points = self.convertDataToPoints(data: self.stats.dataAsDouble, maxHeight: maxHeight, maxWidth: maxWidth)
+        
+        var arrayX = [CGFloat]()
+        var arrayY = [CGFloat]()
+        
+        for index in 0..<points.count {
+            arrayX.append(points[index].x)
+            arrayY.append(points[index].y)
+        }
+        
+        let pointY = self.stats.setupDataForTrendLine(xValues: arrayX, yValues: arrayY)
+        let startPoint = CGPoint(x: CGFloat(points.first!.x), y: pointY.startPoint)
+        let endPoint = CGPoint(x: CGFloat(points.last!.x), y: pointY.endPoint)
+        var StartEndPoints = [CGPoint]()
+        StartEndPoints.append(startPoint)
+        StartEndPoints.append(endPoint)
+        
+            return StartEndPoints
+            
     }
     
     func estimateXLocalization(value: Double, maxValue: Double, minValue: Double, maxWidth: CGFloat) -> CGFloat {
@@ -389,9 +425,14 @@ struct LineChartView_Previews: PreviewProvider {
     @State static var show = true
     @State static var chCase: ChartCase = .repetition
     @State static var dValue: ChartDisplayedValues = .average
+    @State static var sTrend: Bool = false
     
     static var previews: some View {
-        LineChartView(stats: prevStats, chartCase: $chCase, minMaxBares: $show, displayValue: $dValue)
+        LineChartView(stats: prevStats,
+                      chartCase: $chCase,
+                      minMaxBares: $show,
+                      displayValue: $dValue,
+                      showTrendLine: $sTrend)
     }
 }
 

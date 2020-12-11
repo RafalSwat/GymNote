@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		070E195725825E9F001DD0B1 /* ChartValueDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070E195625825E9F001DD0B1 /* ChartValueDot.swift */; };
 		0720992123F7417E00B75CF5 /* DoneConformAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0720992023F7417E00B75CF5 /* DoneConformAlert.swift */; };
 		0727887123AA473500092E24 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0727887023AA473500092E24 /* ProfileView.swift */; };
 		0736F9DD23CA3F0C00626599 /* ChangeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0736F9DC23CA3F0C00626599 /* ChangeButton.swift */; };
@@ -85,6 +86,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		070E195625825E9F001DD0B1 /* ChartValueDot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartValueDot.swift; sourceTree = "<group>"; };
 		0720992023F7417E00B75CF5 /* DoneConformAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneConformAlert.swift; sourceTree = "<group>"; };
 		0727887023AA473500092E24 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		0736F9DC23CA3F0C00626599 /* ChangeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeButton.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 				0759DECB24E43BED00DBCC26 /* LineChartView.swift */,
 				07608DE824FD0F8F003497E3 /* LineChartModelView.swift */,
 				0759DECF24E5553400DBCC26 /* ChartDot.swift */,
+				070E195625825E9F001DD0B1 /* ChartValueDot.swift */,
 			);
 			path = StatsMechanics;
 			sourceTree = "<group>";
@@ -623,6 +626,7 @@
 				07FCCE6F24817238008FE164 /* MainContainer.swift in Sources */,
 				07608DE924FD0F90003497E3 /* LineChartModelView.swift in Sources */,
 				0736F9DD23CA3F0C00626599 /* ChangeButton.swift in Sources */,
+				070E195725825E9F001DD0B1 /* ChartValueDot.swift in Sources */,
 				07C0B99C23A273D9001632A0 /* SwitchableSecureField.swift in Sources */,
 				073F482923F5604C003011F0 /* Coordinator.swift in Sources */,
 				07507897256507BA00A46D60 /* Series.swift in Sources */,
