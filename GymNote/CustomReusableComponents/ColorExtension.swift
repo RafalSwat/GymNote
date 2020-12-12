@@ -16,5 +16,5 @@ extension Color {
     static let customDark = Color("customDark")
     static let magnesium = Color("magnesium")
     static let darkRed = Color("darkRed")
-    
+    static let customSuperLight = Color("customSuperLight")
 }

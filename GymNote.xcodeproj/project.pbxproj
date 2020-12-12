@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		070E195725825E9F001DD0B1 /* ChartValueDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070E195625825E9F001DD0B1 /* ChartValueDot.swift */; };
+		070E196D2584E5F2001DD0B1 /* ExerciseDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070E196C2584E5F2001DD0B1 /* ExerciseDetailsView.swift */; };
+		070E19712584E9F0001DD0B1 /* ChartViewListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070E19702584E9F0001DD0B1 /* ChartViewListRowView.swift */; };
 		0720992123F7417E00B75CF5 /* DoneConformAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0720992023F7417E00B75CF5 /* DoneConformAlert.swift */; };
 		0727887123AA473500092E24 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0727887023AA473500092E24 /* ProfileView.swift */; };
 		0736F9DD23CA3F0C00626599 /* ChangeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0736F9DC23CA3F0C00626599 /* ChangeButton.swift */; };
@@ -87,6 +89,8 @@
 
 /* Begin PBXFileReference section */
 		070E195625825E9F001DD0B1 /* ChartValueDot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartValueDot.swift; sourceTree = "<group>"; };
+		070E196C2584E5F2001DD0B1 /* ExerciseDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDetailsView.swift; sourceTree = "<group>"; };
+		070E19702584E9F0001DD0B1 /* ChartViewListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewListRowView.swift; sourceTree = "<group>"; };
 		0720992023F7417E00B75CF5 /* DoneConformAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneConformAlert.swift; sourceTree = "<group>"; };
 		0727887023AA473500092E24 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		0736F9DC23CA3F0C00626599 /* ChangeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeButton.swift; sourceTree = "<group>"; };
@@ -180,6 +184,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		070E196F2584E9B8001DD0B1 /* ChartViewSupportingViews */ = {
+			isa = PBXGroup;
+			children = (
+				070E19702584E9F0001DD0B1 /* ChartViewListRowView.swift */,
+				070E196C2584E5F2001DD0B1 /* ExerciseDetailsView.swift */,
+			);
+			path = ChartViewSupportingViews;
+			sourceTree = "<group>";
+		};
 		073DEAD6248ECC65008F3C72 /* NoteViewSupportingViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +306,7 @@
 			children = (
 				07AC9DE824E323420025AD39 /* ChartView.swift */,
 				078D3A0C2507F86B002291FC /* ChartMenuView.swift */,
+				070E196F2584E9B8001DD0B1 /* ChartViewSupportingViews */,
 				075F9BCD24DDC85E005ADFF1 /* StatsMechanics */,
 			);
 			path = Stats;
@@ -587,6 +601,7 @@
 				07FCCE7124817470008FE164 /* NoteView.swift in Sources */,
 				07C922E02410EA2300AF6010 /* SearchBar.swift in Sources */,
 				07C922E424110A5700AF6010 /* AddBarItem.swift in Sources */,
+				070E19712584E9F0001DD0B1 /* ChartViewListRowView.swift in Sources */,
 				078D3A0D2507F86B002291FC /* ChartMenuView.swift in Sources */,
 				073E6C9523AA215800A06E80 /* TitleBelt.swift in Sources */,
 				075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */,
@@ -617,6 +632,7 @@
 				0764EBA525822EB200C33430 /* SmallRectangularButtonStyle.swift in Sources */,
 				075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */,
 				07C0B98B23992267001632A0 /* SignupView.swift in Sources */,
+				070E196D2584E5F2001DD0B1 /* ExerciseDetailsView.swift in Sources */,
 				07C922E62411140000AF6010 /* NavigationConfigurator.swift in Sources */,
 				073DEF9C2433556100644ED3 /* SetSeriesView.swift in Sources */,
 				0720992123F7417E00B75CF5 /* DoneConformAlert.swift in Sources */,

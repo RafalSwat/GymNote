@@ -26,6 +26,10 @@ struct ChartView: View {
     @State var minMaxBares: Bool = true
     @State var startDate = Date()
     @State var endDate = Date()
+    //@State var dataRange: ClosedRange<Date> = Date()...Date()
+    @State var showBasicInfo = false
+    
+    @State var showExerciseDetails = false
     
     var body: some View {
         
@@ -43,7 +47,9 @@ struct ChartView: View {
                                               minMaxBares: self.$minMaxBares,
                                               showStatsFromDate: self.$startDate,
                                               showStatsToDate: self.$endDate,
-                                              choosenStas: self.$chosenStats)
+                                              //dataRange: self.$dataRange,
+                                              choosenStas: self.$chosenStats,
+                                              showBasicInfo: self.$showBasicInfo)
                                     .frame(height: 130)
                                     .background(LinearGradient(gradient: Gradient(colors:[Color.orange, Color.red]),
                                                                startPoint: .bottomLeading, endPoint: .topTrailing))
@@ -65,26 +71,21 @@ struct ChartView: View {
                                     .transition(.scale)
                                     .padding(.bottom, 20)
                             }
-                            List {
+                            ScrollView {
                                 ForEach(self.session.userSession?.userStatistics ?? [ExerciseStatistics](), id: \.exercise.exerciseID) { exerciseStats in
-                                    Button(action: { withAnimation {
-                                        self.chosenStats = nil
-                                        self.chooseIndex(stats: exerciseStats)
-                                        self.setupTitle()
-                                        self.setupSeriesForGivenStats(statistics: exerciseStats,
-                                                                      chartCase: self.displayMode)
-                                    }
-                                    }) {
-                                        HStack {
-                                            if exerciseStats.exercise.exerciseCreatedByUser {
-                                                Image(systemName: "hammer")
-                                            }
-                                            Text("\(exerciseStats.exercise.exerciseName)")
-                                        }
-                                    }
-                                }
+                                    ChartViewListRowView(exerciseStats: exerciseStats,
+                                                         chosenStats: self.$chosenStats,
+                                                         displayMode: self.$displayMode,
+                                                         chosenIndex: self.$chosenIndex,
+                                                         startDate: self.$startDate,
+                                                         endDate: self.$endDate,
+                                                         //dataRange: self.$dataRange,
+                                                         chartTitle: self.$chartTitle,
+                                                         showBasicInfo: self.$showBasicInfo)
+                                }.padding(.top, 5)
                             }
-                            .listStyle(PlainListStyle())
+                            
+                            
                         }
                     }
                 }
@@ -112,60 +113,7 @@ struct ChartView: View {
             })
         }
     }
-    func chooseIndex(stats: ExerciseStatistics) {
-        self.chosenIndex = self.session.userSession!.userStatistics.firstIndex(of: stats)
-    }
-    func setupTitle() {
-        if self.chosenIndex != nil {
-            self.chartTitle = self.session.userSession!.userStatistics[self.chosenIndex!].exercise.exerciseName
-        } else {
-            self.chartTitle = ""
-        }
-    }
-    func setupSeriesForGivenStats(statistics: ExerciseStatistics, chartCase: ChartCase) {
-        var counter = 0
-        for singleExerciseData in statistics.exerciseData {
-            self.session.downloadSeriesFromDB(userID: (self.session.userSession?.userProfile.userID)!,
-                                              exerciseDataID: singleExerciseData.exerciseDataID, completion: { finishUpload in
-                                                if finishUpload {
-                                                    counter += 1
-                                                    if counter == statistics.exerciseData.count {
-                                                        let statsToShow = self.session.userSession!.userStatistics[self.chosenIndex!]
-                                                        self.estimateDateRange(statistics: statistics)
-                                                        let stats = LineChartModelView(data: statsToShow,
-                                                                                       chartCase: chartCase,
-                                                                                       fromDate: self.startDate,
-                                                                                       toDate: self.endDate)
-                                                        self.setupStats(stats: stats)
-                                                        self.chosenStats = stats
-                                                    }
-                                                }
-                                              })
-        }
-    }
     
-    
-    func setupStats(stats: LineChartModelView) {
-        stats.setupDatesRange()
-        stats.normalizeData()
-        stats.setupAverageValues()
-        stats.setupMinAndMaxValues()
-        stats.evaluateNumberOfVerticalLines()
-        stats.evaluateNumberOfValuesOnChart()
-        stats.setupRangeOfValues()
-    }
-    
-    func estimateDateRange(statistics: ExerciseStatistics) {
-        var dates = [Date]()
-        for singleData in statistics.exerciseData {
-            dates.append(singleData.exerciseDate)
-        }
-        let min = dates.min() ?? Date()
-        let max = dates.max() ?? Date()
-        
-        self.startDate = min
-        self.endDate = max
-    }
 }
 struct ChartView_Previews: PreviewProvider {
     static var previews: some View {
@@ -178,3 +126,24 @@ struct ChartView_Previews: PreviewProvider {
 }
 
 
+//Button(action: { withAnimation {
+//    self.chosenStats = nil
+//    self.chooseIndex(stats: exerciseStats)
+//    self.setupTitle()
+//    self.setupSeriesForGivenStats(statistics: exerciseStats,
+//                                  chartCase: self.displayMode)
+//}
+//}) {
+//    VStack {
+//    HStack {
+//        if exerciseStats.exercise.exerciseCreatedByUser {
+//            Image(systemName: "hammer")
+//        }
+//        Text("\(exerciseStats.exercise.exerciseName)")
+//        Spacer()
+//    }
+//        if chosenStats != nil {
+//            ExerciseDetailsView(showExercieDetails: self.$showExerciseDetails)
+//        }
+//    }
+//}

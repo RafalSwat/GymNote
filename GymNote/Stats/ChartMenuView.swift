@@ -18,13 +18,13 @@ struct ChartMenuView: View {
     @Binding var minMaxBares: Bool
     @Binding var showStatsFromDate: Date
     @Binding var showStatsToDate: Date
+    //@Binding var dataRange: ClosedRange<Date>
     @Binding var choosenStas: LineChartModelView?
+    @Binding var showBasicInfo: Bool
+    
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: true) {
-            
-            if #available(iOS 14.0, *) {
-                ScrollViewReader { reader in
                     HStack {
                         ZStack {
                             Rectangle()
@@ -68,8 +68,14 @@ struct ChartMenuView: View {
                             Toggle(isOn: self.$minMaxBares) {
                                 Text("Min-Max Bars")
                             }.toggleStyle(CheckmarkToggleStyle())
+                            Divider()
+                            Toggle(isOn: self.$showBasicInfo) {
+                                Text("Basic info")
+                            }.toggleStyle(CheckmarkToggleStyle())
                         }
                         .id(1)
+                        .font(.footnote)
+                        .frame(width: 170)
                         .padding()
                         }
                         
@@ -98,14 +104,18 @@ struct ChartMenuView: View {
                                     Text("Stats from:")
                                         .font(.subheadline)
                                         .foregroundColor(Color.customShadow)
-                                    DatePicker("", selection: $showStatsFromDate, in: showStatsFromDate...showStatsToDate, displayedComponents: .date)
+                                    DatePicker("", selection: $showStatsFromDate,
+                                               in: showStatsFromDate...showStatsToDate /*dataRange*/,
+                                               displayedComponents: .date)
                                         .shadow(color: Color.black, radius: 1)
                                 }
                                 HStack {
                                     Text("Stats to:    ")
                                         .font(.subheadline)
                                         .foregroundColor(Color.customShadow)
-                                    DatePicker("", selection: $showStatsToDate, in: showStatsFromDate...showStatsToDate, displayedComponents: .date)
+                                    DatePicker("", selection: $showStatsToDate,
+                                               in: showStatsFromDate...showStatsToDate /*dataRange*/,
+                                               displayedComponents: .date)
                                         .shadow(color: Color.black, radius: 1)
                                 }
                             }
@@ -116,10 +126,7 @@ struct ChartMenuView: View {
                         
                     }
                     .padding()
-                }
-            } else {
-                // Fallback on earlier versions
-            }
+               
           
         }
     }

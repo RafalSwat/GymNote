@@ -21,18 +21,20 @@ struct LineChartView: View {
     @State var horizontalLineLocation: CGPoint = .zero
     @State var showDotChart = false
     @State var choosenIndex: Int = 0
-
+    
+    
     var lineGradient = Gradient(colors: [Color.yellow,
                                          Color.orange,
                                          Color.red])
-    
     var body: some View {
+        
         GeometryReader { geometry in
+            
             ZStack {
                 GeometryReader { reader in
+                    Group {
+                    let points = self.convertDataToPoints(data: self.stats.dataAsDouble, maxHeight: reader.size.height, maxWidth: reader.size.width)
                     Path { p in
-                        
-                        let points = self.convertDataToPoints(data: self.stats.dataAsDouble, maxHeight: reader.size.height, maxWidth: reader.size.width)
                         
                         p.move(to: points[0])
                         for index in 1..<points.count {
@@ -44,17 +46,10 @@ struct LineChartView: View {
                                            startPoint: UnitPoint(x: 0.0, y: 1.0),
                                            endPoint: UnitPoint(x: 0.0, y: 0.0)),
                             lineWidth: 3)
-                    //if self.showTrendLine == true {
-                        //if self.stats.data.count != 1 {
-                            Path { p in
-                                
-                                let points = self.estimateTrendLine(stats: self.stats.dataAsDouble, maxHeight: reader.size.height, maxWidth: reader.size.width)
-                                p.move(to: points.first!)
-                                p.addLine(to: points.last!)
-                                
-                            }.stroke(Color.blue, lineWidth: 5)
-                        //}
-                    //}
+
+// 
+                        
+                    }
                     
                     if self.showDotChart {
                         let description = self.estimateDotDescription()
@@ -128,9 +123,9 @@ struct LineChartView: View {
                                                                         maxWidth: reader.size.width)
                                 
                                 let yStartPoint = self.estimateYLocalization(value: Double(11 * step),
-                                                                        maxValue: Double(11 * step),
-                                                                        minValue: Double(1 * step),
-                                                                        maxHeight: reader.size.height)
+                                                                             maxValue: Double(11 * step),
+                                                                             minValue: Double(1 * step),
+                                                                             maxHeight: reader.size.height)
                                 
                                 let yEndPoint = self.estimateYLocalization(value: Double(1 * step),
                                                                            maxValue: Double(11 * step),
@@ -152,14 +147,14 @@ struct LineChartView: View {
                             //Setup min max bars
                             if let indexX = self.stats.datesInRange.firstIndex(where:
                                                                                 { (Calendar.current.compare($0, to: self.stats.dataDates[iterator], toGranularity: .day)) == .orderedSame }) {
-                            
+                                
                                 Path { p in
                                     if chartCase == .repetition {
                                         let xPoint = self.estimateXLocalization(value: Double(indexX+1),
                                                                                 maxValue: Double(self.stats.datesInRange.count+1),
                                                                                 minValue: Double(1),
                                                                                 maxWidth: reader.size.width)
-
+                                        
                                         let yStartPoint = self.estimateYLocalization(value: self.stats.repsHightestValue[iterator],
                                                                                      maxValue: self.stats.maxRepsValue,
                                                                                      minValue: self.stats.minRepsValue,
@@ -188,7 +183,7 @@ struct LineChartView: View {
                                                                                 maxValue: Double(self.stats.datesInRange.count+1),
                                                                                 minValue: Double(1),
                                                                                 maxWidth: reader.size.width)
-
+                                        
                                         let yStartPoint = self.estimateYLocalization(value: self.stats.weightsHightestValue[iterator],
                                                                                      maxValue: self.stats.maxWeightValue,
                                                                                      minValue: self.stats.minWeightValue,
@@ -249,10 +244,11 @@ struct LineChartView: View {
                             }
                         })
             )
+            
+            
+            
         }
     }
-    
-    
     
     func convertDataToPoints(data: [StatsAsDoubles], maxHeight: CGFloat, maxWidth: CGFloat) -> [CGPoint] {
         var yPoints = [CGFloat]()
@@ -312,28 +308,28 @@ struct LineChartView: View {
         }
         
     }
-    func estimateTrendLine(stats: [StatsAsDoubles], maxHeight: CGFloat, maxWidth: CGFloat) -> [CGPoint] {
-  
-        let points = self.convertDataToPoints(data: self.stats.dataAsDouble, maxHeight: maxHeight, maxWidth: maxWidth)
-        
-        var arrayX = [CGFloat]()
-        var arrayY = [CGFloat]()
-        
-        for index in 0..<points.count {
-            arrayX.append(points[index].x)
-            arrayY.append(points[index].y)
-        }
-        
-        let pointY = self.stats.setupDataForTrendLine(xValues: arrayX, yValues: arrayY)
-        let startPoint = CGPoint(x: CGFloat(points.first!.x), y: pointY.startPoint)
-        let endPoint = CGPoint(x: CGFloat(points.last!.x), y: pointY.endPoint)
-        var StartEndPoints = [CGPoint]()
-        StartEndPoints.append(startPoint)
-        StartEndPoints.append(endPoint)
-        
-            return StartEndPoints
-            
-    }
+//    func estimateTrendLine(points: [CGPoint]) -> [CGPoint] {
+//        print("Points inside function: \(points)")
+//        print("-------------------------------------------------------------------------------------------------")
+//        var arrayX = [Double]()
+//        var arrayY = [Double]()
+//
+//        for index in 0..<points.count {
+//            arrayX.append(Double(points[index].x))
+//            arrayY.append(Double(points[index].y))
+//        }
+//        print("Y inside function: \(arrayY.first!)")
+//
+//        let pointY = self.stats.setupDataForTrendLine(xValues: arrayX, yValues: arrayY)
+//        let startPoint = CGPoint(x: CGFloat(points.first!.x), y: pointY.startPoint)
+//        let endPoint = CGPoint(x: CGFloat(points.last!.x), y: pointY.endPoint)
+//        var StartEndPoints = [CGPoint]()
+//        StartEndPoints.append(startPoint)
+//        StartEndPoints.append(endPoint)
+//
+//        return StartEndPoints
+//
+//    }
     
     func estimateXLocalization(value: Double, maxValue: Double, minValue: Double, maxWidth: CGFloat) -> CGFloat {
         let chartWidth = maxWidth/1.2
@@ -408,7 +404,7 @@ struct LineChartView: View {
             pointsX.append(point.x)
         }
         let indexX = pointsX.firstIndex(of: point.x) ?? 0
-
+        
         return indexX
     }
 }

@@ -263,50 +263,94 @@ class LineChartModelView: ObservableObject {
         self.stepWeightMultiplier = stepWeights
     }
     
-    func setupDataForTrendLine(xValues: [CGFloat], yValues: [CGFloat]) -> StartEndPoits {
-        if xValues.count == yValues.count {
-            var sumX = 0.0
-            var sumY = 0.0
-            for x in xValues {
-                sumX += Double(x)
-            }
-            for y in xValues {
-                sumY += Double(y)
-            }
-            let averageX = sumX/Double(xValues.count)
-            let averageY = sumY/Double(yValues.count)
-            
-            var fractionSumX = [Double]()
-            var fractionSumY = [Double]()
-            var productXY = [Double]()
-            var squareX = [Double]()
-            for index in 0..<xValues.count {
-                fractionSumX.append(Double(xValues[index]) - averageX)
-                fractionSumY.append(Double(yValues[index]) - averageY)
-                productXY.append(fractionSumX[index] * fractionSumY[index])
-                
-                let deviationX = (Double(xValues[index]) - averageX)
-                squareX.append(deviationX * deviationX)
-            }
-            var nominator = 0.0
-            var denominator = 0.0
-            for index in 0..<productXY.count {
-                nominator += productXY[index]
-                denominator += squareX[index]
-            }
-            let a = nominator / denominator
-            let b = averageY - a * averageX
-            
-            let startPointY = a * Double(xValues.first!) + b
-            let endPointY = a * Double(xValues.last!) + b
-        
-            let startEndPoint = StartEndPoits(startPoint: CGFloat(startPointY), endPoint: CGFloat(endPointY))
-            return startEndPoint
-        } else {
-            print("Error: number of values x is NOT equal to numbers of values y!")
-            fatalError()
-        }
-    }
+//    func setupDataForTrendLine(xValues: [Double], yValues: [Double]) -> StartEndPoits {
+//        print("Y inside model method: \(yValues.first!)")
+//        print("==================================================================================================")
+//        if xValues.count == yValues.count {
+//            var sumX = 0.0
+//            var sumY = 0.0
+//            for x in xValues {
+//                sumX += x
+//            }
+//            for y in xValues {
+//                sumY += y
+//            }
+//            let averageX = sumX/Double(xValues.count)
+//            let averageY = sumY/Double(yValues.count)
+//
+//            var fractionSumX = [Double]()
+//            var fractionSumY = [Double]()
+//            var productXY = [Double]()
+//            var squareX = [Double]()
+//            for index in 0..<xValues.count {
+//                fractionSumX.append(Double(xValues[index]) - averageX)
+//                fractionSumY.append(Double(yValues[index]) - averageY)
+//                productXY.append(fractionSumX[index] * fractionSumY[index])
+//
+//                let deviationX = (Double(xValues[index]) - averageX)
+//                squareX.append(deviationX * deviationX)
+//            }
+//            var nominator = 0.0
+//            var denominator = 0.0
+//            for index in 0..<productXY.count {
+//                nominator += productXY[index]
+//                denominator += squareX[index]
+//            }
+//            let n = Double(xValues.count)
+//            let a = nominator / denominator
+//            let b = (1 / n) * (sumY - a * sumX)
+//
+//            let startPointY = a * Double(xValues.first!) + b
+//            let endPointY = a * Double(xValues.last!) + b
+//
+//            let startEndPoint = StartEndPoits(startPoint: CGFloat(startPointY), endPoint: CGFloat(endPointY))
+//            return startEndPoint
+//        } else {
+//            print("Error: number of values x is NOT equal to numbers of values y!")
+//            fatalError()
+//        }
+//    }
+//    func setupDataForTrendLine(xValues: [Double], yValues: [Double]) -> StartEndPoits {
+//        print("Y inside model method: \(yValues.first!)")
+//        print("==================================================================================================")
+//        if xValues.count == yValues.count {
+//            let n = Double(xValues.count)
+//            var sumX = 0.0
+//            var sumX2 = 0.0
+//            var sumY = 0.0
+//            var sumXY = 0.0
+//            
+//            for x in xValues {
+//                sumX += x
+//                sumX2 += x * x
+//            }
+//            for y in xValues {
+//                sumY += y
+//            }
+//            for index in 0..<xValues.count {
+//                let xy = xValues[index] * yValues[index]
+//                sumXY += xy
+//            }
+//            let sumOfX2 = sumX * sumX
+//            let nominatorA = n * sumXY - sumX * sumY
+//            let nominatorB = sumY * sumX2 - sumX * sumXY
+//            let denominator = n * sumX2 - sumOfX2
+//            
+//            let a = nominatorA / denominator
+//            let b = nominatorB / denominator
+//
+//            let startPointY = a * Double(xValues.first!) + b
+//            let endPointY = a * Double(xValues.last!) + b
+//
+//            let startEndPoint = StartEndPoits(startPoint: CGFloat(startPointY), endPoint: CGFloat(endPointY))
+//            return startEndPoint
+//
+//
+//        } else {
+//            print("Error: number of values x is NOT equal to numbers of values y!")
+//            fatalError()
+//        }
+//    }
 }
 
 class StatsAsDoubles {
