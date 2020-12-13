@@ -10,17 +10,16 @@ import SwiftUI
 
 struct ChartMenuView: View {
     
-    @State var position: CGFloat = .zero
-    
     @Binding var displayMode: ChartCase
     @Binding var displayValue: ChartDisplayedValues
     @Binding var showTrendLine: Bool
     @Binding var minMaxBares: Bool
     @Binding var showStatsFromDate: Date
     @Binding var showStatsToDate: Date
-    //@Binding var dataRange: ClosedRange<Date>
+    @Binding var dateRange: ClosedRange<Date>
     @Binding var choosenStas: LineChartModelView?
     @Binding var showBasicInfo: Bool
+    
     
     
     var body: some View {
@@ -105,7 +104,7 @@ struct ChartMenuView: View {
                                         .font(.subheadline)
                                         .foregroundColor(Color.customShadow)
                                     DatePicker("", selection: $showStatsFromDate,
-                                               in: showStatsFromDate...showStatsToDate /*dataRange*/,
+                                               in: self.dateRange,
                                                displayedComponents: .date)
                                         .shadow(color: Color.black, radius: 1)
                                 }
@@ -114,7 +113,7 @@ struct ChartMenuView: View {
                                         .font(.subheadline)
                                         .foregroundColor(Color.customShadow)
                                     DatePicker("", selection: $showStatsToDate,
-                                               in: showStatsFromDate...showStatsToDate /*dataRange*/,
+                                               in: self.dateRange,
                                                displayedComponents: .date)
                                         .shadow(color: Color.black, radius: 1)
                                 }
@@ -126,9 +125,8 @@ struct ChartMenuView: View {
                         
                     }
                     .padding()
-               
-          
         }
+        
     }
     
     func applyNewDataRangeToStats() {

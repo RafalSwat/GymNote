@@ -19,9 +19,10 @@ struct ChartViewListRowView: View {
     @Binding var chosenIndex: Int?
     @Binding var startDate: Date
     @Binding var endDate: Date
-    //@Binding var dataRange: ClosedRange<Date>
+    @Binding var dateRange: ClosedRange<Date>
     @Binding var chartTitle: String
     @Binding var showBasicInfo: Bool
+    @Binding var chartCase: ChartCase
     
     @State var scaleValue: CGFloat = 1
     
@@ -61,7 +62,9 @@ struct ChartViewListRowView: View {
             }
             
             if self.showBasicInfo && self.chosenStats?.data.exercise.exerciseID == self.exerciseStats.exercise.exerciseID {
-                ExerciseDetailsView(showExercieDetails: self.$showBasicInfo)
+                ExerciseDetailsView(showExercieDetails: self.$showBasicInfo,
+                                    chosenStats: self.$chosenStats,
+                                    chartCase: self.$chartCase)
             }
         }
         
@@ -112,7 +115,7 @@ struct ChartViewListRowView: View {
         
         self.startDate = min
         self.endDate = max
-        //self.dataRange = min...max
+        self.dateRange = min...max
     }
     func setupTitle() {
         if self.chosenIndex != nil {

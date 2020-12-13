@@ -40,7 +40,12 @@ class LineChartModelView: ObservableObject {
     @Published var minWeightValue: Double = 0
     @Published var stepWeightMultiplier: Double = 0
     
-    
+    @Published var theGratestWeight: Double  = 0
+    @Published var theGreatestNumberOfRepetitions: Double  = 0
+    @Published var theAverageWeight: Double = 0
+    @Published var theAverageNumberOfRepetitions: Double = 0
+    @Published var averageNumberOfSeries: Double  = 0
+    @Published var exerciseFrequency: Double  = 0
     
     
     init(data: ExerciseStatistics,
@@ -73,10 +78,10 @@ class LineChartModelView: ObservableObject {
             
             for seriesIndex in 0..<self.data.exerciseData[dataIndex].exerciseSeries.count {
                 tempRepeatSum += Double(self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseRepeats)
-                tempWeightSum += Double(self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseWeight ?? 0)
+                tempWeightSum += Double(self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseWeight ?? 1)
                 
                 repeats.append(Double(self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseRepeats))
-                weights.append(Double(self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseWeight ?? 0))
+                weights.append(Double(self.data.exerciseData[dataIndex].exerciseSeries[seriesIndex].exerciseWeight ?? 1))
             }
             
             averageRepeatValue = tempRepeatSum/Double(self.data.exerciseData[dataIndex].exerciseSeries.count)
@@ -90,6 +95,7 @@ class LineChartModelView: ObservableObject {
         var maxWeight = weights.max()!
         var minWeight = weights.min()!
         
+        
         if maxRepeat == minRepeat {
             maxRepeat += 1
             minRepeat -= 1
@@ -98,6 +104,9 @@ class LineChartModelView: ObservableObject {
             maxWeight += 1
             minWeight -= 1
         }
+        
+        self.theGreatestNumberOfRepetitions = maxRepeat
+        self.theGratestWeight = maxWeight
 
         let minDate = self.datesInRange.min()
         let minDoubleDate = Double(Calendar.current.ordinality(of: .day, in: .year, for: minDate!)!)
@@ -153,12 +162,16 @@ class LineChartModelView: ObservableObject {
         self.dataDates = dates.sorted()
         self.datesInRange = DateConverter().fillUpArrayWithDates(startDate: self.dateFrom,
                                                                  endDate: self.dateTo)
+        self.exerciseFrequency = Double(self.dataDates.count)/Double(self.datesInRange.count)
     }
 
     func setupAverageValues() {
         
         var repeatsOnAverage = [Double]()
         var weightsOnAverage = [Double]()
+        var sumOfAllRepeats = 0
+        var sumOfAllWeights = 0
+        var numberOfDatas = 0
         
         for index in 0..<self.data.exerciseData.count {
             
@@ -167,6 +180,9 @@ class LineChartModelView: ObservableObject {
             for series in self.data.exerciseData[index].exerciseSeries {
                 repeatSum += series.exerciseRepeats
                 weigthtSum += series.exerciseWeight ?? 1
+                sumOfAllRepeats += repeatSum
+                sumOfAllWeights += weigthtSum
+                numberOfDatas += 1
             }
             let averageRepeat = Double(repeatSum)/Double(self.data.exerciseData[index].exerciseSeries.count)
             let averageWeight = Double(weigthtSum)/Double(self.data.exerciseData[index].exerciseSeries.count)
@@ -176,6 +192,17 @@ class LineChartModelView: ObservableObject {
         }
         self.repsOnAverage = repeatsOnAverage
         self.weightsOnAverage = weightsOnAverage
+        self.theAverageNumberOfRepetitions = Double(sumOfAllRepeats) / Double(numberOfDatas)
+        self.theAverageWeight = Double(sumOfAllWeights) / Double(numberOfDatas)
+        
+        var sumOfNumberOfSeries = 0
+        for singleData in data.exerciseData {
+            let numberOfSeries = singleData.exerciseSeries.count
+            sumOfNumberOfSeries += numberOfSeries
+        }
+        let numberOfTrainings = data.exerciseData.count
+        let average = Double(sumOfNumberOfSeries)/Double(numberOfTrainings)
+        self.averageNumberOfSeries = average
     }
     
     func setupMinAndMaxValues() {

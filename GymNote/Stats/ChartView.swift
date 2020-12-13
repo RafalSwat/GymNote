@@ -26,7 +26,7 @@ struct ChartView: View {
     @State var minMaxBares: Bool = true
     @State var startDate = Date()
     @State var endDate = Date()
-    //@State var dataRange: ClosedRange<Date> = Date()...Date()
+    @State var dateRange: ClosedRange<Date> = Date()...Date()
     @State var showBasicInfo = false
     
     @State var showExerciseDetails = false
@@ -47,7 +47,7 @@ struct ChartView: View {
                                               minMaxBares: self.$minMaxBares,
                                               showStatsFromDate: self.$startDate,
                                               showStatsToDate: self.$endDate,
-                                              //dataRange: self.$dataRange,
+                                              dateRange: self.$dateRange,
                                               choosenStas: self.$chosenStats,
                                               showBasicInfo: self.$showBasicInfo)
                                     .frame(height: 130)
@@ -79,9 +79,10 @@ struct ChartView: View {
                                                          chosenIndex: self.$chosenIndex,
                                                          startDate: self.$startDate,
                                                          endDate: self.$endDate,
-                                                         //dataRange: self.$dataRange,
+                                                         dateRange: self.$dateRange,
                                                          chartTitle: self.$chartTitle,
-                                                         showBasicInfo: self.$showBasicInfo)
+                                                         showBasicInfo: self.$showBasicInfo,
+                                                         chartCase: self.$displayMode)
                                 }.padding(.top, 5)
                             }
                             
