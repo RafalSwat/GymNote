@@ -40,6 +40,8 @@ struct ExerciseView: View {
                     
                     SeriesTextFields(repetitions: self.$arrayOfReps[index],
                                      weight: self.$arrayOfWeights[index])
+                        
+                        
                     
                 }
             }

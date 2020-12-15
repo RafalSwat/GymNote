@@ -20,6 +20,8 @@ struct ChartMenuView: View {
     @Binding var choosenStas: LineChartModelView?
     @Binding var showBasicInfo: Bool
     
+    @State var copyChosenStatsFullRange: LineChartModelView?
+    
     
     
     var body: some View {
@@ -126,13 +128,16 @@ struct ChartMenuView: View {
                     }
                     .padding()
         }
+        .onAppear {
+            self.copyChosenStatsFullRange = self.choosenStas
+        }
         
     }
     
     func applyNewDataRangeToStats() {
-        if self.choosenStas != nil {
+        if self.copyChosenStatsFullRange != nil {
             var exercisesData = [ExerciseData]()
-            for singleData in self.choosenStas!.data.exerciseData {
+            for singleData in self.self.copyChosenStatsFullRange!.data.exerciseData {
                 let date = singleData.exerciseDate
                 if date >= showStatsFromDate && date <= showStatsToDate {
                     exercisesData.append(singleData)
@@ -147,7 +152,7 @@ struct ChartMenuView: View {
                                               toDate: showStatsToDate)
             self.setupStats(stats: newStats)
             self.choosenStas = newStats
-        }
+        } 
     }
     
     func setupStats(stats: LineChartModelView) {

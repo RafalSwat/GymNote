@@ -50,6 +50,7 @@ struct TrainingHost: View {
                              showWarning: $showWarning,
                              alertTitle: $warningTitle,
                              alertMessage: $warningMessage)
+                    
             }
         }
         .navigationBarItems(

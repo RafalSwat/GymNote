@@ -47,6 +47,9 @@ class LineChartModelView: ObservableObject {
     @Published var averageNumberOfSeries: Double  = 0
     @Published var exerciseFrequency: Double  = 0
     
+    @Published var intercept: Double = 0
+    @Published var slope: Double = 0
+    
     
     init(data: ExerciseStatistics,
          chartCase: ChartCase,
@@ -171,7 +174,7 @@ class LineChartModelView: ObservableObject {
         var weightsOnAverage = [Double]()
         var sumOfAllRepeats = 0
         var sumOfAllWeights = 0
-        var numberOfDatas = 0
+        var numberOfDatas = 0.0
         
         for index in 0..<self.data.exerciseData.count {
             
@@ -180,20 +183,22 @@ class LineChartModelView: ObservableObject {
             for series in self.data.exerciseData[index].exerciseSeries {
                 repeatSum += series.exerciseRepeats
                 weigthtSum += series.exerciseWeight ?? 1
-                sumOfAllRepeats += repeatSum
-                sumOfAllWeights += weigthtSum
-                numberOfDatas += 1
+                sumOfAllRepeats += series.exerciseRepeats
+                sumOfAllWeights += series.exerciseWeight ?? 1
             }
-            let averageRepeat = Double(repeatSum)/Double(self.data.exerciseData[index].exerciseSeries.count)
-            let averageWeight = Double(weigthtSum)/Double(self.data.exerciseData[index].exerciseSeries.count)
+            let numberOfSeries = Double(self.data.exerciseData[index].exerciseSeries.count)
+            let averageRepeat = Double(repeatSum)/numberOfSeries
+            let averageWeight = Double(weigthtSum)/numberOfSeries
+            numberOfDatas += numberOfSeries
             
             repeatsOnAverage.append(averageRepeat)
             weightsOnAverage.append(averageWeight)
         }
         self.repsOnAverage = repeatsOnAverage
         self.weightsOnAverage = weightsOnAverage
+
         self.theAverageNumberOfRepetitions = Double(sumOfAllRepeats) / Double(numberOfDatas)
-        self.theAverageWeight = Double(sumOfAllWeights) / Double(numberOfDatas)
+        self.theAverageWeight = Double(sumOfAllWeights) / numberOfDatas
         
         var sumOfNumberOfSeries = 0
         for singleData in data.exerciseData {
@@ -289,94 +294,34 @@ class LineChartModelView: ObservableObject {
         self.minWeightValue = minWeights
         self.stepWeightMultiplier = stepWeights
     }
-    
-//    func setupDataForTrendLine(xValues: [Double], yValues: [Double]) -> StartEndPoits {
-//        print("Y inside model method: \(yValues.first!)")
-//        print("==================================================================================================")
-//        if xValues.count == yValues.count {
-//            var sumX = 0.0
-//            var sumY = 0.0
-//            for x in xValues {
-//                sumX += x
-//            }
-//            for y in xValues {
-//                sumY += y
-//            }
-//            let averageX = sumX/Double(xValues.count)
-//            let averageY = sumY/Double(yValues.count)
-//
-//            var fractionSumX = [Double]()
-//            var fractionSumY = [Double]()
-//            var productXY = [Double]()
-//            var squareX = [Double]()
-//            for index in 0..<xValues.count {
-//                fractionSumX.append(Double(xValues[index]) - averageX)
-//                fractionSumY.append(Double(yValues[index]) - averageY)
-//                productXY.append(fractionSumX[index] * fractionSumY[index])
-//
-//                let deviationX = (Double(xValues[index]) - averageX)
-//                squareX.append(deviationX * deviationX)
-//            }
-//            var nominator = 0.0
-//            var denominator = 0.0
-//            for index in 0..<productXY.count {
-//                nominator += productXY[index]
-//                denominator += squareX[index]
-//            }
-//            let n = Double(xValues.count)
-//            let a = nominator / denominator
-//            let b = (1 / n) * (sumY - a * sumX)
-//
-//            let startPointY = a * Double(xValues.first!) + b
-//            let endPointY = a * Double(xValues.last!) + b
-//
-//            let startEndPoint = StartEndPoits(startPoint: CGFloat(startPointY), endPoint: CGFloat(endPointY))
-//            return startEndPoint
-//        } else {
-//            print("Error: number of values x is NOT equal to numbers of values y!")
-//            fatalError()
-//        }
+    //Trend line functions
+//    func estimateStartAndEndPointOfRegression(values: [Double]) -> StartEndPoits {
+//        let start = predicted(x: values.first!, intercept: self.intercept, slope: self.slope)
+//        let end = predicted(x: values.last!, intercept: self.intercept, slope: self.slope)
+//        
+//        return StartEndPoits(startPoint: CGFloat(start), endPoint: CGFloat(end))
 //    }
-//    func setupDataForTrendLine(xValues: [Double], yValues: [Double]) -> StartEndPoits {
-//        print("Y inside model method: \(yValues.first!)")
-//        print("==================================================================================================")
-//        if xValues.count == yValues.count {
-//            let n = Double(xValues.count)
-//            var sumX = 0.0
-//            var sumX2 = 0.0
-//            var sumY = 0.0
-//            var sumXY = 0.0
-//            
-//            for x in xValues {
-//                sumX += x
-//                sumX2 += x * x
+//    
+//    func estimateInterceptAndSlopeForRegresion(x: [Double], y: [Double]) {
+//        var a = 0.0
+//        var b = 0.0
+//        let amount = y.count
+//        let n = 100
+//        let alpha = 0.0001
+//        
+//        for _ in 1...n {
+//            for i in 0..<amount {
+//                let difference = y[i] - self.predicted(x: x[i], intercept: b, slope: a)
+//                b += alpha * difference
+//                a += alpha * difference * x[i]
 //            }
-//            for y in xValues {
-//                sumY += y
-//            }
-//            for index in 0..<xValues.count {
-//                let xy = xValues[index] * yValues[index]
-//                sumXY += xy
-//            }
-//            let sumOfX2 = sumX * sumX
-//            let nominatorA = n * sumXY - sumX * sumY
-//            let nominatorB = sumY * sumX2 - sumX * sumXY
-//            let denominator = n * sumX2 - sumOfX2
-//            
-//            let a = nominatorA / denominator
-//            let b = nominatorB / denominator
-//
-//            let startPointY = a * Double(xValues.first!) + b
-//            let endPointY = a * Double(xValues.last!) + b
-//
-//            let startEndPoint = StartEndPoits(startPoint: CGFloat(startPointY), endPoint: CGFloat(endPointY))
-//            return startEndPoint
-//
-//
-//        } else {
-//            print("Error: number of values x is NOT equal to numbers of values y!")
-//            fatalError()
 //        }
+//        self.intercept = b
+//        self.slope = a
+//        
+//    }
+//    func predicted(x: Double, intercept: Double, slope: Double) -> Double {
+//        return intercept + slope * x
 //    }
 }
 

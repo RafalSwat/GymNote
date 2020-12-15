@@ -40,7 +40,7 @@ struct ChartView: View {
                         Indicator()
                     } else {
                         VStack {
-                            if showMenu {
+                            if showMenu && self.chosenStats != nil {
                                 ChartMenuView(displayMode: self.$displayMode,
                                               displayValue: self.$displayValue,
                                               showTrendLine: self.$showTrendLine,
@@ -127,24 +127,3 @@ struct ChartView_Previews: PreviewProvider {
 }
 
 
-//Button(action: { withAnimation {
-//    self.chosenStats = nil
-//    self.chooseIndex(stats: exerciseStats)
-//    self.setupTitle()
-//    self.setupSeriesForGivenStats(statistics: exerciseStats,
-//                                  chartCase: self.displayMode)
-//}
-//}) {
-//    VStack {
-//    HStack {
-//        if exerciseStats.exercise.exerciseCreatedByUser {
-//            Image(systemName: "hammer")
-//        }
-//        Text("\(exerciseStats.exercise.exerciseName)")
-//        Spacer()
-//    }
-//        if chosenStats != nil {
-//            ExerciseDetailsView(showExercieDetails: self.$showExerciseDetails)
-//        }
-//    }
-//}

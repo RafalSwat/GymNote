@@ -29,51 +29,58 @@ struct TrainingView: View {
         ZStack {
             VStack(alignment: .leading) {
                 List {
-                    Section(header: Text("")) {
-                        
+                    ZStack {
+                        Rectangle()
+                            .fill(LinearGradient(gradient: Gradient(colors: [.customDark, .customLight]), startPoint: .bottomLeading, endPoint: .topTrailing))
+                            .cornerRadius(10)
+                            .shadow(color: Color.customShadow, radius: 5)
+                        HStack {
                         VStack(alignment: .leading) {
                             Text(training.trainingName)
                                 .font(.largeTitle)
                                 .padding(.horizontal)
                                 .padding(.bottom)
+                                .shadow(radius: 4)
                             
                             Text(training.trainingDescription)
                                 .padding(.horizontal)
-                            Text("last training: \(dataString)")
+                            Text("Created at: \(training.initialDate)")
                                 .padding(.horizontal)
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
-                        .padding()
-                        
-                    }
-                    Section(header: Text("")) {
-                        if !self.setOfArraysOfReps.isEmpty {
-                            ForEach(0..<training.listOfExercises.count, id: \.self) { exerciseIndex in
-                                ExerciseView(trainingComponent: training.listOfExercises[exerciseIndex],
-                                             conform: self.$conform,
-                                             arrayOfReps: self.$setOfArraysOfReps[exerciseIndex],
-                                             arrayOfWeights: self.$setOfArraysOfWeights[exerciseIndex])
-                            }
+                        Spacer()
+                    }.padding()
+                }
+                    if !self.setOfArraysOfReps.isEmpty {
+                        ForEach(0..<training.listOfExercises.count, id: \.self) { exerciseIndex in
+                            ExerciseView(trainingComponent: training.listOfExercises[exerciseIndex],
+                                         conform: self.$conform,
+                                         arrayOfReps: self.$setOfArraysOfReps[exerciseIndex],
+                                         arrayOfWeights: self.$setOfArraysOfWeights[exerciseIndex])
+                                .padding()
+                                .background(LinearGradient(gradient: Gradient(colors: [.customLight, .customSuperLight]), startPoint: .leading, endPoint: .trailing))
+                                .cornerRadius(10)
+                                .shadow(color: Color.customShadow, radius: 3)
                         }
                     }
-                    Section(header: Text("")) {
-                        VStack {
-                            Button(action: {
-                                
-                                self.conform = true
-                            }) {
-                                HStack {
-                                    Image(systemName: "checkmark.circle")
-                                        .font(.largeTitle)
-                                    Spacer()
-                                    Text("Confirm finished training")
-                                    Spacer()
-                                }.padding()
-                            }.buttonStyle(RectangularButtonStyle())
-                            .padding(.vertical)
-                        }
+                    
+                    
+                    Button(action: {
+                        self.conform = true
+                    }) {
+                        HStack {
+                            Image(systemName: "checkmark.circle")
+                                .font(.largeTitle)
+                            Spacer()
+                            Text("Confirm finished training")
+                            Spacer()
+                        }.padding()
                     }
+                    .buttonStyle(RectangularButtonStyle())
+                    .padding(.vertical)
+                    
+                    
                 }
                 .listStyle(PlainListStyle())
                 .navigationBarTitle(conform ? Text("") : Text(training.trainingName), displayMode: .inline)
@@ -83,7 +90,7 @@ struct TrainingView: View {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
                 })
                 .onAppear {
-                    initializationOfSetOfArrays()
+                    self.initializationOfSetOfArrays()
                 }
             }
             .disabled(conform)
@@ -101,6 +108,7 @@ struct TrainingView: View {
                                 self.saveTrainingToStatistics()
                                 self.presentationMode.wrappedValue.dismiss()
                             })
+                    .shadow(color: Color.customShadow, radius: 5)
             }
             
         }
@@ -163,14 +171,14 @@ struct TrainingView: View {
     }
     func saveStatisticToDataBase(statsToSave: ExerciseStatistics) {
         self.session.uploadUserStatisticsToDB(userID: (self.session.userSession?.userProfile.userID)!,
-                                          statistics: statsToSave,
-                                          completion: { errorOccur, error in
-                                            self.showWarning = errorOccur
-                                            if let errorDescription =  error {
-                                                self.alertTitle = "DataBase Error"
-                                                self.alertMessage = errorDescription
-                                            }
-                                          })
+                                              statistics: statsToSave,
+                                              completion: { errorOccur, error in
+                                                self.showWarning = errorOccur
+                                                if let errorDescription =  error {
+                                                    self.alertTitle = "DataBase Error"
+                                                    self.alertMessage = errorDescription
+                                                }
+                                              })
     }
     func addStatisticToUserData(statsToAdd: ExerciseStatistics) {
         if self.session.userSession?.userStatistics.count != 0 {

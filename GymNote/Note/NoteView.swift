@@ -22,7 +22,7 @@ struct NoteView: View {
         NavigationView {
             ZStack {
                 VStack {
-                    List {
+                    ScrollView {
                         ForEach(self.listOfTrainings.array, id: \.trainingID) { training in
                             TrainingRow(listOfTrainings: self.listOfTrainings,
                                         training: training,
@@ -32,7 +32,6 @@ struct NoteView: View {
                         }
                         
                     }
-                    .listStyle(GroupedListStyle())
                     .onAppear {
                         if !didAppear {
                             self.setupListOfTrainings()
@@ -41,6 +40,8 @@ struct NoteView: View {
                             self.updateTrainingIfNeeded()
                         }
                     }
+                    
+                    
                     AddButton(addButtonText: "Add New Training",
                               action: {},
                               addingMode: self.$passageToAddTraining)
@@ -48,7 +49,7 @@ struct NoteView: View {
                     
                     NavigationLink(destination: TrainingHost(editMode: true, training: Training()), isActive: self.$passageToAddTraining, label: { EmptyView() })
                 }
-                .navigationBarTitle("Training List")
+                .navigationBarTitle("Training List", displayMode: .inline)
                 .disabled(showAlert)
                 
                 if showAlert {

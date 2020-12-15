@@ -58,6 +58,7 @@ struct TrainingRow: View {
                             .opacity(showButtons ? 1 : 0).animation(.default)
                             .buttonStyle(BorderlessButtonStyle())
                             .offset(x: 0, y: 2)
+                            .shadow(color: Color.customShadow, radius: 2)
                         
                         DeleteButton(deleteAction: {
                             withAnimation(.easeInOut) {
@@ -67,6 +68,7 @@ struct TrainingRow: View {
                         })
                             .opacity(showButtons ? 1 : 0).animation(.default)
                             .buttonStyle(BorderlessButtonStyle())
+                            .shadow(color: Color.customShadow, radius: 2)
                     }
                 }
             }
@@ -92,7 +94,13 @@ struct TrainingRow: View {
             }
             
         }
-
+        .padding(.horizontal)
+        .contentShape(Rectangle())
+        .frame(maxWidth: .infinity)
+        .background(LinearGradient(gradient: Gradient(colors: [.customLight, .customDark]), startPoint: .leading, endPoint: .trailing))
+        .cornerRadius(7)
+        .shadow(color: Color.customShadow, radius: 3)
+        .padding(2)
         
     }
 }

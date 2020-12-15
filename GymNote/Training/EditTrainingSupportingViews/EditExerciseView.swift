@@ -50,7 +50,6 @@ struct EditExerciseView: View {
                           deleteMode: $deleteMode)
         }
         .padding(.bottom, 10)
-        
     }
 }
 

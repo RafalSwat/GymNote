@@ -46,10 +46,14 @@ struct LineChartView: View {
                                            startPoint: UnitPoint(x: 0.0, y: 1.0),
                                            endPoint: UnitPoint(x: 0.0, y: 0.0)),
                             lineWidth: 3)
-
-// 
-                        
+//                        Path { p in
+//                            let startEndPoints = self.estimateTrendLine(points: points)
+//                            p.move(to: startEndPoints.first!)
+//                            p.addLine(to: startEndPoints.last!)
+//                        }
+//                        .stroke(Color.green,  lineWidth: 5)
                     }
+                    
                     
                     if self.showDotChart {
                         let description = self.estimateDotDescription()
@@ -309,26 +313,20 @@ struct LineChartView: View {
         
     }
 //    func estimateTrendLine(points: [CGPoint]) -> [CGPoint] {
-//        print("Points inside function: \(points)")
-//        print("-------------------------------------------------------------------------------------------------")
-//        var arrayX = [Double]()
-//        var arrayY = [Double]()
-//
-//        for index in 0..<points.count {
-//            arrayX.append(Double(points[index].x))
-//            arrayY.append(Double(points[index].y))
+//        var x = [Double]()
+//        var y = [Double]()
+//        for single in points {
+//            let date = Double(single.x)
+//            let reps = Double(single.y)
+//            x.append(date)
+//            y.append(reps)
 //        }
-//        print("Y inside function: \(arrayY.first!)")
-//
-//        let pointY = self.stats.setupDataForTrendLine(xValues: arrayX, yValues: arrayY)
-//        let startPoint = CGPoint(x: CGFloat(points.first!.x), y: pointY.startPoint)
-//        let endPoint = CGPoint(x: CGFloat(points.last!.x), y: pointY.endPoint)
-//        var StartEndPoints = [CGPoint]()
-//        StartEndPoints.append(startPoint)
-//        StartEndPoints.append(endPoint)
-//
-//        return StartEndPoints
-//
+//        self.stats.estimateInterceptAndSlopeForRegresion(x: x, y: y)
+//        let startEnd = self.stats.estimateStartAndEndPointOfRegression(values: x)
+//        let startPoint = CGPoint(x: CGFloat(x.first!), y: startEnd.startPoint)
+//        let endPoint = CGPoint(x: CGFloat(x.last!), y: startEnd.endPoint)
+//        let startEndPoints = [startPoint, endPoint]
+//        return startEndPoints
 //    }
     
     func estimateXLocalization(value: Double, maxValue: Double, minValue: Double, maxWidth: CGFloat) -> CGFloat {

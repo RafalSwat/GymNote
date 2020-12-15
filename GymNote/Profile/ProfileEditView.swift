@@ -34,12 +34,12 @@ struct ProfileEditView: View {
                         VStack {
                             ZStack {
                                 
-                                CircleImage(image: Image(uiImage: profile.userImage))
+                                RectangularImge(image: Image(uiImage: profile.userImage))
                                     .padding(.top, 20)
                                     .padding(.bottom, 15)
                                 ChangeButton(isChanged: $doneChangingPhoto)
-                                    .offset(x: 30, y: 40)
-                                    .scaleEffect(1.7)
+                                    .offset(x: 60, y: 60)
+                                    .scaleEffect(1.2)
                             }
                             Text("\(profile.userName) \(profile.userSurname)")
                                 .font(.title)
@@ -64,21 +64,28 @@ struct ProfileEditView: View {
                         TextField("Enter your surname: ", text: $profile.userSurname)
                     }}
                 Section(header: Text("Height")) {
-                    
+                    ZStack {
+                                RoundedRectangle(cornerRadius: 5)
+                                    .fill(LinearGradient(gradient: Gradient(colors: [.orange, .red]), startPoint: .leading, endPoint: .trailing))
+                                    .frame(width: UIScreen.main.bounds.size.width-52, height: 32)
+                                    .shadow(color: Color.black, radius: 3)
+                                    
                     
                     Picker(
                         selection: $profile.userHeight,
                         label: EmptyView()) {
                         
-                        ForEach(self.userPossibleHeight, id: \.self) {
-                            Text("\($0) cm")
+                        ForEach(self.userPossibleHeight, id: \.self) { height in
+                            Text("\(height) cm")
+                            
                         }
                     }
                     .pickerStyle(WheelPickerStyle())
                     .labelsHidden()
-                    .frame(width: UIScreen.main.bounds.width/1.11)
+                    .frame(width: UIScreen.main.bounds.size.width-40)
                     .clipped()
                     
+                    }
                     
                 }
                 Section(header: Text("Gender")) {
@@ -90,10 +97,13 @@ struct ProfileEditView: View {
                             Text("\($0.rawValue)").tag($0.rawValue)
                         }
                     }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .background(LinearGradient(gradient: Gradient(colors: [.orange, .red]), startPoint: .leading, endPoint: .trailing))
+                    .cornerRadius(7)
+                    .shadow(color: Color.black, radius: 3)
+                    .padding(.vertical)
                 }
                 
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.vertical)
                 
                 Section(header: Text("Date of birth")) {
                     DatePicker(
@@ -101,7 +111,7 @@ struct ProfileEditView: View {
                         in: ...Date(),
                         displayedComponents: .date) {
                         
-                        Text("")
+                        Text("")//enter your date of birth
                     }
                 }
             }.listStyle(GroupedListStyle())

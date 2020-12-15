@@ -10,15 +10,22 @@ import SwiftUI
 
 struct EditTrainingView: View {
     
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
     @ObservedObject var training: Training
     @State var addMode = false
     @State var editMode = EditMode.inactive
     @State var deleteMode = false
     
+    var lightColorSet = [Color(UIColor.systemBackground), .customLight, Color(UIColor.systemBackground)]
+    var darkColorSet = [Color(UIColor.secondarySystemBackground), .customLight, Color(UIColor.secondarySystemBackground)]
+    
     var body: some View {
         VStack {
             List {
                 Section(header: Text("Basic info")) {
+                    ZStack {
+                        Rectangle()
+                            .fill(LinearGradient(gradient: Gradient(colors: colorScheme == .light ? lightColorSet : darkColorSet), startPoint: .leading, endPoint: .trailing))
                     VStack {
                         HStack {
                             Text("Training name:")
@@ -40,7 +47,8 @@ struct EditTrainingView: View {
                                 .frame(maxWidth: UIScreen.main.bounds.width/1.75)
                         }
                         
-                    }.padding(.vertical)
+                    }.padding()
+                    }
                 }
                 Section(header: HStack{
                     Text("List of exercises")
@@ -49,12 +57,14 @@ struct EditTrainingView: View {
                     EditTrainingListOptions(editMode: $editMode,
                                             deleteMode: $deleteMode)
                 }) {
-                    
                     ForEach(training.listOfExercises, id: \.self) { trainingComponent in
                         HStack {
                             EditExerciseView(trainingComponent: trainingComponent,
                                              editMode: $editMode,
                                              deleteMode: $deleteMode)
+                                .background(LinearGradient(gradient: Gradient(colors: colorScheme == .light ? lightColorSet : darkColorSet), startPoint: .leading, endPoint: .trailing))
+                               
+                            
                             if deleteMode {
                                 Button(action: {
                                     guard let index = self.training.listOfExercises.firstIndex(of: trainingComponent) else { return }
@@ -94,6 +104,7 @@ struct EditTrainingView: View {
                         }
                         
                     }
+                
                 }
             }
             .listStyle(GroupedListStyle())

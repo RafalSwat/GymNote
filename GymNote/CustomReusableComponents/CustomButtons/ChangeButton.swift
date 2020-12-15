@@ -12,17 +12,26 @@ struct ChangeButton: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @Binding var isChanged: Bool
     
-    var changesButtonImage: Image = Image(systemName: "arrow.right.arrow.left.circle.fill")
+    var changesButtonImage: Image = Image(systemName: "arrow.uturn.left.square")
 
     var body: some View {
         
         Button(action: {
             self.isChanged.toggle()
         }) {
-            self.changesButtonImage
-                .font(.largeTitle)
-                .foregroundColor(colorScheme == .light ? .black : .secondary)
+            Rectangle()
+                .fill(LinearGradient(gradient: Gradient(colors: [.customLight, .customDark]), startPoint: .bottomLeading, endPoint: .topTrailing))
+                .cornerRadius(10)
+                .shadow(color: colorScheme == .light ? .white : .black, radius: 3)
+                .frame(width: 50, height: 50, alignment: .center)
+                .overlay(self.changesButtonImage
+                            .font(.largeTitle)
+                            .foregroundColor(Color.orange))
+            
+                
+            
         }
+        
     }
 }
 

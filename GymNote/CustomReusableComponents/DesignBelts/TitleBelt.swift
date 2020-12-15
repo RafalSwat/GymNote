@@ -27,7 +27,7 @@ struct TitleBelt: View {
                         colors: colorScheme == .light ? lightBeltColors : darkBeltColors),
                     startPoint: .leading, endPoint: .trailing))
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/5, alignment: .trailing)
-                .overlay(CircleImage(image: image), alignment: .leading)
+                .overlay(RectangularImge(image: image), alignment: .leading)
             
             VStack(alignment: .center) {
                 if CeditMode {

@@ -17,4 +17,5 @@ extension Color {
     static let magnesium = Color("magnesium")
     static let darkRed = Color("darkRed")
     static let customSuperLight = Color("customSuperLight")
+    static let blendingInWithTheList = Color("blendingInWithTheList")
 }

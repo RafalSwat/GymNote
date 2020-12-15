@@ -19,9 +19,10 @@ struct SeriesTextFields: View {
                 .keyboardType(.numberPad)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 
+                
             TextField("weight", text: $weight)
                 .keyboardType(.decimalPad)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(RoundedBorderTextFieldStyle())  
         }
     }
 }
