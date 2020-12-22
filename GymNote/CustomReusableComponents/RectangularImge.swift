@@ -17,8 +17,9 @@ struct RectangularImge: View {
         
         image
             .resizable()
+            .scaledToFit()
+            .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
             .frame(width: UIScreen.main.bounds.width/2.5, height: UIScreen.main.bounds.width/2.5, alignment: .center)
-            .aspectRatio(contentMode: .fit)
             .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
             .overlay(RoundedRectangle(cornerRadius: 15, style: .continuous).stroke(colorScheme == .light ? Color.white : Color.black, lineWidth: 4))
             .shadow(color: colorScheme == .light ? Color.magnesium : Color.customDark, radius: 5)

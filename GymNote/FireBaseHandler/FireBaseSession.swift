@@ -121,6 +121,8 @@ class FireBaseSession: ObservableObject {
                                                       height: value["height"] as! Int,
                                                       userDateOfBirth: convertDate)
                         self.userSession = UserData(profile: userProfile)
+                        let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                        print("\n\(dataFilePath)\n")
                     })
                 } 
             } else {
@@ -179,7 +181,7 @@ class FireBaseSession: ObservableObject {
     }
     //MARK: Upload image to DB ( is used inside updating profile method)
     func uploadImageToDB(uiimage: UIImage, id: String) {
-        if let imageToSave = uiimage.jpegData(compressionQuality: 1) {
+        if let imageToSave = uiimage.jpegData(compressionQuality: 0.3) {
             self.usersDBStorage.child("Images").child(id).putData(imageToSave, metadata: nil) { (_, error) in
                 if let err = error {
                     print("Could`t save image in FireBase Database: \(err.localizedDescription)")
@@ -196,6 +198,7 @@ class FireBaseSession: ObservableObject {
         usersDBStorage.child("Images").child(id).getData(maxSize: 10*1024*1024) { (imageData, error) in
             if let err = error {
                 print("Could`t get image data from FireBase DataBase!: \(err.localizedDescription)")
+                completion(UIImage(named: "staticImage")!)
             } else {
                 if let image = imageData {
                     completion(UIImage(data: image)!)
@@ -541,4 +544,7 @@ class FireBaseSession: ObservableObject {
             completion(true)
         }
     }
+}
+extension FireBaseSession {
+    //static let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
 }

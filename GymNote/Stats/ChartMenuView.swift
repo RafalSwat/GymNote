@@ -115,7 +115,7 @@ struct ChartMenuView: View {
                                         .font(.subheadline)
                                         .foregroundColor(Color.customShadow)
                                     DatePicker("", selection: $showStatsToDate,
-                                               in: self.dateRange,
+                                               in: self.showStatsFromDate...self.dateRange.upperBound,
                                                displayedComponents: .date)
                                         .shadow(color: Color.black, radius: 1)
                                 }

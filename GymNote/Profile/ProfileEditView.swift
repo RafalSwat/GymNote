@@ -41,6 +41,8 @@ struct ProfileEditView: View {
                                     .offset(x: 60, y: 60)
                                     .scaleEffect(1.2)
                             }
+                            .padding(.bottom, 15)
+                            
                             Text("\(profile.userName) \(profile.userSurname)")
                                 .font(.title)
                         }
@@ -106,13 +108,18 @@ struct ProfileEditView: View {
                 
                 
                 Section(header: Text("Date of birth")) {
-                    DatePicker(
-                        selection: $profile.userDateOfBirth,
-                        in: ...Date(),
-                        displayedComponents: .date) {
+
+                        DatePicker(
+                            selection: $profile.userDateOfBirth,
+                            in: ...Date(),
+                            displayedComponents: .date) {
+                            
+                            Text("Enter your date of birth: ")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
                         
-                        Text("")//enter your date of birth
-                    }
+                    
                 }
             }.listStyle(GroupedListStyle())
             
