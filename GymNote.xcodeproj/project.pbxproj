@@ -45,6 +45,8 @@
 		0759DED024E5553400DBCC26 /* ChartDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759DECF24E5553400DBCC26 /* ChartDot.swift */; };
 		075A31F323FF19ED006613A2 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F223FF19ED006613A2 /* DateConverter.swift */; };
 		075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A31F4240683C4006613A2 /* FireBaseSession.swift */; };
+		075E6EB225AC36F1005CBCF0 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 075E6EB025AC36F1005CBCF0 /* CoreDataModel.xcdatamodeld */; };
+		075E6EBE25AC5BBC005CBCF0 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075E6EBD25AC5BBC005CBCF0 /* Profile.swift */; };
 		075F9BCA24DDC150005ADFF1 /* ExerciseStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BC924DDC150005ADFF1 /* ExerciseStatistics.swift */; };
 		075F9BCC24DDC1BF005ADFF1 /* ExerciseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F9BCB24DDC1BF005ADFF1 /* ExerciseData.swift */; };
 		07608DE924FD0F90003497E3 /* LineChartModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07608DE824FD0F8F003497E3 /* LineChartModelView.swift */; };
@@ -126,6 +128,8 @@
 		0759DECF24E5553400DBCC26 /* ChartDot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDot.swift; sourceTree = "<group>"; };
 		075A31F223FF19ED006613A2 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		075A31F4240683C4006613A2 /* FireBaseSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseSession.swift; sourceTree = "<group>"; };
+		075E6EB125AC36F1005CBCF0 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		075E6EBD25AC5BBC005CBCF0 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		075F9BC924DDC150005ADFF1 /* ExerciseStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseStatistics.swift; sourceTree = "<group>"; };
 		075F9BCB24DDC1BF005ADFF1 /* ExerciseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseData.swift; sourceTree = "<group>"; };
 		07608DE824FD0F8F003497E3 /* LineChartModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartModelView.swift; sourceTree = "<group>"; };
@@ -301,6 +305,14 @@
 			path = CustomTextFields;
 			sourceTree = "<group>";
 		};
+		075E6EB425AC5B49005CBCF0 /* CoreDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				075E6EBD25AC5BBC005CBCF0 /* Profile.swift */,
+			);
+			path = CoreDataModel;
+			sourceTree = "<group>";
+		};
 		075F9BC624DD835E005ADFF1 /* Stats */ = {
 			isa = PBXGroup;
 			children = (
@@ -398,6 +410,7 @@
 				07C0B9742397BE03001632A0 /* LaunchScreen.storyboard */,
 				07C0B9772397BE03001632A0 /* Info.plist */,
 				073F482323F43A8F003011F0 /* GoogleService-Info.plist */,
+				075E6EB025AC36F1005CBCF0 /* CoreDataModel.xcdatamodeld */,
 				07C0B9712397BE03001632A0 /* Preview Content */,
 			);
 			path = GymNote;
@@ -415,6 +428,7 @@
 			isa = PBXGroup;
 			children = (
 				077ECD4223B0F4A1005A1B76 /* UserData.swift */,
+				075E6EB425AC5B49005CBCF0 /* CoreDataModel */,
 				07C0B9822397DE58001632A0 /* UserProfile.swift */,
 				0740B3C6242E0F56003D7520 /* Training.swift */,
 				075077A325629A8700A46D60 /* TrainingsComponent.swift */,
@@ -586,6 +600,7 @@
 				07F55DA224AF3D790024AB1A /* ActionAlert.swift in Sources */,
 				07840A94248B9D9400FC3019 /* ContentView.swift in Sources */,
 				07840A92248ACD8100FC3019 /* CancelEditModeButton.swift in Sources */,
+				075E6EB225AC36F1005CBCF0 /* CoreDataModel.xcdatamodeld in Sources */,
 				07840A99248BA17900FC3019 /* SignOutButton.swift in Sources */,
 				079BF91F2551C3400066B903 /* ColorExtension.swift in Sources */,
 				073DEAE02498F852008F3C72 /* SwipeGesture.swift in Sources */,
@@ -593,6 +608,7 @@
 				07C0B9832397DE58001632A0 /* UserProfile.swift in Sources */,
 				077ECD4123B0F020005A1B76 /* ProfileEditView.swift in Sources */,
 				0742660D240C11C6003F2C32 /* ExercisesListView.swift in Sources */,
+				075E6EBE25AC5BBC005CBCF0 /* Profile.swift in Sources */,
 				0759DED024E5553400DBCC26 /* ChartDot.swift in Sources */,
 				075077A425629A8700A46D60 /* TrainingsComponent.swift in Sources */,
 				07C0B98923990D0E001632A0 /* LoginView.swift in Sources */,
@@ -848,6 +864,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		075E6EB025AC36F1005CBCF0 /* CoreDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				075E6EB125AC36F1005CBCF0 /* CoreDataModel.xcdatamodel */,
+			);
+			currentVersion = 075E6EB125AC36F1005CBCF0 /* CoreDataModel.xcdatamodel */;
+			path = CoreDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 07C0B95E2397BE00001632A0 /* Project object */;
 }

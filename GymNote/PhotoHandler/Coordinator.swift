@@ -24,6 +24,9 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
         
         guard let unwrapImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
+        //let datos = unwrapImage.jpegData(compressionQuality: 0.3)
+        
+        
         imageInCoordinator = unwrapImage
         isCoordinatorShown = false
     }
