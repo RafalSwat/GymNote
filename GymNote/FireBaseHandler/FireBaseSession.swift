@@ -22,11 +22,7 @@ class FireBaseSession: ObservableObject {
     @Published var usersDBRef = Database.database().reference()
     @Published var usersDBStorage = Storage.storage().reference()
     
-    //-------------------- CoreData - Only Image Handling ----------------------
     
-    @Environment(\.managedObjectContext) var moc
-    //After fetch request we can use data from CoreData if there is any
-    @FetchRequest(entity: Profile.entity(), sortDescriptors: []) var imageCoreData: FetchedResults<Profile>
     //-------------------- Error properties handler ----------------------------
     
     var handle: AuthStateDidChangeListenerHandle?
@@ -115,20 +111,15 @@ class FireBaseSession: ObservableObject {
                     let strDate = value["dateOfBirth"] as! String
                     let convertDate = DateConverter().convertFromString(dateString: strDate)
                     
-                    self.downloadImageFromCDOrDB(id: userID, completion: { downloadedImage in
-                        
-                        let userProfile = UserProfile(uID: userID,
-                                                      email: userEmail,
-                                                      name: value["name"] as! String,
-                                                      surname: value["surname"] as! String,
-                                                      gender: value["gender"] as! String,
-                                                      profileImage: downloadedImage,
-                                                      height: value["height"] as! Int,
-                                                      userDateOfBirth: convertDate)
-                        self.userSession = UserData(profile: userProfile)
-                        let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-                        print("\n\(dataFilePath)\n")
-                    })
+                    let userProfile = UserProfile(uID: userID,
+                                                  email: userEmail,
+                                                  name: value["name"] as! String,
+                                                  surname: value["surname"] as! String,
+                                                  gender: value["gender"] as! String,
+                                                  profileImage: UIImage(named: "staticImage")!,
+                                                  height: value["height"] as! Int,
+                                                  userDateOfBirth: convertDate)
+                    self.userSession = UserData(profile: userProfile)
                 } 
             } else {
                 // User has no data on FirebaseDatabase, so we set up default on (new user)
@@ -172,7 +163,7 @@ class FireBaseSession: ObservableObject {
                     completion(false)
                 }
         }
-        saveImageToCDAndDB(uiimage: user.userImage, id: user.userID)
+        uploadImageToDB(uiimage: user.userImage, id: user.userID)
     }
     
     //MARK: Update profile for current user on DB
@@ -183,25 +174,10 @@ class FireBaseSession: ObservableObject {
              "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
              "gender" : user.userGender,
              "height" : user.userHeight])
-        saveImageToCDAndDB(uiimage: user.userImage, id: user.userID)
+        uploadImageToDB(uiimage: user.userImage, id: user.userID)
     }
-    
-    //MARK: save image inside CoreData and Firebase ( is used inside updating profile method)
-    func saveImageToCDAndDB(uiimage: UIImage, id: String) {
-        let imageCoreData = Profile(context: self.moc)
-        imageCoreData.userID = id
-        imageCoreData.image = uiimage.jpegData(compressionQuality: 0.3)
-        
-        do {
-            try self.moc.save()
-        } catch {
-            print("Error while saving managedObjectContext \(error.localizedDescription)")
-        }
-        uploadImageToDB(uiimage: uiimage, id: id)
-    }
-    
-    
-    //MARK: Upload image to Firebase
+
+    //MARK: Upload image to Firebase ( is used inside updating profile method)
     func uploadImageToDB(uiimage: UIImage, id: String) {
         if let imageToSave = uiimage.jpegData(compressionQuality: 0.3) {
             self.usersDBStorage.child("Images").child(id).putData(imageToSave, metadata: nil) { (_, error) in
@@ -215,39 +191,7 @@ class FireBaseSession: ObservableObject {
             print("Could`t case/unwrap image to data!")
         }
     }
-    
-    //MARK: Download Image form CoreData, if Not FireBase if not put ststic Image
-    func downloadImageFromCDOrDB(id: String, completion: @escaping (UIImage)->()) {
-        if !imageCoreData.isEmpty {
 
-            for img in imageCoreData {
-                if img.userID == id {
-                    if let image = img.image {
-                        if let imgCoreData = UIImage(data: image) {
-                            completion(imgCoreData)
-                        } else {
-                            self.downloadImageFromDB(id: id, completion: { imageFromFireBase in
-                                completion(imageFromFireBase)
-                            })
-                        }
-                    } else {
-                        self.downloadImageFromDB(id: id, completion: { imageFromFireBase in
-                            completion(imageFromFireBase)
-                        })
-                    }
-                } else {
-                    self.downloadImageFromDB(id: id, completion: { imageFromFireBase in
-                        completion(imageFromFireBase)
-                    })
-                }
-            }
-        } else {
-            self.downloadImageFromDB(id: id, completion: { imageFromFireBase in
-                completion(imageFromFireBase)
-            })
-        }
-    }
-    
     //MARK: Download Image form FireBase
     func downloadImageFromDB(id: String, completion: @escaping (UIImage)->()){
         usersDBStorage.child("Images").child(id).getData(maxSize: 10*1024*1024) { (imageData, error) in
@@ -262,6 +206,15 @@ class FireBaseSession: ObservableObject {
                 }
             }
         }
+    }
+    func deleteImagefromFirebase(id: String) {
+        usersDBStorage.child("Images").child(id).delete(completion: { error in
+            if let err = error {
+                print("Could`t delete image from Firebase DataBase!: \(err.localizedDescription)")
+            } else {
+                print("Image removed successfully from Firebase DataBase!")
+            }
+        })
     }
     
     //not sure if there is any need to this function

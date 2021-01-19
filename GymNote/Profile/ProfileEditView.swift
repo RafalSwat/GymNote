@@ -11,17 +11,19 @@ import SwiftUI
 struct ProfileEditView: View {
     
     //MARK: Properties
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var session: FireBaseSession
     @Binding var profile: UserProfile
+    @Binding var imageHasBeenDeleted: Bool
     
     //var to change photo mechanics
     @State var doneUpdating = false
     @State var doneChangingPhoto = false
+    @State var doDeleteAction = false
     
     //Array only for pick the height of a user
     var userPossibleHeight = Array(40...250)
     @State var selectedGender = Gender.non
-    
     
     var body: some View {
         
@@ -34,12 +36,22 @@ struct ProfileEditView: View {
                         VStack {
                             ZStack {
                                 
-                                RectangularImge(image: Image(uiImage: profile.userImage))
+                                RectangularImage(image: Image(uiImage: profile.userImage))
                                     .padding(.top, 20)
                                     .padding(.bottom, 15)
                                 ChangeButton(isChanged: $doneChangingPhoto)
                                     .offset(x: 60, y: 60)
                                     .scaleEffect(1.2)
+                                //TODO: do not display delete button if there is image there
+                                ChangeButton(isChanged: self.$doDeleteAction,
+                                             changesButtonImage: Image(systemName: "trash"),
+                                             foregroundColor: Color.red)
+                                    .buttonStyle(BorderlessButtonStyle())
+                                    .scaleEffect(0.7)
+                                    .offset(x: -UIScreen.main.bounds.width/6 - 8,
+                                            y: -UIScreen.main.bounds.width/6 - 8)
+                                
+                                
                             }
                             .padding(.bottom, 15)
                             
@@ -67,26 +79,26 @@ struct ProfileEditView: View {
                     }}
                 Section(header: Text("Height")) {
                     ZStack {
-                                RoundedRectangle(cornerRadius: 5)
-                                    .fill(LinearGradient(gradient: Gradient(colors: [.orange, .red]), startPoint: .leading, endPoint: .trailing))
-                                    .frame(width: UIScreen.main.bounds.size.width-52, height: 32)
-                                    .shadow(color: Color.black, radius: 3)
-                                    
-                    
-                    Picker(
-                        selection: $profile.userHeight,
-                        label: EmptyView()) {
+                        RoundedRectangle(cornerRadius: 5)
+                            .fill(LinearGradient(gradient: Gradient(colors: [.orange, .red]), startPoint: .leading, endPoint: .trailing))
+                            .frame(width: UIScreen.main.bounds.size.width-52, height: 32)
+                            .shadow(color: Color.black, radius: 3)
                         
-                        ForEach(self.userPossibleHeight, id: \.self) { height in
-                            Text("\(height) cm")
+                        
+                        Picker(
+                            selection: $profile.userHeight,
+                            label: EmptyView()) {
                             
+                            ForEach(self.userPossibleHeight, id: \.self) { height in
+                                Text("\(height) cm")
+                                
+                            }
                         }
-                    }
-                    .pickerStyle(WheelPickerStyle())
-                    .labelsHidden()
-                    .frame(width: UIScreen.main.bounds.size.width-40)
-                    .clipped()
-                    
+                        .pickerStyle(WheelPickerStyle())
+                        .labelsHidden()
+                        .frame(width: UIScreen.main.bounds.size.width-40)
+                        .clipped()
+                        
                     }
                     
                 }
@@ -108,24 +120,42 @@ struct ProfileEditView: View {
                 
                 
                 Section(header: Text("Date of birth")) {
-
-                        DatePicker(
-                            selection: $profile.userDateOfBirth,
-                            in: ...Date(),
-                            displayedComponents: .date) {
-                            
-                            Text("Enter your date of birth: ")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
+                    
+                    DatePicker(
+                        selection: $profile.userDateOfBirth,
+                        in: ...Date(),
+                        displayedComponents: .date) {
                         
+                        Text("Enter your date of birth: ")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                    
                     
                 }
             }.listStyle(GroupedListStyle())
             
-            if (doneChangingPhoto) {
-                CaptureImageView(isShown: $doneChangingPhoto, image: $profile.userImage)
+            if doneChangingPhoto || doDeleteAction {
+                Color.black.opacity(0.7)
             }
+            if doneChangingPhoto {
+                CaptureImageView(isShown: $doneChangingPhoto,
+                                 image: $profile.userImage)
+            }
+            if doDeleteAction {
+                ActionAlert(showAlert: $doDeleteAction,
+                            title: "Warning",
+                            message: "You want to delete the photo?",
+                            firstButtonTitle: "Yes",
+                            secondButtonTitle: "Cancel",
+                            action: {
+                                self.deleteImageFromDraftProfile()
+                                self.presentationMode.wrappedValue.dismiss()
+                            })
+                    .shadow(color: Color.customShadow, radius: 5)
+            }
+            
+            
         }
         
         .onAppear {
@@ -143,16 +173,26 @@ struct ProfileEditView: View {
             self.selectedGender = Gender.non
         }
     }
+    func deleteImageFromDraftProfile() {
+        profile.userImage = UIImage(named: "staticImage")!
+        imageHasBeenDeleted = true
+    }
+    func isImageEqual(image1: UIImage, isEqualTo image2: UIImage) -> Bool {
+        let data1: NSData = image1.pngData()! as NSData
+        let data2: NSData = image2.pngData()! as NSData
+        return data1.isEqual(data2)
+    }
 }
 
 struct ProfileEditView_Previews: PreviewProvider {
     
     @State static var prevProfile = UserProfile()
     @State static var prevDoneUpdating = false
+    @State static var imageHasBeenRemoved = false
     
     static var previews: some View {
         NavigationView {
-            ProfileEditView(profile: $prevProfile)
+            ProfileEditView(profile: $prevProfile, imageHasBeenDeleted: $imageHasBeenRemoved)
         }
     }
 }

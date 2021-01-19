@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct RectangularImge: View {
+struct RectangularImage: View {
     
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     var image: Image
@@ -31,7 +31,7 @@ struct RectangularImge: View {
 struct CircleImage_Previews: PreviewProvider {
 
     static var previews: some View {
-        RectangularImge(image: Image("ststicImage"))
+        RectangularImage(image: Image("ststicImage"))
     }
 }
 

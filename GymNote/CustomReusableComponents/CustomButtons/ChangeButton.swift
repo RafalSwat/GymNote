@@ -13,6 +13,7 @@ struct ChangeButton: View {
     @Binding var isChanged: Bool
     
     var changesButtonImage: Image = Image(systemName: "arrow.uturn.left.square")
+    var foregroundColor: Color = Color.orange
 
     var body: some View {
         
@@ -26,11 +27,8 @@ struct ChangeButton: View {
                 .frame(width: 50, height: 50, alignment: .center)
                 .overlay(self.changesButtonImage
                             .font(.largeTitle)
-                            .foregroundColor(Color.orange))
-            
-                
-            
-        }
+                            .foregroundColor(foregroundColor))
+        }.buttonStyle(BorderlessButtonStyle())
         
     }
 }
