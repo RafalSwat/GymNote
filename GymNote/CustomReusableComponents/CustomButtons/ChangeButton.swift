@@ -11,6 +11,7 @@ import SwiftUI
 struct ChangeButton: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @Binding var isChanged: Bool
+    var  changeAction: () -> Void
     
     var changesButtonImage: Image = Image(systemName: "arrow.uturn.left.square")
     var foregroundColor: Color = Color.orange
@@ -19,6 +20,7 @@ struct ChangeButton: View {
         
         Button(action: {
             self.isChanged.toggle()
+            self.changeAction()
         }) {
             Rectangle()
                 .fill(LinearGradient(gradient: Gradient(colors: [.customLight, .customDark]), startPoint: .bottomLeading, endPoint: .topTrailing))
@@ -38,6 +40,7 @@ struct ChangeButton_Previews: PreviewProvider {
     @State static var prevIsChanged = false
     
     static var previews: some View {
-        ChangeButton(isChanged: $prevIsChanged)
+        ChangeButton(isChanged: $prevIsChanged,
+                     changeAction: {print("")})
     }
 }

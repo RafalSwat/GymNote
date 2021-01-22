@@ -72,7 +72,7 @@ class LineChartModelView: ObservableObject {
         
         for dataIndex in 0..<self.data.exerciseData.count {
             
-            let dateAsDouble = Double(Calendar.current.ordinality(of: .day, in: .year, for: data.exerciseData[dataIndex].exerciseDate)!)
+            let dateAsDouble = Double(Calendar.current.ordinality(of: .day, in: .era, for: data.exerciseData[dataIndex].exerciseDate)!)
             
             var tempRepeatSum = 0.0
             var tempWeightSum = 0.0
@@ -112,7 +112,7 @@ class LineChartModelView: ObservableObject {
         self.theGratestWeight = maxWeight
 
         let minDate = self.datesInRange.min()
-        let minDoubleDate = Double(Calendar.current.ordinality(of: .day, in: .year, for: minDate!)!)
+        let minDoubleDate = Double(Calendar.current.ordinality(of: .day, in: .era, for: minDate!)!)
         
         let repeatRange = maxRepeat - minRepeat
         let weightRange = maxWeight - minWeight

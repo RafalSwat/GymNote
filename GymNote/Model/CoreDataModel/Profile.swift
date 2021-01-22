@@ -12,6 +12,7 @@ import CoreData
 public class Profile: NSManagedObject {
     @NSManaged public var userID: String?
     @NSManaged public var image: Data?
+    @NSManaged public var lastImageActualization: Date?
 }
 
 extension Profile {

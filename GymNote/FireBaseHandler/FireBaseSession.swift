@@ -109,7 +109,11 @@ class FireBaseSession: ObservableObject {
                 // User is already on FirebaseDatabase, so we setup session based on it (old user)
                 if let value = snapshot.value as? [String: Any] {
                     let strDate = value["dateOfBirth"] as! String
-                    let convertDate = DateConverter().convertFromString(dateString: strDate)
+                    let strDateActualization = value["lastImageActualization"] as! String
+                    let convertDate = DateConverter.convertFromString(dateString: strDate)
+
+                    let lastActualizationDate = DateConverter.convertFromStringFull(dateString: strDateActualization)
+                    
                     
                     let userProfile = UserProfile(uID: userID,
                                                   email: userEmail,
@@ -118,7 +122,8 @@ class FireBaseSession: ObservableObject {
                                                   gender: value["gender"] as! String,
                                                   profileImage: UIImage(named: "staticImage")!,
                                                   height: value["height"] as! Int,
-                                                  userDateOfBirth: convertDate)
+                                                  userDateOfBirth: convertDate,
+                                                  lastImageActualization: lastActualizationDate)
                     self.userSession = UserData(profile: userProfile)
                 } 
             } else {
@@ -130,7 +135,8 @@ class FireBaseSession: ObservableObject {
                                               gender: "non",
                                               profileImage: UIImage(named: "staticImage")!,
                                               height: 175,
-                                              userDateOfBirth: Date())
+                                              userDateOfBirth: Date(),
+                                              lastImageActualization : Date())
                 self.userSession = UserData(profile: userProfile)
                 
                 if let newUser = self.userSession?.userProfile {
@@ -141,6 +147,7 @@ class FireBaseSession: ObservableObject {
     }
     //MARK: Adding new user to data base
     func uploadUserToDB(user: UserProfile, completion: @escaping (Bool)->()) {
+        let currentDate = DateConverter.fullDateFormat.string(from: Date())
         usersDBRef.child("Users").child(user.userID).child("Profile").setValue(
             ["userID" : user.userID,
              "email": user.userEmail,
@@ -148,7 +155,8 @@ class FireBaseSession: ObservableObject {
              "surname" : user.userSurname,
              "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
              "gender" : user.userGender,
-             "height" : user.userHeight]) {
+             "height" : user.userHeight,
+             "lastImageActualization" : currentDate]) {
                 
                 (error, reference) in
                 
@@ -168,13 +176,25 @@ class FireBaseSession: ObservableObject {
     
     //MARK: Update profile for current user on DB
     func updateProfileOnDB(user: UserProfile) {
-        usersDBRef.child("Users").child(user.userID).child("Profile").updateChildValues(
-            ["name" : user.userName,
-             "surname" : user.userSurname,
-             "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
-             "gender" : user.userGender,
-             "height" : user.userHeight])
-        uploadImageToDB(uiimage: user.userImage, id: user.userID)
+        
+        if let lastActualization = user.lastImageActualization {
+            let dateString = DateConverter.fullDateFormat.string(from: lastActualization)
+            usersDBRef.child("Users").child(user.userID).child("Profile").updateChildValues(
+                ["name" : user.userName,
+                 "surname" : user.userSurname,
+                 "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
+                 "gender" : user.userGender,
+                 "height" : user.userHeight,
+                 "lastImageActualization" : dateString])
+            print("----> update lastImageActualization")
+        } else {
+            usersDBRef.child("Users").child(user.userID).child("Profile").updateChildValues(
+                ["name" : user.userName,
+                 "surname" : user.userSurname,
+                 "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
+                 "gender" : user.userGender,
+                 "height" : user.userHeight])
+        }
     }
 
     //MARK: Upload image to Firebase ( is used inside updating profile method)
@@ -411,11 +431,11 @@ class FireBaseSession: ObservableObject {
         
         for data in statistics.exerciseData {
             
-            let dataString = DateConverter.dateFormat.string(from: data.exerciseDate)
+            let dateString = DateConverter.dateFormat.string(from: data.exerciseDate)
             let dataID = data.exerciseDataID
             
             
-            self.usersDBRef.child("UserExercisesData").child(userID).child(id).child(dataID).setValue(dataString) {
+            self.usersDBRef.child("UserExercisesData").child(userID).child(id).child(dataID).setValue(dateString) {
 
                 (error:Error?, ref:DatabaseReference) in
                 if let error = error {
@@ -485,7 +505,7 @@ class FireBaseSession: ObservableObject {
                                 if let snapDataChildren = exerciseDataSnapshot.children.allObjects as? [DataSnapshot] {
                                     for childData in snapDataChildren {
                                         let exerciseDataID = childData.key
-                                        let exerciseDate = DateConverter().convertFromString(dateString: childData.value as! String)
+                                        let exerciseDate = DateConverter.convertFromString(dateString: childData.value as! String)
                                         
                                         exerciseData.append(ExerciseData(dataID: exerciseDataID,
                                                                          date: exerciseDate,

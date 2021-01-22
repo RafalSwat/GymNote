@@ -70,6 +70,7 @@ struct ChartView: View {
                                               showTrendLine: self.$showTrendLine)
                                     .transition(.scale)
                                     .padding(.bottom, 20)
+                                    .padding(.trailing, 20)
                             }
                             ScrollView {
                                 ForEach(self.session.userSession?.userStatistics ?? [ExerciseStatistics](), id: \.exercise.exerciseID) { exerciseStats in

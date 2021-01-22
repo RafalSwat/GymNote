@@ -20,6 +20,7 @@ struct UserProfile {
     var userImage: UIImage
     var userHeight: Int
     var userDateOfBirth: Date
+    var lastImageActualization: Date?
     
     init() {
         
@@ -40,7 +41,8 @@ struct UserProfile {
          gender: String,
          profileImage: UIImage,
          height: Int,
-         userDateOfBirth: Date) {
+         userDateOfBirth: Date,
+         lastImageActualization: Date?) {
         
         self.userID = uID
         self.userEmail = email
@@ -50,6 +52,7 @@ struct UserProfile {
         self.userImage = profileImage
         self.userHeight = height
         self.userDateOfBirth = userDateOfBirth
+        self.lastImageActualization = lastImageActualization
     }
 
 

@@ -11,7 +11,6 @@ import SwiftUI
 struct ProfileEditView: View {
     
     //MARK: Properties
-    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var session: FireBaseSession
     @Binding var profile: UserProfile
     @Binding var imageHasBeenDeleted: Bool
@@ -39,11 +38,18 @@ struct ProfileEditView: View {
                                 RectangularImage(image: Image(uiImage: profile.userImage))
                                     .padding(.top, 20)
                                     .padding(.bottom, 15)
-                                ChangeButton(isChanged: $doneChangingPhoto)
+                                ChangeButton(isChanged: $doneChangingPhoto,
+                                             changeAction: {
+                                                if imageHasBeenDeleted {
+                                                    imageHasBeenDeleted = false
+                                                }
+                                             })
+                            
                                     .offset(x: 60, y: 60)
                                     .scaleEffect(1.2)
                                 //TODO: do not display delete button if there is image there
                                 ChangeButton(isChanged: self.$doDeleteAction,
+                                             changeAction: {},
                                              changesButtonImage: Image(systemName: "trash"),
                                              foregroundColor: Color.red)
                                     .buttonStyle(BorderlessButtonStyle())
@@ -150,14 +156,13 @@ struct ProfileEditView: View {
                             secondButtonTitle: "Cancel",
                             action: {
                                 self.deleteImageFromDraftProfile()
-                                self.presentationMode.wrappedValue.dismiss()
+                                self.doDeleteAction = false
                             })
                     .shadow(color: Color.customShadow, radius: 5)
             }
             
             
         }
-        
         .onAppear {
             self.setupGender()
         }
@@ -192,7 +197,8 @@ struct ProfileEditView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            ProfileEditView(profile: $prevProfile, imageHasBeenDeleted: $imageHasBeenRemoved)
+            ProfileEditView(profile: $prevProfile,
+                            imageHasBeenDeleted: $imageHasBeenRemoved)
         }
     }
 }

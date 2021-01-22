@@ -37,7 +37,8 @@ struct ProfileHost: View {
                             }
                         }
                 } else {
-                    ProfileEditView(profile: $draftProfile, imageHasBeenDeleted: $imageHasBeenRemoved)
+                    ProfileEditView(profile: $draftProfile,
+                                    imageHasBeenDeleted: $imageHasBeenRemoved)
                         .onAppear {
                             self.draftProfile = self.session.userSession?.userProfile ?? UserProfile()
                         }
@@ -48,31 +49,55 @@ struct ProfileHost: View {
                     self.draftProfile = self.session.userSession?.userProfile ?? UserProfile()
                 }),
                 trailing: EditModeButton(editMode: $editMode, editAction: {
-                    self.session.userSession?.userProfile = self.draftProfile
-                    self.session.updateProfileOnDB(user: self.draftProfile)
-                    self.saveImageToCoreData()
-                    self.image = self.draftProfile.userImage
+                    
+                    if self.session.userSession?.userProfile.userImage != self.draftProfile.userImage && !self.imageHasBeenRemoved {
+                        self.draftProfile.lastImageActualization = Date()
+                        self.saveImageToCoreData(userID: self.draftProfile.userID,
+                                                 userImage: self.draftProfile.userImage,
+                                                 userActualization: self.draftProfile.lastImageActualization ?? Date())
+                        self.session.uploadImageToDB(uiimage: self.draftProfile.userImage,
+                                                     id: self.draftProfile.userID)
+                        self.image = self.draftProfile.userImage
+                    }
+                    
                     if self.imageHasBeenRemoved {
                         if let userID = self.session.userSession?.userProfile.userID {
+                            self.draftProfile.lastImageActualization = Date()
                             session.deleteImagefromFirebase(id: userID)
                             deleteImageFromCoreData(id: userID)
                         }
+                        self.image = self.draftProfile.userImage
                     }
+                    self.session.userSession?.userProfile = self.draftProfile
+                    self.session.updateProfileOnDB(user: self.draftProfile)
                 })
             )
         }
     }
     
     //MARK: save image inside CoreData
-    func saveImageToCoreData() {
-        let userID = self.session.userSession?.userProfile.userID
-        let userImage = self.session.userSession?.userProfile.userImage
-        
-        if userImage != UIImage(named: "staticImage") && userImage != nil {
+    func saveImageToCoreData(userID: String, userImage: UIImage, userActualization: Date) {
+
+        if userImage != UIImage(named: "staticImage")! {
+            if imageCoreData.isEmpty {
+                let profile = Profile(context: moc)
+                profile.userID = userID
+                profile.image = userImage.jpegData(compressionQuality: 0.3)
+                profile.lastImageActualization = userActualization
+            } else {
+                for user in self.imageCoreData {
+                    if user.userID == userID {
+                        user.image = userImage.jpegData(compressionQuality: 0.3)
+                        user.lastImageActualization = Date()
+                    } else {
+                        let profile = Profile(context: moc)
+                        profile.userID = userID
+                        profile.image = userImage.jpegData(compressionQuality: 0.3)
+                        profile.lastImageActualization = Date()
+                    }
+                }
+            }
             
-            let imageCoreData = Profile(context: self.moc)
-            imageCoreData.userID = userID
-            imageCoreData.image = userImage!.jpegData(compressionQuality: 0.3)
             
             do {
                 try self.moc.save()
@@ -84,19 +109,23 @@ struct ProfileHost: View {
     }
     func setupImage() {
         if let userID = self.session.userSession?.userProfile.userID {
-            downloadImageFromCoreData(id: userID, completion: { image, coreDataDownloadingSuccessful in
+            downloadImageFromCoreData(id: userID, completion: { image, lastActuazlization, coreDataDownloadingSuccessful in
                 if coreDataDownloadingSuccessful == true {
-                    if let coreDataImage = image {
-                        self.session.userSession?.userProfile.userImage = coreDataImage
-                        self.image = coreDataImage
-                        print("---> ProfileHost: setupImage - CoreData")
+                    print("---> ther is some data in core data")
+                    let fbrDateOfActualization = self.session.userSession?.userProfile.lastImageActualization
+                    if fbrDateOfActualization == lastActuazlization || fbrDateOfActualization! < lastActuazlization! {
+                        print("fbrDateOfActualization == lastActuazlization && fbrDateOfActualization! > lastActuazlization! ---> TRUE")
+                        if let coreDataImage = image {
+                            self.session.userSession?.userProfile.userImage = coreDataImage
+                            self.session.userSession?.userProfile.lastImageActualization = lastActuazlization
+                            self.image = coreDataImage
+                            print("---> ProfileHost: setupImage - CoreData")
+                        }
+                    } else {
+                        self.downloadImageFromFirebase(userID: userID)
                     }
                 } else {
-                    self.session.downloadImageFromDB(id: userID, completion: { fireBaseImage in
-                        self.session.userSession?.userProfile.userImage = fireBaseImage
-                        self.image = fireBaseImage
-                        print("---> ProfileHost: setupImage - Firebase")
-                    })
+                    self.downloadImageFromFirebase(userID: userID)
                 }
             })
         }
@@ -104,29 +133,29 @@ struct ProfileHost: View {
     
     
     //MARK: Download Image form CoreData, if Not FireBase if not put ststic Image
-    func downloadImageFromCoreData(id: String, completion: @escaping (UIImage?, Bool)->()) {
+    func downloadImageFromCoreData(id: String, completion: @escaping (UIImage?, Date?, Bool)->()) {
         if !imageCoreData.isEmpty {
-
             for img in imageCoreData {
+                print("----> how many: \(imageCoreData.count)")
                 if img.userID == id {
                     if let image = img.image {
                         if let imgCoreData = UIImage(data: image) {
-                            completion(imgCoreData, true)
+                            completion(imgCoreData, img.lastImageActualization, true)
                         } else {
-                            completion(nil, false)
+                            completion(nil, nil, false)
                             return
                         }
                     } else {
-                        completion(nil, false)
+                        completion(nil, nil, false)
                         return
                     }
                 } else {
-                    completion(nil, false)
+                    completion(nil, nil, false)
                     return
                 }
             }
         } else {
-            completion(nil, false)
+            completion(nil, nil, false)
             return
         }
     }
@@ -144,6 +173,17 @@ struct ProfileHost: View {
                 print("Removing Image from CoreData failed!")
             }
         }
+    }
+    func downloadImageFromFirebase(userID: String) {
+        self.session.downloadImageFromDB(id: userID, completion: { fireBaseImage in
+            self.session.userSession?.userProfile.userImage = fireBaseImage
+            self.image = fireBaseImage
+            print("---> ProfileHost: setupImage - Firebase")
+            
+            self.saveImageToCoreData(userID: userID,
+                                     userImage: fireBaseImage,
+                                     userActualization: self.session.userSession?.userProfile.lastImageActualization ?? Date())
+        })
     }
 }
 
