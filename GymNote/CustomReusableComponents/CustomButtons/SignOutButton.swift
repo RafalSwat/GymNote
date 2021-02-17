@@ -15,7 +15,6 @@ struct SignOutButton: View {
     
     var body: some View {
         Button(action: {
-            sleep(3)
             if let isAnonymous = self.session.userSession?.userProfile.isUserAnonymous {
                 if isAnonymous {
                     removeUserWithData(completion: { userHasBeenDeleted in
@@ -38,9 +37,19 @@ struct SignOutButton: View {
             
             self.session.deleteImagefromFirebase(id: userID) { (errorDuringDeleteImage) in
                 if !errorDuringDeleteImage {
-                    self.session.deleteUserDataFromDB(userID: userID)
-                    self.session.deleteUser()
-                    completion(true)
+                    self.session.deleteUserDataFromDB(userID: userID) { (errorDuringDeleteUserData) in
+                        if !errorDuringDeleteUserData {
+                            self.session.deleteUser() { (errorDuringDeleteUser) in
+                                if !errorDuringDeleteUser {
+                                    completion(true)
+                                } else {
+                                    completion(false)
+                                }
+                            }
+                        } else {
+                            completion(false)
+                        }
+                    }
                 } else {
                     completion(false)
                 }

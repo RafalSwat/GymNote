@@ -128,75 +128,119 @@ class FireBaseSession: ObservableObject {
     
     //MARK: Delete user data method
     
-    func deleteUserDataFromDB(userID: String) {
+    func deleteUserDataFromDB(userID: String, completion: @escaping (Bool)->()) {
         
         if self.userSession != nil {
-            
-            //Delete all trainings belong to current user
-            if self.userSession!.userTrainings.isEmpty {
-                downloadTrainingsFromDB(userID: userID) { finishDownloadingTraining in
-                    if finishDownloadingTraining {
-                        for training in self.userSession!.userTrainings {
-                            self.deleteTrainingFromDB(userID: userID, training: training, completion: { errorOccur, errorDescription in
-                                                        if errorOccur {
-                                                            print(errorDescription ?? "Unknow error occur during removing training!")
-                                                        }})
+            self.deleteAllTraingsBelongToCurrentUser(userID: userID, completion: { (errorOccur1) in
+                if !errorOccur1 {
+                    self.deleteAllStatsBelongToCurrentUser(userID: userID, completion: { (errorOccur2) in
+                        if !errorOccur2 {
+                            self.deleteUserProfile(userID: userID, completion: {(errorOccur3) in
+                                if !errorOccur3 {
+                                    completion(false)
+                                } else {
+                                    completion(true)
+                                }
+                            })
+                        } else {
+                            completion(true)
                         }
-                    }
-                }
-            } else {
-                for training in self.userSession!.userTrainings {
-                    self.deleteTrainingFromDB(userID: userID, training: training, completion: { errorOccur, errorDescription in
-                                                if errorOccur {
-                                                    print(errorDescription ?? "Unknow error occur during removing training!")
-                                                }})
-                }
-            }
-            //Delete all stats belong to current user
-            if self.userSession!.userStatistics.isEmpty {
-                
-                downloadUserStatisticsFromDB(userID: userID, completion: { finishedLoadingStats in
-                    if finishedLoadingStats {
-                        for statsistic in self.userSession!.userStatistics {
-                            self.deleteSingleStataisticsFromDB(userID: userID, statistics: statsistic, completion: { errorOccur, errorDescription in
-                                                                if errorOccur {
-                                                                    print(errorDescription ?? "Unknow error occur during removing training!")
-                                                                }})
-                        }
-                    }
-                })
-            } else {
-                for statsistic in self.userSession!.userStatistics {
-                    self.deleteSingleStataisticsFromDB(userID: userID, statistics: statsistic, completion: { errorOccur, errorDescription in
-                                                        if errorOccur {
-                                                            print(errorDescription ?? "Unknow error occur during removing training!")
-                                                        }})
-                }
-            }
-            
-            
-            //Delete user profile
-            self.usersDBRef.child("Users").child(userID).removeValue() { error, _ in
-                if let error = error  {
-                    print("While deleting user profile an error occurred: \(error.localizedDescription)")
+                    })
                 } else {
-                    print("Data for path: [Users/...] removed successfully!")
+                    completion(true)
                 }
-            }
-            
+            })
             
         }
     }
+    
+    //Delete user profile
+    func deleteUserProfile(userID: String, completion: @escaping (Bool)->()) {
+        self.usersDBRef.child("Users").child(userID).removeValue() { error, _ in
+            if let error = error  {
+                print("While deleting user profile an error occurred: \(error.localizedDescription)")
+                completion(true)
+            } else {
+                print("Data for path: [Users/...] removed successfully!")
+                completion(false)
+            }
+        }
+    }
+    //Delete all trainings belong to current user
+    func deleteAllTraingsBelongToCurrentUser(userID: String, completion: @escaping (Bool)->()) {
+        if self.userSession!.userTrainings.isEmpty {
+            downloadTrainingsFromDB(userID: userID) { finishDownloadingTraining in
+                if finishDownloadingTraining {
+                    for training in self.userSession!.userTrainings {
+                        self.deleteTrainingFromDB(userID: userID, training: training, completion: { errorOccur, errorDescription in
+                                                    if errorOccur {
+                                                        print(errorDescription ?? "Unknow error occur during removing training!")
+                                                        completion(true)
+                                                    } else {
+                                                        completion(false)
+                                                    }})
+                    }
+                } else if !finishDownloadingTraining {
+                    completion(false)
+                }
+            }
+        } else {
+            for training in self.userSession!.userTrainings {
+                self.deleteTrainingFromDB(userID: userID, training: training, completion: { errorOccur, errorDescription in
+                                            if errorOccur {
+                                                print(errorDescription ?? "Unknow error occur during removing training!")
+                                                completion(true)
+                                            } else {
+                                                completion(false)
+                                            }})
+            }
+        }
+    }
+    //Delete all stats belong to current user
+    func deleteAllStatsBelongToCurrentUser(userID: String, completion: @escaping (Bool)->()) {
+        if self.userSession!.userStatistics.isEmpty {
+            
+            downloadUserStatisticsFromDB(userID: userID, completion: { finishedLoadingStats in
+                if finishedLoadingStats {
+                    for statsistic in self.userSession!.userStatistics {
+                        self.deleteSingleStataisticsFromDB(userID: userID, statistics: statsistic, completion: { errorOccur, errorDescription in
+                                                            if errorOccur {
+                                                                print(errorDescription ?? "Unknow error occur during removing training!")
+                                                                completion(true)
+                                                            } else {
+                                                                completion(false)
+                                                            }})
+                    }
+                } else if !finishedLoadingStats {
+                    completion(false)
+                }
+            })
+        } else {
+            for statsistic in self.userSession!.userStatistics {
+                self.deleteSingleStataisticsFromDB(userID: userID, statistics: statsistic, completion: { errorOccur, errorDescription in
+                                                    if errorOccur {
+                                                        print(errorDescription ?? "Unknow error occur during removing training!")
+                                                        completion(true)
+                                                    } else {
+                                                        completion(false)
+                                                    }})
+            }
+        }
+    }
+    
     //Delete user from Firebase
-    func deleteUser() {
+    func deleteUser(completion: @escaping (Bool)->()) {
         //Delete user
         let user = Auth.auth().currentUser
         
         user?.delete { error in
             if let error = error {
                 print("While deleting user an error occurred: \(error.localizedDescription)")
+                completion(true)
             } else {
                 print("User has been successfully removed from database!")
+                completion(false)
+                return
             }
         }
     }
@@ -505,6 +549,8 @@ class FireBaseSession: ObservableObject {
                         }
                     }
                 }
+            } else {
+                completion(false)
             }
         }
     }
