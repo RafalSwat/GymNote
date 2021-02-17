@@ -24,6 +24,7 @@ struct ContentView: View {
                     }
                 }
                 .onAppear{
+                    sleep(2)
                     self.getUser()
                 }
             } else {
@@ -31,7 +32,6 @@ struct ContentView: View {
             }
         }.onAppear {
             self.alreadySignIn = self.session.tryAutoSignIn()
-   
         }
         
     }

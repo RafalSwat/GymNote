@@ -63,7 +63,7 @@ struct ProfileHost: View {
                     if self.imageHasBeenRemoved {
                         if let userID = self.session.userSession?.userProfile.userID {
                             self.draftProfile.lastImageActualization = Date()
-                            session.deleteImagefromFirebase(id: userID)
+                            session.deleteImagefromFirebase(id: userID, completion: { _ in })
                             deleteImageFromCoreData(id: userID)
                         }
                         self.image = self.draftProfile.userImage

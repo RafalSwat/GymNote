@@ -21,6 +21,7 @@ struct UserProfile {
     var userHeight: Int
     var userDateOfBirth: Date
     var lastImageActualization: Date?
+    var isUserAnonymous: Bool
     
     init() {
         
@@ -32,6 +33,7 @@ struct UserProfile {
         self.userImage = UIImage(named: "staticImage")!
         self.userHeight = 170
         self.userDateOfBirth = Date()
+        self.isUserAnonymous = false
     }
     
     init(uID: String,
@@ -42,7 +44,8 @@ struct UserProfile {
          profileImage: UIImage,
          height: Int,
          userDateOfBirth: Date,
-         lastImageActualization: Date?) {
+         lastImageActualization: Date?,
+         isAnonymous: Bool) {
         
         self.userID = uID
         self.userEmail = email
@@ -53,6 +56,7 @@ struct UserProfile {
         self.userHeight = height
         self.userDateOfBirth = userDateOfBirth
         self.lastImageActualization = lastImageActualization
+        self.isUserAnonymous = isAnonymous
     }
 
 

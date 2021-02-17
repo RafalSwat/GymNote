@@ -90,7 +90,7 @@ struct ExercisesListView: View {
                                 else {
                                     self.choosenComponents.append(trainingComponent)
                                 }
-                            }
+                            }.padding(.horizontal, 2)
                     }
                 }
                 Spacer()

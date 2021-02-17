@@ -15,9 +15,37 @@ struct SignOutButton: View {
     
     var body: some View {
         Button(action: {
-            self.signIn = self.session.signOut()
+            sleep(3)
+            if let isAnonymous = self.session.userSession?.userProfile.isUserAnonymous {
+                if isAnonymous {
+                    removeUserWithData(completion: { userHasBeenDeleted in
+                        if userHasBeenDeleted {
+                            self.signIn = self.session.signOut()
+                        }
+                    })
+                } else {
+                    self.signIn = self.session.signOut()
+                }
+            }
+            
         }) {
             Text("SignOut")
+        }
+    }
+    
+    func removeUserWithData(completion: @escaping (Bool)->()) {
+        if let userID = self.session.userSession?.userProfile.userID {
+            
+            self.session.deleteImagefromFirebase(id: userID) { (errorDuringDeleteImage) in
+                if !errorDuringDeleteImage {
+                    self.session.deleteUserDataFromDB(userID: userID)
+                    self.session.deleteUser()
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+                
+            }
         }
     }
 }

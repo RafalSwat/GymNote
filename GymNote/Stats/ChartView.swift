@@ -16,7 +16,7 @@ struct ChartView: View {
     @State var chosenStats: LineChartModelView?
     @State var chosenIndex: Int?
     @State var chartTitle = "Stats"
-    @State var statsLoadedSuccessfully = false
+    @State var statsLoadedSuccessfully: Bool?
     @State var didAppear = false
     
     @State var showMenu: Bool = false
@@ -36,8 +36,14 @@ struct ChartView: View {
         return GeometryReader { geometry in
             NavigationView {
                 ZStack(alignment: .topTrailing) {
-                    if !self.statsLoadedSuccessfully {
+                    if self.statsLoadedSuccessfully == nil {
                         Indicator()
+                    } else if self.statsLoadedSuccessfully == false {
+                        Text("There are no statistics to display yet. Do the training and record your performance first. Good luck!")
+                            .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                            
                     } else {
                         VStack {
                             if showMenu && self.chosenStats != nil {
@@ -84,7 +90,9 @@ struct ChartView: View {
                                                          chartTitle: self.$chartTitle,
                                                          showBasicInfo: self.$showBasicInfo,
                                                          chartCase: self.$displayMode)
-                                }.padding(.top, 5)
+                                }
+                                .padding(.top, 5)
+                                .padding(.horizontal, 3)
                             }
                             
                             

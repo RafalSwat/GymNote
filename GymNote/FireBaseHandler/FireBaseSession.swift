@@ -35,13 +35,37 @@ class FireBaseSession: ObservableObject {
     func listen() {
         self.handle = Auth.auth().addStateDidChangeListener { (auth, user) in
             if let user = user {
-                self.setupSession(userEmail: user.email!, userID: user.uid)
+                self.setupSession(userID: user.uid)
             } else {
                 self.userSession = nil
             }
         }
     }
     //MARK: Signup method
+    
+    func signInAnonymously(completion: @escaping (Bool, String?)->()) {
+        Auth.auth().signInAnonymously { (authDataResult, error) in
+            if let user = authDataResult?.user {
+                if user.isAnonymous {
+                    print("Got a new anonymous user")
+                } else {
+                    print("Got a new user!")
+                }
+                if error != nil {
+                    completion(true, error?.localizedDescription)
+                } else {
+                    completion(false, error?.localizedDescription)
+                }
+            } else {
+                if let specificError = error?.localizedDescription {
+                    print(specificError)
+                } else {
+                    print("Error:  can`t register!")
+                }
+            }
+        }
+    }
+    
     func signUp(email: String, password: String, completion: @escaping (Bool, String?)->()) {
         Auth.auth().createUser(withEmail: email, password: password) {
             (user, error) in
@@ -97,50 +121,149 @@ class FireBaseSession: ObservableObject {
             try Auth.auth().signOut()
             self.userSession = nil
             return false
-        } catch {
+        }  catch {
             return true
         }
     }
     
+    //MARK: Delete user data method
+    
+    func deleteUserDataFromDB(userID: String) {
+        
+        if self.userSession != nil {
+            
+            //Delete all trainings belong to current user
+            if self.userSession!.userTrainings.isEmpty {
+                downloadTrainingsFromDB(userID: userID) { finishDownloadingTraining in
+                    if finishDownloadingTraining {
+                        for training in self.userSession!.userTrainings {
+                            self.deleteTrainingFromDB(userID: userID, training: training, completion: { errorOccur, errorDescription in
+                                                        if errorOccur {
+                                                            print(errorDescription ?? "Unknow error occur during removing training!")
+                                                        }})
+                        }
+                    }
+                }
+            } else {
+                for training in self.userSession!.userTrainings {
+                    self.deleteTrainingFromDB(userID: userID, training: training, completion: { errorOccur, errorDescription in
+                                                if errorOccur {
+                                                    print(errorDescription ?? "Unknow error occur during removing training!")
+                                                }})
+                }
+            }
+            //Delete all stats belong to current user
+            if self.userSession!.userStatistics.isEmpty {
+                
+                downloadUserStatisticsFromDB(userID: userID, completion: { finishedLoadingStats in
+                    if finishedLoadingStats {
+                        for statsistic in self.userSession!.userStatistics {
+                            self.deleteSingleStataisticsFromDB(userID: userID, statistics: statsistic, completion: { errorOccur, errorDescription in
+                                                                if errorOccur {
+                                                                    print(errorDescription ?? "Unknow error occur during removing training!")
+                                                                }})
+                        }
+                    }
+                })
+            } else {
+                for statsistic in self.userSession!.userStatistics {
+                    self.deleteSingleStataisticsFromDB(userID: userID, statistics: statsistic, completion: { errorOccur, errorDescription in
+                                                        if errorOccur {
+                                                            print(errorDescription ?? "Unknow error occur during removing training!")
+                                                        }})
+                }
+            }
+            
+            
+            //Delete user profile
+            self.usersDBRef.child("Users").child(userID).removeValue() { error, _ in
+                if let error = error  {
+                    print("While deleting user profile an error occurred: \(error.localizedDescription)")
+                } else {
+                    print("Data for path: [Users/...] removed successfully!")
+                }
+            }
+            
+            
+        }
+    }
+    //Delete user from Firebase
+    func deleteUser() {
+        //Delete user
+        let user = Auth.auth().currentUser
+        
+        user?.delete { error in
+            if let error = error {
+                print("While deleting user an error occurred: \(error.localizedDescription)")
+            } else {
+                print("User has been successfully removed from database!")
+            }
+        }
+    }
+    
     //MARK: Setup session method
-    func setupSession(userEmail: String, userID: String) {
+    func setupSession(userID: String) {
         self.usersDBRef.child("Users").child(userID).child("Profile").observeSingleEvent(of: .value) { (snapshot) in
             if snapshot.exists() {
                 // User is already on FirebaseDatabase, so we setup session based on it (old user)
                 if let value = snapshot.value as? [String: Any] {
                     let strDate = value["dateOfBirth"] as! String
-                    let strDateActualization = value["lastImageActualization"] as! String
+                    let strDateActualization = value["lastImageActualization"] as? String
                     let convertDate = DateConverter.convertFromString(dateString: strDate)
-
-                    let lastActualizationDate = DateConverter.convertFromStringFull(dateString: strDateActualization)
+                    
+                    let currentDate = DateConverter.fullDateFormat.string(from: Date())
+                    let lastActualizationDate = DateConverter.convertFromStringFull(dateString: strDateActualization ?? currentDate)
                     
                     
                     let userProfile = UserProfile(uID: userID,
-                                                  email: userEmail,
+                                                  email: value["email"] as! String,
                                                   name: value["name"] as! String,
                                                   surname: value["surname"] as! String,
                                                   gender: value["gender"] as! String,
                                                   profileImage: UIImage(named: "staticImage")!,
                                                   height: value["height"] as! Int,
                                                   userDateOfBirth: convertDate,
-                                                  lastImageActualization: lastActualizationDate)
+                                                  lastImageActualization: lastActualizationDate,
+                                                  isAnonymous: value["isAnonymous"] as? Bool ?? false)
                     self.userSession = UserData(profile: userProfile)
                 } 
             } else {
                 // User has no data on FirebaseDatabase, so we set up default on (new user)
-                let userProfile = UserProfile(uID: userID,
-                                              email: userEmail,
-                                              name: "",
-                                              surname: "",
-                                              gender: "non",
-                                              profileImage: UIImage(named: "staticImage")!,
-                                              height: 175,
-                                              userDateOfBirth: Date(),
-                                              lastImageActualization : Date())
-                self.userSession = UserData(profile: userProfile)
-                
-                if let newUser = self.userSession?.userProfile {
-                    self.uploadUserToDB(user: newUser, completion: {_ in }) //TODO: do sth with this completion!!! you lazy bastard 
+                if let user = Auth.auth().currentUser {
+                    if user.isAnonymous {
+                        let userProfile = UserProfile(uID: userID,
+                                                      email: "",
+                                                      name: "",
+                                                      surname: "",
+                                                      gender: "non",
+                                                      profileImage: UIImage(named: "staticImage")!,
+                                                      height: 175,
+                                                      userDateOfBirth: Date(),
+                                                      lastImageActualization : Date(),
+                                                      isAnonymous: true)
+                        self.userSession = UserData(profile: userProfile)
+                        
+                        if let newUser = self.userSession?.userProfile {
+                            self.uploadUserToDB(user: newUser, completion: {_ in }) //TODO: do sth with this completion!!! you lazy bastard
+                        }
+                        
+                    } else {
+                        let userProfile = UserProfile(uID: userID,
+                                                      email: user.email ?? "",
+                                                      name: "",
+                                                      surname: "",
+                                                      gender: "non",
+                                                      profileImage: UIImage(named: "staticImage")!,
+                                                      height: 175,
+                                                      userDateOfBirth: Date(),
+                                                      lastImageActualization : Date(),
+                                                      isAnonymous: false)
+                        self.userSession = UserData(profile: userProfile)
+                        
+                        if let newUser = self.userSession?.userProfile {
+                            self.uploadUserToDB(user: newUser, completion: {_ in }) //TODO: do sth with this completion!!! you lazy bastard
+                        }
+                    }
                 }
             }
         }
@@ -156,20 +279,21 @@ class FireBaseSession: ObservableObject {
              "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
              "gender" : user.userGender,
              "height" : user.userHeight,
-             "lastImageActualization" : currentDate]) {
-                
-                (error, reference) in
-                
-                if error != nil {
-                    completion(true)
-                    if let specificError = error?.localizedDescription {
-                        print(specificError)
-                    } else {
-                        print("Error:  can`t login!")
-                    }
+             "lastImageActualization" : currentDate,
+             "isAnonymous" : user.isUserAnonymous]) {
+            
+            (error, reference) in
+            
+            if error != nil {
+                completion(true)
+                if let specificError = error?.localizedDescription {
+                    print(specificError)
                 } else {
-                    completion(false)
+                    print("Error:  can`t login!")
                 }
+            } else {
+                completion(false)
+            }
         }
         uploadImageToDB(uiimage: user.userImage, id: user.userID)
     }
@@ -185,7 +309,8 @@ class FireBaseSession: ObservableObject {
                  "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
                  "gender" : user.userGender,
                  "height" : user.userHeight,
-                 "lastImageActualization" : dateString])
+                 "lastImageActualization" : dateString,
+                 "isAnonymous" : user.isUserAnonymous])
             print("----> update lastImageActualization")
         } else {
             usersDBRef.child("Users").child(user.userID).child("Profile").updateChildValues(
@@ -193,10 +318,11 @@ class FireBaseSession: ObservableObject {
                  "surname" : user.userSurname,
                  "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
                  "gender" : user.userGender,
-                 "height" : user.userHeight])
+                 "height" : user.userHeight,
+                 "isAnonymous" : user.isUserAnonymous])
         }
     }
-
+    
     //MARK: Upload image to Firebase ( is used inside updating profile method)
     func uploadImageToDB(uiimage: UIImage, id: String) {
         if let imageToSave = uiimage.jpegData(compressionQuality: 0.3) {
@@ -211,7 +337,7 @@ class FireBaseSession: ObservableObject {
             print("Could`t case/unwrap image to data!")
         }
     }
-
+    
     //MARK: Download Image form FireBase
     func downloadImageFromDB(id: String, completion: @escaping (UIImage)->()){
         usersDBStorage.child("Images").child(id).getData(maxSize: 10*1024*1024) { (imageData, error) in
@@ -227,12 +353,14 @@ class FireBaseSession: ObservableObject {
             }
         }
     }
-    func deleteImagefromFirebase(id: String) {
+    func deleteImagefromFirebase(id: String, completion: @escaping (Bool)->()) {
         usersDBStorage.child("Images").child(id).delete(completion: { error in
             if let err = error {
                 print("Could`t delete image from Firebase DataBase!: \(err.localizedDescription)")
+                completion(true)
             } else {
                 print("Image removed successfully from Firebase DataBase!")
+                completion(false)
             }
         })
     }
@@ -266,37 +394,37 @@ class FireBaseSession: ObservableObject {
             ["name" : training.trainingName,
              "description" : training.trainingDescription,
              "initialDate" : training.initialDate]) {
-                (error:Error?, ref:DatabaseReference) in
-                if let error = error {
-                    print("Data path: [Trainings/...] could not be saved: \(error.localizedDescription).")
-                    //errorDescription = error.localizedDescription
-                    completion(true, error.localizedDescription)
-                } else {
-                    print("Data path: [Trainings/...] saved successfully!")
-                    //errorTrainings = false
-                    completion(false, nil)
-                }
+            (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Data path: [Trainings/...] could not be saved: \(error.localizedDescription).")
+                //errorDescription = error.localizedDescription
+                completion(true, error.localizedDescription)
+            } else {
+                print("Data path: [Trainings/...] saved successfully!")
+                //errorTrainings = false
+                completion(false, nil)
+            }
         }
         for trainingComponent in training.listOfExercises {
             
             // Upload list of exercises under current training
             self.usersDBRef.child("ExerciseList").child(training.trainingID).child(trainingComponent.exercise.exerciseID).setValue([
-                "name" : trainingComponent.exercise.exerciseName,
-                "createdByUser" : trainingComponent.exercise.exerciseCreatedByUser,
-                "numberOfSeries" : trainingComponent.exerciseNumberOfSeries,
-                "order" : trainingComponent.exerciseOrderInList]) {
-                    (error:Error?, ref:DatabaseReference) in
-                    if let error = error {
-                        print("Data path: [ExerciseList/\(training.trainingID)/...] could not be saved: \(error.localizedDescription).")
-                        //errorDescription = error.localizedDescription
-                        completion(true, error.localizedDescription)
-                    } else {
-                        print("Data path: [ExerciseList/\(training.trainingID)/...] saved successfully!")
-                        //errorExerciseList = false
-                        completion(false, nil)
-                    }
+                                                                                                                                    "name" : trainingComponent.exercise.exerciseName,
+                                                                                                                                    "createdByUser" : trainingComponent.exercise.exerciseCreatedByUser,
+                                                                                                                                    "numberOfSeries" : trainingComponent.exerciseNumberOfSeries,
+                                                                                                                                    "order" : trainingComponent.exerciseOrderInList]) {
+                (error:Error?, ref:DatabaseReference) in
+                if let error = error {
+                    print("Data path: [ExerciseList/\(training.trainingID)/...] could not be saved: \(error.localizedDescription).")
+                    //errorDescription = error.localizedDescription
+                    completion(true, error.localizedDescription)
+                } else {
+                    print("Data path: [ExerciseList/\(training.trainingID)/...] saved successfully!")
+                    //errorExerciseList = false
+                    completion(false, nil)
+                }
             }
-        
+            
         }
     }
     //MARK: Update training under current user
@@ -316,9 +444,9 @@ class FireBaseSession: ObservableObject {
     func updateTrainingsExerciseListOnDB(training: Training) {
         for trainingComponent in training.listOfExercises {
             self.usersDBRef.child("ExerciseList").child(training.trainingID).child(trainingComponent.exercise.exerciseID).updateChildValues([
-                "name" : trainingComponent.exercise.exerciseName,
-                "createdByUser" : trainingComponent.exercise.exerciseCreatedByUser,
-                "numberOfSeries" : trainingComponent.exerciseNumberOfSeries])
+                                                                                                                                                "name" : trainingComponent.exercise.exerciseName,
+                                                                                                                                                "createdByUser" : trainingComponent.exercise.exerciseCreatedByUser,
+                                                                                                                                                "numberOfSeries" : trainingComponent.exerciseNumberOfSeries])
         }
     }
     //MARK: Download list of trainings, and store this data in enviroment
@@ -406,7 +534,7 @@ class FireBaseSession: ObservableObject {
                 completion(false, nil)
             }
         }
-
+        
     }
     
     func uploadUserStatisticsToDB(userID: String, statistics: ExerciseStatistics, completion: @escaping (Bool, String?)->()) {
@@ -416,8 +544,8 @@ class FireBaseSession: ObservableObject {
         let createdByUser = statistics.exercise.exerciseCreatedByUser
         
         self.usersDBRef.child("UserStatistics").child(userID).child(id).setValue([
-            "name" : name,
-            "createdByUser" : createdByUser]) {
+                                                                                    "name" : name,
+                                                                                    "createdByUser" : createdByUser]) {
             
             (error:Error?, ref:DatabaseReference) in
             if let error = error {
@@ -436,13 +564,13 @@ class FireBaseSession: ObservableObject {
             
             
             self.usersDBRef.child("UserExercisesData").child(userID).child(id).child(dataID).setValue(dateString) {
-
+                
                 (error:Error?, ref:DatabaseReference) in
                 if let error = error {
-                    print("Data path: [UserStatistics/...] could not be saved: \(error.localizedDescription).")
+                    print("Data path: [UserExercisesData/...] could not be saved: \(error.localizedDescription).")
                     completion(true, error.localizedDescription)
                 } else {
-                    print("Data path: [UserStatistics/...] saved successfully!")
+                    print("Data path: [UserExercisesData/...] saved successfully!")
                     completion(false, nil)
                 }
             }
@@ -455,9 +583,9 @@ class FireBaseSession: ObservableObject {
                 let weight = seriesDetails.exerciseWeight
                 
                 self.usersDBRef.child("Series").child(dataID).child(seriesID).setValue([
-                    "order" : orderInSeries,
-                    "repeats" : reps,
-                    "weight" : weight]) {
+                                                                                        "order" : orderInSeries,
+                                                                                        "repeats" : reps,
+                                                                                        "weight" : weight]) {
                     
                     (error:Error?, ref:DatabaseReference) in
                     if let error = error {
@@ -530,6 +658,8 @@ class FireBaseSession: ObservableObject {
                         }
                     }
                 }
+            } else {
+                completion(false)
             }
         }
     }
@@ -558,9 +688,9 @@ class FireBaseSession: ObservableObject {
                 
                 
                 let exerciseIndex = self.userSession?.userStatistics.firstIndex(where: {
-                    ($0.exerciseData.firstIndex(where: {
-                        $0.exerciseDataID == exerciseDataID
-                    }) != nil) == true })
+                                                                                    ($0.exerciseData.firstIndex(where: {
+                                                                                        $0.exerciseDataID == exerciseDataID
+                                                                                    }) != nil) == true })
                 
                 let exerciseDataIndex = self.userSession?.userStatistics[exerciseIndex!].exerciseData.firstIndex(where: {
                     $0.exerciseDataID == exerciseDataID
@@ -572,7 +702,38 @@ class FireBaseSession: ObservableObject {
             completion(true)
         }
     }
+    
+    func deleteSingleStataisticsFromDB(userID: String, statistics: ExerciseStatistics, completion: @escaping (Bool, String?)->()) {
+        
+        let exerciseID = statistics.exercise.exerciseID
+        
+        self.usersDBRef.child("UserStatistics").child(userID).child(exerciseID).removeValue() { error, _ in
+            if error != nil {
+                completion(true, error?.localizedDescription)
+            } else {
+                print("Data for path: [UserStatistics/...] removed successfully!")
+                completion(false, nil)
+            }
+        }
+        self.usersDBRef.child("UserExercisesData").child(userID).child(exerciseID).removeValue() { error, _ in
+            if error != nil {
+                completion(true, error?.localizedDescription)
+            } else {
+                print("Data for path: [UserExercisesData/...] removed successfully!")
+                completion(false, nil)
+            }
+        }
+        for exerciseData in statistics.exerciseData {
+            let exerciseDataID = exerciseData.exerciseDataID
+            self.usersDBRef.child("Series").child(exerciseDataID).removeValue() { error, _ in
+                if error != nil {
+                    completion(true, error?.localizedDescription)
+                } else {
+                    print("Data for path: [Series/...] removed successfully!")
+                    completion(false, nil)
+                }
+            }
+        }
+    }
 }
-extension FireBaseSession {
-    //static let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-}
+

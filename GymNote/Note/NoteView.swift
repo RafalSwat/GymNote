@@ -28,6 +28,7 @@ struct NoteView: View {
                                         training: training,
                                         showAlert: $showAlert,
                                         selectedTraining: $trainingToRemove)
+                                .padding(.horizontal, 3)
                             
                         }
                         
@@ -91,7 +92,7 @@ struct NoteView: View {
     }
     func updateTrainingIfNeeded() {
         if self.listOfTrainings.array.count != self.session.userSession?.userTrainings.count {
-            self.listOfTrainings.array = self.session.userSession!.userTrainings
+            self.listOfTrainings.array = self.session.userSession?.userTrainings ?? [Training]()
         }
     }
     

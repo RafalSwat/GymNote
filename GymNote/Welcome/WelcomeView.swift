@@ -20,6 +20,8 @@ struct WelcomeView: View {
         
         VStack {
             Image("staticImage")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
             
             ColorfulPicker(selection: $isRegistered)
             
