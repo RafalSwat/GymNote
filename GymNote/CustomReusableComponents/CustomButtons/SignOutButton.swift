@@ -10,6 +10,9 @@ import SwiftUI
 
 struct SignOutButton: View {
     
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(entity: Profile.entity(), sortDescriptors: []) var imageCoreData: FetchedResults<Profile>
+    
     @EnvironmentObject var session: FireBaseSession
     @Binding var signIn: Bool
     
@@ -35,17 +38,14 @@ struct SignOutButton: View {
     func removeUserWithData(completion: @escaping (Bool)->()) {
         if let userID = self.session.userSession?.userProfile.userID {
             
-            self.session.deleteImagefromFirebase(id: userID) { (errorDuringDeleteImage) in
-                if !errorDuringDeleteImage {
-                    self.session.deleteUserDataFromDB(userID: userID) { (errorDuringDeleteUserData) in
-                        if !errorDuringDeleteUserData {
-                            self.session.deleteUser() { (errorDuringDeleteUser) in
-                                if !errorDuringDeleteUser {
-                                    completion(true)
-                                } else {
-                                    completion(false)
-                                }
-                            }
+            deleteImageFromCoreData(id: userID)
+            
+            self.session.deleteImagefromFirebase(id: userID) { _ in }            
+            self.session.deleteUserDataFromDB(userID: userID) { (errorDuringDeleteUserData) in
+                if !errorDuringDeleteUserData {
+                    self.session.deleteUser() { (errorDuringDeleteUser) in
+                        if !errorDuringDeleteUser {
+                            completion(true)
                         } else {
                             completion(false)
                         }
@@ -53,7 +53,21 @@ struct SignOutButton: View {
                 } else {
                     completion(false)
                 }
-                
+            }
+            
+        }
+    }
+    func deleteImageFromCoreData(id: String) {
+        for image in imageCoreData {
+            if image.userID == id {
+                let imageObjectToDelete = image
+                moc.delete(imageObjectToDelete)
+            }
+            do {
+                try moc.save()
+                print("Image photo was deleted successfully from Core Data")
+            } catch {
+                print("Removing Image from CoreData failed!")
             }
         }
     }

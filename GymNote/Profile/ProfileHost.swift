@@ -65,6 +65,7 @@ struct ProfileHost: View {
                             self.draftProfile.lastImageActualization = Date()
                             session.deleteImagefromFirebase(id: userID, completion: { _ in })
                             deleteImageFromCoreData(id: userID)
+                            //deleteImages()
                         }
                         self.image = self.draftProfile.userImage
                     }
@@ -136,7 +137,7 @@ struct ProfileHost: View {
     func downloadImageFromCoreData(id: String, completion: @escaping (UIImage?, Date?, Bool)->()) {
         if !imageCoreData.isEmpty {
             for img in imageCoreData {
-                print("----> how many: \(imageCoreData.count)")
+                print("---> how many: \(imageCoreData.count)")
                 if img.userID == id {
                     if let image = img.image {
                         if let imgCoreData = UIImage(data: image) {
@@ -174,6 +175,22 @@ struct ProfileHost: View {
             }
         }
     }
+    func deleteImages() {
+        var counter = 0
+        for image in imageCoreData {
+            counter += 1
+            moc.delete(image)
+            print("deleting COREDATA nr: \(counter)")
+        }
+        do {
+            try moc.save()
+            print("Image photo was deleted successfully from Core Data")
+        } catch {
+            print("Removing Image from CoreData failed!")
+        }
+    }
+    
+    
     func downloadImageFromFirebase(userID: String) {
         self.session.downloadImageFromDB(id: userID, completion: { fireBaseImage in
             self.session.userSession?.userProfile.userImage = fireBaseImage

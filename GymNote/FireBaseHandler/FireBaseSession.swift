@@ -129,27 +129,34 @@ class FireBaseSession: ObservableObject {
     //MARK: Delete user data method
     
     func deleteUserDataFromDB(userID: String, completion: @escaping (Bool)->()) {
-        
         if self.userSession != nil {
-            self.deleteAllTraingsBelongToCurrentUser(userID: userID, completion: { (errorOccur1) in
-                if !errorOccur1 {
-                    self.deleteAllStatsBelongToCurrentUser(userID: userID, completion: { (errorOccur2) in
-                        if !errorOccur2 {
-                            self.deleteUserProfile(userID: userID, completion: {(errorOccur3) in
+            self.downloadTrainingsFromDB(userID: userID) { (errorOccur1) in
+                if errorOccur1 {
+                    self.downloadUserStatisticsFromDB(userID: userID) { (errorOccur2) in
+                        if errorOccur2 {
+                            self.deleteAllTraingsBelongToCurrentUser(userID: userID, completion: { (errorOccur3) in
                                 if !errorOccur3 {
-                                    completion(false)
+                                    self.deleteAllStatsBelongToCurrentUser(userID: userID, completion: { (errorOccur4) in
+                                        if !errorOccur4 {
+                                            self.deleteUserProfile(userID: userID, completion: {(errorOccur5) in
+                                                if !errorOccur5 {
+                                                    completion(false)
+                                                } else {
+                                                    completion(true)
+                                                }
+                                            })
+                                        } else {
+                                            completion(true)
+                                        }
+                                    })
                                 } else {
                                     completion(true)
                                 }
                             })
-                        } else {
-                            completion(true)
                         }
-                    })
-                } else {
-                    completion(true)
+                    }
                 }
-            })
+            }
             
         }
     }
@@ -169,29 +176,21 @@ class FireBaseSession: ObservableObject {
     //Delete all trainings belong to current user
     func deleteAllTraingsBelongToCurrentUser(userID: String, completion: @escaping (Bool)->()) {
         if self.userSession!.userTrainings.isEmpty {
-            downloadTrainingsFromDB(userID: userID) { finishDownloadingTraining in
-                if finishDownloadingTraining {
-                    for training in self.userSession!.userTrainings {
-                        self.deleteTrainingFromDB(userID: userID, training: training, completion: { errorOccur, errorDescription in
-                                                    if errorOccur {
-                                                        print(errorDescription ?? "Unknow error occur during removing training!")
-                                                        completion(true)
-                                                    } else {
-                                                        completion(false)
-                                                    }})
-                    }
-                } else if !finishDownloadingTraining {
-                    completion(false)
-                }
-            }
+            completion(false)
         } else {
+            var counter = 0
+            let numberOfTrainings = self.userSession!.userTrainings.count
+            
             for training in self.userSession!.userTrainings {
                 self.deleteTrainingFromDB(userID: userID, training: training, completion: { errorOccur, errorDescription in
                                             if errorOccur {
                                                 print(errorDescription ?? "Unknow error occur during removing training!")
                                                 completion(true)
                                             } else {
-                                                completion(false)
+                                                counter += 1
+                                                if counter == numberOfTrainings {
+                                                    completion(false)
+                                                }
                                             }})
             }
         }
@@ -199,30 +198,21 @@ class FireBaseSession: ObservableObject {
     //Delete all stats belong to current user
     func deleteAllStatsBelongToCurrentUser(userID: String, completion: @escaping (Bool)->()) {
         if self.userSession!.userStatistics.isEmpty {
-            
-            downloadUserStatisticsFromDB(userID: userID, completion: { finishedLoadingStats in
-                if finishedLoadingStats {
-                    for statsistic in self.userSession!.userStatistics {
-                        self.deleteSingleStataisticsFromDB(userID: userID, statistics: statsistic, completion: { errorOccur, errorDescription in
-                                                            if errorOccur {
-                                                                print(errorDescription ?? "Unknow error occur during removing training!")
-                                                                completion(true)
-                                                            } else {
-                                                                completion(false)
-                                                            }})
-                    }
-                } else if !finishedLoadingStats {
-                    completion(false)
-                }
-            })
+            completion(false)
         } else {
+            var counter = 0
+            let numberOfStats = self.userSession!.userStatistics.count
+            
             for statsistic in self.userSession!.userStatistics {
                 self.deleteSingleStataisticsFromDB(userID: userID, statistics: statsistic, completion: { errorOccur, errorDescription in
                                                     if errorOccur {
                                                         print(errorDescription ?? "Unknow error occur during removing training!")
                                                         completion(true)
                                                     } else {
-                                                        completion(false)
+                                                        counter += 1
+                                                        if counter == numberOfStats {
+                                                            completion(false)
+                                                        }
                                                     }})
             }
         }
@@ -457,6 +447,7 @@ class FireBaseSession: ObservableObject {
                                                                                                                                     "createdByUser" : trainingComponent.exercise.exerciseCreatedByUser,
                                                                                                                                     "numberOfSeries" : trainingComponent.exerciseNumberOfSeries,
                                                                                                                                     "order" : trainingComponent.exerciseOrderInList]) {
+                
                 (error:Error?, ref:DatabaseReference) in
                 if let error = error {
                     print("Data path: [ExerciseList/\(training.trainingID)/...] could not be saved: \(error.localizedDescription).")
@@ -501,6 +492,7 @@ class FireBaseSession: ObservableObject {
         var descriptions = [String]()
         var dates = [String]()
         var allExercises = [[TrainingsComponent]]()
+        var trainings = [Training]()
         var index = 0
         
         self.usersDBRef.child("UsersTrainings").child(userID).observeSingleEvent(of: .value) { (userSnapshot) in
@@ -541,16 +533,17 @@ class FireBaseSession: ObservableObject {
                                                     description: descriptions[index],
                                                     date: dates[index],
                                                     exercises: allExercises[index])
-                            self.userSession?.userTrainings.append(training)
+                            trainings.append(training)
                             index += 1
                             if ids.count == index {
+                                self.userSession?.userTrainings = trainings
                                 completion(true)
                             }
                         }
                     }
                 }
             } else {
-                completion(false)
+                completion(true)
             }
         }
     }
@@ -652,6 +645,7 @@ class FireBaseSession: ObservableObject {
         var exerciseNames = [String]()
         var exerciseAsUserCreations = [Bool]()
         var exercisesData = [[ExerciseData]]()
+        var exerciseStatistics = [ExerciseStatistics]()
         var index = 0
         var size = 0
         
@@ -692,12 +686,14 @@ class FireBaseSession: ObservableObject {
                                                                                               name: exerciseNames[index],
                                                                                               createdByUser: exerciseAsUserCreations[index]),
                                                                            data: exercisesData[index].sorted(by: {$0.exerciseDate < $1.exerciseDate}))
-                                self.userSession?.userStatistics.append(exerciseStatistic)
+                                //self.userSession?.userStatistics.append(exerciseStatistic)
+                                exerciseStatistics.append(exerciseStatistic)
                                 
                                 index += 1
                                 
                                 if index == size
                                 {
+                                    self.userSession?.userStatistics = exerciseStatistics
                                     completion(true)
                                 }
                             }
@@ -705,7 +701,7 @@ class FireBaseSession: ObservableObject {
                     }
                 }
             } else {
-                completion(false)
+                completion(true)
             }
         }
     }
@@ -742,8 +738,8 @@ class FireBaseSession: ObservableObject {
                     $0.exerciseDataID == exerciseDataID
                 })
                 
-                self.userSession?.userStatistics[exerciseIndex!].exerciseData[exerciseDataIndex!].exerciseSeries.append(contentsOf: series)
-                
+                //self.userSession?.userStatistics[exerciseIndex!].exerciseData[exerciseDataIndex!].exerciseSeries.append(contentsOf: series)
+                self.userSession?.userStatistics[exerciseIndex!].exerciseData[exerciseDataIndex!].exerciseSeries = series
             }
             completion(true)
         }

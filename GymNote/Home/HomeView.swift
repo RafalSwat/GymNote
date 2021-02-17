@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HomeView: View {
     
+    
     @EnvironmentObject var session: FireBaseSession
     @Binding var alreadySignIn: Bool
     
