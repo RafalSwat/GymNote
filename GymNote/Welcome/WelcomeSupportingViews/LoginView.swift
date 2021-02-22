@@ -18,6 +18,7 @@ struct LoginView: View {
     @State private var password: String = ""
     @State var warningText = ""
     @State var showWarning = false
+    @State var showForgotPassword = false
     @Binding var alreadySignIn: Bool
     
     //MARK: View
@@ -29,6 +30,17 @@ struct LoginView: View {
                 .textContentType(.emailAddress)
             
             SwitchableSecureField(placeHolder: "Password", secureText: $password)
+            
+            HStack {
+                Spacer()
+                Button(action: {
+                    self.showForgotPassword.toggle()
+                }, label: {
+                   Text("Forgot Password?")
+                    .foregroundColor(.secondary)
+                    .font(.subheadline)
+                }).padding(.horizontal)
+            }
             
             if self.showWarning {
                 Text(warningText)
@@ -142,7 +154,9 @@ struct LoginView: View {
 
 
             }
-        }
+        }.sheet(isPresented: self.$showForgotPassword, content: {
+            ForgotPasswordView()
+        })
     }
     
     //MARK: Functions

@@ -125,6 +125,17 @@ class FireBaseSession: ObservableObject {
             return true
         }
     }
+    //MARK: Reset password method
+    func restetPassword(email: String, completion: @escaping (Bool, String?)->()) {
+        Auth.auth().sendPasswordReset(withEmail: email) { (error) in
+            
+            if error != nil {
+                completion(true, error?.localizedDescription)
+            } else {
+                completion(false, "Reset password email has been successfully sent!")
+            }
+        }
+    }
     
     //MARK: Delete user data method
     

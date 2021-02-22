@@ -20,9 +20,11 @@ struct ProfileHost: View {
     @State var image: UIImage = UIImage(named: "staticImage")!
     @State var didAppear = false
     @State var imageHasBeenRemoved = false
+    
+    @Binding var alreadySignIn: Bool
 
     var body: some View {
-        NavigationView {
+
             VStack(alignment: .leading, spacing: 20) {
                 
                 if !self.editMode {
@@ -38,7 +40,8 @@ struct ProfileHost: View {
                         }
                 } else {
                     ProfileEditView(profile: $draftProfile,
-                                    imageHasBeenDeleted: $imageHasBeenRemoved)
+                                    imageHasBeenDeleted: $imageHasBeenRemoved,
+                                    alreadySignIn: $alreadySignIn)
                         .onAppear {
                             self.draftProfile = self.session.userSession?.userProfile ?? UserProfile()
                         }
@@ -74,7 +77,7 @@ struct ProfileHost: View {
                 })
             )
         }
-    }
+    
     
     //MARK: save image inside CoreData
     func saveImageToCoreData(userID: String, userImage: UIImage, userActualization: Date) {
@@ -209,9 +212,10 @@ struct ProfileHost: View {
 struct ProfileHost_Previews: PreviewProvider {
     
     @State static var prevSession = FireBaseSession()
+    @State static var loggedIn = true
     
     static var previews: some View {
-        ProfileHost()
+        ProfileHost(alreadySignIn: $loggedIn)
             .environmentObject(prevSession)
         
     }

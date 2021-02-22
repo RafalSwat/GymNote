@@ -11,14 +11,19 @@ import SwiftUI
 struct ProfileEditView: View {
     
     //MARK: Properties
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(entity: Profile.entity(), sortDescriptors: []) var imageCoreData: FetchedResults<Profile>
+    
     @EnvironmentObject var session: FireBaseSession
     @Binding var profile: UserProfile
     @Binding var imageHasBeenDeleted: Bool
+    @Binding var alreadySignIn: Bool
     
     //var to change photo mechanics
     @State var doneUpdating = false
     @State var doneChangingPhoto = false
     @State var doDeleteAction = false
+    @State var doRemoveAccoutAction = false
     
     //Array only for pick the height of a user
     var userPossibleHeight = Array(40...250)
@@ -139,9 +144,25 @@ struct ProfileEditView: View {
                     
                     
                 }
+                Section(header: Text("Delete the profile with related data")) {
+                    Button(action: {
+                        self.doRemoveAccoutAction = true
+                    }, label: {
+                        HStack {
+                            Image(systemName: "person.fill.xmark")
+                                .font(.headline)
+                            Spacer()
+                            Text("Delete Account")
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+                    })
+                    .buttonStyle(RectangularButtonStyle(fromColor: .darkRed, toColor: .red))
+                    .padding()
+                }
             }.listStyle(GroupedListStyle())
             
-            if doneChangingPhoto || doDeleteAction {
+            if doneChangingPhoto || doDeleteAction || doRemoveAccoutAction {
                 Color.black.opacity(0.7)
             }
             if doneChangingPhoto {
@@ -160,6 +181,22 @@ struct ProfileEditView: View {
                             })
                     .shadow(color: Color.customShadow, radius: 5)
             }
+            if doRemoveAccoutAction {
+                ActionAlert(showAlert: $doRemoveAccoutAction,
+                            title: "Warning!",
+                            message: "Do you want to delete the account along with saved workouts and related statistics?",
+                            firstButtonTitle: "Yes",
+                            secondButtonTitle: "Cancel",
+                            action: {
+                                removeUserWithData(completion: { userHasBeenDeleted in
+                                    if userHasBeenDeleted {
+                                        self.alreadySignIn = self.session.signOut()
+                                    }
+                                })
+
+                            })
+                    .shadow(color: Color.customShadow, radius: 5)
+            }
             
             
         }
@@ -167,6 +204,7 @@ struct ProfileEditView: View {
             self.setupGender()
         }
         .navigationBarTitle("Edit Profile", displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
     }
     
     func setupGender() {
@@ -187,6 +225,42 @@ struct ProfileEditView: View {
         let data2: NSData = image2.pngData()! as NSData
         return data1.isEqual(data2)
     }
+    func removeUserWithData(completion: @escaping (Bool)->()) {
+        if let userID = self.session.userSession?.userProfile.userID {
+            
+            deleteImageFromCoreData(id: userID)
+            
+            self.session.deleteImagefromFirebase(id: userID) { _ in }
+            self.session.deleteUserDataFromDB(userID: userID) { (errorDuringDeleteUserData) in
+                if !errorDuringDeleteUserData {
+                    self.session.deleteUser() { (errorDuringDeleteUser) in
+                        if !errorDuringDeleteUser {
+                            completion(true)
+                        } else {
+                            completion(false)
+                        }
+                    }
+                } else {
+                    completion(false)
+                }
+            }
+            
+        }
+    }
+    func deleteImageFromCoreData(id: String) {
+        for image in imageCoreData {
+            if image.userID == id {
+                let imageObjectToDelete = image
+                moc.delete(imageObjectToDelete)
+            }
+            do {
+                try moc.save()
+                print("Image photo was deleted successfully from Core Data")
+            } catch {
+                print("Removing Image from CoreData failed!")
+            }
+        }
+    }
 }
 
 struct ProfileEditView_Previews: PreviewProvider {
@@ -194,11 +268,13 @@ struct ProfileEditView_Previews: PreviewProvider {
     @State static var prevProfile = UserProfile()
     @State static var prevDoneUpdating = false
     @State static var imageHasBeenRemoved = false
+    @State static var loggedIn = true
     
     static var previews: some View {
         NavigationView {
             ProfileEditView(profile: $prevProfile,
-                            imageHasBeenDeleted: $imageHasBeenRemoved)
+                            imageHasBeenDeleted: $imageHasBeenRemoved,
+                            alreadySignIn: $loggedIn)
         }
     }
 }

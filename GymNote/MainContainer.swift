@@ -39,16 +39,7 @@ struct MainContainer: View {
             } else {
                 // Fallback on earlier versions
             }
-            ProfileHost()
-                .tabItem {
-                    VStack {
-                        Image(systemName: "person.fill")
-                        Text("Profile")
-                    }
-                    .font(.largeTitle)
-                    .padding()
-            }.tag(2)
-            //StatsView()
+           
             if #available(iOS 14.0, *) {
                 ChartView()
                     .tabItem {
@@ -58,7 +49,7 @@ struct MainContainer: View {
                         }
                         .font(.largeTitle)
                         .padding()
-                    }.tag(3)
+                    }.tag(2)
             } else {
                 // Fallback on earlier versions
             }

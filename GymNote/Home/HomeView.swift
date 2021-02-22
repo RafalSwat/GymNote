@@ -13,15 +13,20 @@ struct HomeView: View {
     
     @EnvironmentObject var session: FireBaseSession
     @Binding var alreadySignIn: Bool
+    @State var showProfile = false
     
     var body: some View {
         NavigationView {
             
             VStack {
+                NavigationLink(destination: ProfileHost(alreadySignIn: $alreadySignIn), isActive: self.$showProfile, label: {EmptyView()})
                 Image("staticImage")
-                Text("Welcome: \(session.userSession?.userProfile.userEmail ?? "...")")
+                Text("Welcome \(session.userSession?.userProfile.userEmail ?? "...")")
             }
-            .navigationBarItems(leading: SignOutButton(signIn: $alreadySignIn))
+            
+            .navigationBarItems(leading: SignOutButton(signIn: $alreadySignIn),
+                                trailing:  ProfileButton(showProfile: self.$showProfile))
+            .navigationBarTitle("Home", displayMode: .inline)
             
         }
     }  
