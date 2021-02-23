@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct SocialAuthLogInView: View {
+    
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+    
     var body: some View {
         VStack {
             Text("----- or continue with -----")

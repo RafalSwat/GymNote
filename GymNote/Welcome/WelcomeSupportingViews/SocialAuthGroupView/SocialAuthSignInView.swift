@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct SocialAuthSignInView: View {
+    
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+    
     var body: some View {
         VStack {
             
