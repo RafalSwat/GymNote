@@ -21,8 +21,6 @@ struct SignupView: View {
     @State var warningText = ""
     @State var isEmailVerified = false
     @State var showAlert = false
-    @State var verifyResponse = ""
-    @State var verifyResponseColor = Color.red
     @Binding var alreadySignIn: Bool
     @Binding var isRegistered: Bool
     
@@ -92,78 +90,11 @@ struct SignupView: View {
                 }
                 .padding(.top, 8)
                 
-                Text("----- or sign in with -----")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .padding(.top, 40)
-                
-                HStack {
-                    Spacer()
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
-                        Rectangle()
-                            .fill(LinearGradient(gradient: Gradient(colors: [.blendingInWithTheList, colorScheme == .light ? .customLight : .customDark]),
-                                                 startPoint: .bottomLeading, endPoint: .topTrailing))
-                            .frame(minWidth: 40,
-                                   maxWidth: 50,
-                                   minHeight: 40,
-                                   maxHeight: 50,
-                                   alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            .aspectRatio(contentMode: .fit)
-                            .cornerRadius(5)
-                            .shadow(color: Color.customShadow, radius: 4, x: -3, y: 3)
-                            .overlay(Image(systemName: "applelogo")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .foregroundColor(colorScheme == .light ? .black : .white)
-                                        .padding(7))
-                    }
-                    Spacer()
-                    
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
-                        Rectangle()
-                            .fill(LinearGradient(gradient: Gradient(colors: [.blendingInWithTheList, colorScheme == .light ? .customLight : .customDark]),
-                                                 startPoint: .topTrailing, endPoint: .bottomLeading))
-                            .frame(minWidth: 40,
-                                   maxWidth: 50,
-                                   minHeight: 40,
-                                   maxHeight: 50,
-                                   alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            .aspectRatio(contentMode: .fit)
-                            .cornerRadius(5)
-                            .shadow(color: Color.customShadow, radius: 4, x: -3, y: 3)
-                            .overlay(Image("googleImage")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .padding(7))
-                    }
-                    Spacer()
-                    
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
-                        Rectangle()
-                            .fill(LinearGradient(gradient: Gradient(colors: [.blendingInWithTheList, colorScheme == .light ? .customLight : .customDark]),
-                                                 startPoint: .bottomLeading, endPoint: .topTrailing))
-                            .frame(minWidth: 40,
-                                   maxWidth: 50,
-                                   minHeight: 40,
-                                   maxHeight: 50,
-                                   alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            .aspectRatio(contentMode: .fit)
-                            .cornerRadius(5)
-                            .shadow(color: Color.customShadow, radius: 4, x: -3, y: 3)
-                            .overlay(Image("facebookImage")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .padding(7))
-                    }
-                    Spacer()
-                    
-                    
-                }
             }
             if showAlert {
                 VerificationEmailAlert(showAlert: self.$showAlert,
                                        signUpAction: {
-                                            self.isRegistered.toggle()
+                                        self.isRegistered.toggle()
                                        })
             }
         }

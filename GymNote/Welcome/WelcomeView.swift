@@ -29,7 +29,7 @@ struct WelcomeView: View {
                 LoginView(alreadySignIn: $alreadySignIn)
             } else {
                 SignupView(alreadySignIn: $alreadySignIn,
-                           isRegistered: self.$isRegistered)
+                           isRegistered: $isRegistered)
             }
         }
         .padding()

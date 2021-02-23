@@ -80,6 +80,8 @@
 		07C922E62411140000AF6010 /* NavigationConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E52411140000AF6010 /* NavigationConfigurator.swift */; };
 		07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E72411582400AF6010 /* DualColorCheckmark.swift */; };
 		07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */; };
+		07DB16C325E5318000216607 /* SocialAuthLogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DB16C225E5318000216607 /* SocialAuthLogInView.swift */; };
+		07DB16C725E531C800216607 /* SocialAuthSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DB16C625E531C800216607 /* SocialAuthSignInView.swift */; };
 		07DE7FE925E40B220090E808 /* VerificationEmailAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DE7FE825E40B220090E808 /* VerificationEmailAlert.swift */; };
 		07EA01E6253C6B42003A13FA /* ObservableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07EA01E5253C6B41003A13FA /* ObservableArray.swift */; };
 		07F55DA224AF3D790024AB1A /* ActionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F55DA124AF3D790024AB1A /* ActionAlert.swift */; };
@@ -168,6 +170,8 @@
 		07C922E52411140000AF6010 /* NavigationConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationConfigurator.swift; sourceTree = "<group>"; };
 		07C922E72411582400AF6010 /* DualColorCheckmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualColorCheckmark.swift; sourceTree = "<group>"; };
 		07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserExerciseView.swift; sourceTree = "<group>"; };
+		07DB16C225E5318000216607 /* SocialAuthLogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialAuthLogInView.swift; sourceTree = "<group>"; };
+		07DB16C625E531C800216607 /* SocialAuthSignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialAuthSignInView.swift; sourceTree = "<group>"; };
 		07DE7FE825E40B220090E808 /* VerificationEmailAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationEmailAlert.swift; sourceTree = "<group>"; };
 		07EA01E5253C6B41003A13FA /* ObservableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableArray.swift; sourceTree = "<group>"; };
 		07F55DA124AF3D790024AB1A /* ActionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionAlert.swift; sourceTree = "<group>"; };
@@ -454,6 +458,7 @@
 				07C0B98A23992267001632A0 /* SignupView.swift */,
 				07C0B98823990D0E001632A0 /* LoginView.swift */,
 				0722A16A25DE82C00035E5B9 /* ForgotPasswordView.swift */,
+				07DB16C125E5315300216607 /* SocialAuthGroupView */,
 			);
 			path = WelcomeSupportingViews;
 			sourceTree = "<group>";
@@ -484,6 +489,15 @@
 				0764EBA1257A54B200C33430 /* CheckmarkToggleStyle.swift */,
 			);
 			path = CustomReusableComponents;
+			sourceTree = "<group>";
+		};
+		07DB16C125E5315300216607 /* SocialAuthGroupView */ = {
+			isa = PBXGroup;
+			children = (
+				07DB16C225E5318000216607 /* SocialAuthLogInView.swift */,
+				07DB16C625E531C800216607 /* SocialAuthSignInView.swift */,
+			);
+			path = SocialAuthGroupView;
 			sourceTree = "<group>";
 		};
 		6040C7A73773C683AA3F2E7D /* Frameworks */ = {
@@ -654,6 +668,7 @@
 				073DEAF9249F4FF2008F3C72 /* TrainingHost.swift in Sources */,
 				073DEAF7249F456D008F3C72 /* EditExerciseView.swift in Sources */,
 				073DEAE9249E5F11008F3C72 /* TrainingView.swift in Sources */,
+				07DB16C725E531C800216607 /* SocialAuthSignInView.swift in Sources */,
 				07C0B96A2397BE00001632A0 /* AppDelegate.swift in Sources */,
 				07428FDB24E2BEDC0062B892 /* Indicator.swift in Sources */,
 				07EA01E6253C6B42003A13FA /* ObservableArray.swift in Sources */,
@@ -662,6 +677,7 @@
 				07C0B98B23992267001632A0 /* SignupView.swift in Sources */,
 				070E196D2584E5F2001DD0B1 /* ExerciseDetailsView.swift in Sources */,
 				07C922E62411140000AF6010 /* NavigationConfigurator.swift in Sources */,
+				07DB16C325E5318000216607 /* SocialAuthLogInView.swift in Sources */,
 				073DEF9C2433556100644ED3 /* SetSeriesView.swift in Sources */,
 				0720992123F7417E00B75CF5 /* DoneConformAlert.swift in Sources */,
 				0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */,
