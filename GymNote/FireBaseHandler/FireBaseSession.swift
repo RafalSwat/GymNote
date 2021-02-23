@@ -129,8 +129,11 @@ class FireBaseSession: ObservableObject {
     func tryAutoSignIn() -> Bool {
         if let user = Auth.auth().currentUser {
             if !user.isEmailVerified {
-                //deleteUser(completion: { _ in })
-                return false
+                if user.isAnonymous {
+                    return true
+                } else {
+                    return false
+                }
             } else {
                 return true
             }
