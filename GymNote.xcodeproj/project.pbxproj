@@ -80,6 +80,7 @@
 		07C922E62411140000AF6010 /* NavigationConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E52411140000AF6010 /* NavigationConfigurator.swift */; };
 		07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922E72411582400AF6010 /* DualColorCheckmark.swift */; };
 		07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */; };
+		07DE7FE925E40B220090E808 /* VerificationEmailAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DE7FE825E40B220090E808 /* VerificationEmailAlert.swift */; };
 		07EA01E6253C6B42003A13FA /* ObservableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07EA01E5253C6B41003A13FA /* ObservableArray.swift */; };
 		07F55DA224AF3D790024AB1A /* ActionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F55DA124AF3D790024AB1A /* ActionAlert.swift */; };
 		07F55DA424AF3E690024AB1A /* WarningAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F55DA324AF3E690024AB1A /* WarningAlert.swift */; };
@@ -167,6 +168,7 @@
 		07C922E52411140000AF6010 /* NavigationConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationConfigurator.swift; sourceTree = "<group>"; };
 		07C922E72411582400AF6010 /* DualColorCheckmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualColorCheckmark.swift; sourceTree = "<group>"; };
 		07C922EB2416693D00AF6010 /* AddUserExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserExerciseView.swift; sourceTree = "<group>"; };
+		07DE7FE825E40B220090E808 /* VerificationEmailAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationEmailAlert.swift; sourceTree = "<group>"; };
 		07EA01E5253C6B41003A13FA /* ObservableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableArray.swift; sourceTree = "<group>"; };
 		07F55DA124AF3D790024AB1A /* ActionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionAlert.swift; sourceTree = "<group>"; };
 		07F55DA324AF3E690024AB1A /* WarningAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningAlert.swift; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 				0720992023F7417E00B75CF5 /* DoneConformAlert.swift */,
 				079BF91E2551C3400066B903 /* ColorExtension.swift */,
 				07F55DA124AF3D790024AB1A /* ActionAlert.swift */,
+				07DE7FE825E40B220090E808 /* VerificationEmailAlert.swift */,
 				07F55DA324AF3E690024AB1A /* WarningAlert.swift */,
 				07C922E72411582400AF6010 /* DualColorCheckmark.swift */,
 				0764EBA1257A54B200C33430 /* CheckmarkToggleStyle.swift */,
@@ -638,6 +641,7 @@
 				07F55DA424AF3E690024AB1A /* WarningAlert.swift in Sources */,
 				073DEADA248ED394008F3C72 /* TrainingDetails.swift in Sources */,
 				075F9BCC24DDC1BF005ADFF1 /* ExerciseData.swift in Sources */,
+				07DE7FE925E40B220090E808 /* VerificationEmailAlert.swift in Sources */,
 				073DEAF2249EA864008F3C72 /* EditTrainingView.swift in Sources */,
 				073F482723F55F47003011F0 /* CaptureImageView.swift in Sources */,
 				073B917A23A4025800F38F1D /* RectangularImage.swift in Sources */,

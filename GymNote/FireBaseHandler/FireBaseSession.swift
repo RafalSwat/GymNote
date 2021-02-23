@@ -43,6 +43,8 @@ class FireBaseSession: ObservableObject {
     }
     //MARK: Signup method
     
+    
+    
     func signInAnonymously(completion: @escaping (Bool, String?)->()) {
         Auth.auth().signInAnonymously { (authDataResult, error) in
             if let user = authDataResult?.user {
@@ -66,6 +68,7 @@ class FireBaseSession: ObservableObject {
         }
     }
     
+    
     func signUp(email: String, password: String, completion: @escaping (Bool, String?)->()) {
         Auth.auth().createUser(withEmail: email, password: password) {
             (user, error) in
@@ -77,6 +80,15 @@ class FireBaseSession: ObservableObject {
             }
             if user != nil {
                 print("Got a new user: \(email)")
+                Auth.auth().currentUser?.sendEmailVerification(completion: { (emailVerificationError) in
+                    if emailVerificationError != nil {
+                        completion(true, error?.localizedDescription)
+                    } else {
+                        completion(false, "confirmation email sent to: \(email)")
+                        print("confirmation email sent to: \(email)")
+                    }
+                })
+                
             } else {
                 if let specificError = error?.localizedDescription {
                     print(specificError)
@@ -88,33 +100,67 @@ class FireBaseSession: ObservableObject {
     }
     //MARK: Signin method
     func signIn(email: String, password: String, completion: @escaping (Bool, String?)->()) {
-        Auth.auth().signIn(withEmail: email, password: password) {
-            (user, error) in
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             
             if error != nil {
                 completion(true, error?.localizedDescription)
-            } else {
-                completion(false, error?.localizedDescription)
+            } else if user == nil {
+                print("Cooooo dooo kuuuurwy się dzieje!!!!")
             }
-            if user != nil {
-                print("Welcome back: \(email)")
-            } else {
-                if let specificError = error?.localizedDescription {
-                    print(specificError)
+            self.checkIfTheEmailIsVerified(completion: { isVerified, errorDiscription in
+                if isVerified {
+                    if user != nil {
+                        completion(false, errorDiscription)
+                        print("Welcome back: \(email)")
+                    } else {
+                        if let specificError = error?.localizedDescription {
+                            print(specificError)
+                        } else {
+                            print("Error:  can`t login!")
+                        }
+                    }
                 } else {
-                    print("Error:  can`t login!")
+                    completion(true, errorDiscription)
                 }
-            }
+            })
         }
     }
     //MARK: Autologin method
     func tryAutoSignIn() -> Bool {
-        if Auth.auth().currentUser != nil {
-            return true
+        if let user = Auth.auth().currentUser {
+            if !user.isEmailVerified {
+                //deleteUser(completion: { _ in })
+                return false
+            } else {
+                return true
+            }
         } else {
             return false
         }
     }
+    func checkIfTheEmailIsVerified(completion: @escaping (Bool, String)->()){
+        if let user = Auth.auth().currentUser {
+        user.reload(completion: { (error) in
+            if let error = error {
+                completion(false, "Error during reolad user after email verification: \(error.localizedDescription)")
+            } else {
+                let isEmailVerified = Auth.auth().currentUser?.isEmailVerified
+                if isEmailVerified == true {
+                    completion(true, "email: \(String(describing: user.email)) is verified")
+                } else {
+                    completion(false, "email: \(String(describing: user.email)) is not verified or there is no information on verification at all")
+                }
+            }
+        })
+        } else {
+            completion(false, "Error during reolad user after email verification: Could not find the user!")
+        }
+    }
+    func getCurrentUser() -> User? {
+        let user  = Auth.auth().currentUser
+        return user
+    }
+    
     //MARK: Log out method
     func signOut () -> Bool {
         do {
@@ -241,6 +287,7 @@ class FireBaseSession: ObservableObject {
             } else {
                 print("User has been successfully removed from database!")
                 completion(false)
+                self.userSession = nil
                 return
             }
         }
