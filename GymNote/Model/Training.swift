@@ -22,7 +22,7 @@ class Training: Hashable, ObservableObject {
         self.trainingID = UUID().uuidString
         self.trainingName = ""//"My Training"
         self.trainingDescription = ""//My Little Description"
-        self.initialDate = "01-Jan-2020"
+        self.initialDate = DateConverter.dateFormat.string(from: Date())
         self.listOfExercises = [TrainingsComponent]()
     }
     init(id: String,

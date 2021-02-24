@@ -22,6 +22,8 @@ struct HomeView: View {
                 NavigationLink(destination: ProfileHost(alreadySignIn: $alreadySignIn), isActive: self.$showProfile, label: {EmptyView()})
                 Image("staticImage")
                 Text("Welcome \(session.userSession?.userProfile.userEmail ?? "...")")
+                
+                
             }
             
             .navigationBarItems(leading: SignOutButton(signIn: $alreadySignIn),
