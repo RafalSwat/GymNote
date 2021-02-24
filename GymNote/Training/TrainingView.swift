@@ -185,6 +185,9 @@ struct TrainingView: View {
             if let index = self.session.userSession?.userStatistics.firstIndex(where: { $0.exercise.exerciseID == statsToAdd.exercise.exerciseID }) {
                 self.session.userSession?.userStatistics[index].exerciseData.append(contentsOf: statsToAdd.exerciseData)
             }
+            else {
+                self.session.userSession?.userStatistics.append(statsToAdd)
+            }
         }
     }
 }

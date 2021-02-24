@@ -12,11 +12,13 @@ import SwiftUI
 struct ChartView: View {
     
     @EnvironmentObject var session: FireBaseSession
+    @StateObject var listOfExerciseStatistic: ObservableArray<ExerciseStatistics> = ObservableArray(array: [ExerciseStatistics]()).observeChildrenChanges()
+    
     @State var stats = [ExerciseStatistics]()
     @State var chosenStats: LineChartModelView?
     @State var chosenIndex: Int?
     @State var chartTitle = "Stats"
-    @State var statsLoadedSuccessfully: Bool?
+    @State var statsLoadedSuccessfully: Bool? = nil
     @State var didAppear = false
     
     @State var showMenu: Bool = false
@@ -79,7 +81,7 @@ struct ChartView: View {
                                     .padding(.trailing, 20)
                             }
                             ScrollView {
-                                ForEach(self.session.userSession?.userStatistics ?? [ExerciseStatistics](), id: \.exercise.exerciseID) { exerciseStats in
+                                ForEach(listOfExerciseStatistic.array, id: \.exercise.exerciseID) { exerciseStats in
                                     ChartViewListRowView(exerciseStats: exerciseStats,
                                                          chosenStats: self.$chosenStats,
                                                          displayMode: self.$displayMode,
@@ -108,6 +110,7 @@ struct ChartView: View {
                         .font(.title)
                 })
                 .onAppear {
+                    self.didAppear = false
                     if !didAppear {
                         self.setupUserStatisticsIfNeeded()
                         self.didAppear = true
@@ -119,8 +122,16 @@ struct ChartView: View {
     func setupUserStatisticsIfNeeded() {
         if self.session.userSession?.userStatistics.count == 0 {
             self.session.downloadUserStatisticsFromDB(userID: (session.userSession?.userProfile.userID)!, completion: { finishedLoadingStats in
-                self.statsLoadedSuccessfully = finishedLoadingStats
+                if finishedLoadingStats && self.session.userSession?.userStatistics.count == 0 {
+                    self.statsLoadedSuccessfully = false
+                } else if finishedLoadingStats && self.session.userSession?.userStatistics.count != 0 {
+                    self.listOfExerciseStatistic.array = self.session.userSession!.userStatistics
+                    self.statsLoadedSuccessfully = true
+                }
             })
+        } else {
+            self.listOfExerciseStatistic.array = self.session.userSession?.userStatistics ?? [ExerciseStatistics]()
+            self.statsLoadedSuccessfully = true
         }
     }
     
