@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AddUserExerciseView: View {
     
+    @EnvironmentObject var session: FireBaseSession
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @State var exerciseName = ""
     @State var isCheck = true
@@ -34,12 +35,14 @@ struct AddUserExerciseView: View {
                 Button(action: {
                     if self.exerciseName != "" {
                         withAnimation {
-                            let newComponent = TrainingsComponent(exercise: Exercise(id: UUID().uuidString,
-                                                                                    name: self.exerciseName,
-                                                                                    createdByUser: true),
+                            let exercise = Exercise(id: UUID().uuidString,
+                                                    name: self.exerciseName,
+                                                    createdByUser: true)
+                            let newComponent = TrainingsComponent(exercise: exercise,
                                                                  numberOfSeries: 1,
                                                                  orderInList: 1)
                             self.addTrainingSafely(trainingComponent: newComponent)
+                            self.addExerciseToDataBase(exercise: exercise)
                             self.exerciseName = ""
                             self.showAddView = false
                         }
@@ -59,6 +62,17 @@ struct AddUserExerciseView: View {
     func addTrainingSafely(trainingComponent: TrainingsComponent) {
         self.list.insert(trainingComponent, at: self.list.startIndex)
         sleep(1) // dont know why but error occur when user tapeed addbutton to quickly
+    }
+    func addExerciseToDataBase(exercise: Exercise) {
+        if let id = self.session.userSession?.userProfile.userID {
+            self.session.uploadExerciseCreatedByUser(userID: id, exercise: exercise) { (error, errorDiscription) in
+                if error {
+                    print(errorDiscription ?? "Error occur during saving exercise created by user")
+                } else {
+                    print("exercise created by user saved successfully")
+                }
+            }
+        }
     }
 }
 

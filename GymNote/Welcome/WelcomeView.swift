@@ -13,23 +13,36 @@ struct WelcomeView: View {
     //MARK: Properties
     @EnvironmentObject var session: FireBaseSession
     @State private var isRegistered = true
+    @State var showAlert = false
     @Binding var alreadySignIn: Bool
+    
     
     //MARK: View
     var body: some View {
-        
-        VStack {
-            Image("staticImage")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-            
-            ColorfulPicker(selection: $isRegistered)
-            
-            if isRegistered {
-                LoginView(alreadySignIn: $alreadySignIn)
-            } else {
-                SignupView(alreadySignIn: $alreadySignIn,
-                           isRegistered: $isRegistered)
+        ZStack {
+            VStack {
+                Image("staticImage")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                
+                ColorfulPicker(selection: $isRegistered)
+                
+                if isRegistered {
+                    LoginView(alreadySignIn: $alreadySignIn)
+                } else {
+                    
+                    SignupView(showAlert: $showAlert,
+                               alreadySignIn: $alreadySignIn,
+                               isRegistered: $isRegistered)
+                }
+            }
+            if showAlert {
+                Color.black.opacity(0.7)
+                
+                VerificationEmailAlert(showAlert: self.$showAlert,
+                                       signUpAction: {
+                                        self.isRegistered.toggle()
+                                       })
             }
         }
         .padding()

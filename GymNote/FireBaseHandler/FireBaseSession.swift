@@ -27,10 +27,6 @@ class FireBaseSession: ObservableObject {
     
     var handle: AuthStateDidChangeListenerHandle?
     
-    func setupErrorDescription(errorString: String, errorDescription: @escaping (String)->()) {
-        errorDescription(errorString)
-    }
-    
     //MARK: Setup user data
     func listen() {
         self.handle = Auth.auth().addStateDidChangeListener { (auth, user) in
@@ -466,6 +462,42 @@ class FireBaseSession: ObservableObject {
             Auth.auth().removeStateDidChangeListener(handle)
         }
     }
+    func uploadExerciseCreatedByUser(userID: String, exercise: Exercise, completion: @escaping (Bool, String?)->()) {
+        self.usersDBRef.child("ExercisesCreatedByUsers").child(userID).child(exercise.exerciseID).setValue(exercise.exerciseName) { (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Data path: [ExercisesCreatedByUsers/...] could not be saved: \(error.localizedDescription)")
+                completion(true, error.localizedDescription)
+            } else {
+                print("Data path: [ExercisesCreatedByUsers/...] saved successfully!")
+                completion(false, nil)
+            }
+        }
+    }
+    func downloadExerciseCreatedByUser(userID: String, completion: @escaping ([Exercise])->()) {
+        
+        var listOfCreatedByUserExercises = [Exercise]()
+        var counter = 0
+        
+        self.usersDBRef.child("ExercisesCreatedByUsers").child(userID).observeSingleEvent(of: .value) { (userSnapshot) in
+            if userSnapshot.exists() {
+                if let snapChildren = userSnapshot.children.allObjects as? [DataSnapshot] {
+                    for exercise in snapChildren {
+                        let usersExercise = Exercise(id: exercise.key,
+                                                     name: exercise.value as! String,
+                                                     createdByUser: true)
+                        listOfCreatedByUserExercises.append(usersExercise)
+                        counter += 1
+                    }
+                    if counter == snapChildren.count {
+                        completion(listOfCreatedByUserExercises)
+                    }
+                }
+            } else {
+                completion([Exercise]())
+            }
+        }
+    }
+    
     
     //MARK: Save training in the database
     func uploadTrainingToDB(userID: String, training: Training, completion: @escaping (Bool, String?)->()) {
@@ -475,11 +507,9 @@ class FireBaseSession: ObservableObject {
             (error:Error?, ref:DatabaseReference) in
             if let error = error {
                 print("Data path: [UserTrainings/...] could not be saved: \(error.localizedDescription).")
-                //errorDescription = error.localizedDescription
                 completion(true, error.localizedDescription)
             } else {
                 print("Data path: [UserTrainings/...] saved successfully!")
-                //errorUserTrainings = false
                 completion(false, nil)
             }
         }

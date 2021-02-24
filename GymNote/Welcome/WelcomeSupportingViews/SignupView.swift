@@ -20,83 +20,75 @@ struct SignupView: View {
     @State var showWarning = false
     @State var warningText = ""
     @State var isEmailVerified = false
-    @State var showAlert = false
+    @Binding var showAlert: Bool
     @Binding var alreadySignIn: Bool
     @Binding var isRegistered: Bool
     
     //MARK: View
     var body: some View {
-        ZStack {
+        VStack {
+            TextField("Email", text: $email)
+                .autocapitalization(.none)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textContentType(.emailAddress)
+            
+            SwitchableSecureField(placeHolder: "Password", secureText: $password)
+            
+            SwitchableSecureField(placeHolder: "repeat password", secureText: $repeatPassword)
+            
+            if self.showWarning {
+                Text(warningText)
+                    .font(.caption)
+                    .foregroundColor(.red)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding()
+                    .multilineTextAlignment(.center)
+                
+            }
             VStack {
-                TextField("Email", text: $email)
-                    .autocapitalization(.none)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .textContentType(.emailAddress)
-                
-                SwitchableSecureField(placeHolder: "Password", secureText: $password)
-                
-                SwitchableSecureField(placeHolder: "repeat password", secureText: $repeatPassword)
-                
-                if self.showWarning {
-                    Text(warningText)
-                        .font(.caption)
-                        .foregroundColor(.red)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding()
-                        .multilineTextAlignment(.center)
-                    
-                }
-                VStack {
-                    Button(action: {
-                        if self.isNotEmpty() && self.arePasswordEqual() {
-                            self.signUpWithEmail()
-                            
-                        } else if !self.isNotEmpty() {
-                            self.showWarning = true
-                            
-                        } else if !self.arePasswordEqual() {
-                            self.showWarning = true
-                            
-                        }
-                    }) {
-                        HStack {
-                            Image(systemName: "at")
-                                .font(.headline)
-                            Spacer()
-                            Text("SignUp with email")
-                            Spacer()
-                        }.padding(.horizontal)
+                Button(action: {
+                    if self.isNotEmpty() && self.arePasswordEqual() {
+                        self.signUpWithEmail()
+                        
+                    } else if !self.isNotEmpty() {
+                        self.showWarning = true
+                        
+                    } else if !self.arePasswordEqual() {
+                        self.showWarning = true
+                        
                     }
-                    .buttonStyle(RectangularButtonStyle())
-                    .padding(.bottom, 2.5)
-                    
-                    Button(action: {
-                        self.signInAnonymously()
-                    }) {
-                        HStack {
-                            Image(systemName: "person.fill.questionmark")
-                                .font(.headline)
-                            Spacer()
-                            Text("continue anonymously")
-                            Spacer()
-                        }
-                        .padding(.horizontal)
-                        .foregroundColor(colorScheme == .light ? .black : .white)
-                    }
-                    .buttonStyle(RectangularButtonStyle(fromColor: .blendingInWithTheList,
-                                                        toColor: colorScheme == .light ? .customLight : .customDark))
-                    .padding(.top, 2.5)
-                    
+                }) {
+                    HStack {
+                        Image(systemName: "at")
+                            .font(.headline)
+                        Spacer()
+                        Text("SignUp with email")
+                        Spacer()
+                    }.padding(.horizontal)
                 }
-                .padding(.top, 8)
+                .buttonStyle(RectangularButtonStyle())
+                .padding(.bottom, 2.5)
+                
+                Button(action: {
+                    self.signInAnonymously()
+                }) {
+                    HStack {
+                        Image(systemName: "person.fill.questionmark")
+                            .font(.headline)
+                        Spacer()
+                        Text("continue anonymously")
+                        Spacer()
+                    }
+                    .padding(.horizontal)
+                    .foregroundColor(colorScheme == .light ? .black : .white)
+                }
+                .buttonStyle(RectangularButtonStyle(fromColor: .blendingInWithTheList,
+                                                    toColor: colorScheme == .light ? .customLight : .customDark))
+                .padding(.top, 2.5)
                 
             }
-            if showAlert {
-                VerificationEmailAlert(showAlert: self.$showAlert,
-                                       signUpAction: {
-                                        self.isRegistered.toggle()
-                                       })
-            }
+            .padding(.top, 8)
+            
         }
     }
     
@@ -172,9 +164,11 @@ struct SignupView_Previews: PreviewProvider {
     
     @State static var prevAlreadySignIn = false
     @State static var previsRegistred = false
+    @State static var prevShowAlert = false
     
     static var previews: some View {
-        SignupView(alreadySignIn: $prevAlreadySignIn,
+        SignupView(showAlert: $prevShowAlert,
+                   alreadySignIn: $prevAlreadySignIn,
                    isRegistered: $previsRegistred)
     }
 }

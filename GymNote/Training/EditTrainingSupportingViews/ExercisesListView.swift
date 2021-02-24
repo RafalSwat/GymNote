@@ -10,12 +10,15 @@ import SwiftUI
 
 struct ExercisesListView: View {
     
+    @EnvironmentObject var session: FireBaseSession
+    
     @Binding var finishTyping: Bool
     @Binding var selectedComponents: [TrainingsComponent] // Exercise conform as selected
     @State var choosenComponents = [TrainingsComponent]() // Exercise selected but not conform
     @State var addExerciseMode = false
     @State var searchText = ""
     @State var showCreatedByUserOnly = false
+    @State var listAreReadyForShow = false
     
     @State var listOfComponents = [
         TrainingsComponent(exercise: Exercise(id: "5AA41935-1D78-42FD-9A8A-F80CDF76AB7C", name: "Squats", createdByUser: false),
@@ -49,17 +52,7 @@ struct ExercisesListView: View {
         TrainingsComponent(exercise: Exercise(id: "CE2F9401-A50B-4D89-884E-45E5A8195B26", name: "Sit-ups", createdByUser: false),
                            numberOfSeries: 1, orderInList: 1, isCheck: false)
     ]
-    
-    
-    
-    
-    func conformExercise() {
-        selectedComponents += choosenComponents
-        for index in self.selectedComponents.indices { 
-            selectedComponents[index].exerciseOrderInList = index
-        }
-    }
-    
+
     var body: some View {
         NavigationView {
             VStack {
@@ -69,31 +62,34 @@ struct ExercisesListView: View {
                 HStack {
                     SearchBar(text: $searchText)
                 }
-                
-                List {
-
-                    ForEach(self.listOfComponents.filter {
-                        // search mechanics: If searchText is empty, then give it all list.
-                        //                   If some elements of the list contains searchText show only them
-                        
-                                self.searchText.isEmpty ? true : $0.exercise.exerciseName.localizedStandardContains(self.searchText)}, id: \.self) { trainingComponent in
-                            // row display exercise name from array,
-                            // and add exercise to selected array base on Exercise model property: "isChcek".
-                            // "isCheck" is a Bool that changes according to the "contains" method.
+                if listAreReadyForShow {
+                    List {
+                        ForEach(self.listOfComponents.filter {
+                            // search mechanics: If searchText is empty, then give it all list.
+                            //                   If some elements of the list contains searchText show only them
                             
-                        ExerciseListRow(exerciseName: trainingComponent.exercise.exerciseName,
-                                        isCheck: self.choosenComponents.contains(trainingComponent),
-                                        createdbyUser: trainingComponent.exercise.exerciseCreatedByUser) {
-                                if self.choosenComponents.contains(trainingComponent) {
-                                    self.choosenComponents.removeAll(where: { $0 == trainingComponent })
-                                }
-                                else {
-                                    self.choosenComponents.append(trainingComponent)
-                                }
-                            }.padding(.horizontal, 2)
+                                    self.searchText.isEmpty ? true : $0.exercise.exerciseName.localizedStandardContains(self.searchText)}, id: \.self) { trainingComponent in
+                                // row display exercise name from array,
+                                // and add exercise to selected array base on Exercise model property: "isChcek".
+                                // "isCheck" is a Bool that changes according to the "contains" method.
+                                
+                            ExerciseListRow(exerciseName: trainingComponent.exercise.exerciseName,
+                                            isCheck: self.choosenComponents.contains(trainingComponent),
+                                            createdbyUser: trainingComponent.exercise.exerciseCreatedByUser) {
+                                    if self.choosenComponents.contains(trainingComponent) {
+                                        self.choosenComponents.removeAll(where: { $0 == trainingComponent })
+                                    }
+                                    else {
+                                        self.choosenComponents.append(trainingComponent)
+                                    }
+                                }.padding(.horizontal, 2)
+                        }
                     }
+                    Spacer()
+                    
+                } else {
+                    Indicator()
                 }
-                Spacer()
                 
                 AddButton(addButtonImage: Image(systemName: "checkmark.square"),
                           addButtonText: "add selected exercises",
@@ -108,6 +104,41 @@ struct ExercisesListView: View {
                 leading: ExitButton(donePresenting: $finishTyping),
                 trailing: AddBarItem(showAddView: $addExerciseMode)
             )
+            .onAppear {
+                self.addExercisesCreatedByUserToList()
+            }
+        }
+    }
+    
+    func addExercisesCreatedByUserToList() {
+        if let id = self.session.userSession?.userProfile.userID {
+            
+            var counter = 0
+            
+            self.session.downloadExerciseCreatedByUser(userID: id) { (exercises) in
+                if !exercises.isEmpty {
+                    for exercise in exercises {
+                        let trainingComponent = TrainingsComponent(exercise: exercise,
+                                                                   numberOfSeries: 1,
+                                                                   orderInList: 1,
+                                                                   isCheck: false)
+                        listOfComponents.insert(trainingComponent, at: 0)
+                        counter += 1
+                        if counter == exercises.count {
+                            self.listAreReadyForShow = true
+                        }
+                    }
+                } else {
+                    self.listAreReadyForShow = true
+                }
+            }
+        }
+    }
+    
+    func conformExercise() {
+        selectedComponents += choosenComponents
+        for index in self.selectedComponents.indices {
+            selectedComponents[index].exerciseOrderInList = index
         }
     }
 }
