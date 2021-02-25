@@ -22,9 +22,9 @@ struct DeleteButton: View {
                 Image(systemName: "trash")
                     .font(.title)
                     .foregroundColor(.red)
+                   
                     
             }
-            .frame(width: UIScreen.main.bounds.width/7, height: UIScreen.main.bounds.width/7, alignment: .center)
         }
     }
 }

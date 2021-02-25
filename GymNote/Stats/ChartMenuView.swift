@@ -19,6 +19,7 @@ struct ChartMenuView: View {
     @Binding var dateRange: ClosedRange<Date>
     @Binding var choosenStas: LineChartModelView?
     @Binding var showBasicInfo: Bool
+    @Binding var showDeleteStatsWarning: Bool
     
     @State var copyChosenStatsFullRange: LineChartModelView?
     
@@ -124,6 +125,40 @@ struct ChartMenuView: View {
                         }
                         .id(2)
                         
+                        ZStack {
+                            Rectangle()
+                                .fill(LinearGradient(gradient: Gradient(colors: [.customLight, .customDark]), startPoint: .bottomLeading, endPoint: .topTrailing))
+                                .cornerRadius(10)
+                                .shadow(color: Color.customShadow, radius: 3)
+                            VStack {
+                                Text("Romeve all statistic for given exercise:")
+                                    .font(.subheadline)
+                                    .foregroundColor(Color.customShadow)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal)
+                                    .padding(.top)
+                                
+                                Button(action: {
+                                    self.showDeleteStatsWarning = true
+                                }) {
+                                    HStack {
+                                        Spacer()
+                                        Image(systemName: "xmark.bin" )
+                                            .font(.caption)
+                                            .padding(.horizontal,3)
+                                        
+                                        Text("delete statistic")
+                                            .font(.system(size: 13, weight: .semibold, design: .default))
+                                            .padding(3)
+                                        Spacer()
+                                    }
+                                }
+                                .buttonStyle(SmallRectangularButtonStyle(fromColor: .darkRed, toColor: .red))
+                                .frame(minWidth: 150, maxWidth: .infinity)
+                                .padding()
+                            }
+                        }
+                        .id(3)
                         
                     }
                     .padding()

@@ -12,6 +12,8 @@ struct HomeView: View {
     
     
     @EnvironmentObject var session: FireBaseSession
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+    
     @Binding var alreadySignIn: Bool
     @State var showProfile = false
     
@@ -20,6 +22,7 @@ struct HomeView: View {
             
             VStack {
                 NavigationLink(destination: ProfileHost(alreadySignIn: $alreadySignIn), isActive: self.$showProfile, label: {EmptyView()})
+                    
                 Image("staticImage")
                 Text("Welcome \(session.userSession?.userProfile.userEmail ?? "...")")
                 

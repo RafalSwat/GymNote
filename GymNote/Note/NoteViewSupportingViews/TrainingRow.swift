@@ -36,6 +36,7 @@ struct TrainingRow: View {
                     VStack(alignment: .leading) {
                         Text(training.trainingName)
                             .font(.headline)
+                            .padding(.vertical, 5)
                         Text(training.trainingDescription)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
@@ -43,36 +44,52 @@ struct TrainingRow: View {
                 }
                 
                 Spacer()
-                ZStack {
+
                     HStack {
-                        if showButtons {
-                            Image(systemName: "chevron.right")
-                        } else {
-                            Image(systemName: "chevron.left")
-                                .offset(x: UIScreen.main.bounds.width/3.6, y: 0)
-                        }
-                        
-                        UseButton(useAction: {
-                            self.goToTraining.toggle()
-                        })
-                            .opacity(showButtons ? 1 : 0).animation(.default)
-                            .buttonStyle(BorderlessButtonStyle())
-                            .offset(x: 0, y: 2)
-                            .shadow(color: Color.customShadow, radius: 2)
-                        
-                        DeleteButton(deleteAction: {
-                            withAnimation(.easeInOut) {
-                                self.showAlert.toggle()
-                                self.selectedTraining = training
+                        Button(action: {
+                            self.showButtons.toggle()
+                        }) {
+                            if showButtons {
+                                Image(systemName: "chevron.right")
+                                    .font(.title)
+                                    .shadow(color: Color.customShadow, radius: 2, x: -1, y: 1)
+                            } else {
+                                Image(systemName: "chevron.left")
+                                    .font(.title)
+                                    .shadow(color: Color.customShadow, radius: 2, x: -1, y: 1)
                             }
-                        })
-                            .opacity(showButtons ? 1 : 0).animation(.default)
-                            .buttonStyle(BorderlessButtonStyle())
-                            .shadow(color: Color.customShadow, radius: 2)
+                        }
+                        if showButtons {
+                            HStack {
+                                ShowHideDetailsButton(showHideShwitcher: self.$showDetails,
+                                                      useAction: {
+                                                        self.showDetails.toggle()
+                                                      })
+                                    .opacity(showButtons ? 1 : 0).animation(.default)
+                                    .buttonStyle(BorderlessButtonStyle())
+                                    .offset(x: 0, y: 2)
+                                    .shadow(color: Color.customShadow, radius: 2)
+                                    .padding(.trailing, 5)
+                                
+                                DeleteButton(deleteAction: {
+                                    withAnimation(.easeInOut) {
+                                        self.showAlert.toggle()
+                                        self.selectedTraining = training
+                                    }
+                                })
+                                .opacity(showButtons ? 1 : 0).animation(.default)
+                                .buttonStyle(BorderlessButtonStyle())
+                                .shadow(color: Color.customShadow, radius: 2)
+                                .padding(.leading, 5)
+                            }
+                            .padding(.vertical)
+                            .padding(.leading)
+                            
+                        }
                     }
-                }
+                
             }
-            .modifier(SwipeGesture(direction: .horizontal, showContetnt: $showButtons))
+            
             
             if showDetails {
                 TrainingDetails(training: training)
@@ -85,7 +102,7 @@ struct TrainingRow: View {
         }
         .contentShape(Rectangle())
         .onTapGesture {
-            withAnimation { self.showDetails.toggle() }
+            withAnimation { self.goToTraining.toggle() }
         }
         .onAppear {
             withAnimation {

@@ -19,7 +19,7 @@
 		073DEAD8248ECCD7008F3C72 /* TrainingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAD7248ECCD7008F3C72 /* TrainingRow.swift */; };
 		073DEADA248ED394008F3C72 /* TrainingDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAD9248ED394008F3C72 /* TrainingDetails.swift */; };
 		073DEAE02498F852008F3C72 /* SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEADF2498F852008F3C72 /* SwipeGesture.swift */; };
-		073DEAE2249A4F66008F3C72 /* UseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAE1249A4F66008F3C72 /* UseButton.swift */; };
+		073DEAE2249A4F66008F3C72 /* ShowHideDetailsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAE1249A4F66008F3C72 /* ShowHideDetailsButton.swift */; };
 		073DEAE4249A54D4008F3C72 /* DeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAE3249A54D4008F3C72 /* DeleteButton.swift */; };
 		073DEAE9249E5F11008F3C72 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAE8249E5F11008F3C72 /* TrainingView.swift */; };
 		073DEAEC249E658C008F3C72 /* ExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073DEAEB249E658C008F3C72 /* ExerciseView.swift */; };
@@ -107,7 +107,7 @@
 		073DEAD7248ECCD7008F3C72 /* TrainingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingRow.swift; sourceTree = "<group>"; };
 		073DEAD9248ED394008F3C72 /* TrainingDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingDetails.swift; sourceTree = "<group>"; };
 		073DEADF2498F852008F3C72 /* SwipeGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGesture.swift; sourceTree = "<group>"; };
-		073DEAE1249A4F66008F3C72 /* UseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseButton.swift; sourceTree = "<group>"; };
+		073DEAE1249A4F66008F3C72 /* ShowHideDetailsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowHideDetailsButton.swift; sourceTree = "<group>"; };
 		073DEAE3249A54D4008F3C72 /* DeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButton.swift; sourceTree = "<group>"; };
 		073DEAE8249E5F11008F3C72 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
 		073DEAEB249E658C008F3C72 /* ExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseView.swift; sourceTree = "<group>"; };
@@ -293,7 +293,7 @@
 			children = (
 				0757023E23A4D89500030991 /* RectangularButtonStyle.swift */,
 				0764EBA425822EB200C33430 /* SmallRectangularButtonStyle.swift */,
-				073DEAE1249A4F66008F3C72 /* UseButton.swift */,
+				073DEAE1249A4F66008F3C72 /* ShowHideDetailsButton.swift */,
 				073DEAE3249A54D4008F3C72 /* DeleteButton.swift */,
 				0736F9DC23CA3F0C00626599 /* ChangeButton.swift */,
 				07426607240BFD2A003F2C32 /* AddButton.swift */,
@@ -694,7 +694,7 @@
 				07AC9DE924E323420025AD39 /* ChartView.swift in Sources */,
 				07C0B96C2397BE00001632A0 /* SceneDelegate.swift in Sources */,
 				0757024323A4EAD500030991 /* ColorfulPicker.swift in Sources */,
-				073DEAE2249A4F66008F3C72 /* UseButton.swift in Sources */,
+				073DEAE2249A4F66008F3C72 /* ShowHideDetailsButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

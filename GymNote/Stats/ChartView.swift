@@ -32,6 +32,7 @@ struct ChartView: View {
     @State var showBasicInfo = false
     
     @State var showExerciseDetails = false
+    @State var showDeleteStatsWarning = false
     
     var body: some View {
         
@@ -57,7 +58,8 @@ struct ChartView: View {
                                               showStatsToDate: self.$endDate,
                                               dateRange: self.$dateRange,
                                               choosenStas: self.$chosenStats,
-                                              showBasicInfo: self.$showBasicInfo)
+                                              showBasicInfo: self.$showBasicInfo,
+                                              showDeleteStatsWarning: self.$showDeleteStatsWarning)
                                     .frame(height: 130)
                                     .background(LinearGradient(gradient: Gradient(colors:[Color.orange, Color.red]),
                                                                startPoint: .bottomLeading, endPoint: .topTrailing))
@@ -100,6 +102,23 @@ struct ChartView: View {
                             
                         }
                     }
+                    
+                    if self.showDeleteStatsWarning {
+                        Color.black.opacity(0.7)
+                        VStack {
+                            Spacer()
+                            ActionAlert(showAlert: self.$showDeleteStatsWarning,
+                                        title: "Warning!",
+                                        message: "Do you want to delete all of the statistic for \(self.chosenStats?.data.exercise.exerciseName ?? "given exercise")",
+                                        firstButtonTitle: "Yes",
+                                        secondButtonTitle: "Cancel",
+                                        action: {
+                                            self.removeStatisticFromDataBase()
+                                        })
+                            .shadow(color: Color.customShadow, radius: 5)
+                            Spacer()
+                        }
+                    }
                 }
                 .padding(.top)
                 .navigationBarTitle(Text(self.chartTitle), displayMode: .inline)
@@ -132,6 +151,25 @@ struct ChartView: View {
         } else {
             self.listOfExerciseStatistic.array = self.session.userSession?.userStatistics ?? [ExerciseStatistics]()
             self.statsLoadedSuccessfully = true
+        }
+    }
+    func removeStatisticFromDataBase() {
+        if let id = self.session.userSession?.userProfile.userID {
+            if let currentExercise = self.chosenStats?.data {
+                self.session.deleteSingleStataisticsFromDB(userID: id,
+                                                           statistics: currentExercise) { (error, errorDescription) in
+                    if error {
+                        print("Error during delete single statistic: \(String(describing: errorDescription))")
+                    } else {
+                        if let index = self.session.userSession?.userStatistics.firstIndex(where: { $0.exercise.exerciseID == currentExercise.exercise.exerciseID }) {
+                            self.session.userSession?.userStatistics.remove(at: index)
+                            self.listOfExerciseStatistic.array.remove(at: index)
+                            self.showDeleteStatsWarning = false
+                            self.chosenStats = nil
+                        }
+                    }
+                }
+            }
         }
     }
     
