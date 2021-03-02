@@ -13,6 +13,7 @@
 		0720992123F7417E00B75CF5 /* DoneConformAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0720992023F7417E00B75CF5 /* DoneConformAlert.swift */; };
 		0722A16725DE4E390035E5B9 /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0722A16625DE4E390035E5B9 /* ProfileButton.swift */; };
 		0722A16B25DE82C00035E5B9 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0722A16A25DE82C00035E5B9 /* ForgotPasswordView.swift */; };
+		07232B8B25EE39B4006E953D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232B8A25EE39B4006E953D /* CalendarView.swift */; };
 		0727887123AA473500092E24 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0727887023AA473500092E24 /* ProfileView.swift */; };
 		0736F9DD23CA3F0C00626599 /* ChangeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0736F9DC23CA3F0C00626599 /* ChangeButton.swift */; };
 		073B917A23A4025800F38F1D /* RectangularImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073B917923A4025800F38F1D /* RectangularImage.swift */; };
@@ -101,6 +102,7 @@
 		0720992023F7417E00B75CF5 /* DoneConformAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneConformAlert.swift; sourceTree = "<group>"; };
 		0722A16625DE4E390035E5B9 /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
 		0722A16A25DE82C00035E5B9 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		07232B8A25EE39B4006E953D /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		0727887023AA473500092E24 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		0736F9DC23CA3F0C00626599 /* ChangeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeButton.swift; sourceTree = "<group>"; };
 		073B917923A4025800F38F1D /* RectangularImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularImage.swift; sourceTree = "<group>"; };
@@ -205,6 +207,14 @@
 				070E196C2584E5F2001DD0B1 /* ExerciseDetailsView.swift */,
 			);
 			path = ChartViewSupportingViews;
+			sourceTree = "<group>";
+		};
+		07232B8925EE39A0006E953D /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				07232B8A25EE39B4006E953D /* CalendarView.swift */,
+			);
+			path = Calendar;
 			sourceTree = "<group>";
 		};
 		073DEAD6248ECC65008F3C72 /* NoteViewSupportingViews */ = {
@@ -360,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				07C0B98D239A73C8001632A0 /* HomeView.swift */,
+				07232B8925EE39A0006E953D /* Calendar */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -666,6 +677,7 @@
 				0764EBA2257A54B200C33430 /* CheckmarkToggleStyle.swift in Sources */,
 				07FF8E5125496DED006D6732 /* SeriesTextFields.swift in Sources */,
 				073DEAF9249F4FF2008F3C72 /* TrainingHost.swift in Sources */,
+				07232B8B25EE39B4006E953D /* CalendarView.swift in Sources */,
 				073DEAF7249F456D008F3C72 /* EditExerciseView.swift in Sources */,
 				073DEAE9249E5F11008F3C72 /* TrainingView.swift in Sources */,
 				07DB16C725E531C800216607 /* SocialAuthSignInView.swift in Sources */,

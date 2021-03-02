@@ -10,6 +10,18 @@ import Foundation
 
 class DateConverter {
     
+    static let monthFormat: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM"
+        return formatter
+    }()
+
+    static let monthAndYearFormat: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM yyyy"
+        return formatter
+    }()
+    
     static let dateFormat: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "d MMM yyyy"

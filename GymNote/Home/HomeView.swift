@@ -13,18 +13,53 @@ struct HomeView: View {
     
     @EnvironmentObject var session: FireBaseSession
     @Environment(\.colorScheme) var colorScheme: ColorScheme
-    
+    @Environment(\.calendar) var calendar
+
     @Binding var alreadySignIn: Bool
     @State var showProfile = false
+    private var year: DateInterval {
+        calendar.dateInterval(of: .year, for: Date())!
+    }
+    let cellSize = UIScreen.main.bounds.size.width/20
+    let grayCellBackground = LinearGradient(gradient: Gradient(colors: [.customLight, .customDark]), startPoint: .bottomLeading, endPoint: .topTrailing)
+    let orangeCellbackground = LinearGradient(gradient: Gradient(colors: [.orange, .red]), startPoint: .bottomLeading, endPoint: .topTrailing)
     
     var body: some View {
         NavigationView {
             
             VStack {
+                
                 NavigationLink(destination: ProfileHost(alreadySignIn: $alreadySignIn), isActive: self.$showProfile, label: {EmptyView()})
-                    
-                Image("staticImage")
-                Text("Welcome \(session.userSession?.userProfile.userEmail ?? "...")")
+
+                if #available(iOS 14.0, *) {
+                    CalendarView(interval: year) { date in
+
+                        Text("?")
+                            .hidden()
+                            .padding(cellSize)
+                            .background(Calendar.current.isDateInToday(date) ? orangeCellbackground : grayCellBackground)
+                            .clipShape(Rectangle())
+                            .cornerRadius(3)
+                            .shadow(color: Color.customShadow, radius: 3, x: -2, y: 2)
+                            .padding(1)
+                            .overlay(
+                                VStack {
+                                    HStack {
+                                        Text(String(self.calendar.component(.day, from: date)))
+                                            .fontWeight(Calendar.current.isDateInToday(date) ? .heavy    : .regular)
+                                        Spacer()
+                                    }
+                                    Spacer()
+                                }.padding(4)
+                            )
+                    }
+                    .padding(20)
+                } else {
+                    // Fallback on earlier versions
+                }
+                
+//                Image("staticImage")
+//                Text("Welcome \(session.userSession?.userProfile.userEmail ?? "...")")
                 
                 
             }
