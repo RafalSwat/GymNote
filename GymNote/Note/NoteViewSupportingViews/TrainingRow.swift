@@ -47,7 +47,9 @@ struct TrainingRow: View {
 
                     HStack {
                         Button(action: {
-                            self.showButtons.toggle()
+                            withAnimation(.default, {
+                                self.showButtons.toggle()
+                            })
                         }) {
                             if showButtons {
                                 Image(systemName: "chevron.right")

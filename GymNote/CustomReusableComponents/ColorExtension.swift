@@ -12,10 +12,12 @@ import SwiftUI
 extension Color {
     static let customOrange = Color("customOrange")
     static let customShadow = Color("customShadow")
+    static let reverseCustomShadow = Color("reverseCustomShadow")
     static let customLight = Color("customLight")
     static let customDark = Color("customDark")
     static let magnesium = Color("magnesium")
     static let darkRed = Color("darkRed")
     static let customSuperLight = Color("customSuperLight")
+    static let customSuperDark = Color("customSuperDark")
     static let blendingInWithTheList = Color("blendingInWithTheList")
 }

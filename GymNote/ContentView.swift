@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct ContentView: View {
     
     @EnvironmentObject var session: FireBaseSession
@@ -41,7 +42,7 @@ struct ContentView: View {
     }
     
 }
-
+@available(iOS 14.0, *)
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView().environmentObject(FireBaseSession())

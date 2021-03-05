@@ -135,7 +135,15 @@ struct ChartView: View {
                         self.didAppear = true
                     }
                 }
+                
+                
             }
+        }
+        .onDisappear {
+            chosenStats = nil
+            chosenIndex = nil
+            chartTitle = "Stats"
+            showMenu = false
         }
     }
     func setupUserStatisticsIfNeeded() {

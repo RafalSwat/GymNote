@@ -8,80 +8,125 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct HomeView: View {
     
     
     @EnvironmentObject var session: FireBaseSession
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @Environment(\.calendar) var calendar
-
+    
     @Binding var alreadySignIn: Bool
     @State var showProfile = false
+    
+    @State var selectedDate = Date()
+    @State var components = DateComponents()
+    @State var showDayView = false
     private var year: DateInterval {
         calendar.dateInterval(of: .year, for: Date())!
     }
-    let cellSize = UIScreen.main.bounds.size.width/20
-    let grayCellBackground = LinearGradient(gradient: Gradient(colors: [.customLight, .customDark]), startPoint: .bottomLeading, endPoint: .topTrailing)
-    let orangeCellbackground = LinearGradient(gradient: Gradient(colors: [.orange, .red]), startPoint: .bottomLeading, endPoint: .topTrailing)
+    @StateObject var listOfNotes: ObservableArray<CalendarNote> = ObservableArray(array: [CalendarNote]()).observeChildrenChanges()
+    @StateObject var listOfTrainingSessions: ObservableArray<TrainingSession> = ObservableArray(array: [TrainingSession]()).observeChildrenChanges()
+    
     
     var body: some View {
         NavigationView {
-            
-            VStack {
-                
-                NavigationLink(destination: ProfileHost(alreadySignIn: $alreadySignIn), isActive: self.$showProfile, label: {EmptyView()})
-
-                if #available(iOS 14.0, *) {
+            ZStack {
+                VStack {
+                    
+                    NavigationLink(destination: ProfileHost(alreadySignIn: $alreadySignIn), isActive: self.$showProfile, label: {EmptyView()})
+                    
                     CalendarView(interval: year) { date in
-
-                        Text("?")
-                            .hidden()
-                            .padding(cellSize)
-                            .background(Calendar.current.isDateInToday(date) ? orangeCellbackground : grayCellBackground)
-                            .clipShape(Rectangle())
-                            .cornerRadius(3)
-                            .shadow(color: Color.customShadow, radius: 3, x: -2, y: 2)
-                            .padding(1)
-                            .overlay(
-                                VStack {
-                                    HStack {
-                                        Text(String(self.calendar.component(.day, from: date)))
-                                            .fontWeight(Calendar.current.isDateInToday(date) ? .heavy    : .regular)
-                                        Spacer()
-                                    }
-                                    Spacer()
-                                }.padding(4)
-                            )
+                        CalendarCellView(date: date,
+                                         trainingDay: isTrainingDay(date: date),
+                                         notesDay: isDayWithNote(date: date),
+                                         isIncompltedTask: areThereIncompleteTasks(forDay: date))
+                        
+                            .onTapGesture {
+                                self.setUpSelectedDate(date: date)
+                                self.showDayView.toggle()
+                            }
                     }
-                    .padding(20)
-                } else {
-                    // Fallback on earlier versions
+                    .padding(10)
+                    
                 }
-                
-//                Image("staticImage")
-//                Text("Welcome \(session.userSession?.userProfile.userEmail ?? "...")")
-                
-                
+                if showDayView {
+                    Color.black.opacity(0.7)
+                        .onTapGesture {
+                            self.showDayView.toggle()
+                        }
+                    
+                    CalendarDayView(listOfTrainingSessions: self.listOfTrainingSessions,
+                                    listOfNotes: self.listOfNotes,
+                                    date: self.$selectedDate)
+                        .padding(.horizontal, 30)
+                        
+                }
             }
-            
             .navigationBarItems(leading: SignOutButton(signIn: $alreadySignIn),
                                 trailing:  ProfileButton(showProfile: self.$showProfile))
             .navigationBarTitle("Home", displayMode: .inline)
-            
-        }
-    }  
-}
-
-struct HomeView_Previews: PreviewProvider {
-    
-    @State static var session = FireBaseSession()
-    @State static var prevAlreadySignIn = true
-    
-    static var previews: some View {
-        NavigationView {
-            HomeView(alreadySignIn: $prevAlreadySignIn)
-                .environmentObject(session)
+            .onAppear {
+                self.setUpCalendarArrays()
+            }
         }
     }
+    func isTrainingDay(date: Date) -> Bool {
+        for training in listOfTrainingSessions.array {
+            if training.trainingDates.contains(where: {$0 == date }) {
+                return true
+            }
+        }
+        return false
+    }
+    func isDayWithNote(date: Date) -> Bool {
+        for note in listOfNotes.array {
+            if note.notesDate == date {
+                return true
+            }
+        }
+        return false
+    }
+    func areThereIncompleteTasks(forDay: Date) -> Bool {
+        var notes = [CalendarNote]()
+        
+        for note in listOfNotes.array {
+            if note.notesDate == forDay {
+                notes.append(note)
+            }
+        }
+        if notes.contains(where: {$0.isCompleted == false}) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func setUpSelectedDate(date: Date) {
+        self.components.minute = 0
+        self.components.hour = 0
+        self.components.day = self.calendar.component(.day, from: date)
+        self.components.month = self.calendar.component(.month, from: date)
+        self.components.year = self.calendar.component(.year, from: date)
+        
+        self.selectedDate = self.calendar.date(from: self.components) ?? Date()
+    }
+    func setUpCalendarArrays() {
+        if let id = self.session.userSession?.userProfile.userID {
+            self.session.downloadTrainingSessionsFromDB(userID: id) { (sessionDownloadedSuccesfull) in
+                if sessionDownloadedSuccesfull {
+                    self.listOfTrainingSessions.array = (self.session.userSession?.userCalendar.trainingSessions)!
+                }
+            }
+            self.session.downloadCalendarNote(userID: id) { (notesDownloadedSucccessfull) in
+                if notesDownloadedSucccessfull {
+                    self.listOfNotes.array = (self.session.userSession?.userCalendar.calendarNotes)!
+                }
+            }
+        }
+    }
+    
 }
+
+
 

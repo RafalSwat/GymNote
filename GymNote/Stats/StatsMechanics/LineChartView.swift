@@ -46,12 +46,6 @@ struct LineChartView: View {
                                            startPoint: UnitPoint(x: 0.0, y: 1.0),
                                            endPoint: UnitPoint(x: 0.0, y: 0.0)),
                             lineWidth: 3)
-//                        Path { p in
-//                            let startEndPoints = self.estimateTrendLine(points: points)
-//                            p.move(to: startEndPoints.first!)
-//                            p.addLine(to: startEndPoints.last!)
-//                        }
-//                        .stroke(Color.green,  lineWidth: 5)
                     }
                     
                     
@@ -312,22 +306,6 @@ struct LineChartView: View {
         }
         
     }
-//    func estimateTrendLine(points: [CGPoint]) -> [CGPoint] {
-//        var x = [Double]()
-//        var y = [Double]()
-//        for single in points {
-//            let date = Double(single.x)
-//            let reps = Double(single.y)
-//            x.append(date)
-//            y.append(reps)
-//        }
-//        self.stats.estimateInterceptAndSlopeForRegresion(x: x, y: y)
-//        let startEnd = self.stats.estimateStartAndEndPointOfRegression(values: x)
-//        let startPoint = CGPoint(x: CGFloat(x.first!), y: startEnd.startPoint)
-//        let endPoint = CGPoint(x: CGFloat(x.last!), y: startEnd.endPoint)
-//        let startEndPoints = [startPoint, endPoint]
-//        return startEndPoints
-//    }
     
     func estimateXLocalization(value: Double, maxValue: Double, minValue: Double, maxWidth: CGFloat) -> CGFloat {
         let chartWidth = maxWidth/1.2

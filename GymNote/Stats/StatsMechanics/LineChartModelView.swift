@@ -294,35 +294,7 @@ class LineChartModelView: ObservableObject {
         self.minWeightValue = minWeights
         self.stepWeightMultiplier = stepWeights
     }
-    //Trend line functions
-//    func estimateStartAndEndPointOfRegression(values: [Double]) -> StartEndPoits {
-//        let start = predicted(x: values.first!, intercept: self.intercept, slope: self.slope)
-//        let end = predicted(x: values.last!, intercept: self.intercept, slope: self.slope)
-//        
-//        return StartEndPoits(startPoint: CGFloat(start), endPoint: CGFloat(end))
-//    }
-//    
-//    func estimateInterceptAndSlopeForRegresion(x: [Double], y: [Double]) {
-//        var a = 0.0
-//        var b = 0.0
-//        let amount = y.count
-//        let n = 100
-//        let alpha = 0.0001
-//        
-//        for _ in 1...n {
-//            for i in 0..<amount {
-//                let difference = y[i] - self.predicted(x: x[i], intercept: b, slope: a)
-//                b += alpha * difference
-//                a += alpha * difference * x[i]
-//            }
-//        }
-//        self.intercept = b
-//        self.slope = a
-//        
-//    }
-//    func predicted(x: Double, intercept: Double, slope: Double) -> Double {
-//        return intercept + slope * x
-//    }
+
 }
 
 class StatsAsDoubles {

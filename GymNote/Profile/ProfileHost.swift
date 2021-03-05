@@ -68,7 +68,7 @@ struct ProfileHost: View {
                             self.draftProfile.lastImageActualization = Date()
                             session.deleteImagefromFirebase(id: userID, completion: { _ in })
                             deleteImageFromCoreData(id: userID)
-                            //deleteImages()
+                            deleteImages()
                         }
                         self.image = self.draftProfile.userImage
                     }
@@ -126,9 +126,11 @@ struct ProfileHost: View {
                             print("---> ProfileHost: setupImage - CoreData")
                         }
                     } else {
+                        self.deleteImageFromCoreData(id: userID)
                         self.downloadImageFromFirebase(userID: userID)
                     }
                 } else {
+                    self.deleteImageFromCoreData(id: userID)
                     self.downloadImageFromFirebase(userID: userID)
                 }
             })
@@ -145,19 +147,12 @@ struct ProfileHost: View {
                     if let image = img.image {
                         if let imgCoreData = UIImage(data: image) {
                             completion(imgCoreData, img.lastImageActualization, true)
-                        } else {
-                            completion(nil, nil, false)
                             return
                         }
-                    } else {
-                        completion(nil, nil, false)
-                        return
                     }
-                } else {
-                    completion(nil, nil, false)
-                    return
                 }
             }
+            completion(nil, nil, false)
         } else {
             completion(nil, nil, false)
             return
@@ -195,14 +190,18 @@ struct ProfileHost: View {
     
     
     func downloadImageFromFirebase(userID: String) {
-        self.session.downloadImageFromDB(id: userID, completion: { fireBaseImage in
+        self.session.downloadImageFromDB(id: userID, completion: { fireBaseImage, imageFromFirebase in
             self.session.userSession?.userProfile.userImage = fireBaseImage
             self.image = fireBaseImage
-            print("---> ProfileHost: setupImage - Firebase")
             
-            self.saveImageToCoreData(userID: userID,
-                                     userImage: fireBaseImage,
-                                     userActualization: self.session.userSession?.userProfile.lastImageActualization ?? Date())
+            if imageFromFirebase {
+                print("---> ProfileHost: setupImage - Firebase")
+                self.saveImageToCoreData(userID: userID,
+                                         userImage: fireBaseImage,
+                                         userActualization: self.session.userSession?.userProfile.lastImageActualization ?? Date())
+            } else {
+                print("---> ProfileHost: setupImage - default")
+            }
         })
     }
 }

@@ -238,7 +238,7 @@ class FireBaseSession: ObservableObject {
             let numberOfTrainings = self.userSession!.userTrainings.count
             
             for training in self.userSession!.userTrainings {
-                self.deleteTrainingFromDB(userID: userID, training: training, completion: { errorOccur, errorDescription in
+                self.deleteTrainingFromDB(userID: userID, training: training, deleteAlsoBasicInfo: true, completion: { errorOccur, errorDescription in
                                             if errorOccur {
                                                 print(errorDescription ?? "Unknow error occur during removing training!")
                                                 completion(true)
@@ -430,14 +430,14 @@ class FireBaseSession: ObservableObject {
     }
     
     //MARK: Download Image form FireBase
-    func downloadImageFromDB(id: String, completion: @escaping (UIImage)->()){
+    func downloadImageFromDB(id: String, completion: @escaping (UIImage, Bool)->()){
         usersDBStorage.child("Images").child(id).getData(maxSize: 10*1024*1024) { (imageData, error) in
             if let err = error {
                 print("Could`t get image data from FireBase DataBase!: \(err.localizedDescription)")
-                completion(UIImage(named: "staticImage")!)
+                completion(UIImage(named: "staticImage")!, false)
             } else {
                 if let image = imageData {
-                    completion(UIImage(data: image)!)
+                    completion(UIImage(data: image)!, true)
                 } else {
                     print("Error: Could`t unwrap image-data to an image!")
                 }
@@ -534,10 +534,10 @@ class FireBaseSession: ObservableObject {
             
             // Upload list of exercises under current training
             self.usersDBRef.child("ExerciseList").child(training.trainingID).child(trainingComponent.exercise.exerciseID).setValue([
-                                                                                                                                    "name" : trainingComponent.exercise.exerciseName,
-                                                                                                                                    "createdByUser" : trainingComponent.exercise.exerciseCreatedByUser,
-                                                                                                                                    "numberOfSeries" : trainingComponent.exerciseNumberOfSeries,
-                                                                                                                                    "order" : trainingComponent.exerciseOrderInList]) {
+                        "name" : trainingComponent.exercise.exerciseName,
+                        "createdByUser" : trainingComponent.exercise.exerciseCreatedByUser,
+                        "numberOfSeries" : trainingComponent.exerciseNumberOfSeries,
+                        "order" : trainingComponent.exerciseOrderInList]) {
                 
                 (error:Error?, ref:DatabaseReference) in
                 if let error = error {
@@ -570,9 +570,9 @@ class FireBaseSession: ObservableObject {
     func updateTrainingsExerciseListOnDB(training: Training) {
         for trainingComponent in training.listOfExercises {
             self.usersDBRef.child("ExerciseList").child(training.trainingID).child(trainingComponent.exercise.exerciseID).updateChildValues([
-                                                                                                                                                "name" : trainingComponent.exercise.exerciseName,
-                                                                                                                                                "createdByUser" : trainingComponent.exercise.exerciseCreatedByUser,
-                                                                                                                                                "numberOfSeries" : trainingComponent.exerciseNumberOfSeries])
+                "name" : trainingComponent.exercise.exerciseName,
+                "createdByUser" : trainingComponent.exercise.exerciseCreatedByUser,
+                "numberOfSeries" : trainingComponent.exerciseNumberOfSeries])
         }
     }
     //MARK: Download list of trainings, and store this data in enviroment
@@ -639,14 +639,16 @@ class FireBaseSession: ObservableObject {
         }
     }
     
-    func deleteTrainingFromDB(userID: String, training: Training, completion: @escaping (Bool, String?)->()) {
+    func deleteTrainingFromDB(userID: String, training: Training, deleteAlsoBasicInfo: Bool = false, completion: @escaping (Bool, String?)->()) {
         
-        self.usersDBRef.child("Trainings").child(training.trainingID).removeValue() { error, _ in
-            if error != nil {
-                completion(true, error?.localizedDescription)
-            } else {
-                print("Data for path: [Trainings/...] removed successfully!")
-                completion(false, nil)
+        if deleteAlsoBasicInfo {
+            self.usersDBRef.child("Trainings").child(training.trainingID).removeValue() { error, _ in
+                if error != nil {
+                    completion(true, error?.localizedDescription)
+                } else {
+                    print("Data for path: [Trainings/...] removed successfully!")
+                    completion(false, nil)
+                }
             }
         }
         self.usersDBRef.child("UsersTrainings").child(userID).child(training.trainingID).removeValue() { error, _ in
@@ -868,5 +870,148 @@ class FireBaseSession: ObservableObject {
             }
         }
     }
+    
+    func uploadCalendarNote(userID: String, calendarNote: CalendarNote, completion: @escaping (Bool, String?)->()) {
+        
+        let noteDateString = DateConverter.dateFormat.string(from: calendarNote.notesDate)
+        
+        self.usersDBRef.child("UserNotes").child(userID).child(calendarNote.notesID).setValue([
+            "note" : calendarNote.note,
+            "date" : noteDateString,
+            "isCompleted" : calendarNote.isCompleted
+        ]) { (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Data path: [UserNotes/...] could not be saved: \(error.localizedDescription)")
+                completion(true, error.localizedDescription)
+            } else {
+                print("Data path: [UserNotes/...] saved successfully!")
+                completion(false, nil)
+            }
+        }
+    }
+    func updateCalendarNote(userID: String, calendarNote: CalendarNote) {
+        
+        let noteDateString = DateConverter.dateFormat.string(from: calendarNote.notesDate)
+        
+        self.usersDBRef.child("UserNotes").child(userID).child(calendarNote.notesID).updateChildValues([
+            "note" : calendarNote.note,
+            "date" : noteDateString,
+            "isCompleted" : calendarNote.isCompleted
+        ]) { (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Data path: [UserNotes/...] could not be updated: \(error.localizedDescription)")
+            } else {
+                print("Data path: [UserNotes/...] updated successfully!")
+            }
+        }
+    }
+    
+    func downloadCalendarNote(userID: String, completion: @escaping (Bool)->()) {
+        
+        self.usersDBRef.child("UserNotes").child(userID).observeSingleEvent(of: .value) { noteSnapshot in
+            var notes = [CalendarNote]()
+            var counter = 0
+            
+            if let noteSnapChildren = noteSnapshot.children.allObjects as? [DataSnapshot] {
+                
+                for note in noteSnapChildren {
+                    let noteID = note.key
+                    if let noteData = note.value as? [String : Any] {
+                        let noteDate = noteData["date"] as! String
+                        let noteText = noteData["note"] as! String
+                        let isCompleted = noteData["isCompleted"] as! Bool
+                        
+                        let dateAsDate = DateConverter.convertFromString(dateString: noteDate)
+                        
+                        let calendarNote = CalendarNote(notesID: noteID,
+                                                notesDate: dateAsDate,
+                                                note: noteText,
+                                                isCompleted: isCompleted)
+                        notes.append(calendarNote)
+                        counter += 1
+                        
+                        if counter == noteSnapChildren.count {
+                            self.userSession?.userCalendar.calendarNotes = notes
+                            completion(true)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    func deleteCalendarNoteFromDB(userID: String, note: CalendarNote) {
+        self.usersDBRef.child("UserNotes").child(userID).child(note.notesID).removeValue() { error, _ in
+            if error != nil {
+                print("Error during delete action on note: \(String(describing: error?.localizedDescription))")
+            } else {
+                print("Data for path: [UserStatistics/...] removed successfully!")
+            }
+        }
+    }
+    
+    func uploadTreningSessionToDB(userID: String, trainingID: String, trainingDate: Date, completion: @escaping (Bool, String?)->()) {
+        
+        let currentDateString = DateConverter.dateFormat.string(from: trainingDate)
+        
+        self.usersDBRef.child("UserTrainingSessions").child(userID).child(trainingID).child(currentDateString).setValue(1)
+        { (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Data path: [UserTrainingSessions/...] could not be saved: \(error.localizedDescription)")
+                completion(true, error.localizedDescription)
+            } else {
+                print("Data path: [UserTrainingSessions/...] saved successfully!")
+                completion(false, nil)
+            }
+        }
+    }
+    
+    func downloadTrainingSessionsFromDB(userID: String, completion: @escaping (Bool)->()) {
+        var userSessions = [TrainingSession]()
+        var counter = 0
+        
+        self.usersDBRef.child("UserTrainingSessions").child(userID).observeSingleEvent(of: .value) { (sessionSnapshot) in
+            if let ssessionSnapChildren = sessionSnapshot.children.allObjects as? [DataSnapshot] {
+
+                for sessionSnapChild in ssessionSnapChildren {
+                    
+                    let trainingID = sessionSnapChild.key
+                    
+                    self.usersDBRef.child("Trainings").child(trainingID).observeSingleEvent(of: .value) { (trainingSnapshot) in
+                        if let trainingInfo = trainingSnapshot.value as? [String : Any] {
+                            //generating base data of current training form "Trainings" and
+                            //generating dates of sessions and id from "UserTrainingSessions"
+                            
+                            let name = trainingInfo["name"] as! String
+                            let description = trainingInfo["description"] as! String
+                            var dates = [Date]()
+                            
+                            
+                            if let datesOfSessions = sessionSnapChild.children.allObjects as? [DataSnapshot] {
+                                for dateString in datesOfSessions {
+                                    let dateAsDate = DateConverter.convertFromString(dateString: dateString.key)
+                                    dates.append(dateAsDate)
+                                }
+                                if dates.count == datesOfSessions.count {
+                                    let traininigSession = TrainingSession(trainingID: trainingID,
+                                                                           trainingName: name,
+                                                                           trainingDescription: description,
+                                                                           trainingDates: dates)
+                                    userSessions.append(traininigSession)
+                                    counter += 1
+                                    
+                                    if counter == ssessionSnapChildren.count {
+                                        self.userSession?.userCalendar.trainingSessions = userSessions
+                                        completion(true)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
 }
+
 

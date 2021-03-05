@@ -97,12 +97,12 @@ struct ChartViewListRowView: View {
     
     func setupStats(stats: LineChartModelView) {
         stats.setupDatesRange()
-        stats.normalizeData()
+        stats.evaluateNumberOfVerticalLines()
         stats.setupAverageValues()
         stats.setupMinAndMaxValues()
-        stats.evaluateNumberOfVerticalLines()
         stats.evaluateNumberOfValuesOnChart()
         stats.setupRangeOfValues()
+        stats.normalizeData()
     }
     
     func estimateDateRange(statistics: ExerciseStatistics) {

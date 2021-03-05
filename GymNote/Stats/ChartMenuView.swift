@@ -178,15 +178,17 @@ struct ChartMenuView: View {
                     exercisesData.append(singleData)
                 }
             }
-            let exercise = self.choosenStas!.data.exercise
-            let exerciseStats = ExerciseStatistics(exercise: exercise,
-                                                   data: exercisesData)
-            let newStats = LineChartModelView(data: exerciseStats,
-                                              chartCase: self.displayMode,
-                                              fromDate: showStatsFromDate,
-                                              toDate: showStatsToDate)
-            self.setupStats(stats: newStats)
-            self.choosenStas = newStats
+            if !exercisesData.isEmpty {
+                let exercise = self.choosenStas!.data.exercise
+                let exerciseStats = ExerciseStatistics(exercise: exercise,
+                                                       data: exercisesData)
+                let newStats = LineChartModelView(data: exerciseStats,
+                                                  chartCase: self.displayMode,
+                                                  fromDate: showStatsFromDate,
+                                                  toDate: showStatsToDate)
+                self.setupStats(stats: newStats)
+                self.choosenStas = newStats
+            }
         } 
     }
     

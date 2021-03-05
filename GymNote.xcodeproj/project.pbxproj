@@ -14,6 +14,14 @@
 		0722A16725DE4E390035E5B9 /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0722A16625DE4E390035E5B9 /* ProfileButton.swift */; };
 		0722A16B25DE82C00035E5B9 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0722A16A25DE82C00035E5B9 /* ForgotPasswordView.swift */; };
 		07232B8B25EE39B4006E953D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232B8A25EE39B4006E953D /* CalendarView.swift */; };
+		07232BA025EE8A41006E953D /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232B9F25EE8A41006E953D /* Shapes.swift */; };
+		07232BA825EF7A51006E953D /* UsersCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232BA725EF7A51006E953D /* UsersCalendar.swift */; };
+		07232BAB25EF7B1E006E953D /* CalendarNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232BAA25EF7B1E006E953D /* CalendarNote.swift */; };
+		07232BAE25EF7C50006E953D /* TrainingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232BAD25EF7C50006E953D /* TrainingSession.swift */; };
+		07232BB225EFAEBE006E953D /* CalendarDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232BB125EFAEBE006E953D /* CalendarDayView.swift */; };
+		07232BD925F0E8B3006E953D /* CalendarCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232BD825F0E8B3006E953D /* CalendarCellView.swift */; };
+		07232BFF25F10F27006E953D /* CompletedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232BFE25F10F27006E953D /* CompletedButton.swift */; };
+		07232C1725F134D8006E953D /* ChaveronDeleteComplexButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232C1625F134D8006E953D /* ChaveronDeleteComplexButtons.swift */; };
 		0727887123AA473500092E24 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0727887023AA473500092E24 /* ProfileView.swift */; };
 		0736F9DD23CA3F0C00626599 /* ChangeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0736F9DC23CA3F0C00626599 /* ChangeButton.swift */; };
 		073B917A23A4025800F38F1D /* RectangularImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073B917923A4025800F38F1D /* RectangularImage.swift */; };
@@ -103,6 +111,14 @@
 		0722A16625DE4E390035E5B9 /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
 		0722A16A25DE82C00035E5B9 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		07232B8A25EE39B4006E953D /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		07232B9F25EE8A41006E953D /* Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
+		07232BA725EF7A51006E953D /* UsersCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCalendar.swift; sourceTree = "<group>"; };
+		07232BAA25EF7B1E006E953D /* CalendarNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarNote.swift; sourceTree = "<group>"; };
+		07232BAD25EF7C50006E953D /* TrainingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSession.swift; sourceTree = "<group>"; };
+		07232BB125EFAEBE006E953D /* CalendarDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDayView.swift; sourceTree = "<group>"; };
+		07232BD825F0E8B3006E953D /* CalendarCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellView.swift; sourceTree = "<group>"; };
+		07232BFE25F10F27006E953D /* CompletedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedButton.swift; sourceTree = "<group>"; };
+		07232C1625F134D8006E953D /* ChaveronDeleteComplexButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaveronDeleteComplexButtons.swift; sourceTree = "<group>"; };
 		0727887023AA473500092E24 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		0736F9DC23CA3F0C00626599 /* ChangeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeButton.swift; sourceTree = "<group>"; };
 		073B917923A4025800F38F1D /* RectangularImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularImage.swift; sourceTree = "<group>"; };
@@ -213,8 +229,40 @@
 			isa = PBXGroup;
 			children = (
 				07232B8A25EE39B4006E953D /* CalendarView.swift */,
+				07232BD825F0E8B3006E953D /* CalendarCellView.swift */,
+				07232BB125EFAEBE006E953D /* CalendarDayView.swift */,
+				07232B9F25EE8A41006E953D /* Shapes.swift */,
 			);
 			path = Calendar;
+			sourceTree = "<group>";
+		};
+		07232BA225EF7993006E953D /* TrainingsModels */ = {
+			isa = PBXGroup;
+			children = (
+				0740B3C6242E0F56003D7520 /* Training.swift */,
+				075077A325629A8700A46D60 /* TrainingsComponent.swift */,
+			);
+			path = TrainingsModels;
+			sourceTree = "<group>";
+		};
+		07232BA325EF79C6006E953D /* ExerciseStatisticModels */ = {
+			isa = PBXGroup;
+			children = (
+				075F9BC924DDC150005ADFF1 /* ExerciseStatistics.swift */,
+				075F9BCB24DDC1BF005ADFF1 /* ExerciseData.swift */,
+				07507896256507BA00A46D60 /* Series.swift */,
+			);
+			path = ExerciseStatisticModels;
+			sourceTree = "<group>";
+		};
+		07232BA625EF7A2B006E953D /* CalendarModel */ = {
+			isa = PBXGroup;
+			children = (
+				07232BA725EF7A51006E953D /* UsersCalendar.swift */,
+				07232BAA25EF7B1E006E953D /* CalendarNote.swift */,
+				07232BAD25EF7C50006E953D /* TrainingSession.swift */,
+			);
+			path = CalendarModel;
 			sourceTree = "<group>";
 		};
 		073DEAD6248ECC65008F3C72 /* NoteViewSupportingViews */ = {
@@ -313,6 +361,8 @@
 				07840A91248ACD8100FC3019 /* CancelEditModeButton.swift */,
 				07840A9A248BD4E900FC3019 /* EditModeButton.swift */,
 				0722A16625DE4E390035E5B9 /* ProfileButton.swift */,
+				07232BFE25F10F27006E953D /* CompletedButton.swift */,
+				07232C1625F134D8006E953D /* ChaveronDeleteComplexButtons.swift */,
 			);
 			path = CustomButtons;
 			sourceTree = "<group>";
@@ -450,14 +500,12 @@
 			isa = PBXGroup;
 			children = (
 				077ECD4223B0F4A1005A1B76 /* UserData.swift */,
+				07232BA625EF7A2B006E953D /* CalendarModel */,
 				075E6EB425AC5B49005CBCF0 /* CoreDataModel */,
 				07C0B9822397DE58001632A0 /* UserProfile.swift */,
-				0740B3C6242E0F56003D7520 /* Training.swift */,
-				075077A325629A8700A46D60 /* TrainingsComponent.swift */,
+				07232BA325EF79C6006E953D /* ExerciseStatisticModels */,
+				07232BA225EF7993006E953D /* TrainingsModels */,
 				074265FE240BC6C6003F2C32 /* Exercise.swift */,
-				07507896256507BA00A46D60 /* Series.swift */,
-				075F9BC924DDC150005ADFF1 /* ExerciseStatistics.swift */,
-				075F9BCB24DDC1BF005ADFF1 /* ExerciseData.swift */,
 				07EA01E5253C6B41003A13FA /* ObservableArray.swift */,
 			);
 			path = Model;
@@ -634,6 +682,7 @@
 				0759DECC24E43BED00DBCC26 /* LineChartView.swift in Sources */,
 				07F55DA224AF3D790024AB1A /* ActionAlert.swift in Sources */,
 				07840A94248B9D9400FC3019 /* ContentView.swift in Sources */,
+				07232BA025EE8A41006E953D /* Shapes.swift in Sources */,
 				07840A92248ACD8100FC3019 /* CancelEditModeButton.swift in Sources */,
 				075E6EB225AC36F1005CBCF0 /* CoreDataModel.xcdatamodeld in Sources */,
 				07840A99248BA17900FC3019 /* SignOutButton.swift in Sources */,
@@ -648,16 +697,20 @@
 				075077A425629A8700A46D60 /* TrainingsComponent.swift in Sources */,
 				07C0B98923990D0E001632A0 /* LoginView.swift in Sources */,
 				073DEAD8248ECCD7008F3C72 /* TrainingRow.swift in Sources */,
+				07232BB225EFAEBE006E953D /* CalendarDayView.swift in Sources */,
 				07C0B987239816EA001632A0 /* WelcomeView.swift in Sources */,
 				07FCCE7124817470008FE164 /* NoteView.swift in Sources */,
 				0722A16725DE4E390035E5B9 /* ProfileButton.swift in Sources */,
 				07C922E02410EA2300AF6010 /* SearchBar.swift in Sources */,
 				07C922E424110A5700AF6010 /* AddBarItem.swift in Sources */,
 				070E19712584E9F0001DD0B1 /* ChartViewListRowView.swift in Sources */,
+				07232C1725F134D8006E953D /* ChaveronDeleteComplexButtons.swift in Sources */,
 				078D3A0D2507F86B002291FC /* ChartMenuView.swift in Sources */,
 				073E6C9523AA215800A06E80 /* TitleBelt.swift in Sources */,
 				075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */,
 				07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */,
+				07232BAE25EF7C50006E953D /* TrainingSession.swift in Sources */,
+				07232BA825EF7A51006E953D /* UsersCalendar.swift in Sources */,
 				07840A9B248BD4E900FC3019 /* EditModeButton.swift in Sources */,
 				07FCCE732482C8AD008FE164 /* ProfileHost.swift in Sources */,
 				07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */,
@@ -674,6 +727,7 @@
 				07426608240BFD2A003F2C32 /* AddButton.swift in Sources */,
 				07FF8E052546A8C4006D6732 /* EditTrainingListOptions.swift in Sources */,
 				0727887123AA473500092E24 /* ProfileView.swift in Sources */,
+				07232BD925F0E8B3006E953D /* CalendarCellView.swift in Sources */,
 				0764EBA2257A54B200C33430 /* CheckmarkToggleStyle.swift in Sources */,
 				07FF8E5125496DED006D6732 /* SeriesTextFields.swift in Sources */,
 				073DEAF9249F4FF2008F3C72 /* TrainingHost.swift in Sources */,
@@ -689,10 +743,12 @@
 				07C0B98B23992267001632A0 /* SignupView.swift in Sources */,
 				070E196D2584E5F2001DD0B1 /* ExerciseDetailsView.swift in Sources */,
 				07C922E62411140000AF6010 /* NavigationConfigurator.swift in Sources */,
+				07232BAB25EF7B1E006E953D /* CalendarNote.swift in Sources */,
 				07DB16C325E5318000216607 /* SocialAuthLogInView.swift in Sources */,
 				073DEF9C2433556100644ED3 /* SetSeriesView.swift in Sources */,
 				0720992123F7417E00B75CF5 /* DoneConformAlert.swift in Sources */,
 				0757023F23A4D89500030991 /* RectangularButtonStyle.swift in Sources */,
+				07232BFF25F10F27006E953D /* CompletedButton.swift in Sources */,
 				07C0B98E239A73C8001632A0 /* HomeView.swift in Sources */,
 				07426605240BCE20003F2C32 /* DateBelt.swift in Sources */,
 				07FCCE6F24817238008FE164 /* MainContainer.swift in Sources */,

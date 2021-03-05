@@ -16,6 +16,7 @@ struct TrainingView: View {
     @StateObject var trainingStats: ObservableArray<ExerciseStatistics> = ObservableArray(array: [ExerciseStatistics]())
     @State var setOfArraysOfReps = [[String]]()
     @State var setOfArraysOfWeights = [[String]]()
+    @State var dateOfTraining = Date()
     var training: Training
     let dataString = DateConverter.dateFormat.string(from: Date())
     
@@ -31,27 +32,28 @@ struct TrainingView: View {
                 List {
                     ZStack {
                         Rectangle()
-                            .fill(LinearGradient(gradient: Gradient(colors: [.customDark, .customLight]), startPoint: .bottomLeading, endPoint: .topTrailing))
+                            .fill(LinearGradient(gradient: Gradient(colors: [.customLight, .customDark]), startPoint: .bottomLeading, endPoint: .topTrailing))
                             .cornerRadius(10)
-                            .shadow(color: Color.customShadow, radius: 5)
-                        HStack {
-                        VStack(alignment: .leading) {
-                            Text(training.trainingName)
-                                .font(.largeTitle)
-                                .padding(.horizontal)
-                                .padding(.bottom)
-                                .shadow(radius: 4)
-                            
+                            .shadow(color: Color.customShadow, radius: 5, x: -3, y: 3)
+                        VStack {
+
+                                DatePicker(
+                                    selection: $dateOfTraining,
+                                    in: ...Date(),
+                                    displayedComponents: .date) {
+                                    
+                                    Text(training.trainingName)
+                                        .font(.largeTitle).bold()
+                                        .shadow(color: Color.reverseCustomShadow, radius: 2, x: -1, y: 1)
+                                }
+
+                            Divider()
                             Text(training.trainingDescription)
-                                .padding(.horizontal)
-                            Text("Created at: \(training.initialDate)")
-                                .padding(.horizontal)
-                                .font(.caption)
                                 .foregroundColor(.secondary)
-                        }
-                        Spacer()
-                    }.padding()
-                }
+                                .font(.headline)
+                                
+                        }.padding()
+                    }
                     if !self.setOfArraysOfReps.isEmpty {
                         ForEach(0..<training.listOfExercises.count, id: \.self) { exerciseIndex in
                             ExerciseView(trainingComponent: training.listOfExercises[exerciseIndex],
@@ -61,7 +63,7 @@ struct TrainingView: View {
                                 .padding()
                                 .background(LinearGradient(gradient: Gradient(colors: [.customLight, .customSuperLight]), startPoint: .leading, endPoint: .trailing))
                                 .cornerRadius(10)
-                                .shadow(color: Color.customShadow, radius: 3)
+                                .shadow(color: Color.customShadow, radius: 3, x: -2, y: 2)
                         }
                     }
                     
@@ -106,6 +108,7 @@ struct TrainingView: View {
                             secondButtonTitle: "Cancel",
                             action: {
                                 self.saveTrainingToStatistics()
+                                self.saveTrainingSession()
                                 self.presentationMode.wrappedValue.dismiss()
                             })
                     .shadow(color: Color.customShadow, radius: 5)
@@ -156,10 +159,12 @@ struct TrainingView: View {
                                          repeats: Int(setOfArraysOfReps[exerciseIndex][seriesIndex]) ?? 1,
                                          weight: Int(setOfArraysOfWeights[exerciseIndex][seriesIndex]) ?? 1))
             }
-            let currentDate = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date()) ?? Date()
+            
+            let dateAsString = DateConverter.dateFormat.string(from: dateOfTraining)
+            let dateAsDateWithoutHoursEct = DateConverter.convertFromString(dateString: dateAsString)
             
             let tempExerciseData = ExerciseData(dataID: UUID().uuidString,
-                                                date: currentDate,
+                                                date: dateAsDateWithoutHoursEct,
                                                 series: tempSeries)
             let temExerciseStats = ExerciseStatistics(exercise: Exercise(id: training.listOfExercises[exerciseIndex].exercise.exerciseID,
                                                                          name: training.listOfExercises[exerciseIndex].exercise.exerciseName,
@@ -184,10 +189,23 @@ struct TrainingView: View {
         if self.session.userSession?.userStatistics.count != 0 {
             if let index = self.session.userSession?.userStatistics.firstIndex(where: { $0.exercise.exerciseID == statsToAdd.exercise.exerciseID }) {
                 self.session.userSession?.userStatistics[index].exerciseData.append(contentsOf: statsToAdd.exerciseData)
+                self.session.userSession?.userStatistics[index].exerciseData.sort(by: {$0.exerciseDate < $1.exerciseDate})
             }
             else {
                 self.session.userSession?.userStatistics.append(statsToAdd)
             }
+        }
+    }
+    func saveTrainingSession() {
+        if let id = self.session.userSession?.userProfile.userID {
+            self.session.uploadTreningSessionToDB(userID: id, trainingID: training.trainingID, trainingDate: dateOfTraining) { (error, errorDescription) in
+                if error {
+                    print("Error during saving training session: \(String(describing: errorDescription))")
+                } else {
+                    print("Training session saved successfully!")
+                }
+            }
+            
         }
     }
 }
