@@ -194,9 +194,15 @@ class FireBaseSession: ObservableObject {
                                 if !errorOccur3 {
                                     self.deleteAllStatsBelongToCurrentUser(userID: userID, completion: { (errorOccur4) in
                                         if !errorOccur4 {
-                                            self.deleteUserProfile(userID: userID, completion: {(errorOccur5) in
+                                            self.deleteCalendarDataFromDB(userID: userID, completion: { (errorOccur5) in
                                                 if !errorOccur5 {
-                                                    completion(false)
+                                                    self.deleteUserProfile(userID: userID, completion: {(errorOccur6) in
+                                                        if !errorOccur6 {
+                                                            completion(false)
+                                                        } else {
+                                                            completion(true)
+                                                        }
+                                                    })
                                                 } else {
                                                     completion(true)
                                                 }
@@ -213,7 +219,6 @@ class FireBaseSession: ObservableObject {
                     }
                 }
             }
-            
         }
     }
     
@@ -273,6 +278,25 @@ class FireBaseSession: ObservableObject {
             }
         }
     }
+    //delete all calendar data
+    func deleteCalendarDataFromDB(userID: String, completion: @escaping (Bool)->()) {
+        self.deleteTrainingSessionsFromDB(userID: userID) { (errorDuringDeleteTrainingSessions) in
+            if errorDuringDeleteTrainingSessions {
+                completion(true)
+            } else {
+                self.usersDBRef.child("UserNotes").child(userID).removeValue() { error, _ in
+                    if error != nil {
+                        print("Error during delete action on UserNotes: \(String(describing: error?.localizedDescription))")
+                        completion(true)
+                    } else {
+                        print("Data for path: [UserNotes/...] removed successfully!")
+                        completion(false)
+                    }
+                }
+            }
+        }
+    }
+    
     
     //Delete user from Firebase
     func deleteUser(completion: @escaping (Bool)->()) {
@@ -1010,6 +1034,17 @@ class FireBaseSession: ObservableObject {
                 }
             }
 
+        }
+    }
+    func deleteTrainingSessionsFromDB(userID: String, completion: @escaping (Bool)->()) {
+        self.usersDBRef.child("UserTrainingSessions").child(userID).removeValue() { error, _ in
+            if error != nil {
+                print("Error during delete action UserTrainingSessions: \(String(describing: error?.localizedDescription))")
+                completion(true)
+            } else {
+                print("Data for path: [UserTrainingSessions/...] removed successfully!")
+                completion(false)
+            }
         }
     }
 }
