@@ -88,7 +88,7 @@ struct TrainingHost: View {
     
     func saveTrainingInTheDB() {
         if draftTraining.listOfExercises.isEmpty {
-            self.warningMessage = "You can`t confirm training without any exercises! Please, add some exercises to your program."
+            self.warningMessage = "You can't confirm training without any exercises! Please, add some exercises to your program."
             withAnimation(.easeInOut) {
                 self.showWarning = true
             }

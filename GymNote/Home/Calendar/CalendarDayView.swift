@@ -19,6 +19,7 @@ struct CalendarDayView: View {
     @State var checkToDeleteArray = [Bool]()
     @State var disableAddButton = false
     @State var noteToDelete: CalendarNote?
+    @State var showDetails = false
     @ObservedObject var listOfTrainingSessions: ObservableArray<TrainingSession>
     @ObservedObject var listOfNotes: ObservableArray<CalendarNote>
     @Binding var date: Date
@@ -48,7 +49,7 @@ struct CalendarDayView: View {
                         Image(systemName: "plus.square")
                             .foregroundColor(.orange)
                             .font(.largeTitle)
-                            .shadow(color: Color.customShadow, radius: 2, x: -1, y: 1)
+                            .shadow(color: .black, radius: 2, x: -1, y: 1)
                     }.disabled(disableAddButton)
                 }
                 if showWarninig {
@@ -64,32 +65,10 @@ struct CalendarDayView: View {
             ForEach(listOfTrainingSessions.array, id: \.trainingID) { training in
                 
                 if training.trainingDates.contains(where: {$0 == date }) {
-                    VStack {
-                        HStack {
-                            Image(systemName: "t.square")
-                                .font(.largeTitle)
-                        
-                            Text(training.trainingName)
-                                .multilineTextAlignment(.leading)
-                                .font(.title)
-                            Spacer()
-                        }
-                        HStack {
-                            Text("      ")
-                                .font(.largeTitle)
-                            Text(training.trainingDescription)
-                                .font(.footnote)
-                                .foregroundColor(.secondary)
-                                .multilineTextAlignment(.leading)
-                                .fixedSize(horizontal: false, vertical: true)
-                            
-                            Spacer()
-                        }
-                    }
-                    Divider()
+                    SmallShowHideTrainingView(training: training)
                 }
             }//.padding(.bottom, 15)
-
+            Divider()
             ScrollView {
                 ForEach(listOfNotes.array, id: \.notesID) { note in
                     if note.notesDate == date {

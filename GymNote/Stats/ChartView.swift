@@ -122,12 +122,12 @@ struct ChartView: View {
                 }
                 .padding(.top)
                 .navigationBarTitle(Text(self.chartTitle), displayMode: .inline)
-                .navigationBarItems(trailing: Button(action: {
-                    withAnimation(.spring()) { self.showMenu.toggle() }
-                }) {
-                    Image(systemName: "line.horizontal.3")
-                        .font(.title)
-                })
+                .navigationBarItems(trailing: self.chosenStats != nil ? AnyView( Button(action: {
+                                        withAnimation(.spring()) { self.showMenu.toggle() }
+                                    }) {
+                                        Image(systemName: "line.horizontal.3")
+                                            .font(.title)
+                    }) : AnyView(EmptyView()))
                 .onAppear {
                     self.didAppear = false
                     if !didAppear {

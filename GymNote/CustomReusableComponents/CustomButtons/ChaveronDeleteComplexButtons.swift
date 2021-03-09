@@ -24,11 +24,11 @@ struct ChaveronDeleteComplexButtons: View {
             if showButtons {
                 Image(systemName: "chevron.right")
                     .font(.title)
-                    .shadow(color: Color.customShadow, radius: 2, x: -1, y: 1)
+                    .shadow(color: .black, radius: 2, x: -1, y: 1)
             } else {
                 Image(systemName: "chevron.left")
                     .font(.title)
-                    .shadow(color: Color.customShadow, radius: 2, x: -1, y: 1)
+                    .shadow(color: .black, radius: 2, x: -1, y: 1)
             }
         }
         if self.showButtons {

@@ -23,6 +23,7 @@ struct VerificationEmailAlert: View {
                 .foregroundColor(Color.white)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
+                .padding(.horizontal)
                 //.background(LinearGradient(gradient: Gradient(colors:[Color.gray, Color.customDark, Color.gray]), startPoint: .trailing, endPoint: .leading))
             
             Divider()
@@ -54,21 +55,4 @@ struct VerificationEmailAlert: View {
         .padding()
     }
 }
-//
-//struct VerificationEmailAlert_Previews: PreviewProvider {
-//
-//    @State static var prevShowAlert = true
-//    static var prevTitle = "Alert Title"
-//    static var prevMessage = "Alert Message"
-//    static var prevFirstButtonTitle = "Ok"
-//    static var prevSecondButtonTitle = "Cancel"
-//
-//
-//    static func prevAction() {
-//        print("!Action!")
-//    }
-//
-//    static var previews: some View {
-//        VerificationEmailAlert()
-//    }
-//}
+

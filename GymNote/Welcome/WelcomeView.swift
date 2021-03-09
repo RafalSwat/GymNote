@@ -41,7 +41,7 @@ struct WelcomeView: View {
                 
                 VerificationEmailAlert(showAlert: self.$showAlert,
                                        signUpAction: {
-                                        self.isRegistered.toggle()
+                                            self.isRegistered.toggle()
                                        })
             }
         }

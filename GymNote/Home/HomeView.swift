@@ -17,7 +17,10 @@ struct HomeView: View {
     @Environment(\.calendar) var calendar
     
     @Binding var alreadySignIn: Bool
+    @State var isAnonymous: Bool? = nil
     @State var showProfile = false
+    @State var goToSignIn = false
+    @State var showAlert = false
     
     @State var selectedDate = Date()
     @State var components = DateComponents()
@@ -35,6 +38,7 @@ struct HomeView: View {
                 VStack {
                     
                     NavigationLink(destination: ProfileHost(alreadySignIn: $alreadySignIn), isActive: self.$showProfile, label: {EmptyView()})
+                    NavigationLink(destination: SignUpPopUpView(goToSignIn: $goToSignIn, alreadySignIn: $alreadySignIn, showAlert: $showAlert), isActive: self.$goToSignIn, label: {EmptyView()})
                     
                     CalendarView(interval: year) { date in
                         CalendarCellView(date: date,
@@ -62,13 +66,14 @@ struct HomeView: View {
                         .padding(.horizontal, 30)
                         
                 }
+                
             }
-            .navigationBarItems(leading: SignOutButton(signIn: $alreadySignIn),
-                                trailing:  ProfileButton(showProfile: self.$showProfile))
+            .navigationBarItems(leading: SignOutButton(signIn: $alreadySignIn), trailing: ProfileButton(showProfile: self.$showProfile, goToSignIn: self.$goToSignIn))
             .navigationBarTitle("Home", displayMode: .inline)
             .onAppear {
                 self.setUpCalendarArrays()
             }
+            
         }
     }
     func isTrainingDay(date: Date) -> Bool {
@@ -125,7 +130,6 @@ struct HomeView: View {
             }
         }
     }
-    
 }
 
 

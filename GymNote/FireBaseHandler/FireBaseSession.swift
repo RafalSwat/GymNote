@@ -78,7 +78,7 @@ class FireBaseSession: ObservableObject {
                 print("Got a new user: \(email)")
                 Auth.auth().currentUser?.sendEmailVerification(completion: { (emailVerificationError) in
                     if emailVerificationError != nil {
-                        completion(true, error?.localizedDescription)
+                        completion(true, emailVerificationError?.localizedDescription)
                     } else {
                         completion(false, "confirmation email sent to: \(email)")
                         print("confirmation email sent to: \(email)")
@@ -87,13 +87,44 @@ class FireBaseSession: ObservableObject {
                 
             } else {
                 if let specificError = error?.localizedDescription {
+                    completion(true, specificError)
                     print(specificError)
                 } else {
+                    completion(false, "Error:  can`t register!")
                     print("Error:  can`t register!")
                 }
             }
         }
     }
+    func mergeAnonymousUserWithEmail(email: String, password: String, completion: @escaping (Bool, String?)->()) {
+        
+        if let user = Auth.auth().currentUser {
+            
+            let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+            
+            user.link(with: credential, completion: { (authResult, error) in
+                if error != nil {
+                    completion(true, error?.localizedDescription)
+                } else {
+                    if let mergeWithUser = authResult?.user {
+                        mergeWithUser.sendEmailVerification(completion: { (emailVerificationError) in
+                            if emailVerificationError != nil {
+                                completion(true, emailVerificationError?.localizedDescription)
+                            } else {
+                                var profile = self.userSession?.userProfile
+                                profile?.isUserAnonymous = false
+                                profile?.userEmail = email
+                                self.updateProfileOnDB(user: profile!)
+                                completion(false, "confirmation email sent to: \(email)")
+                                print("confirmation email sent to: \(email)")
+                            }
+                        })
+                    }
+                }
+            })
+        } 
+    }
+    
     //MARK: Signin method
     func signIn(email: String, password: String, completion: @escaping (Bool, String?)->()) {
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
@@ -101,7 +132,7 @@ class FireBaseSession: ObservableObject {
             if error != nil {
                 completion(true, error?.localizedDescription)
             } else if user == nil {
-                print("Cooooo dooo kuuuurwy się dzieje!!!!")
+                //print("Cooooo dooo kuuuurwy się dzieje!!!!")
             }
             self.checkIfTheEmailIsVerified(completion: { isVerified, errorDiscription in
                 if isVerified {
@@ -121,6 +152,7 @@ class FireBaseSession: ObservableObject {
             })
         }
     }
+    
     //MARK: Autologin method
     func tryAutoSignIn() -> Bool {
         if let user = Auth.auth().currentUser {
@@ -196,9 +228,15 @@ class FireBaseSession: ObservableObject {
                                         if !errorOccur4 {
                                             self.deleteCalendarDataFromDB(userID: userID, completion: { (errorOccur5) in
                                                 if !errorOccur5 {
-                                                    self.deleteUserProfile(userID: userID, completion: {(errorOccur6) in
+                                                    self.deleteExercisesCreatedByUser(userID: userID, completion: {(errorOccur6) in
                                                         if !errorOccur6 {
-                                                            completion(false)
+                                                            self.deleteUserProfile(userID: userID, completion: { (errorOccur7) in
+                                                                if !errorOccur7 {
+                                                                    completion(false)
+                                                                } else {
+                                                                    completion(true)
+                                                                }
+                                                            })
                                                         } else {
                                                             completion(true)
                                                         }
@@ -419,7 +457,8 @@ class FireBaseSession: ObservableObject {
         if let lastActualization = user.lastImageActualization {
             let dateString = DateConverter.fullDateFormat.string(from: lastActualization)
             usersDBRef.child("Users").child(user.userID).child("Profile").updateChildValues(
-                ["name" : user.userName,
+                ["email" : user.userEmail,
+                 "name" : user.userName,
                  "surname" : user.userSurname,
                  "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
                  "gender" : user.userGender,
@@ -429,7 +468,8 @@ class FireBaseSession: ObservableObject {
             print("----> update lastImageActualization")
         } else {
             usersDBRef.child("Users").child(user.userID).child("Profile").updateChildValues(
-                ["name" : user.userName,
+                ["email" : user.userEmail,
+                 "name" : user.userName,
                  "surname" : user.userSurname,
                  "dateOfBirth" : DateConverter.dateFormat.string(from: user.userDateOfBirth),
                  "gender" : user.userGender,
@@ -497,6 +537,18 @@ class FireBaseSession: ObservableObject {
             }
         }
     }
+    func deleteExercisesCreatedByUser(userID: String, completion: @escaping (Bool)->()) {
+        self.usersDBRef.child("ExercisesCreatedByUsers").child(userID).removeValue() { error, _ in
+            if let error = error  {
+                print("While deleting user exercises created by users an error occurred: \(error.localizedDescription)")
+                completion(true)
+            } else {
+                print("Data for path: [ExercisesCreatedByUsers/...] removed successfully!")
+                completion(false)
+            }
+        }
+    }
+    
     func downloadExerciseCreatedByUser(userID: String, completion: @escaping ([Exercise])->()) {
         
         var listOfCreatedByUserExercises = [Exercise]()

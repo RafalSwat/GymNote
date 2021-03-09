@@ -10,16 +10,29 @@ import SwiftUI
 
 struct ProfileButton: View {
     
+    @EnvironmentObject var session: FireBaseSession
     @Binding var showProfile: Bool
+    @Binding var goToSignIn: Bool
     
     var body: some View {
         
         Button(action: {
-            self.showProfile.toggle()
+            
+            if self.session.userSession?.userProfile.isUserAnonymous == true {
+                self.goToSignIn.toggle()
+            } else {
+                self.showProfile.toggle()
+            }
+
         }, label: {
-            VStack {
-                Image(systemName: "person.crop.square")
-                    .font(.title)
+            
+            if self.session.userSession?.userProfile.isUserAnonymous == true {
+                Text("SignUp")
+            } else {
+                VStack {
+                    Image(systemName: "person.crop.square")
+                        .font(.title)
+                }
             }
         })
         
@@ -31,7 +44,8 @@ struct ProfileButton: View {
 struct ProfileButton_Previews: PreviewProvider {
     
     @State static var show = false
+    @State static var go = false
     static var previews: some View {
-        ProfileButton(showProfile: $show)
+        ProfileButton(showProfile: $show, goToSignIn: $go)
     }
 }

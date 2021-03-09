@@ -1,32 +1,35 @@
 //
-//  SignupView.swift
+//  SignUpPopUpView.swift
 //  GymNote
 //
-//  Created by Rafał Swat on 05/12/2019.
-//  Copyright © 2019 Rafał Swat. All rights reserved.
+//  Created by Rafał Swat on 08/03/2021.
+//  Copyright © 2021 Rafał Swat. All rights reserved.
 //
 
 import SwiftUI
 
-struct SignupView: View {
+struct SignUpPopUpView: View {
     
-    //MARK: Properties
     @EnvironmentObject var session: FireBaseSession
     @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @Environment(\.presentationMode) var presentationMode
     
+    @Binding var goToSignIn: Bool
+    @Binding var alreadySignIn: Bool
+    @Binding var showAlert: Bool
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var repeatPassword: String = ""
     @State var showWarning = false
     @State var warningText = ""
-    @State var isEmailVerified = false
-    @Binding var showAlert: Bool
-    @Binding var alreadySignIn: Bool
-    @Binding var isRegistered: Bool
-    
-    //MARK: View
+
     var body: some View {
+        ZStack {
         VStack {
+            Image("staticImage")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+            
             TextField("Email", text: $email)
                 .autocapitalization(.none)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -48,7 +51,8 @@ struct SignupView: View {
             VStack {
                 Button(action: {
                     if self.isNotEmpty() && self.arePasswordEqual() {
-                        self.signUpWithEmail()
+                        self.mereAnonymousUserwithEmail()
+                        
                         
                     } else if !self.isNotEmpty() {
                         self.showWarning = true
@@ -68,32 +72,23 @@ struct SignupView: View {
                 }
                 .buttonStyle(RectangularButtonStyle())
                 .padding(.bottom, 2.5)
-                
-                Button(action: {
-                    self.signInAnonymously()
-                }) {
-                    HStack {
-                        Image(systemName: "person.fill.questionmark")
-                            .font(.headline)
-                        Spacer()
-                        Text("continue anonymously")
-                        Spacer()
-                    }
-                    .padding(.horizontal)
-                    .foregroundColor(colorScheme == .light ? .black : .white)
-                }
-                .buttonStyle(RectangularButtonStyle(fromColor: .blendingInWithTheList,
-                                                    toColor: colorScheme == .light ? .customLight : .customDark))
-                .padding(.top, 2.5)
             }
             .padding(.top, 8)
             
+        }.padding()
+        if showAlert {
+            Color.black.opacity(0.7)
+            
+            VerificationEmailAlert(showAlert: self.$showAlert,
+                                   signUpAction: {
+                                        self.goToSignIn = false
+                                        self.alreadySignIn.toggle()
+                                   })
+        
         }
     }
-    
-    
-    
-    //MARK: Functions
+        
+    }
     func arePasswordEqual() -> Bool {
         if password == repeatPassword {
             print("Passwords are equal!")
@@ -120,32 +115,12 @@ struct SignupView: View {
         }
     }
     
-    func signUpWithEmail() {
-        self.session.signUp(email: email, password: password, completion: { errorDuringSignUp, errorDescription in
-            self.showWarning = errorDuringSignUp
+    func mereAnonymousUserwithEmail() {
+        self.session.mergeAnonymousUserWithEmail(email: email, password: password) { errorDuringMerging, errorDescription in
+            self.showWarning = errorDuringMerging
             
             if !self.showWarning {
-                
                 self.showAlert = true
-                
-            } else {
-                if let fbrError = errorDescription {
-                    self.warningText = fbrError
-                    
-                } else {
-                    self.warningText = "Unknow error... please try again"
-                }
-            }
-        })
-    }
-    
-    func signInAnonymously() {
-        self.session.signInAnonymously { (errorDuringSignUp, errorDescription) in
-            self.showWarning = errorDuringSignUp
-            
-            if !self.showWarning {
-                self.alreadySignIn = true
-                
             } else {
                 if let fbrError = errorDescription {
                     self.warningText = fbrError
@@ -155,19 +130,6 @@ struct SignupView: View {
                 }
             }
         }
-    }
-}
-
-
-struct SignupView_Previews: PreviewProvider {
-    
-    @State static var prevAlreadySignIn = false
-    @State static var previsRegistred = false
-    @State static var prevShowAlert = false
-    
-    static var previews: some View {
-        SignupView(showAlert: $prevShowAlert,
-                   alreadySignIn: $prevAlreadySignIn,
-                   isRegistered: $previsRegistred)
+        
     }
 }
