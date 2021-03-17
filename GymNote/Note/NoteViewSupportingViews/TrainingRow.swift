@@ -125,30 +125,3 @@ struct TrainingRow: View {
 }
 
 
-struct TrainingRow_Previews: PreviewProvider {
-    
-    @State static var prevTraining = Training(id: UUID().uuidString,
-                                              name: "My Program",
-                                              description: "My litte subscription ",
-                                              date: "01-Jan-2020",
-                                              exercises: [TrainingsComponent(exercise: Exercise(), numberOfSeries: 1, orderInList: 1)])
-    
-    @State static var prevListOfTraining = [Training]()
-    @State static var prevShowButtons = false
-    @State static var prevShowDetails = false
-    @State static var prevShowAlert = false
-    @State static var prevSelectedTraining: Training?
-
-    
-    static var previews: some View {
-        if #available(iOS 14.0, *) {
-            TrainingRow(listOfTrainings: ObservableArray(array: [Training]()).observeChildrenChanges(),
-                        training: prevTraining,
-                        showAlert: $prevShowAlert,
-                        selectedTraining: $prevSelectedTraining)
-        } else {
-            // Fallback on earlier versions
-        }
-    }
-}
-

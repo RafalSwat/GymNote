@@ -93,6 +93,7 @@ struct TrainingView: View {
                 })
                 .onAppear {
                     self.initializationOfSetOfArrays()
+                    self.alertMessage = ""
                 }
             }
             .disabled(conform)
@@ -203,6 +204,9 @@ struct TrainingView: View {
                     print("Error during saving training session: \(String(describing: errorDescription))")
                 } else {
                     print("Training session saved successfully!")
+                    if let index = self.session.userSession?.userTrainings.firstIndex(where: {$0.trainingID == training.trainingID}) {
+                        self.session.userSession?.userTrainings[index].trainingDates.append(dateOfTraining)
+                    }
                 }
             }
             

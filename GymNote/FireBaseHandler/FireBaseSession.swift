@@ -281,7 +281,7 @@ class FireBaseSession: ObservableObject {
             let numberOfTrainings = self.userSession!.userTrainings.count
             
             for training in self.userSession!.userTrainings {
-                self.deleteTrainingFromDB(userID: userID, training: training, deleteAlsoBasicInfo: true, completion: { errorOccur, errorDescription in
+                self.deleteTrainingFromDB(userID: userID, training: training, completion: { errorOccur, errorDescription in
                                             if errorOccur {
                                                 print(errorDescription ?? "Unknow error occur during removing training!")
                                                 completion(true)
@@ -594,7 +594,8 @@ class FireBaseSession: ObservableObject {
         self.usersDBRef.child("Trainings").child(training.trainingID).setValue(
             ["name" : training.trainingName,
              "description" : training.trainingDescription,
-             "initialDate" : training.initialDate]) {
+             "initialDate" : training.initialDate,
+             "isTrainingActive" : training.isTrainingActive]) {
             (error:Error?, ref:DatabaseReference) in
             if let error = error {
                 print("Data path: [Trainings/...] could not be saved: \(error.localizedDescription).")
@@ -639,7 +640,8 @@ class FireBaseSession: ObservableObject {
         self.usersDBRef.child("Trainings").child(training.trainingID).updateChildValues(
             ["name" : training.trainingName,
              "description" : training.trainingDescription,
-             "initialDate" : training.initialDate]
+             "initialDate" : training.initialDate,
+             "isTrainingActive" : training.isTrainingActive]
         )
     }
     //MARK: Update list of exercises under current training
@@ -658,7 +660,9 @@ class FireBaseSession: ObservableObject {
         var names = [String]()
         var descriptions = [String]()
         var dates = [String]()
+        var isActivesArray = [Bool]()
         var allExercises = [[TrainingsComponent]]()
+        var datesOfTraining = [[Date]]()
         var trainings = [Training]()
         var index = 0
         
@@ -671,11 +675,13 @@ class FireBaseSession: ObservableObject {
                                 let name = trainingInfo["name"] as! String
                                 let description = trainingInfo["description"] as! String
                                 let date = trainingInfo["initialDate"] as! String
+                                let isTrainingActive = trainingInfo["isTrainingActive"] as! Bool
                                 
                                 ids.append(trainingID.key)
                                 names.append(name)
                                 descriptions.append(description)
                                 dates.append(date)
+                                isActivesArray.append(isTrainingActive)
                             }
                         }
                         self.usersDBRef.child("ExerciseList").child(trainingID.key).observeSingleEvent(of: .value) { (exerciseSnapshot) in
@@ -694,18 +700,25 @@ class FireBaseSession: ObservableObject {
                                 trainingComponents = trainingComponents.sorted(by: { $0.exerciseOrderInList < $1.exerciseOrderInList })
                             }
                             allExercises.append(trainingComponents)
-                            
-                            let training = Training(id: ids[index],
-                                                    name: names[index], // FIXME: index out of range
-                                                    description: descriptions[index],
-                                                    date: dates[index],
-                                                    exercises: allExercises[index])
-                            trainings.append(training)
-                            index += 1
-                            if ids.count == index {
-                                self.userSession?.userTrainings = trainings
-                                completion(true)
+                            self.downloadTrainingSessionsFromDB(userID: userID, trainingID: trainingID.key) { (trainingDates) in
+                                datesOfTraining.append(trainingDates)
+                                
+                                
+                                let training = Training(id: ids[index],
+                                                        name: names[index],
+                                                        description: descriptions[index],
+                                                        date: dates[index],
+                                                        exercises: allExercises[index],
+                                                        trainingDates: datesOfTraining[index],
+                                                        isTrainingActive: isActivesArray[index])
+                                trainings.append(training)
+                                index += 1
+                                if ids.count == index {
+                                    self.userSession?.userTrainings = trainings
+                                    completion(true)
+                                }
                             }
+                            
                         }
                     }
                 }
@@ -715,18 +728,17 @@ class FireBaseSession: ObservableObject {
         }
     }
     
-    func deleteTrainingFromDB(userID: String, training: Training, deleteAlsoBasicInfo: Bool = false, completion: @escaping (Bool, String?)->()) {
-        
-        if deleteAlsoBasicInfo {
-            self.usersDBRef.child("Trainings").child(training.trainingID).removeValue() { error, _ in
-                if error != nil {
-                    completion(true, error?.localizedDescription)
-                } else {
-                    print("Data for path: [Trainings/...] removed successfully!")
-                    completion(false, nil)
-                }
+    func deleteTrainingFromDB(userID: String, training: Training, completion: @escaping (Bool, String?)->()) {
+
+        self.usersDBRef.child("Trainings").child(training.trainingID).removeValue() { error, _ in
+            if error != nil {
+                completion(true, error?.localizedDescription)
+            } else {
+                print("Data for path: [Trainings/...] removed successfully!")
+                completion(false, nil)
             }
         }
+        
         self.usersDBRef.child("UsersTrainings").child(userID).child(training.trainingID).removeValue() { error, _ in
             if error != nil {
                 completion(true, error?.localizedDescription)
@@ -898,17 +910,20 @@ class FireBaseSession: ObservableObject {
                 series = series.sorted(by: {$0.orderInSeries < $1.orderInSeries })
                 
                 
-                let exerciseIndex = self.userSession?.userStatistics.firstIndex(where: {
+                if let exerciseIndex = self.userSession?.userStatistics.firstIndex(where: {
                                                                                     ($0.exerciseData.firstIndex(where: {
                                                                                         $0.exerciseDataID == exerciseDataID
-                                                                                    }) != nil) == true })
+                                                                                    }) != nil) == true }) {
+                    
+                    if let exerciseDataIndex = self.userSession?.userStatistics[exerciseIndex].exerciseData.firstIndex(where: {
+                        $0.exerciseDataID == exerciseDataID
+                    }) {
+                        //self.userSession?.userStatistics[exerciseIndex!].exerciseData[exerciseDataIndex!].exerciseSeries.append(contentsOf: series)
+                        self.userSession?.userStatistics[exerciseIndex].exerciseData[exerciseDataIndex].exerciseSeries = series
+                    }
+                }
                 
-                let exerciseDataIndex = self.userSession?.userStatistics[exerciseIndex!].exerciseData.firstIndex(where: {
-                    $0.exerciseDataID == exerciseDataID
-                })
                 
-                //self.userSession?.userStatistics[exerciseIndex!].exerciseData[exerciseDataIndex!].exerciseSeries.append(contentsOf: series)
-                self.userSession?.userStatistics[exerciseIndex!].exerciseData[exerciseDataIndex!].exerciseSeries = series
             }
             completion(true)
         }
@@ -942,6 +957,60 @@ class FireBaseSession: ObservableObject {
                 } else {
                     print("Data for path: [Series/...] removed successfully!")
                     completion(false, nil)
+                }
+            }
+        }
+    }
+    
+    func deleteDayOfTraining(userID: String, training: Training, forDay: Date, completion: @escaping (Bool, String?)->()) {
+        
+        var isTheLastTrainingSession: Bool {
+            if training.trainingDates.count == 1 {
+                return true
+            } else {
+                return false
+            }
+        }
+        var counter = 0
+        
+        for date in training.trainingDates {
+            if date == forDay {
+                let dateAsString = DateConverter.dateFormat.string(from: date)
+                self.usersDBRef.child("UserTrainingSessions").child(userID).child(training.trainingID).child(dateAsString).removeValue()
+
+                for exercise in training.listOfExercises {
+                    self.usersDBRef.child("UserExercisesData").child(userID).child(exercise.exercise.exerciseID).observeSingleEvent(of: .value) { (dataSnapShot) in
+                        
+                        if let listOfExerciseData = dataSnapShot.children.allObjects as? [DataSnapshot] {
+
+                            if listOfExerciseData.count == 1 {
+                                self.usersDBRef.child("UserStatistics").child(userID).child(exercise.exercise.exerciseID).removeValue()
+                            }
+
+                            for exerciseData in listOfExerciseData {
+                                let exerciseDataDate = exerciseData.value as! String
+                                let exerciseDataID = exerciseData.key
+                                if exerciseDataDate == dateAsString {
+                                    self.usersDBRef.child("UserExercisesData").child(userID).child(exercise.exercise.exerciseID).child(exerciseDataID).removeValue()
+                                    self.usersDBRef.child("Series").child(exerciseDataID).removeValue()
+                                    counter += 1
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+                if isTheLastTrainingSession && !training.isTrainingActive {
+                    self.deleteTrainingFromDB(userID: userID, training: training) { (error, errorDescription) in
+                        if !error {
+                            counter += 1
+                        }
+                    }
+                } else {
+                    counter += 1
+                }
+                if counter == 2 {
+                    completion(true, nil)
                 }
             }
         }
@@ -1007,7 +1076,7 @@ class FireBaseSession: ObservableObject {
                         counter += 1
                         
                         if counter == noteSnapChildren.count {
-                            self.userSession?.userCalendar.calendarNotes = notes
+                            self.userSession?.userCalendar = notes
                             completion(true)
                         }
                     }
@@ -1041,51 +1110,29 @@ class FireBaseSession: ObservableObject {
         }
     }
     
-    func downloadTrainingSessionsFromDB(userID: String, completion: @escaping (Bool)->()) {
-        var userSessions = [TrainingSession]()
+    func downloadTrainingSessionsFromDB(userID: String, trainingID: String, completion: @escaping ([Date])->()) {
+        var dates = [Date]()
         var counter = 0
         
-        self.usersDBRef.child("UserTrainingSessions").child(userID).observeSingleEvent(of: .value) { (sessionSnapshot) in
-            if let ssessionSnapChildren = sessionSnapshot.children.allObjects as? [DataSnapshot] {
-
-                for sessionSnapChild in ssessionSnapChildren {
-                    
-                    let trainingID = sessionSnapChild.key
-                    
-                    self.usersDBRef.child("Trainings").child(trainingID).observeSingleEvent(of: .value) { (trainingSnapshot) in
-                        if let trainingInfo = trainingSnapshot.value as? [String : Any] {
-                            //generating base data of current training form "Trainings" and
-                            //generating dates of sessions and id from "UserTrainingSessions"
-                            
-                            let name = trainingInfo["name"] as! String
-                            let description = trainingInfo["description"] as! String
-                            var dates = [Date]()
-                            
-                            
-                            if let datesOfSessions = sessionSnapChild.children.allObjects as? [DataSnapshot] {
-                                for dateString in datesOfSessions {
-                                    let dateAsDate = DateConverter.convertFromString(dateString: dateString.key)
-                                    dates.append(dateAsDate)
-                                }
-                                if dates.count == datesOfSessions.count {
-                                    let traininigSession = TrainingSession(trainingID: trainingID,
-                                                                           trainingName: name,
-                                                                           trainingDescription: description,
-                                                                           trainingDates: dates)
-                                    userSessions.append(traininigSession)
-                                    counter += 1
-                                    
-                                    if counter == ssessionSnapChildren.count {
-                                        self.userSession?.userCalendar.trainingSessions = userSessions
-                                        completion(true)
-                                    }
-                                }
-                            }
+        self.usersDBRef.child("UserTrainingSessions").child(userID).child(trainingID).observeSingleEvent(of: .value) { (sessionSnapshot) in
+            if sessionSnapshot.exists() {
+                if let ssessionSnapChildren = sessionSnapshot.children.allObjects as? [DataSnapshot] {
+                    for sigleSnap in ssessionSnapChildren {
+                        let dateAsDate = DateConverter.convertFromString(dateString: sigleSnap.key)
+                        dates.append(dateAsDate)
+                        counter += 1
+                        
+                        if counter == ssessionSnapChildren.count {
+                            completion(dates)
                         }
                     }
+                } else {
+                    completion([Date]())
                 }
+                
+            } else {
+                completion([Date]())
             }
-
         }
     }
     func deleteTrainingSessionsFromDB(userID: String, completion: @escaping (Bool)->()) {

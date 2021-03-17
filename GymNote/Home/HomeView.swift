@@ -29,7 +29,7 @@ struct HomeView: View {
         calendar.dateInterval(of: .year, for: Date())!
     }
     @StateObject var listOfNotes: ObservableArray<CalendarNote> = ObservableArray(array: [CalendarNote]()).observeChildrenChanges()
-    @StateObject var listOfTrainingSessions: ObservableArray<TrainingSession> = ObservableArray(array: [TrainingSession]()).observeChildrenChanges()
+    @StateObject var listOfTrainings: ObservableArray<Training> = ObservableArray(array: [Training]()).observeChildrenChanges()
     
     
     var body: some View {
@@ -60,7 +60,7 @@ struct HomeView: View {
                             self.showDayView.toggle()
                         }
                     
-                    CalendarDayView(listOfTrainingSessions: self.listOfTrainingSessions,
+                    CalendarDayView(listOfTrainingSessions: self.listOfTrainings,
                                     listOfNotes: self.listOfNotes,
                                     date: self.$selectedDate)
                         .padding(.horizontal, 30)
@@ -72,12 +72,13 @@ struct HomeView: View {
             .navigationBarTitle("Home", displayMode: .inline)
             .onAppear {
                 self.setUpCalendarArrays()
+                print("--------- on appear home -----------")
             }
             
         }
     }
     func isTrainingDay(date: Date) -> Bool {
-        for training in listOfTrainingSessions.array {
+        for training in listOfTrainings.array {
             if training.trainingDates.contains(where: {$0 == date }) {
                 return true
             }
@@ -117,18 +118,22 @@ struct HomeView: View {
         self.selectedDate = self.calendar.date(from: self.components) ?? Date()
     }
     func setUpCalendarArrays() {
-        if let id = self.session.userSession?.userProfile.userID {
-            self.session.downloadTrainingSessionsFromDB(userID: id) { (sessionDownloadedSuccesfull) in
-                if sessionDownloadedSuccesfull {
-                    self.listOfTrainingSessions.array = (self.session.userSession?.userCalendar.trainingSessions)!
+
+            if let userID = self.session.userSession?.userProfile.userID {
+                self.session.downloadTrainingsFromDB(userID: userID) { finishDownloading in
+                    if finishDownloading {
+                        if let list = self.session.userSession?.userTrainings {
+                            self.listOfTrainings.array = list
+                        }
+                    }
+                }
+                self.session.downloadCalendarNote(userID: userID) { (notesDownloadedSucccessfull) in
+                    if notesDownloadedSucccessfull {
+                        self.listOfNotes.array = (self.session.userSession?.userCalendar)!
+                    }
                 }
             }
-            self.session.downloadCalendarNote(userID: id) { (notesDownloadedSucccessfull) in
-                if notesDownloadedSucccessfull {
-                    self.listOfNotes.array = (self.session.userSession?.userCalendar.calendarNotes)!
-                }
-            }
-        }
+        
     }
 }
 

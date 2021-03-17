@@ -20,7 +20,7 @@ struct CalendarDayView: View {
     @State var disableAddButton = false
     @State var noteToDelete: CalendarNote?
     @State var showDetails = false
-    @ObservedObject var listOfTrainingSessions: ObservableArray<TrainingSession>
+    @ObservedObject var listOfTrainingSessions: ObservableArray<Training>
     @ObservedObject var listOfNotes: ObservableArray<CalendarNote>
     @Binding var date: Date
 
@@ -65,7 +65,9 @@ struct CalendarDayView: View {
             ForEach(listOfTrainingSessions.array, id: \.trainingID) { training in
                 
                 if training.trainingDates.contains(where: {$0 == date }) {
-                    SmallShowHideTrainingView(training: training)
+                    SmallShowHideTrainingView(listOfTrainingSessions: listOfTrainingSessions,
+                                              training: training,
+                                              date: self.date)
                 }
             }//.padding(.bottom, 15)
             Divider()
@@ -76,6 +78,7 @@ struct CalendarDayView: View {
                             
                             CompletedButton(isCompleted: note.isCompleted,
                                             action: {
+                                                note.isCompleted.toggle()
                                                     self.updateIsCompletedOnNote(note: note)
                                                 })
                             
@@ -116,7 +119,7 @@ struct CalendarDayView: View {
                         self.disableAddButton = false
                     } else {
                         print("Note is saved successfully in Firebase!")
-                        self.session.userSession?.userCalendar.calendarNotes.append(note)
+                        self.session.userSession?.userCalendar.append(note)
                         self.listOfNotes.array.append(note)
                         self.note = ""
                         self.showWarninig = false
@@ -147,13 +150,18 @@ struct CalendarDayView: View {
         if let id = self.session.userSession?.userProfile.userID {
             self.session.updateCalendarNote(userID: id, calendarNote: note)
         }
-        note.isCompleted.toggle()
+        if let indexSession = self.session.userSession?.userCalendar.firstIndex(where: {$0.notesID == note.notesID}) {
+            self.session.userSession?.userCalendar[indexSession].isCompleted.toggle()
+        }
+        if let indexArray = listOfNotes.array.firstIndex(where: {$0.notesID == note.notesID}) {
+            listOfNotes.array[indexArray].isCompleted.toggle()
+        }
     }
     func deleteNote(note: CalendarNote) {
         if let id = self.session.userSession?.userProfile.userID {
-            if let indexForSession = self.session.userSession?.userCalendar.calendarNotes.firstIndex(of: note) {
+            if let indexForSession = self.session.userSession?.userCalendar.firstIndex(of: note) {
                 self.session.deleteCalendarNoteFromDB(userID: id, note: note)
-                self.session.userSession?.userCalendar.calendarNotes.remove(at: indexForSession)
+                self.session.userSession?.userCalendar.remove(at: indexForSession)
             }
             if let indexForList = self.listOfNotes.array.firstIndex(of: note) {
                 self.listOfNotes.array.remove(at: indexForList)

@@ -15,9 +15,7 @@
 		0722A16B25DE82C00035E5B9 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0722A16A25DE82C00035E5B9 /* ForgotPasswordView.swift */; };
 		07232B8B25EE39B4006E953D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232B8A25EE39B4006E953D /* CalendarView.swift */; };
 		07232BA025EE8A41006E953D /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232B9F25EE8A41006E953D /* Shapes.swift */; };
-		07232BA825EF7A51006E953D /* UsersCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232BA725EF7A51006E953D /* UsersCalendar.swift */; };
 		07232BAB25EF7B1E006E953D /* CalendarNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232BAA25EF7B1E006E953D /* CalendarNote.swift */; };
-		07232BAE25EF7C50006E953D /* TrainingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232BAD25EF7C50006E953D /* TrainingSession.swift */; };
 		07232BB225EFAEBE006E953D /* CalendarDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232BB125EFAEBE006E953D /* CalendarDayView.swift */; };
 		07232BD925F0E8B3006E953D /* CalendarCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232BD825F0E8B3006E953D /* CalendarCellView.swift */; };
 		07232BFF25F10F27006E953D /* CompletedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07232BFE25F10F27006E953D /* CompletedButton.swift */; };
@@ -114,9 +112,7 @@
 		0722A16A25DE82C00035E5B9 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		07232B8A25EE39B4006E953D /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		07232B9F25EE8A41006E953D /* Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
-		07232BA725EF7A51006E953D /* UsersCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCalendar.swift; sourceTree = "<group>"; };
 		07232BAA25EF7B1E006E953D /* CalendarNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarNote.swift; sourceTree = "<group>"; };
-		07232BAD25EF7C50006E953D /* TrainingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSession.swift; sourceTree = "<group>"; };
 		07232BB125EFAEBE006E953D /* CalendarDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDayView.swift; sourceTree = "<group>"; };
 		07232BD825F0E8B3006E953D /* CalendarCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellView.swift; sourceTree = "<group>"; };
 		07232BFE25F10F27006E953D /* CompletedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedButton.swift; sourceTree = "<group>"; };
@@ -263,9 +259,7 @@
 		07232BA625EF7A2B006E953D /* CalendarModel */ = {
 			isa = PBXGroup;
 			children = (
-				07232BA725EF7A51006E953D /* UsersCalendar.swift */,
 				07232BAA25EF7B1E006E953D /* CalendarNote.swift */,
-				07232BAD25EF7C50006E953D /* TrainingSession.swift */,
 			);
 			path = CalendarModel;
 			sourceTree = "<group>";
@@ -716,8 +710,6 @@
 				073E6C9523AA215800A06E80 /* TitleBelt.swift in Sources */,
 				075A31F5240683C4006613A2 /* FireBaseSession.swift in Sources */,
 				07C922E82411582400AF6010 /* DualColorCheckmark.swift in Sources */,
-				07232BAE25EF7C50006E953D /* TrainingSession.swift in Sources */,
-				07232BA825EF7A51006E953D /* UsersCalendar.swift in Sources */,
 				07840A9B248BD4E900FC3019 /* EditModeButton.swift in Sources */,
 				07FCCE732482C8AD008FE164 /* ProfileHost.swift in Sources */,
 				07C922EC2416693D00AF6010 /* AddUserExerciseView.swift in Sources */,

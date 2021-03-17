@@ -10,8 +10,11 @@ import SwiftUI
 
 struct SmallShowHideTrainingView: View {
     
+    @EnvironmentObject var session: FireBaseSession
     @State private var showDetails = false
-    var training: TrainingSession
+    @ObservedObject var listOfTrainingSessions: ObservableArray<Training>
+    var training: Training
+    var date: Date
     
     var body: some View {
         VStack {
@@ -40,7 +43,7 @@ struct SmallShowHideTrainingView: View {
                     }.shadow(color: .black, radius: 1, x: -1, y: 1)
                 }).buttonStyle(BorderlessButtonStyle())
                 ChaveronDeleteComplexButtons(deleteAction: {
-                    //
+                    deleteTraining()
                 })
             }
             HStack {
@@ -53,6 +56,58 @@ struct SmallShowHideTrainingView: View {
                     .fixedSize(horizontal: false, vertical: true)
                 
                 Spacer()
+            }
+            if showDetails {
+                TrainingDetails(training: training)
+            }
+        }
+    }
+    
+    func deleteTraining() {
+        if let id = self.session.userSession?.userProfile.userID {
+            self.session.deleteDayOfTraining(userID: id, training: training, forDay: date) { (removedSuccessfully, des) in
+                if removedSuccessfully {
+                    //
+                }
+            }
+            if let dateIdx = training.trainingDates.firstIndex(where: {$0 == self.date}) {
+                if let trainingIdx = (self.session.userSession?.userTrainings.firstIndex(where: {$0 == training})) {
+                let numbersOfTrainingSessions = self.session.userSession?.userTrainings[trainingIdx].trainingDates.count
+                    if !(self.session.userSession?.userTrainings[trainingIdx].trainingDates.isEmpty)! {
+                        self.session.userSession?.userTrainings[trainingIdx].trainingDates.remove(at: dateIdx)
+                    }
+                    
+                    if numbersOfTrainingSessions!-1 ==  self.session.userSession?.userTrainings[trainingIdx].trainingDates.count {
+                        self.listOfTrainingSessions.array = self.session.userSession!.userTrainings
+                    } else {
+                        print("dupa")
+                    }
+                }
+
+            }
+        }
+        
+        if var stats = self.session.userSession?.userStatistics {
+            var exercisesIDs = [String]()
+            for exercise in training.listOfExercises {
+                exercisesIDs.append(exercise.exercise.exerciseID)
+            }
+            if exercisesIDs.count == training.listOfExercises.count {
+                for id in exercisesIDs {
+                    if !stats.isEmpty {
+                        if let statIndex = stats.firstIndex(where: {$0.exercise.exerciseID == id}) {
+                            if let dataIndex = stats[statIndex].exerciseData.firstIndex(where: {$0.exerciseDate == date}) {
+                                if stats[statIndex].exerciseData.count == 1 {
+                                    stats.remove(at: statIndex)
+                                    self.session.userSession?.userStatistics = stats
+                                } else {
+                                    stats[statIndex].exerciseData.remove(at: dataIndex)
+                                    self.session.userSession?.userStatistics = stats
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

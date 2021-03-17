@@ -80,60 +80,65 @@ struct NoteView: View {
         }
     }
     func setupListOfTrainings() {
-        if let userID = self.session.userSession?.userProfile.userID {
-            self.session.downloadTrainingsFromDB(userID: userID) { finishDownloading in
-                if finishDownloading {
-                    if let list = self.session.userSession?.userTrainings {
-                        self.listOfTrainings.array = list
-                    }
+        if let list = self.session.userSession?.userTrainings {
+            for training in list {
+                if training.isTrainingActive {
+                    self.listOfTrainings.array.append(training)
                 }
             }
         }
     }
     func updateTrainingIfNeeded() {
-        if self.listOfTrainings.array.count != self.session.userSession?.userTrainings.count {
-            self.listOfTrainings.array = self.session.userSession?.userTrainings ?? [Training]()
+        var activeList = [Training]()
+        var counter = 0
+        if let list = self.session.userSession?.userTrainings {
+            for training in list {
+                if training.isTrainingActive {
+                    activeList.append(training)
+                }
+                counter += 1
+                if counter == list.count {
+                    if activeList.count != self.listOfTrainings.array.count {
+                        self.listOfTrainings.array = activeList
+                    }
+                }
+            }
+            
         }
     }
     
     func deleteTraining(trainingToRemove: Training) {
-        if let indexOfTrainingToRemove = self.session.userSession?.userTrainings.firstIndex(of: trainingToRemove) {
-            self.removeTrainingFromDB(at: indexOfTrainingToRemove, trainingToRemove: trainingToRemove)
-            self.session.userSession?.userTrainings.remove(at: indexOfTrainingToRemove)
-            self.listOfTrainings.array.remove(at: indexOfTrainingToRemove)
-        }
-    }
-    
-    func removeTrainingFromDB(at index: Int, trainingToRemove: Training) {
-        if let userID = self.session.userSession?.userProfile.userID {
-            self.session.deleteTrainingFromDB(userID: userID, training: trainingToRemove) { errorOccur, errorDescription in
-                if errorOccur {
-                    print(errorDescription ?? "Unknow error occur during removing training!")
+        if let id = self.session.userSession?.userProfile.userID {
+            if let trainingFromUserData = self.session.userSession?.userTrainings.first(where: {$0.trainingID == trainingToRemove.trainingID}) {
+                if trainingFromUserData.trainingDates.isEmpty {
+                    self.session.deleteTrainingFromDB(userID: id, training: trainingToRemove) { (error, errorDes) in
+                        if !error {
+                            if let indexList = self.listOfTrainings.array.firstIndex(of: trainingToRemove) {
+                                self.listOfTrainings.array.remove(at: indexList)
+                            }
+                            if let indexSession = self.session.userSession?.userTrainings.firstIndex(of: trainingToRemove) {
+                                self.session.userSession?.userTrainings.remove(at: indexSession)
+                            }
+                        }
+                    }
                 }
-                
+                else {
+                    if let indexOfTrainingToRemove = self.session.userSession?.userTrainings.firstIndex(of: trainingToRemove) {
+                        self.session.userSession?.userTrainings[indexOfTrainingToRemove].isTrainingActive = false
+                        self.trainingToRemove?.isTrainingActive = false
+                        self.deactivatetrainingAtDB(trainingToRemove: trainingToRemove)
+                    }
+                    if let indexList = self.listOfTrainings.array.firstIndex(of: trainingToRemove) {
+                        self.listOfTrainings.array.remove(at: indexList)
+                    }
+                }
             }
         }
     }
     
-}
-
-
-
-struct NoteView_Previews: PreviewProvider {
-    
-    static var prevListOfTrainings = [Training(id: UUID().uuidString,
-                                               name: "My Training",
-                                               description: "My litte subscription",
-                                               date: "01-Jan-2020",
-                                               exercises: [TrainingsComponent(exercise: Exercise(), numberOfSeries: 1, orderInList: 1)])]
-    
-    static var previews: some View {
-        NavigationView {
-            if #available(iOS 14.0, *) {
-                NoteView()
-            } else {
-                // Fallback on earlier versions
-            }
-        }
+    func deactivatetrainingAtDB(trainingToRemove: Training) {
+        self.session.updateTrainingOnDBs(training: trainingToRemove)
     }
+    
 }
+

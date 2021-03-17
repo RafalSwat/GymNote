@@ -229,9 +229,9 @@ class LineChartModelView: ObservableObject {
             
             
             let repsMinValue = repsAllValues.min() ?? 1
-            let repsMaxValue = repsAllValues.max()!
+            let repsMaxValue = repsAllValues.max() ?? 1
             let weightMinValue = weightsAllValues.min() ?? 1
-            let weightMaxValue = weightsAllValues.max()!
+            let weightMaxValue = weightsAllValues.max() ?? 1
             
             repsMinValues.append(repsMinValue)
             repsMaxValues.append(repsMaxValue)
@@ -268,8 +268,8 @@ class LineChartModelView: ObservableObject {
                 arrayOfWeightValues.append(Double(element.exerciseSeries[index].exerciseWeight ?? 0))
             }
         }
-        var maxReps = arrayOfRepsValues.max()!
-        var minReps = arrayOfRepsValues.min()!
+        var maxReps = arrayOfRepsValues.max() ?? 1
+        var minReps = arrayOfRepsValues.min() ?? 1
         if maxReps == minReps {
             maxReps += 1
             minReps -= 1

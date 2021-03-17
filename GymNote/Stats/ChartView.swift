@@ -12,14 +12,13 @@ import SwiftUI
 struct ChartView: View {
     
     @EnvironmentObject var session: FireBaseSession
-    @StateObject var listOfExerciseStatistic: ObservableArray<ExerciseStatistics> = ObservableArray(array: [ExerciseStatistics]()).observeChildrenChanges()
-    
+    @ObservedObject var listOfExerciseStatistic: ObservableArray<ExerciseStatistics>
     @State var stats = [ExerciseStatistics]()
     @State var chosenStats: LineChartModelView?
     @State var chosenIndex: Int?
     @State var chartTitle = "Stats"
-    @State var statsLoadedSuccessfully: Bool? = nil
-    @State var didAppear = false
+    @Binding var statsLoadedSuccessfully: Bool?
+    //@State var didAppear = false
     
     @State var showMenu: Bool = false
     @State var displayMode: ChartCase = .repetition
@@ -128,39 +127,45 @@ struct ChartView: View {
                                         Image(systemName: "line.horizontal.3")
                                             .font(.title)
                     }) : AnyView(EmptyView()))
-                .onAppear {
-                    self.didAppear = false
-                    if !didAppear {
-                        self.setupUserStatisticsIfNeeded()
-                        self.didAppear = true
-                    }
-                }
-                
-                
             }
         }
+//        .onAppear {
+//            self.setupUserStatisticsIfNeeded()
+//            print("--------- on appear stats -----------")
+//
+//        }
         .onDisappear {
+            //listOfExerciseStatistic.array = [ExerciseStatistics]()
+            statsLoadedSuccessfully = nil
             chosenStats = nil
             chosenIndex = nil
             chartTitle = "Stats"
             showMenu = false
+            print("--------- on disappear stats -----------")
         }
+        
     }
-    func setupUserStatisticsIfNeeded() {
-        if self.session.userSession?.userStatistics.count == 0 {
-            self.session.downloadUserStatisticsFromDB(userID: (session.userSession?.userProfile.userID)!, completion: { finishedLoadingStats in
-                if finishedLoadingStats && self.session.userSession?.userStatistics.count == 0 {
-                    self.statsLoadedSuccessfully = false
-                } else if finishedLoadingStats && self.session.userSession?.userStatistics.count != 0 {
-                    self.listOfExerciseStatistic.array = self.session.userSession!.userStatistics
-                    self.statsLoadedSuccessfully = true
-                }
-            })
-        } else {
-            self.listOfExerciseStatistic.array = self.session.userSession?.userStatistics ?? [ExerciseStatistics]()
-            self.statsLoadedSuccessfully = true
-        }
-    }
+    
+//
+//    func setupUserStatisticsIfNeeded() {
+//        if self.session.userSession?.userStatistics.count == 0 {
+//            self.session.downloadUserStatisticsFromDB(userID: (session.userSession?.userProfile.userID)!, completion: { finishedLoadingStats in
+//                if finishedLoadingStats && self.session.userSession?.userStatistics.count == 0 {
+//                    self.listOfExerciseStatistic.array = [ExerciseStatistics]()
+//                    self.statsLoadedSuccessfully = false
+//                    //self.didAppear = true
+//                } else if finishedLoadingStats && self.session.userSession?.userStatistics.count != 0 {
+//                    self.listOfExerciseStatistic.array = self.session.userSession!.userStatistics
+//                    self.statsLoadedSuccessfully = true
+//                    //self.didAppear = true
+//                }
+//            })
+//        } else {
+//            self.listOfExerciseStatistic.array = self.session.userSession?.userStatistics ?? [ExerciseStatistics]()
+//            self.statsLoadedSuccessfully = true
+//            //self.didAppear = true
+//        }
+//    }
     func removeStatisticFromDataBase() {
         if let id = self.session.userSession?.userProfile.userID {
             if let currentExercise = self.chosenStats?.data {
@@ -182,14 +187,7 @@ struct ChartView: View {
     }
     
 }
-struct ChartView_Previews: PreviewProvider {
-    static var previews: some View {
-        if #available(iOS 14.0, *) {
-            ChartView()
-        } else {
-            // Fallback on earlier versions
-        }
-    }
-}
+
+
 
 
